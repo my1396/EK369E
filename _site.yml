@@ -1,5 +1,6 @@
 name: "EK360E-website"
-output_dir: docs
+output_dir: "docs"
+include: ["w1.rmd"]
 navbar:
   title: "Course Website"
   left:
