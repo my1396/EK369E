@@ -1,9 +1,14 @@
-name: "my-website"
+name: "EK360E-website"
 output_dir: docs
 navbar:
-  title: "My Website"
+  title: "Course Website"
   left:
     - text: "Home"
       href: index.html
     - text: "About"
       href: about.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+        
