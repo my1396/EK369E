@@ -4,6 +4,6 @@ title: "EK369E"
 
 This webpage provides coding practice for EK369E. 
 
-[week 1, CAPM](w1.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w1.rmd)
+[week 1, CAPM](w1.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w1.rmd); [Download Data](https://github.com/my1396/EK369E/tree/main/data);
 
 
