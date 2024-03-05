@@ -1,0 +1,195 @@
+---
+title: "CAPM"
+output: 
+    bookdown::html_document2:
+        toc: true
+        toc_float: true
+        toc_depth: 4
+        number_sections: false
+header-includes:
+- \usepackage{graphicx}
+- \usepackage{amsmath,amsfonts,amsthm,bm} % Math packages
+---
+
+```{r setup, include=F, echo=F}
+library(knitr) # load packages
+library(kableExtra)
+library(tidyverse)
+library(latex2exp)
+library(stargazer)
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts <- options(knitr.kable.NA = "")
+
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
+```
+
+
+
+This script estimates CAPM for individual stocks and shows an example for 2-pass CAPM.
+
+## CAPM for one equity
+
+```{r block1}
+f_name <- "data/NO_capm_2015-2022_monthly.csv"
+data_return <- read_csv(f_name)
+data_group <- data_return %>% 
+    group_by(ISIN) 
+data_group %>% group_keys()
+groups <- data_group %>% group_split()
+the_group <- groups[[1]] 
+the_group %>%
+    select(-rf_annualized) %>% 
+    knitr::kable(floating.environment="sidewaystable", digits = 5, escape=F) %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down") %>% 
+    scroll_box(width = "100%", height = "500px")
+```
+
+Conduct the linear regression for one equity
+
+```{r block2}
+reg_data <- the_group %>%
+    select(Return_monthly, mkt_return_monthly, rf_1month) %>%
+    rename(r_i = Return_monthly,
+           r_m = mkt_return_monthly,
+           r_f = rf_1month) %>%
+    mutate(rmrf = r_m-r_f,
+           eRi = r_i-r_f)
+capm_ml <- lm(eRi~rmrf, data=reg_data)
+summary(capm_ml)
+```
+
+`stargazer` tabulates regression results neatly.
+```{r, results='asis'}
+stargazer(capm_ml, type="html", title="Regression Results")
+```
+
+## 2-pass CAPM
+
+Get a matrix of excess returns
+```{r block3}
+## matrix of excess returns
+library(quantmod)
+f_name <- "data/NO_Rf-OSEBX_2015-2023_monthly.csv"
+mkt_idx_rets <- read_csv(f_name)
+mkt_idx_rets <- mkt_idx_rets %>% mutate(yrmon=as.yearmon(Date))
+
+## convert to wide table, each row stands for time points; 
+#    each col stands for equities.
+data_wide <- data_return %>% 
+    mutate(excess_return=Return_monthly-rf_1month) %>% 
+    select(ISIN, Date, excess_return) %>% 
+    spread(ISIN, excess_return) 
+
+# merge with market index and risk-free
+data_wide <- data_wide %>% 
+    mutate(yrmon=as.yearmon(Date)) %>% 
+    left_join(mkt_idx_rets %>% select(-Date), by="yrmon") %>% 
+    select(-yrmon)
+
+data_wide <- data_wide %>% 
+    mutate(rmrf=mkt_return_monthly-rf_1month)
+```
+
+
+Inspect the data structure
+```{r max.lines = 10}
+data_wide %>% str()
+```
+
+
+Have a preview of *Excess Return*
+```{r block5}
+No_equity <- 142
+ER <- data_wide[,(1:No_equity)+1] %>% as.matrix()
+data_wide %>%
+    knitr::kable(floating.environment="sidewaystable", digits = 5, escape=F) %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down") %>% 
+    scroll_box(width = "100%", height = "500px")
+```
+
+
+Get *Equity Risk Premium* (ERM)
+```{r}
+ERM <- data_wide %>% pull(rmrf)
+head(ERM)
+```
+
+
+Get pass 2 (cross section) regression coefficients, and test if the market supports the CAPM.
+```{r block6}
+n <- length(ERM) 
+B <- NULL
+n2 <- 62
+for (n2 in 61:n) {
+    n1 <- n2-60
+    y <- ER[n1:(n2-1),]
+    x <- ERM[n1:(n2-1)]
+    regr <- lm(y ~ x) # pass 1
+    regr$coefficients
+    betai <- regr$coefficients[2,]
+    eRi <- ER[n2,]
+    regr <- lm(eRi ~ betai) # pass 2
+    b <- regr$coefficients
+    B <- rbind(B,b)
+}
+
+head(B)
+colMeans(B)
+```
+
+
+T-test for zero means
+```{r block7}
+t.test(B[,1]) 
+t.test(B[,2], alternative=c("two.sided")) 
+t.test(B[,2], alternative=c("greater"))
+p1 <- t.test(B[,1])$p.value
+p2 <- t.test(B[,2], alternative=c("greater"))$p.value 
+test <- colMeans(B)
+test <- rbind(test, c(p1,p2))
+colnames(test)<- c("constant", "beta");
+rownames(test)<- c("average", "p.value");
+test
+```
+
+
+## Plot Security Market Line (SML)
+
+Get $E[r_i-r_f]$ against $\beta_i$ data.
+```{r}
+sml_data <- cbind(eRi, betai) %>% data.frame()
+sml_data <- sml_data %>% filter(betai<5)
+head(sml_data)
+```
+
+
+Draw scatter plot
+```{r}
+p_sml <- ggplot(data.frame(sml_data), aes(x=betai, y=eRi)) +
+    geom_point() + 
+    geom_smooth(method = "lm", se=FALSE) +
+    labs(x=TeX("$\\beta_i$"), y=TeX("$E[r_i-r_f]$"))
+p_sml
+```
+
+
+
+
