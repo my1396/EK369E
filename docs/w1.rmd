@@ -336,7 +336,7 @@ p_sml
 
 **Home practice**:
 
--   Construct 10 decile portfolios based on the ranking of $\beta_i$, do the same analysis based on portfolio $\beta_p$ and see if there exists an SML.
+-   Construct equally-weighted decile portfolios based on the ranking of $\beta_i$, do the same analysis based on portfolio $\beta_p$ and see if there exists an SML.
 
 -   Refer to @Jensen1972.
 
