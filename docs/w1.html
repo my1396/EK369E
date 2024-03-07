@@ -63,6 +63,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -346,9 +368,25 @@ div.tocify {
 </div>
 
 
-<p>This script estimates CAPM for individual stocks and shows an example for 2-pass CAPM.</p>
-<div id="capm-for-one-equity" class="section level2">
-<h2>CAPM for one equity</h2>
+<p>This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.</p>
+<div id="capm" class="section level2">
+<h2>CAPM</h2>
+<p>CAPM states the expected risk premiums on individual assets are the product of <span class="math inline">\(\beta\)</span> and the equity risk premium (ERP).</p>
+<p>ERP here refers to the risk premium of the market portfolio, also called <em>market risk premium</em>.</p>
+<p><span class="math inline">\(\beta\)</span> measures the sensitivity to market risk.</p>
+<p>The model is formulated by</p>
+<p><span class="math display">\[
+E[r_i-r_f] = \beta_i E[r_m-r_f]
+\]</span> where <span class="math inline">\(r_i\)</span> is the return of asset <span class="math inline">\(i\)</span>; <span class="math inline">\(r_f\)</span> is the riskless rate of interest; <span class="math inline">\(r_m\)</span> is the return of the market portfolio.</p>
+<p>CAPM as a regression can be expressed as</p>
+<p><span class="math display">\[
+r_{i,t} - r_{f,t} = \alpha_i + \beta_i (r_{m,t}-r_{f,t}) + \varepsilon_{i,t}
+\]</span> where <span class="math inline">\(\alpha_i\)</span> (intercept) and <span class="math inline">\(\beta_i\)</span> (slope) are the parameters to estimate.</p>
+<p><span class="math inline">\(\alpha_i\)</span> is a <em>nonmarket</em> premium.</p>
+<ul>
+<li><span class="math inline">\(\alpha_i&gt;0\)</span> means positive abnormal return, this could be caused, for example, by positive estimate of the security’s prospect, or you think the security is underpriced, and given time, the price will converge to its equilibrium level and therefore offers an attractive expected return.</li>
+</ul>
+<p>If CAPM holds, then when security prices are <strong>in equilibrium</strong>, <span class="math inline">\(\alpha_i=0\)</span>, i.e., any positive/negative alpha’s will be driven to zero in the end.</p>
 <pre class="r"><code>f_name &lt;- &quot;data/NO_capm_2015-2022_monthly.csv&quot;
 data_return &lt;- read_csv(f_name)
 data_group &lt;- data_return %&gt;% 
@@ -370,6 +408,20 @@ data_group %&gt;% group_keys()</code></pre>
 ## # ℹ 132 more rows</code></pre>
 <pre class="r"><code>groups &lt;- data_group %&gt;% group_split()
 the_group &lt;- groups[[1]] 
+# inspect data structure
+the_group %&gt;% str()</code></pre>
+<pre><code>## tibble [96 × 9] (S3: tbl_df/tbl/data.frame)
+##  $ ISIN              : chr [1:96] &quot;BMG0451H1170&quot; &quot;BMG0451H1170&quot; &quot;BMG0451H1170&quot; &quot;BMG0451H1170&quot; ...
+##  $ Date              : Date[1:96], format: &quot;2015-01-30&quot; &quot;2015-02-27&quot; ...
+##  $ Symbol            : chr [1:96] &quot;ARCHER&quot; &quot;ARCHER&quot; &quot;ARCHER&quot; &quot;ARCHER&quot; ...
+##  $ Name              : chr [1:96] &quot;Archer&quot; &quot;Archer&quot; &quot;Archer&quot; &quot;Archer&quot; ...
+##  $ Sector            : chr [1:96] &quot;Energy&quot; &quot;Energy&quot; &quot;Energy&quot; &quot;Energy&quot; ...
+##  $ Return_monthly    : num [1:96] -0.2401 -0.22801 0.00844 0.16736 -0.03943 ...
+##  $ mkt_return_monthly: num [1:96] 0.03498 0.03262 0.00578 0.03256 0.00988 ...
+##  $ rf_1month         : num [1:96] 0.0012 0.00113 0.00127 0.00123 0.00117 0.00102 0.00097 0.00095 0.00083 0.0008 ...
+##  $ rf_annualized     : num [1:96] 0.0145 0.0136 0.0153 0.0149 0.0141 ...</code></pre>
+<p>We use monthly data of <em>Archer</em> over the period 2015-01 to 2020-12.</p>
+<pre class="r"><code># glimpse of data for one equity
 the_group %&gt;%
     select(-rf_annualized) %&gt;% 
     knitr::kable(floating.environment=&quot;sidewaystable&quot;, digits = 5, escape=F) %&gt;%
@@ -2934,10 +2986,10 @@ summary(capm_ml)</code></pre>
 ## Multiple R-squared:  0.1781, Adjusted R-squared:  0.1693 
 ## F-statistic: 20.36 on 1 and 94 DF,  p-value: 1.853e-05</code></pre>
 <p><code>stargazer</code> tabulates regression results neatly.</p>
-<pre class="r"><code>stargazer(capm_ml, type=&quot;html&quot;, title=&quot;Regression Results&quot;)</code></pre>
+<pre class="r"><code>stargazer(capm_ml, type=&quot;html&quot;, title=&quot;Regression Results for Archer&quot;)</code></pre>
 <table style="text-align:center">
 <caption>
-<strong>Regression Results</strong>
+<strong>Regression Results for Archer</strong>
 </caption>
 <tr>
 <td colspan="2" style="border-bottom: 1px solid black">
@@ -3066,10 +3118,73 @@ F Statistic
 </td>
 </tr>
 </table>
+<p><br/></p>
+<p>Several things worth looking at:</p>
+<ul>
+<li><p>Explanatory power: the <span class="math inline">\(R^2\)</span> (<span class="math inline">\(.178\)</span>) tells us that variation in the excess returns of the market index explains about 17.8% of the variation in Archer’s returns. The adjusted <span class="math inline">\(R^2\)</span> (which is slightly smaller) imposes a penalty for extra number of predictors.</p></li>
+<li><p>The intercept (<span class="math inline">\(-.021\)</span>) is the estimate of Archer’s alpha. The number in parentheses is the standard error (SE). <em>T</em>-statistic is about <span class="math inline">\(1\)</span>, lower than the conventional cutoff for statistical significance is a probability of less than <span class="math inline">\(5\%\)</span>, which requires a <em>t</em>-statistic of about <span class="math inline">\(2.0\)</span>.</p>
+<ul>
+<li>We fail to reject <span class="math inline">\(H_0: \alpha=0\)</span>.</li>
+</ul></li>
+<li><p>The slope (<span class="math inline">\(2.234\)</span>) is the estimate of beta, meaning that its share price tended to move 2.234% for every 1% move in the market index.</p>
+<ul>
+<li><p><span class="math inline">\(\beta&gt;1\)</span> means above-average sensitivity to economy, high exposure to the state of macroeconomy, high-risk equities.</p></li>
+<li><p>The SE is <span class="math inline">\(.495\)</span>. P-value in the table provides the significance level for <span class="math inline">\(H_0: \beta=0\)</span>.</p></li>
+<li><p>An alternative t-test would be <span class="math inline">\(H_0: \beta=1\)</span>.</p>
+<p><span class="math display">\[
+t = \frac{\hat{\beta}-\beta}{se_{\hat{\beta}}} = \frac{2.234-1}{0.495} = 2.493
+\]</span></p>
+<p>The p-value (<span class="math inline">\(1.27\%\)</span>) can be obtained by</p>
+<pre class="r"><code>pnorm(q = -2.493) * 2.</code></pre>
+<pre><code>## [1] 0.01266688</code></pre>
+<p>Therefore, we reject <span class="math inline">\(H_0: \hat{\beta}=1\)</span> at 5% significance level.</p></li>
+<li><p>Sometimes we are interested in the <span class="math inline">\(95\%\)</span> <em>Confidence Interval</em> (CI) that includes the true but unobserved value of beta with 95% probability.</p>
+<p>We would take the estimated value as the center of the interval, and then add and subtract about two standard errors.</p>
+<p>More precisely, the <span class="math inline">\(95\%\)</span> CI is given as <span class="math inline">\([\hat{\beta}-1.96 \cdot se_{\hat{\beta}}, \hat{\beta}+1.96 \cdot se_{\hat{\beta}}]\)</span>.</p>
+<pre class="r"><code>qnorm(p = 0.025) # critical value of 1.96</code></pre>
+<pre><code>## [1] -1.959964</code></pre>
+<pre class="r"><code>c(&quot;lower bound&quot;=2.234-1.96*0.495, &quot;upper bound&quot;=2.234+1.96*0.495) # 95% CI</code></pre>
+<pre><code>## lower bound upper bound 
+##      1.2638      3.2042</code></pre></li>
+<li><p>The standard deviation of the residual is <span class="math inline">\(20.4\%\)</span> per month, or `20.4%*sqrt(12)=70.67%`. This stands for firm-specific risk.</p>
+<p>The standard deviation of systematic risk is <span class="math inline">\(\beta\times \sigma(r_m-r_f)\)</span></p>
+<pre class="r"><code>capm_ml$coefficients[2] * sd(reg_data$rmrf)</code></pre>
+<pre><code>##       rmrf 
+## 0.09450784</code></pre>
+<p>which is <span class="math inline">\(9.45\%\)</span>, much smaller than the firm-specific risk.</p>
+<p>In other words, more of the fluctuation in Archer’s monthly return derives from firm-specific factors than from marketwide systematic factors.</p></li>
+</ul></li>
+</ul>
+<p><strong>Industry version of CAPM</strong></p>
+<ul>
+<li><p>They often use total return than excess return in the regressions. This makes sense when <span class="math inline">\(r_f\)</span> is low, but could make a difference if <span class="math inline">\(r_f\)</span> is high and volatile.</p></li>
+<li><p>Notice that when <span class="math inline">\(r_f\)</span> is constant, the<span class="math display">\[
+\hat{\beta}_i=\frac{\text{Cov}(R^e_i, R^e_m)}{\text{Var}(R^e_m)}
+\]</span>where</p>
+<p>        <span class="math inline">\(R^e_i=r_i-r_f\)</span> stands for excess return on asset <span class="math inline">\(i\)</span>, and</p>
+<p>        <span class="math inline">\(R^e_m=r_m-r_f\)</span> stands for excess return on the market index.</p>
+<p>is not affected by the value of <span class="math inline">\(r_f\)</span>.</p></li>
+</ul>
 <hr />
 </div>
 <div id="pass-capm" class="section level2">
 <h2>2-pass CAPM</h2>
+<p>Early tests of CAPM focused on the cross-section of stock returns. <span class="math inline">\(\rightarrow\)</span> Test Security Market Line.</p>
+<p><span class="math display">\[
+E_T[R^e_i] = \gamma_0 + \gamma_1 \hat{\beta}_i + u_i \;\;\;\; (SML)
+\]</span></p>
+<p>Regressing the mean excess return over a time interval, <span class="math inline">\(E_T[R^e_i]=\frac{1}{T}\sum_{t=1}^TR^e_{i,t}\)</span>, on estimates of the systematic risk, <span class="math inline">\(\hat{\beta}_i\)</span>.</p>
+<p><span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span> are parameters of interest here.</p>
+<p>If CAPM holds, <span class="math inline">\(\gamma_0\)</span> should be equal to zero, and <span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p>
+<p>We call the time series estimation using individual assets the <em>First Pass</em> CAPM. We use the beta estimates from the first pass as the independent variable in the <em>Second Pass</em> and the average excess return for a set of securities as the dependent variable.</p>
+<ul>
+<li><p>Main problem:</p>
+<p><span class="math inline">\(\hat{\beta}_i\)</span> has measurement error from the first pass, which causes the Errors-in-Variable (EIV) problem in the second pass.</p>
+<p>The main consequence of EIV is attenuation bias. In short, <span class="math inline">\(\gamma_1\)</span> will be biased towards zero, assuming <span class="math inline">\(\gamma_1&gt;0\)</span>.</p></li>
+<li><p>Solution:</p>
+<p>Measure <span class="math inline">\(\beta\)</span>’s based on portfolios will be less affected by the measurement error than individual <span class="math inline">\(\beta_i\)</span> due to aggregation.</p></li>
+</ul>
+<p>Here we demonstrate an example using individual <span class="math inline">\(\beta_i\)</span>.</p>
 <p>Get a matrix of excess returns</p>
 <pre class="r"><code>## matrix of excess returns
 library(quantmod)
@@ -46099,21 +46214,24 @@ head(ERM)</code></pre>
 <p>Get pass 2 (cross section) regression coefficients, and test if the market supports the CAPM.</p>
 <pre class="r"><code>n &lt;- length(ERM) 
 B &lt;- NULL
-n2 &lt;- 62
 for (n2 in 61:n) {
     n1 &lt;- n2-60
     y &lt;- ER[n1:(n2-1),]
     x &lt;- ERM[n1:(n2-1)]
-    regr &lt;- lm(y ~ x) # pass 1
+    regr &lt;- lm(y ~ x) # pass 1 uses 5-yr preceeding data
     regr$coefficients
     betai &lt;- regr$coefficients[2,]
     eRi &lt;- ER[n2,]
-    regr &lt;- lm(eRi ~ betai) # pass 2
+    regr &lt;- lm(eRi ~ betai) # pass 2 SML use all cross section obs
     b &lt;- regr$coefficients
     B &lt;- rbind(B,b)
 }
-
-head(B)</code></pre>
+B %&gt;% str()</code></pre>
+<pre><code>##  num [1:36, 1:2] 0.00815 -0.05358 -0.12548 0.12185 0.09489 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 2
+##   ..$ : chr [1:36] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; ...
+##   ..$ : chr [1:2] &quot;(Intercept)&quot; &quot;betai&quot;</code></pre>
+<pre class="r"><code>head(B)</code></pre>
 <pre><code>##    (Intercept)       betai
 ## b  0.008151460 -0.02271188
 ## b -0.053579307 -0.05564175
@@ -46124,7 +46242,7 @@ head(B)</code></pre>
 <pre class="r"><code>colMeans(B)</code></pre>
 <pre><code>## (Intercept)       betai 
 ##  -0.2228427   0.3580724</code></pre>
-<p>T-test for zero means</p>
+<p><span class="math inline">\(T\)</span>-test for <span class="math inline">\(H_0: \gamma_0=0\)</span></p>
 <pre class="r"><code>t.test(B[,1]) </code></pre>
 <pre><code>## 
 ##  One Sample t-test
@@ -46137,6 +46255,7 @@ head(B)</code></pre>
 ## sample estimates:
 ##  mean of x 
 ## -0.2228427</code></pre>
+<p><span class="math inline">\(T\)</span>-test for <span class="math inline">\(H_0: \gamma_1=0\)</span></p>
 <pre class="r"><code>t.test(B[,2], alternative=c(&quot;two.sided&quot;)) </code></pre>
 <pre><code>## 
 ##  One Sample t-test
@@ -46149,6 +46268,7 @@ head(B)</code></pre>
 ## sample estimates:
 ## mean of x 
 ## 0.3580724</code></pre>
+<p><span class="math inline">\(T\)</span>-test for <span class="math inline">\(H_0: \gamma_1&lt;0\)</span></p>
 <pre class="r"><code>t.test(B[,2], alternative=c(&quot;greater&quot;))</code></pre>
 <pre><code>## 
 ##  One Sample t-test
@@ -46175,7 +46295,7 @@ test</code></pre>
 </div>
 <div id="plot-security-market-line-sml" class="section level2">
 <h2>Plot Security Market Line (SML)</h2>
-<p>Get <span class="math inline">\(E[r_i-r_f]\)</span> against <span class="math inline">\(\beta_i\)</span> data.</p>
+<p>Get <span class="math inline">\(E[r_i-r_f]\)</span> against <span class="math inline">\(\beta_i\)</span> data for one cross section.</p>
 <pre class="r"><code>sml_data &lt;- cbind(eRi, betai) %&gt;% data.frame()
 sml_data &lt;- sml_data %&gt;% filter(betai&lt;5)
 head(sml_data)</code></pre>
@@ -46192,7 +46312,21 @@ head(sml_data)</code></pre>
     geom_smooth(method = &quot;lm&quot;, se=FALSE) +
     labs(x=TeX(&quot;$\\beta_i$&quot;), y=TeX(&quot;$E[r_i-r_f]$&quot;))
 p_sml</code></pre>
-<p><img src="w1_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w1_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><strong>Home practice</strong>:</p>
+<ul>
+<li><p>Construct 10 decile portfolios based on the ranking of <span class="math inline">\(\beta_i\)</span>, do the same analysis based on portfolio <span class="math inline">\(\beta_p\)</span> and see if there exists an SML.</p></li>
+<li><p>Refer to <span class="citation">Jensen, Black, and Scholes (<a href="#ref-Jensen1972">1972</a>)</span>.</p></li>
+</ul>
+<hr />
+<div id="references" class="section level3 unnumbered">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Jensen1972" class="csl-entry">
+Jensen, Michael C., Fischer Black, and Myron S. Scholes. 1972. <span>“The Capital Asset Pricing Model: Some Empirical Tests.”</span> In <em>Studies in the Theory of Capital Markets</em>, edited by Michael C. Jensen. Praeger Publishers Inc. <a href="https://papers.ssrn.com/abstract=908569">https://papers.ssrn.com/abstract=908569</a>.
+</div>
+</div>
+</div>
 </div>
 
 
