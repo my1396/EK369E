@@ -43,6 +43,7 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
+<br/>
 This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.
 
 ## Time Series CAPM
