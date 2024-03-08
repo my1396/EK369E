@@ -19,6 +19,7 @@ library(kableExtra)
 library(tidyverse)
 library(latex2exp)
 library(stargazer)
+library(xts)
 # don't show code unless we explicitly set echo = TRUE
 opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
 opts <- options(knitr.kable.NA = "")
@@ -68,11 +69,15 @@ $$ where $\alpha_i$ (intercept) and $\beta_i$ (slope) are the parameters to esti
 
 $\alpha_i$ is a *nonmarket* premium.
 
--   $\alpha_i>0$ means positive abnormal return, this could be caused, for example, by positive estimate of the security's prospect, or you think the security is underpriced, and given time, the price will converge to its equilibrium level and therefore offers an attractive expected return.
+-   $\alpha_i>0$ means positive abnormal return, this could be caused, for example, by positive estimate of the security's prospect, or you think the security is underpriced based on private information you are aware of, and given time, the price will converge to its "fair value" and therefore offers an attractive expected return.
 
 If CAPM holds, then when security prices are **in equilibrium**, $\alpha_i=0$, i.e., any positive/negative alpha's will be driven to zero in the end.
 
 ```{r block1}
+## read in .csv data
+# put the data in a folder called "data"
+# the code below works on macos, if using Windows, need to 
+# replace the forward slash ("/") with backslash ("\")
 f_name <- "data/NO_capm_2015-2022_monthly.csv"
 data_return <- read_csv(f_name)
 data_group <- data_return %>% 
@@ -108,6 +113,27 @@ reg_data <- the_group %>%
            r_f = rf_1month) %>%
     mutate(rmrf = r_m-r_f,
            eRi = r_i-r_f)
+```
+
+
+Visualize excess return of Archer and the market index
+```{r fig.keep=2}
+plot_data <- reg_data %>% 
+    select(eRi, rmrf) %>% 
+    xts(order.by = the_group$Date)
+col_vec <- c("black", "red")
+plot.xts(plot_data, col = col_vec, main = "Excess Returns on Asset and Market")
+addLegend("topright", 
+          legend.names = c("Archer", "Equity Risk Premium"), 
+          lty = c(1, 1), 
+          lwd = c(2, 2),
+          col = col_vec,
+          bg = "white",
+          box.col = "white")
+
+```
+
+```{r}
 capm_ml <- lm(eRi~rmrf, data=reg_data)
 summary(capm_ml)
 ```
@@ -321,7 +347,8 @@ Get $E[r_i-r_f]$ against $\beta_i$ data for one cross section.
 
 ```{r}
 sml_data <- cbind(eRi, betai) %>% data.frame()
-sml_data <- sml_data %>% filter(betai<5)
+sml_data <- sml_data %>% filter(betai<5) # remove outliers
+sml_data %>% str()
 head(sml_data)
 ```
 
@@ -337,7 +364,7 @@ p_sml
 
 **Home practice**:
 
--   Construct equally-weighted decile portfolios based on the ranking of $\beta_i$, do the same analysis based on portfolio $\beta_p$ and see if there exists an SML.
+-   Construct equal-weighted decile portfolios based on the ranking of $\beta_i$, do the same analysis based on portfolio $\beta_p$ and see if there exists an SML.
 
 -   Refer to @Jensen1972.
 

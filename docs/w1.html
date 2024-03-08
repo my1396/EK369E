@@ -385,10 +385,14 @@ r_{i,t} - r_{f,t} = \alpha_i + \beta_i (r_{m,t}-r_{f,t}) + \varepsilon_{i,t}
 \]</span> where <span class="math inline">\(\alpha_i\)</span> (intercept) and <span class="math inline">\(\beta_i\)</span> (slope) are the parameters to estimate.</p>
 <p><span class="math inline">\(\alpha_i\)</span> is a <em>nonmarket</em> premium.</p>
 <ul>
-<li><span class="math inline">\(\alpha_i&gt;0\)</span> means positive abnormal return, this could be caused, for example, by positive estimate of the security’s prospect, or you think the security is underpriced, and given time, the price will converge to its equilibrium level and therefore offers an attractive expected return.</li>
+<li><span class="math inline">\(\alpha_i&gt;0\)</span> means positive abnormal return, this could be caused, for example, by positive estimate of the security’s prospect, or you think the security is underpriced based on private information you are aware of, and given time, the price will converge to its “fair value” and therefore offers an attractive expected return.</li>
 </ul>
 <p>If CAPM holds, then when security prices are <strong>in equilibrium</strong>, <span class="math inline">\(\alpha_i=0\)</span>, i.e., any positive/negative alpha’s will be driven to zero in the end.</p>
-<pre class="r"><code>f_name &lt;- &quot;data/NO_capm_2015-2022_monthly.csv&quot;
+<pre class="r"><code>## read in .csv data
+# put the data in a folder called &quot;data&quot;
+# the code below works on macos, if using Windows, need to 
+# replace the forward slash (&quot;/&quot;) with backslash (&quot;\&quot;)
+f_name &lt;- &quot;data/NO_capm_2015-2022_monthly.csv&quot;
 data_return &lt;- read_csv(f_name)
 data_group &lt;- data_return %&gt;% 
     group_by(ISIN) 
@@ -2965,8 +2969,22 @@ Energy
            r_m = mkt_return_monthly,
            r_f = rf_1month) %&gt;%
     mutate(rmrf = r_m-r_f,
-           eRi = r_i-r_f)
-capm_ml &lt;- lm(eRi~rmrf, data=reg_data)
+           eRi = r_i-r_f)</code></pre>
+<p>Visualize excess return of Archer and the market index</p>
+<pre class="r"><code>plot_data &lt;- reg_data %&gt;% 
+    select(eRi, rmrf) %&gt;% 
+    xts(order.by=the_group$Date)
+col_vec &lt;- c(&quot;black&quot;, &quot;red&quot;)
+plot.xts(plot_data, col=col_vec, main=&quot;Excess Return on Asset and Market&quot;)
+addLegend(&quot;topright&quot;, 
+          legend.names = c(&quot;Archer&quot;, &quot;Equity Risk Premium&quot;), 
+          lty=c(1, 1), 
+          lwd=c(2, 2),
+          col=col_vec,
+          bg=&quot;white&quot;,
+          box.col=&quot;white&quot;)</code></pre>
+<p><img src="w1_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>capm_ml &lt;- lm(eRi~rmrf, data=reg_data)
 summary(capm_ml)</code></pre>
 <pre><code>## 
 ## Call:
@@ -46298,8 +46316,12 @@ test</code></pre>
 <h2>Plot Security Market Line (SML)</h2>
 <p>Get <span class="math inline">\(E[r_i-r_f]\)</span> against <span class="math inline">\(\beta_i\)</span> data for one cross section.</p>
 <pre class="r"><code>sml_data &lt;- cbind(eRi, betai) %&gt;% data.frame()
-sml_data &lt;- sml_data %&gt;% filter(betai&lt;5)
-head(sml_data)</code></pre>
+sml_data &lt;- sml_data %&gt;% filter(betai&lt;5) # remove outliers
+sml_data %&gt;% str()</code></pre>
+<pre><code>## &#39;data.frame&#39;:    140 obs. of  2 variables:
+##  $ eRi  : num  -0.069 -0.12 -0.129 -0.016 -0.124 ...
+##  $ betai: num  1.814 1.253 0.869 2.339 0.383 ...</code></pre>
+<pre class="r"><code>head(sml_data)</code></pre>
 <pre><code>##                      eRi      betai
 ## BMG0451H1170 -0.06901575 1.81404649
 ## BMG067231032 -0.12007330 1.25293991
@@ -46313,10 +46335,10 @@ head(sml_data)</code></pre>
     geom_smooth(method = &quot;lm&quot;, se=FALSE) +
     labs(x=TeX(&quot;$\\beta_i$&quot;), y=TeX(&quot;$E[r_i-r_f]$&quot;))
 p_sml</code></pre>
-<p><img src="w1_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w1_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><strong>Home practice</strong>:</p>
 <ul>
-<li><p>Construct equally-weighted decile portfolios based on the ranking of <span class="math inline">\(\beta_i\)</span>, do the same analysis based on portfolio <span class="math inline">\(\beta_p\)</span> and see if there exists an SML.</p></li>
+<li><p>Construct equal-weighted decile portfolios based on the ranking of <span class="math inline">\(\beta_i\)</span>, do the same analysis based on portfolio <span class="math inline">\(\beta_p\)</span> and see if there exists an SML.</p></li>
 <li><p>Refer to <span class="citation">Jensen, Black, and Scholes (<a href="#ref-Jensen1972">1972</a>)</span>.</p></li>
 </ul>
 <hr />
