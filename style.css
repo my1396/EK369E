@@ -1,0 +1,22 @@
+/* CSS for RMD site */
+
+/* general typesetting */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", SimSun, sans-serif;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+p {
+  margin: 10px 0;
+}
+a {
+  color: #337ab7;
+}
+a:hover,
+a:focus {
+  color: #0085a1;
+}
+a img:hover,
+a img:focus {
+  cursor: zoom-in;
+}
