@@ -116,7 +116,7 @@ reg_data <- the_group %>%
 ```
 
 
-Visualize excess return of Archer and the market index
+Visualize excess returns of Archer and the market index
 ```{r fig.keep=2}
 plot_data <- reg_data %>% 
     select(eRi, rmrf) %>% 
@@ -205,9 +205,9 @@ Several things worth looking at:
     \hat{\beta}_i=\frac{\text{Cov}(R^e_i, R^e_m)}{\text{Var}(R^e_m)}
     $$where
 
-    &nbsp; &nbsp; &nbsp; &nbsp; $R^e_i=r_i-r_f$ stands for excess return on asset $i$, and
+    &nbsp; &nbsp; &nbsp; &nbsp; $R^e_i=r_i-r_f$ stands for the excess return on asset $i$, and
 
-    &nbsp; &nbsp; &nbsp; &nbsp; $R^e_m=r_m-r_f$ stands for excess return on the market index.
+    &nbsp; &nbsp; &nbsp; &nbsp; $R^e_m=r_m-r_f$ stands for the excess return on the market index.
 
     is not affected by the value of $r_f$.
 
@@ -237,11 +237,11 @@ We call the time series estimation using individual assets the *First Pass* CAPM
 
 -   Solution:
 
-    Measure $\beta$'s based on portfolios will be less affected by the measurement error than individual $\beta_i$ due to aggregation.
+    $\beta_p$ estimates based on portfolios will be less affected by the measurement error than individual $\beta_i$ due to aggregation.
 
-Here we demonstrate an example using individual $\beta_i$.
+Here we demonstrate an example using individual $\beta_i$'s.
 
-Get a matrix of excess returns
+Get the matrix of excess returns
 
 ```{r block3}
 ## matrix of excess returns
