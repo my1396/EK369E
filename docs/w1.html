@@ -2970,19 +2970,19 @@ Energy
            r_f = rf_1month) %&gt;%
     mutate(rmrf = r_m-r_f,
            eRi = r_i-r_f)</code></pre>
-<p>Visualize excess return of Archer and the market index</p>
+<p>Visualize excess returns of Archer and the market index</p>
 <pre class="r"><code>plot_data &lt;- reg_data %&gt;% 
     select(eRi, rmrf) %&gt;% 
-    xts(order.by=the_group$Date)
+    xts(order.by = the_group$Date)
 col_vec &lt;- c(&quot;black&quot;, &quot;red&quot;)
-plot.xts(plot_data, col=col_vec, main=&quot;Excess Return on Asset and Market&quot;)
+plot.xts(plot_data, col = col_vec, main = &quot;Excess Returns on Asset and Market&quot;)
 addLegend(&quot;topright&quot;, 
           legend.names = c(&quot;Archer&quot;, &quot;Equity Risk Premium&quot;), 
-          lty=c(1, 1), 
-          lwd=c(2, 2),
-          col=col_vec,
-          bg=&quot;white&quot;,
-          box.col=&quot;white&quot;)</code></pre>
+          lty = c(1, 1), 
+          lwd = c(2, 2),
+          col = col_vec,
+          bg = &quot;white&quot;,
+          box.col = &quot;white&quot;)</code></pre>
 <p><img src="w1_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>capm_ml &lt;- lm(eRi~rmrf, data=reg_data)
 summary(capm_ml)</code></pre>
@@ -3180,8 +3180,8 @@ t = \frac{\hat{\beta}-\beta}{se_{\hat{\beta}}} = \frac{2.234-1}{0.495} = 2.493
 <li><p>Notice that when <span class="math inline">\(r_f\)</span> is constant, the<span class="math display">\[
 \hat{\beta}_i=\frac{\text{Cov}(R^e_i, R^e_m)}{\text{Var}(R^e_m)}
 \]</span>where</p>
-<p>        <span class="math inline">\(R^e_i=r_i-r_f\)</span> stands for excess return on asset <span class="math inline">\(i\)</span>, and</p>
-<p>        <span class="math inline">\(R^e_m=r_m-r_f\)</span> stands for excess return on the market index.</p>
+<p>        <span class="math inline">\(R^e_i=r_i-r_f\)</span> stands for the excess return on asset <span class="math inline">\(i\)</span>, and</p>
+<p>        <span class="math inline">\(R^e_m=r_m-r_f\)</span> stands for the excess return on the market index.</p>
 <p>is not affected by the value of <span class="math inline">\(r_f\)</span>.</p></li>
 </ul>
 <hr />
@@ -3201,10 +3201,10 @@ E_T[R^e_i] = \gamma_0 + \gamma_1 \hat{\beta}_i + u_i \;\;\;\; (SML)
 <p><span class="math inline">\(\hat{\beta}_i\)</span> has measurement error from the first pass, which causes the Errors-in-Variable (EIV) problem in the second pass.</p>
 <p>The main consequence of EIV is attenuation bias. In short, <span class="math inline">\(\gamma_1\)</span> will be biased towards zero, assuming <span class="math inline">\(\gamma_1&gt;0\)</span>.</p></li>
 <li><p>Solution:</p>
-<p>Measure <span class="math inline">\(\beta\)</span>’s based on portfolios will be less affected by the measurement error than individual <span class="math inline">\(\beta_i\)</span> due to aggregation.</p></li>
+<p><span class="math inline">\(\beta_p\)</span> estimates based on portfolios will be less affected by the measurement error than individual <span class="math inline">\(\beta_i\)</span> due to aggregation.</p></li>
 </ul>
-<p>Here we demonstrate an example using individual <span class="math inline">\(\beta_i\)</span>.</p>
-<p>Get a matrix of excess returns</p>
+<p>Here we demonstrate an example using individual <span class="math inline">\(\beta_i\)</span>’s.</p>
+<p>Get the matrix of excess returns</p>
 <pre class="r"><code>## matrix of excess returns
 library(quantmod)
 f_name &lt;- &quot;data/NO_Rf-OSEBX_2015-2023_monthly.csv&quot;

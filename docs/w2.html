@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Menghan Yuan" />
+
+<meta name="date" content="2024-03-14" />
+
+<title>EMH and RW</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Course Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">EMH and RW</h1>
+<h4 class="author">Menghan Yuan</h4>
+<h4 class="date">March 14, 2024</h4>
+
+</div>
+
+
+<div id="emh" class="section level2">
+<h2>EMH</h2>
+<p>A market in which prices always “fully reflect” available information is called “<em>efficient</em>.”</p>
+<p>Formally, the market is said to be efficient with respect to some <em>information set</em>.</p>
+<p>Three forms of efficiency corresponding to differing information sets:</p>
+<ol style="list-style-type: decimal">
+<li>weak-from (historical market trading data, such as prices, volumes)</li>
+<li>semistrong-form (fundamental data, such as earnings, dividends, accounting practices)</li>
+<li>strong-form (insider info, such as mergers and acquisitions)</li>
+</ol>
+<p>Efficiency with respect to an information set implies that it is impossible to make economic profits by trading on the basis of [that information set].</p>
+<ul>
+<li><p>Here by economic profits, we mean “abnormal/superior” returns after adjustment for risk and costs.</p></li>
+<li><p>We need equilibrium (asset pricing) models for risk adjustments, such as CAPM, to determine the “normal” returns appropriate for bearing the level risk in a security.</p></li>
+<li><p>If the abnormal return is unforecastable, and in this sense “random”, then the <em>Efficiency Market Hypothesis</em> (EMH) is not rejected.</p></li>
+</ul>
+<p>Market efficiency can be tested by revealing information to market participants and measuring the reaction of security prices. If prices do not move when info is revealed, then the market is efficient w.r.t. that info.</p>
+<p>Challenges of testing EMH: Any test of efficiency must assume an equilibrium model that defines normal security returns. This leads to our null is a <em>joint test</em> of market efficiency and a correct equilibrium model.</p>
+<p>The result of this is that when we reject the null, this could be because the market is truly inefficient or because an incorrect equilibrium model has been assumed.</p>
+<ul>
+<li><p>With the wrong asset pricing model, we can wind up rejecting efficiency. It would be easy to find abnormal returns to be forecastable if we had the wrong equilibrium.</p></li>
+<li><p>Asset pricing models give the equilibrium return; abnormal returns are deviations of real prices from equilibriums.</p></li>
+</ul>
+<p>Types of market efficiency <span class="math inline">\(\rightarrow\)</span> Violations of efficiency:</p>
+<ul>
+<li>weak form <span class="math inline">\(\rightarrow\)</span> technical analysis or charting earn superior profits (after adjustment for risk).</li>
+<li>semistrong form <span class="math inline">\(\rightarrow\)</span> fundamental analysis achieves superior returns</li>
+<li>strong from <span class="math inline">\(\rightarrow\)</span> corporate insiders making profitable trades</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:emh"></span>
+<img src="images/EMH.png" alt="EMH" width="50%" />
+<p class="caption">
+Fig. 1: EMH
+</p>
+</div>
+<p>Perfect efficiency exists only in the idealized frictionless world of the imagination. Abnormal returns will exist if there are costs of gathering and processing information. Since market efficiency is an idealization that is economically unrealizable, what we can do is to measure relative efficiency. And if some markets turn out to be particularly inefficient, then investors will be well-prepared to take advantage of the opportunity to make profits.</p>
+<p>Most tests suggest that if the security (demeaned) return cannot be forecasted, then market efficiency cannot be rejected.</p>
+<hr />
+</div>
+<div id="predictability-of-asset-returns" class="section level2">
+<h2>Predictability of Asset Returns</h2>
+<p>A process <span class="math inline">\(\{p_t\}\)</span> is called a <em>Random Walk</em> (RW) if:</p>
+<p><span class="math display">\[
+p_t = \mu + p_{t-1} + e_t
+\]</span></p>
+<p>where <span class="math inline">\(E(e_t)=0\)</span> and <span class="math inline">\(\text{Var}(e_t)=\sigma^2\)</span>.</p>
+<ul>
+<li><p><span class="math inline">\(\mu\)</span> is called the expected price change or <em>drift</em>.</p></li>
+<li><p><span class="math inline">\(\{e_t\}\)</span> is called the innovations, disturbances, or increments. There are differing hypothesis regarding to its distribution:</p>
+<ul>
+<li><p>RW1: <span class="math inline">\(e_t\sim \text{IID } (0, \sigma^2)\)</span> meaning increments are Independently and Identically Distributed (IID).</p></li>
+<li><p>RW2: <span class="math inline">\(e_t\sim \text{INID } (0, \sigma^2)\)</span> independent but not (necessarily) identically distributed (INID) increments. RW2 is weaker than RW1 because it relaxes the assumption of identically distributed increments.</p>
+<ul>
+<li>RW2 allows for heteroskedasticity.</li>
+</ul></li>
+<li><p>RW3: <span class="math inline">\(e_t\)</span> is uncorrelated. <span class="math inline">\(\text{Cov}[e_t, e_{t-k}]=0\)</span> for all <span class="math inline">\(k\neq 0\)</span>. This is the weakest form of RW.</p>
+<ul>
+<li><p>RW3 allows for dependence in higher moments.</p></li>
+<li><p>An example that satisfiies RW3 but not RW1 and RW2: <span class="math inline">\(\text{Cov}[e_t,e_{t−k}]=0\)</span> for all <span class="math inline">\(k\neq 0\)</span>, but <span class="math inline">\(\text{Cov}[e_t^2,e_{t−k}^2]\neq0\)</span> for some <span class="math inline">\(k\neq 0\)</span>. In words, first moments are uncorrelated, but second moments are correlated; therefore, such a process is not independent.</p></li>
+</ul></li>
+</ul></li>
+<li><p>Let <span class="math inline">\(p_t=\ln P_t\)</span> be the natural logarithm of price <span class="math inline">\(P_t\)</span>, and <span class="math inline">\(r_t=\mu+e_t=\Delta p = p_t-p_{t-1}\)</span>. Then <span class="math inline">\(r_t\)</span> is the <strong>log return</strong> at time <span class="math inline">\(t\)</span>.</p></li>
+</ul>
+<hr />
+<div id="cowles-and-jones-test" class="section level3">
+<h3>Cowles and Jones Test</h3>
+<p><span class="citation">Cowles and Jones (<a href="#ref-Cowles1937">1937</a>)</span> proposed a test of RW1 using the frequency of <em>sequences</em> and <em>reversals</em> in historical stock returns.</p>
+<ul>
+<li><p>Sequences: pairs of consecutive returns with the same sign (<span class="math inline">\((+,+)\)</span> or <span class="math inline">\((-,-)\)</span>);</p></li>
+<li><p>Reversals: consecutive returns with opposite signs (<span class="math inline">\((+,-)\)</span> or <span class="math inline">\((-,+)\)</span>).</p></li>
+</ul>
+<p>More formally, we define <span class="math inline">\(I_t\)</span> an indicator variable as:</p>
+<p><span class="math display">\[
+\begin{align*}
+I_t =
+\begin{cases}
+1 &amp; \text{if } r_t&gt;0 \\
+0 &amp; \text{if } r_t\leq0
+\end{cases}
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(I_t\)</span> is an analogy to the <em>Bernoulli</em> coin-tossing experiments. That is, when it is a fair coin, <span class="math inline">\(X_t\sim \text{Bernoulli}(p=1/2)\)</span></p>
+<p><span class="math display">\[
+\begin{align*}
+X_t =
+\begin{cases}
+1 &amp; \text{if it is a head, with prob. } p=\frac{1}{2}  \\
+0 &amp; \text{if it is a tail, with prob. } 1-p=\frac{1}{2}.
+\end{cases}
+\end{align*}
+\]</span></p>
+<p>The number of sequences (<span class="math inline">\(N_s\)</span>) and reversals (<span class="math inline">\(N_r\)</span>) can be expressed as functions of <span class="math inline">\(I_t\)</span>’s.</p>
+<p><span class="math display">\[
+\begin{aligned}
+N_s &amp;\equiv \sum_{t=1}^n Y_t, \quad \color{#32CD32}{Y_t} \equiv I_tI_{t-1} + (1-I_t)(1-I_{t-1})  \\
+N_r &amp;\equiv n-N_s.
+\end{aligned}
+\]</span></p>
+</div>
+<div id="rw-without-drift" class="section level3">
+<h3>RW without drift</h3>
+<p>For simplicity, we assume <span class="math inline">\(\mu=0\)</span> (a driftless RW) for now. <span class="math inline">\(r_t=e_t\)</span>.</p>
+<p>If <span class="math inline">\(p_t\)</span> follows a driftless RW, then for any pair of consecutive returns, a sequence and a reversal are equally probable. We would expect <span class="math inline">\(N_s\)</span> should be approximately equal to <span class="math inline">\(N_r\)</span>.</p>
+<ul>
+<li><span class="math inline">\(N_s + N_r = n\)</span></li>
+</ul>
+<p>The Cowles-Jones test statistic is given by the ratio of the probability of a sequence <span class="math inline">\(\pi_s\)</span> to the probability of a reversal <span class="math inline">\(1-\pi_s\)</span>.</p>
+<p><span class="math display" id="eq:CJ">\[
+\begin{equation} \tag{1}
+\widehat{\text{CJ}} \equiv \frac{N_s}{N_r} = \frac{N_s/n}{N_r/n} = \frac{\hat{\pi}_s}{1-\hat{\pi}_s} \xrightarrow{p} \frac{\pi_s}{1-\pi_s} = \text{CJ} = \frac{1/2}{1-1/2} = 1
+\end{equation}
+\]</span></p>
+<div class="exercise">
+<p><span id="exr:proof1" class="exercise"><strong>Proof. 1  </strong></span>Show <span class="math inline">\(\pi_s=\frac{1}{2}\)</span>.</p>
+<p>Hint: This is equivalent to show that
+<span class="math display">\[
+Y_t =
+\begin{cases}
+1 &amp; \text{with prob. } p= \pi_s \\
+0 &amp; \text{with prob. } 1-p= 1-\pi_s .
+\end{cases}
+\]</span></p>
+</div>
+<hr />
+</div>
+<div id="rw-with-drift" class="section level3">
+<h3>RW with drift</h3>
+<p><span class="math inline">\(r_t=\mu+e_t\)</span>. Such a drift, either positive or negative, makes sequences more likely than reversals.</p>
+<p>For now we assume that log prices follow a normal random walk with drift:</p>
+<p><span class="math display">\[
+p_t=\mu+p_{t-1}+e_t, \quad e_t\sim N(0, \sigma^2).
+\]</span>
+Then <span class="math inline">\(I_t\)</span> is no longer a fair coin-toss but is biased in the direction of th drift, i.e.,</p>
+<p><span class="math display">\[
+I_t =
+\begin{cases}
+1 &amp; \text{with prob. } p= \pi \\
+0 &amp; \text{with prob. } 1-p= 1-\pi .
+\end{cases}
+\]</span>
+where</p>
+<p><span class="math display">\[
+\pi \equiv P(r_t&gt;0) = \Phi \left(\frac{\mu}{\sigma}\right).
+\]</span>
+<span class="math inline">\(\Phi(.)\)</span> is the cdf of the <em>standard normal</em> distribution.</p>
+<p>Given that <span class="math inline">\(\Phi(.)\)</span> is symmetric,</p>
+<ul>
+<li>if the drift <span class="math inline">\(\mu\)</span> is positive, then <span class="math inline">\(\pi&gt;\frac{1}{2}\)</span>;</li>
+<li>if the drift <span class="math inline">\(\mu\)</span> is negative, then <span class="math inline">\(\pi&lt;\frac{1}{2}\)</span>.</li>
+</ul>
+<div class="exercise">
+<p><span id="exr:proof2" class="exercise"><strong>Proof. 2  </strong></span>Show <span class="math inline">\(\pi=\Phi \left(\frac{\mu}{\sigma}\right)\)</span>.</p>
+</div>
+<p><span class="math display">\[
+\begin{aligned}
+P(r_t&gt;0) &amp;= P(\mu+e_t&gt;0) \\
+&amp;= P(e_t&gt;-\mu) \\
+&amp;= P\left( \frac{e_t}{\sigma} &gt; -\frac{\mu}{\sigma}\right) \quad e_t\sim N(0, \sigma^2), \text{ then } \frac{e_t}{\sigma}\sim N(0,1) \\
+&amp;= P \left( \frac{e_t}{\sigma} &lt; \frac{\mu}{\sigma} \right) \\
+&amp;= \Phi \left(\frac{\mu}{\sigma} \right)
+\end{aligned}
+\]</span></p>
+<p>Then we have</p>
+<p><span class="math display">\[
+\text{CJ} = \frac{\pi_s}{1-\pi_s} = \frac{\pi^2+(1-\pi)^2}{2\pi(1-\pi)}
+\]</span></p>
+<div class="exercise">
+<p><span id="exr:proof3" class="exercise"><strong>Proof. 3  </strong></span>Show <span class="math inline">\(\pi_s=\pi^2+(1-\pi)^2\)</span>.</p>
+<p>Hint: use the probability mass function of <span class="math inline">\(Y_t\)</span> in Proof. <a href="#exr:proof1">1</a>.</p>
+</div>
+<p>The asymptotic distribution of <span class="math inline">\(\widehat{\text{CJ}}\)</span> is given by</p>
+<p><span class="math display">\[
+\widehat{\text{CJ}} \overset{a}{\sim} N \left(\frac{\pi_s}{1-\pi_s}, \frac{\pi_s(1-\pi_s) + 2\big[\pi^3+(1-\pi)^3-\pi_s^3\big]}{n-(1-\pi_s)^4} \right)
+\]</span>
+Refer to <span class="citation">Campbell, Lo, and MacKinlay (<a href="#ref-Campbell1996">1996</a>)</span> chapter 2 for proof.</p>
+<hr />
+</div>
+<div id="simulation-example" class="section level3">
+<h3>Simulation example</h3>
+<pre class="r"><code># RW example
+set.seed(123)
+t &lt;- seq(1, 100, by=1)
+et &lt;- rnorm(length(t), mean=0, sd=1) # IID N(0,1) increments
+pt &lt;- c(0, cumsum(et))  # driftless random walk
+par(mfrow=c(2,1)); par(mar=c(3.5, 4, 2, .5), mgp=c(2.4,0.8,0))
+plot(t, et, type=&quot;o&quot;, col=&quot;blue&quot;, xlab=&quot;t&quot;, ylab=expression(e[t]), cex.lab=1.2)
+plot(c(0,t), pt, type=&quot;o&quot;, col=&quot;blue&quot;, xlab=&quot;t&quot;, ylab=expression(p[t]), cex.lab=1.2)</code></pre>
+<p><img src="w2_files/figure-html/CJ-data-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>It &lt;- ifelse(et&gt;0,1,0)
+It_1 &lt;- c(NA, head(It, -1))
+data &lt;- cbind(et, It, It_1) %&gt;% as_tibble()
+data &lt;- data %&gt;% mutate(yt = It*It_1 + (1-It)*(1-It_1))
+data</code></pre>
+<pre><code>## # A tibble: 100 × 4
+##         et    It  It_1    yt
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 -0.560      0    NA    NA
+##  2 -0.230      0     0     1
+##  3  1.56       1     0     0
+##  4  0.0705     1     1     1
+##  5  0.129      1     1     1
+##  6  1.72       1     1     1
+##  7  0.461      1     1     1
+##  8 -1.27       0     1     0
+##  9 -0.687      0     0     1
+## 10 -0.446      0     0     1
+## # ℹ 90 more rows</code></pre>
+<pre class="r"><code>Ns &lt;- sum(data$yt, na.rm=TRUE)
+Nr &lt;- length(t)-Ns
+CJ_hat &lt;- Ns/Nr
+CJ_hat</code></pre>
+<pre><code>## [1] 1.12766</code></pre>
+<pre class="r"><code>pi_hat &lt;- sum(It)/length(t)
+pis_hat &lt;- Ns/length(t)
+sigma2 &lt;- (pis_hat*(1-pis_hat) + 2*(pi_hat^3 + (1-pi_hat)^3 - pis_hat^2)) /(length(t))/(1-pis_hat)^4
+sigma &lt;- sqrt(sigma2)
+t_stat &lt;- (CJ_hat-1)/sigma
+t_stat</code></pre>
+<pre><code>## [1] 0.6474637</code></pre>
+<pre class="r"><code>p_value &lt;- pnorm(-abs(t_stat)) *2
+list(test_statistic = t_stat, p_value = p_value)</code></pre>
+<pre><code>## $test_statistic
+## [1] 0.6474637
+## 
+## $p_value
+## [1] 0.5173319</code></pre>
+<p>The estimate is not statistically significantly different from <span class="math inline">\(1\)</span>. Therefore, we fail to reject the null hypothesis of random walk.</p>
+<hr />
+</div>
+<div id="references" class="section level3 unnumbered">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Campbell1996" class="csl-entry">
+Campbell, John Y., Andrew W. Lo, and A. Craig MacKinlay. 1996. <em>The Econometrics of Financial Markets</em>. 2nd ed. Princeton University Press.
+</div>
+<div id="ref-Cowles1937" class="csl-entry">
+Cowles, Alfred, and Herbert E. Jones. 1937. <span>“Some a Posteriori Probabilities in Stock Market Action.”</span> <em>Econometrica</em> 5 (July): 280. <a href="https://doi.org/10.2307/1905515">https://doi.org/10.2307/1905515</a>.
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
