@@ -9,7 +9,7 @@ This webpage provides coding practice for EK369E.
 
 [week 2, EMH and RW](w2.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w2.rmd); 
 
-------------------------------------------------------------------------
+___
 
 **Office hour**: 14:00-16:00 Fridays on teaching weeks.
 
