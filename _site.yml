@@ -13,5 +13,3 @@ output:
     theme: cosmo
     highlight: textmate
     css: "style.css"
-    
-        
