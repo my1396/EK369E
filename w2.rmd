@@ -8,6 +8,7 @@ output:
         toc_float: true
         toc_depth: 4
         number_sections: false
+        css: "style.css"
 bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
@@ -79,7 +80,7 @@ Types of market efficiency $\rightarrow$ Violations of efficiency:
 -   semistrong form $\rightarrow$ fundamental analysis achieves superior returns
 -   strong from $\rightarrow$ corporate insiders making profitable trades
 
-```{r emh, out.width="50%", fig.cap="EMH", echo=FALSE}
+```{r tmp, out.width="50%", fig.cap="EMH", echo=FALSE}
 # All defaults
 include_graphics("./images/EMH.png")
 ```
@@ -102,7 +103,9 @@ where $E(e_t)=0$ and $\text{Var}(e_t)=\sigma^2$.
 
 -   $\mu$ is called the expected price change or *drift*.
 
--   $\{e_t\}$ is called the innovations, disturbances, or increments. There are differing hypothesis regarding to its distribution:
+-   $\{e_t\}$ is called the innovations, disturbances, or increments.
+
+    There are differing hypothesis regarding to its distribution:
 
     -   RW1: $e_t\sim \text{IID } (0, \sigma^2)$ meaning increments are Independently and Identically Distributed (IID).
 
@@ -140,7 +143,7 @@ I_t =
 \end{align*}
 $$
 
-$I_t$ is an analogy to the *Bernoulli* coin-tossing experiments. That is, when it is a fair coin, $X_t\sim \text{Bernoulli}(p=1/2)$
+$I_t$ is an analogy to the *Bernoulli* coin-tossing experiments. That is, when it is a fair coin, $X_t\sim \text{Bernoulli}(p=1/2)$.
 
 $$
 \begin{align*}
@@ -156,29 +159,30 @@ The number of sequences ($N_s$) and reversals ($N_r$) can be expressed as functi
 
 $$
 \begin{aligned}
-N_s &\equiv \sum_{t=1}^n Y_t, \quad \color{#32CD32}{Y_t} \equiv I_tI_{t-1} + (1-I_t)(1-I_{t-1})  \\
+N_s &\equiv \sum_{t=1}^n Y_t, \quad \color{red}{Y_t} \equiv I_tI_{t-1} + (1-I_t)(1-I_{t-1})  \\
 N_r &\equiv n-N_s. 
 \end{aligned}
 $$
 
+$Y_t$ is thus a sequence indicator, $Y_t=1$ if it is a sequence; $Y_t=0$ if it is a reversal.
+
 ### RW without drift
 
-For simplicity, we assume $\mu=0$ (a driftless RW) for now. $r_t=e_t$.
+For simplicity, we often assume $\mu=0$ (a driftless RW). $r_t=p_t-p_{t-1}=e_t$. In other words, the increments $e_t$ are first differences of the level of the random walk.
 
 If $p_t$ follows a driftless RW, then for any pair of consecutive returns, a sequence and a reversal are equally probable. We would expect $N_s$ should be approximately equal to $N_r$.
 
-- $N_s + N_r = n$ 
+-   $N_s + N_r = n$
 
-The Cowles-Jones test statistic is given by the ratio of the probability of a sequence $\pi_s$ to the probability of a reversal $1-\pi_s$.
+The Cowles-Jones test statistic is given by the **ratio of the probability of a sequence** $\color{red}{\pi_s}$ to the probability of a reversal $1-\pi_s$.
 
 $$
 \begin{equation} (\#eq:CJ) 
 \widehat{\text{CJ}} \equiv \frac{N_s}{N_r} = \frac{N_s/n}{N_r/n} = \frac{\hat{\pi}_s}{1-\hat{\pi}_s} \xrightarrow{p} \frac{\pi_s}{1-\pi_s} = \text{CJ} = \frac{1/2}{1-1/2} = 1 
 \end{equation}
-$$
+$$ where $\xrightarrow{p}$ denotes convergence in probability.
 
-
-
+<div class = "boxed">
 ```{exercise, proof1}
 Show $\pi_s=\frac{1}{2}$.
 
@@ -192,6 +196,7 @@ Y_t =
 $$
 
 ```
+</div>
 
 ------------------------------------------------------------------------
 
@@ -203,64 +208,71 @@ For now we assume that log prices follow a normal random walk with drift:
 
 $$
 p_t=\mu+p_{t-1}+e_t, \quad e_t\sim N(0, \sigma^2).
-$$
-Then $I_t$ is no longer a fair coin-toss but is biased in the direction of th drift, i.e.,
+$$ Then $I_t$ is no longer a fair coin-toss but is biased in the direction of th drift, i.e.,
 
 $$
 I_t = 
 \begin{cases}
-1 & \text{with prob. } p= \pi \\
+1 & \text{with prob. } p= \color{red}{\pi} \\
 0 & \text{with prob. } 1-p= 1-\pi .
 \end{cases}
-$$
-where 
+$$ where
 
 $$
 \pi \equiv P(r_t>0) = \Phi \left(\frac{\mu}{\sigma}\right).
-$$
+$$ $\pi$ is fully determined by the drift $\mu$ and the volatility of increments $\sigma$.
+
 $\Phi(.)$ is the cdf of the *standard normal* distribution.
 
-Given that $\Phi(.)$ is symmetric, 
+Given that $\Phi(.)$ is symmetric,
 
-- if the drift $\mu$ is positive, then $\pi>\frac{1}{2}$; 
-- if the drift $\mu$ is negative, then $\pi<\frac{1}{2}$.
+-   if the drift $\mu=0$, then $\pi = \frac{1}{2}$ (fair-coin case);
+-   if the drift $\mu$ is positive, then $\pi > \frac{1}{2}$;
+-   if the drift $\mu$ is negative, then $\pi < \frac{1}{2}$.
 
-
+<div class = "boxed">
 ```{exercise, proof2}
 Show $\pi=\Phi \left(\frac{\mu}{\sigma}\right)$.
-```
-
 $$
-\begin{aligned}
+\begin{aligned}[b]
 P(r_t>0) &= P(\mu+e_t>0) \\
-&= P(e_t>-\mu) \\
-&= P\left( \frac{e_t}{\sigma} > -\frac{\mu}{\sigma}\right) \quad e_t\sim N(0, \sigma^2), \text{ then } \frac{e_t}{\sigma}\sim N(0,1) \\
+&= P(e_t>-\mu) \quad\quad\quad (\sigma>0, \text{dividing by a pos. number, inequality unchanged}) \\
+&= P\left( \frac{e_t}{\sigma} > -\frac{\mu}{\sigma}\right) \quad\;\; e_t\sim N(0, \sigma^2), \text{ then } \frac{e_t}{\sigma}\sim N(0,1) \\
 &= P \left( \frac{e_t}{\sigma} < \frac{\mu}{\sigma} \right) \\
-&= \Phi \left(\frac{\mu}{\sigma} \right)
-\end{aligned}
+&= \Phi \left(\frac{\mu}{\sigma} \right) 
+\end{aligned}  \square
 $$
+```
+</div>
+
+<br/>
 
 
-Then we have 
+Then we have
 
 $$
 \text{CJ} = \frac{\pi_s}{1-\pi_s} = \frac{\pi^2+(1-\pi)^2}{2\pi(1-\pi)}
 $$
 
+<br/>
+
+<div class = "boxed">
 ```{exercise, proof3}
 Show $\pi_s=\pi^2+(1-\pi)^2$.
 
 Hint: use the probability mass function of $Y_t$ in Proof. \@ref(exr:proof1).
 ```
+</div>
 
+<br/>
 
 The asymptotic distribution of $\widehat{\text{CJ}}$ is given by
 
 $$
 \widehat{\text{CJ}} \overset{a}{\sim} N \left(\frac{\pi_s}{1-\pi_s}, \frac{\pi_s(1-\pi_s) + 2\big[\pi^3+(1-\pi)^3-\pi_s^3\big]}{n-(1-\pi_s)^4} \right)
-$$
-Refer to @Campbell1996 chapter 2 for proof.
+$$ where $\overset{a}{\sim}$ indicates that the distributional relation is asymptotic.
 
+Refer to @Campbell1996 chapter 2 for proof.
 
 ------------------------------------------------------------------------
 
@@ -298,8 +310,111 @@ p_value <- pnorm(-abs(t_stat)) *2
 list(test_statistic = t_stat, p_value = p_value)
 ```
 
-The estimate is not statistically significantly different from $1$. Therefore, we fail to reject the null hypothesis of random walk.
+The estimate is not statistically significantly different from $1$. Therefore, we fail to reject the null hypothesis of random walk. Equivalently, we say that this provides little evidence against the random walk hypothesis.
 
+## Autocorrelation Tests
+
+One of the most direct and intuitive tests of the random walk hypotheses for an individual time series is to check for *serial correlation*, correlation between two observations of the same series at different dates.
+
+Under random walk hypothesis, increments $e_t$ are uncorrelated, that is
+
+$$
+\gamma(k) \equiv \text{Cov}(e_t, e_{t-k}) = 0 \quad \text{for all } k\neq 0
+$$
+$\gamma(k)$ is the *autocovariance coefficient*.
+
+Or
+
+$$
+\rho(k) \equiv \frac{\text{Cov}(e_t, e_{t-k})}{\sqrt{\text{Var}(e_t)\text{Var}(e_{t-k})}} = 0 \quad \text{for all } k\neq 0
+$$
+$\rho(k)$ is the *autocorrelation coefficient*.
+
+<div class = "boxed">
+```{exercise proof4}
+To show that $$\text{Cov}(e_t, e_{t-k}) = 0$$ is equivalent to show that $$\text{Cov}(r_t, r_{t-k}) = 0.$$
+
+Rewrite $r_t$ as
+
+\begin{aligned}
+p_t &= \mu + p_{t-1} + e_t & \Rightarrow & \qquad  r_t =  \mu + e_t \\
+p_{t-k} &= \mu + p_{t-k-1} + e_{t-k} & \Rightarrow & \quad  r_{t-k} =  \mu + e_{t-k}
+\end{aligned}
+
+$r_t$ is the first-difference of price at time $t$.
+
+Then we have
+
+\begin{aligned}
+\text{Cov}(r_t, r_{t-k}) &= \text{Cov}( \mu+e_t, \mu+e_{t-k}) \\
+&= \text{Cov}(e_t, e_{t-k}) \qquad (\mu \text{ is a constant})
+\end{aligned}
+
+That is, the covariance of the first-differences equals to the covariance of the increments. 
+<span style='float:right; margin-right:10px'>&#9633;</span>
+```
+</div>
+
+For a given sample $\{r_t\}_{t=1}^T$, autocovariance and autocorrelation coefficients may be estimated by replacing population moments with sample counterparts:
+
+
+$$
+\begin{aligned}
+\hat{\gamma}(k) & =  \frac{1}{T} \sum_{t=1}^{T-k} (r_t-\bar{r}_T) (r_{t+k}-\bar{r}_T), \quad 0\leq k <T \\
+\hat{\rho}(k) &= \frac{\hat{\gamma}(k)}{\hat{\gamma}(0)} \\
+\bar{r}_T &\equiv \frac{1}{T} \sum_{t=1}^{T} r_t
+\end{aligned}
+$$
+Sample autocorrelation coefficients are asymptotically independent and normally distributed with distribution:
+
+$$
+\sqrt{T} \hat{\rho} (k) \overset{a}{\sim} N(0,1)
+$$
+The sampling distribution yields a variety of autocorrelation-based tests.
+
+### Box-Pierce Q-statistic
+
+Box-Pierce Q-statistic test a joint hypothesis that the first $m$ autocorrelations are equal to zero. That is,
+
+$$
+H_0: \rho_1 = \rho_2 = \cdots = \rho_m = 0.
+$$
+@Box1970 proposed the Q-statistic:
+
+$$
+Q_m \equiv T\sum_{k=1}^m \rho^2(k)
+$$
+Since $\rho(k)$ is normally distributed, $\hat{Q}_m$ is distributed as a chi-square distibution of $m$ degrees of freemdom, that is $Q_m \sim \chi_m^2$.
+
+@Ljung1979 provided a correction which yields a better for to the $\chi_m^2$ for small sample sizes:
+
+$$
+Q_m' \equiv T(T+2)\sum_{k=1}^m \frac{\rho^2(k)}{T-k}.
+$$
+$Q'_m$ is the usual Q-statistic version.
+
+By summing the squared autocorrelations, the Q-statistic is designed to detect departures from zero autocorrelations in either direction and at all lags. 
+
+```{r}
+Box.test(diff(pt), lag=1, type="Ljung-Box")
+Box.test(diff(pt), lag=1, type="Box-Pierce")
+```
+
+
+### Varriance Ratio
+
+The VR(q) tests for the null hypothesis that the first $q$ autocorrealtions are zero.
+
+$$
+\text{VR(q)} \equiv \frac{\text{Var}[r_t(q)]}{q\cdot \text{Var}[r_t]}
+$$
+where $r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}=r_t+r_{t-1}+\cdots+r_{t-q+1}$ is the $q$-period (log) return.
+
+- Under zero autocorrelation, $\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]$; therefore, VR(q)=1.
+- When there serial correlation, $\text{VR(q)}>1$.
+
+
+Lo and MacKinlay present a number of test statistics based on the VR(q). Check Lo and MacKinlay [-@Lo-Mackinlay1988; -@Lo1989] for example.
 
 ------------------------------------------------------------------------
 

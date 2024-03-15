@@ -20,3 +20,11 @@ a img:hover,
 a img:focus {
   cursor: zoom-in;
 }
+
+/* define a boxed environment */
+.boxed {
+    border: 1px solid #A9A9A9;
+    border-radius: 10px;
+    padding: 5px;
+    padding-right: 0px;
+}

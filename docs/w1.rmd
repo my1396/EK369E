@@ -8,6 +8,7 @@ output:
         toc_float: true
         toc_depth: 4
         number_sections: false
+        css: "style.css"
 bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
