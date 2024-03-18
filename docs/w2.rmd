@@ -401,7 +401,7 @@ Box.test(diff(pt), lag=1, type="Box-Pierce")
 ```
 
 
-### Varriance Ratio
+### Varriance Ratio Test
 
 The VR(q) tests for the null hypothesis that the first $q$ autocorrealtions are zero.
 
