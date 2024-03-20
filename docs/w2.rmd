@@ -1,7 +1,7 @@
 ---
 title: "EMH and RW"
 author: "Menghan Yuan"
-date: "March 14, 2024"
+date: "March 22, 2024"
 output: 
     bookdown::html_document2:
         toc: true
@@ -44,6 +44,39 @@ knitr::knit_hooks$set(output = function(x, options) {
 ```
 
 
+## Quiz Questions on Canvas
+
+For the preparation of the final exam, it is highly encouraged to practice with the quiz questions on Canvas. 
+
+Three quizzes are available, covering various topics. You are expected to take all of them.
+
+Get familiarized with the **Equation Editor** on Canvas. 
+
+
+```{r eq-step1, out.width="70%", echo=FALSE}
+include_graphics("./images/step1.png")
+```
+
+
+```{r eq-step2, out.width="70%", echo=FALSE}
+include_graphics("./images/step2.png")
+```
+
+
+You can either choose the math symbol provided by the editor, or type *LaTeX* equations directly, which is must faster! 
+
+See a LaTeX equation tutorial [HERE](https://www.overleaf.com/learn/latex/Mathematical_expressions).
+
+You are expected to type equations in the **final exam** whenever a formula is needed in the calculation.
+
+```{r eq-editor, out.width="70%", echo=FALSE}
+include_graphics("./images/eq_editor.png")
+```
+
+
+------------------------------------------------------------------------
+
+
 ## EMH
 
 A market in which prices always "fully reflect" available information is called "*efficient*."
@@ -80,8 +113,7 @@ Types of market efficiency $\rightarrow$ Violations of efficiency:
 -   semistrong form $\rightarrow$ fundamental analysis achieves superior returns
 -   strong from $\rightarrow$ corporate insiders making profitable trades
 
-```{r tmp, out.width="50%", fig.cap="EMH", echo=FALSE}
-# All defaults
+```{r EMH, out.width="50%", fig.cap="EMH", echo=FALSE}
 include_graphics("./images/EMH.png")
 ```
 
