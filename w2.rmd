@@ -63,11 +63,11 @@ include_graphics("./images/step2.png")
 ```
 
 
-You can either choose the math symbol provided by the editor, or type *LaTeX* equations directly, which is must faster! 
+You can either choose from the math symbols provided by the editor, or type *LaTeX* equations directly, which is must faster! 
 
 See a LaTeX equation tutorial [HERE](https://www.overleaf.com/learn/latex/Mathematical_expressions).
 
-You are expected to type equations in the **final exam** whenever a formula is needed in the calculation.
+You are expected to type equations in the **final exam** whenever formulas are needed in the calculation.
 
 ```{r eq-editor, out.width="70%", echo=FALSE}
 include_graphics("./images/eq_editor.png")
