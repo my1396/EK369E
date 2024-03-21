@@ -379,7 +379,12 @@ This script estimates CAPM for individual stocks and shows an example of 2-pass 
 <p>The model is formulated by</p>
 <p><span class="math display">\[
 E[r_i-r_f] = \beta_i E[r_m-r_f]
-\]</span> where <span class="math inline">\(r_i\)</span> is the return of asset <span class="math inline">\(i\)</span>; <span class="math inline">\(r_f\)</span> is the riskless rate of interest; <span class="math inline">\(r_m\)</span> is the return of the market portfolio.</p>
+\]</span></p>
+<ul>
+<li>where <span class="math inline">\(r_i\)</span> is the return of asset <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(r_f\)</span> is the riskless rate of interest;</li>
+<li><span class="math inline">\(r_m\)</span> is the return of the market portfolio.</li>
+</ul>
 <p>CAPM as a regression can be expressed as</p>
 <p><span class="math display">\[
 r_{i,\color{red}{t}} - r_{f,\color{red}{t}} = \alpha_i + \beta_i (r_{m,\color{red}{t}}-r_{f,\color{red}{t}}) + \varepsilon_{i,\color{red}{t}}
@@ -426,7 +431,7 @@ the_group %&gt;% str()</code></pre>
 ##  $ mkt_return_monthly: num [1:96] 0.03498 0.03262 0.00578 0.03256 0.00988 ...
 ##  $ rf_1month         : num [1:96] 0.0012 0.00113 0.00127 0.00123 0.00117 0.00102 0.00097 0.00095 0.00083 0.0008 ...
 ##  $ rf_annualized     : num [1:96] 0.0145 0.0136 0.0153 0.0149 0.0141 ...</code></pre>
-<p>We use monthly data of <em>Archer</em> over the period 2015-01 to 2020-12.</p>
+<p>We use monthly data of <em>Archer</em> over the period 2015-01 to 2022-12.</p>
 <pre class="r"><code># glimpse of data for one equity
 the_group %&gt;%
     select(-rf_annualized) %&gt;% 
@@ -3195,7 +3200,9 @@ E_T[R^e_i] = \gamma_0 + \gamma_1 \hat{\beta}_i + u_i \;\;\;\; (SML)
 \]</span></p>
 <p>Regressing the mean excess return over a time interval, <span class="math inline">\(E_T[R^e_i]=\frac{1}{T}\sum_{t=1}^TR^e_{i,t}\)</span>, on estimates of the systematic risk, <span class="math inline">\(\hat{\beta}_i\)</span>.</p>
 <p><span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span> are parameters of interest here.</p>
-<p>If CAPM holds, <span class="math inline">\(\gamma_0\)</span> should be equal to zero, and <span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p>
+<p>If CAPM holds,
+- <span class="math inline">\(\gamma_0\)</span> should be equal to zero, and
+- <span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p>
 <p>We call the time series estimation using individual assets the <em>First Pass</em> CAPM. We use the beta estimates from the first pass as the independent variable in the <em>Second Pass</em> and the average excess return for a set of securities as the dependent variable.</p>
 <ul>
 <li><p>Main problem:</p>
