@@ -369,8 +369,7 @@ div.tocify {
 </div>
 
 
-<p><br/>
-This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.</p>
+<p><br/> This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.</p>
 <div id="time-series-capm" class="section level2">
 <h2>Time Series CAPM</h2>
 <p>CAPM states the expected risk premiums on individual assets are the product of <span class="math inline">\(\beta\)</span> and the equity risk premium (ERP).</p>
@@ -3171,7 +3170,7 @@ t = \frac{\hat{\beta}-\beta}{se_{\hat{\beta}}} = \frac{2.234-1}{0.495} = 2.493
 <pre class="r"><code>c(&quot;lower bound&quot;=2.234-1.96*0.495, &quot;upper bound&quot;=2.234+1.96*0.495) # 95% CI</code></pre>
 <pre><code>## lower bound upper bound 
 ##      1.2638      3.2042</code></pre></li>
-<li><p>The standard deviation of the residual is <span class="math inline">\(20.4\%\)</span> per month, or `20.4%*sqrt(12)=70.67%`. This stands for firm-specific risk.</p>
+<li><p>The standard deviation of the residual is <span class="math inline">\(20.4\%\)</span> per month, or <span class="math inline">\(20.4\% \times \sqrt{12}=70.67\%\)</span>. This stands for firm-specific risk.</p>
 <p>The standard deviation of systematic risk is <span class="math inline">\(\beta\times \sigma(r_m-r_f)\)</span></p>
 <pre class="r"><code>capm_ml$coefficients[2] * sd(reg_data$rmrf)</code></pre>
 <pre><code>##       rmrf 
@@ -3200,9 +3199,7 @@ E_T[R^e_i] = \gamma_0 + \gamma_1 \hat{\beta}_i + u_i \;\;\;\; (SML)
 \]</span></p>
 <p>Regressing the mean excess return over a time interval, <span class="math inline">\(E_T[R^e_i]=\frac{1}{T}\sum_{t=1}^TR^e_{i,t}\)</span>, on estimates of the systematic risk, <span class="math inline">\(\hat{\beta}_i\)</span>.</p>
 <p><span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span> are parameters of interest here.</p>
-<p>If CAPM holds,
-- <span class="math inline">\(\gamma_0\)</span> should be equal to zero, and
-- <span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p>
+<p>If CAPM holds, - <span class="math inline">\(\gamma_0\)</span> should be equal to zero, and - <span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p>
 <p>We call the time series estimation using individual assets the <em>First Pass</em> CAPM. We use the beta estimates from the first pass as the independent variable in the <em>Second Pass</em> and the average excess return for a set of securities as the dependent variable.</p>
 <ul>
 <li><p>Main problem:</p>

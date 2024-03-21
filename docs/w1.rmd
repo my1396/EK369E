@@ -45,8 +45,7 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
-<br/>
-This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.
+<br/> This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.
 
 ## Time Series CAPM
 
@@ -60,11 +59,11 @@ The model is formulated by
 
 $$
 E[r_i-r_f] = \beta_i E[r_m-r_f]
-$$ 
+$$
 
-- where $r_i$ is the return of asset $i$; 
-- $r_f$ is the riskless rate of interest; 
-- $r_m$ is the return of the market portfolio.
+-   where $r_i$ is the return of asset $i$;
+-   $r_f$ is the riskless rate of interest;
+-   $r_m$ is the return of the market portfolio.
 
 CAPM as a regression can be expressed as
 
@@ -120,8 +119,8 @@ reg_data <- the_group %>%
            eRi = r_i-r_f)
 ```
 
-
 Visualize excess returns of Archer and the market index
+
 ```{r fig.keep=2}
 plot_data <- reg_data %>% 
     select(eRi, rmrf) %>% 
@@ -190,7 +189,7 @@ Several things worth looking at:
         c("lower bound"=2.234-1.96*0.495, "upper bound"=2.234+1.96*0.495) # 95% CI
         ```
 
-    -   The standard deviation of the residual is $20.4\%$ per month, or \`20.4%\*sqrt(12)=70.67%\`. This stands for firm-specific risk.
+    -   The standard deviation of the residual is $20.4\%$ per month, or $20.4\% \times \sqrt{12}=70.67\%$. This stands for firm-specific risk.
 
         The standard deviation of systematic risk is $\beta\times \sigma(r_m-r_f)$
 
@@ -210,9 +209,9 @@ Several things worth looking at:
     \hat{\beta}_i=\frac{\text{Cov}(R^e_i, R^e_m)}{\text{Var}(R^e_m)}
     $$where
 
-    &nbsp; &nbsp; &nbsp; &nbsp; $R^e_i=r_i-r_f$ stands for the excess return on asset $i$, and
+            $R^e_i=r_i-r_f$ stands for the excess return on asset $i$, and
 
-    &nbsp; &nbsp; &nbsp; &nbsp; $R^e_m=r_m-r_f$ stands for the excess return on the market index.
+            $R^e_m=r_m-r_f$ stands for the excess return on the market index.
 
     is not affected by the value of $r_f$.
 
@@ -228,11 +227,9 @@ $$
 
 Regressing the mean excess return over a time interval, $E_T[R^e_i]=\frac{1}{T}\sum_{t=1}^TR^e_{i,t}$, on estimates of the systematic risk, $\hat{\beta}_i$.
 
-$\gamma_0$ and $\gamma_1$ are parameters of interest here. 
+$\gamma_0$ and $\gamma_1$ are parameters of interest here.
 
-If CAPM holds, 
-- $\gamma_0$ should be equal to zero, and 
-- $\gamma_1$ should be equal to the mean excess return on the market.
+If CAPM holds, - $\gamma_0$ should be equal to zero, and - $\gamma_1$ should be equal to the mean excess return on the market.
 
 We call the time series estimation using individual assets the *First Pass* CAPM. We use the beta estimates from the first pass as the independent variable in the *Second Pass* and the average excess return for a set of securities as the dependent variable.
 
