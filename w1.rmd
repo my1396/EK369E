@@ -239,7 +239,7 @@ We call the time series estimation using individual assets the *First Pass* CAPM
 
 -   Main problem:
 
-    $\hat{\beta}_i$ has measurement error from the first pass, which causes the Errors-in-Variable (EIV) problem in the second pass.
+    $\hat{\beta}_i$ has measurement error from the first pass, which causes the *Errors-in-Variable* (EIV) problem in the second pass.
 
     The main consequence of EIV is attenuation bias. In short, $\gamma_1$ will be biased towards zero, assuming $\gamma_1>0$.
 

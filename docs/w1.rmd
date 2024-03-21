@@ -229,13 +229,17 @@ Regressing the mean excess return over a time interval, $E_T[R^e_i]=\frac{1}{T}\
 
 $\gamma_0$ and $\gamma_1$ are parameters of interest here.
 
-If CAPM holds, - $\gamma_0$ should be equal to zero, and - $\gamma_1$ should be equal to the mean excess return on the market.
+If CAPM holds,
+
+-    $\gamma_0$ should be equal to zero, and
+
+-    $\gamma_1$ should be equal to the mean excess return on the market.
 
 We call the time series estimation using individual assets the *First Pass* CAPM. We use the beta estimates from the first pass as the independent variable in the *Second Pass* and the average excess return for a set of securities as the dependent variable.
 
 -   Main problem:
 
-    $\hat{\beta}_i$ has measurement error from the first pass, which causes the Errors-in-Variable (EIV) problem in the second pass.
+    $\hat{\beta}_i$ has measurement error from the first pass, which causes the *Errors-in-Variable* (EIV) problem in the second pass.
 
     The main consequence of EIV is attenuation bias. In short, $\gamma_1$ will be biased towards zero, assuming $\gamma_1>0$.
 

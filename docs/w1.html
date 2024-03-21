@@ -3199,11 +3199,15 @@ E_T[R^e_i] = \gamma_0 + \gamma_1 \hat{\beta}_i + u_i \;\;\;\; (SML)
 \]</span></p>
 <p>Regressing the mean excess return over a time interval, <span class="math inline">\(E_T[R^e_i]=\frac{1}{T}\sum_{t=1}^TR^e_{i,t}\)</span>, on estimates of the systematic risk, <span class="math inline">\(\hat{\beta}_i\)</span>.</p>
 <p><span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span> are parameters of interest here.</p>
-<p>If CAPM holds, - <span class="math inline">\(\gamma_0\)</span> should be equal to zero, and - <span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p>
+<p>If CAPM holds,</p>
+<ul>
+<li><p><span class="math inline">\(\gamma_0\)</span> should be equal to zero, and</p></li>
+<li><p><span class="math inline">\(\gamma_1\)</span> should be equal to the mean excess return on the market.</p></li>
+</ul>
 <p>We call the time series estimation using individual assets the <em>First Pass</em> CAPM. We use the beta estimates from the first pass as the independent variable in the <em>Second Pass</em> and the average excess return for a set of securities as the dependent variable.</p>
 <ul>
 <li><p>Main problem:</p>
-<p><span class="math inline">\(\hat{\beta}_i\)</span> has measurement error from the first pass, which causes the Errors-in-Variable (EIV) problem in the second pass.</p>
+<p><span class="math inline">\(\hat{\beta}_i\)</span> has measurement error from the first pass, which causes the <em>Errors-in-Variable</em> (EIV) problem in the second pass.</p>
 <p>The main consequence of EIV is attenuation bias. In short, <span class="math inline">\(\gamma_1\)</span> will be biased towards zero, assuming <span class="math inline">\(\gamma_1&gt;0\)</span>.</p></li>
 <li><p>Solution:</p>
 <p><span class="math inline">\(\beta_p\)</span> estimates based on portfolios will be less affected by the measurement error than individual <span class="math inline">\(\beta_i\)</span> due to aggregation.</p></li>
