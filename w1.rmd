@@ -65,7 +65,7 @@ $$ where $r_i$ is the return of asset $i$; $r_f$ is the riskless rate of interes
 CAPM as a regression can be expressed as
 
 $$
-r_{i,t} - r_{f,t} = \alpha_i + \beta_i (r_{m,t}-r_{f,t}) + \varepsilon_{i,t}
+r_{i,\color{red}{t}} - r_{f,\color{red}{t}} = \alpha_i + \beta_i (r_{m,\color{red}{t}}-r_{f,\color{red}{t}}) + \varepsilon_{i,\color{red}{t}}
 $$ where $\alpha_i$ (intercept) and $\beta_i$ (slope) are the parameters to estimate.
 
 $\alpha_i$ is a *nonmarket* premium.
