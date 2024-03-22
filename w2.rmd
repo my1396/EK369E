@@ -453,7 +453,7 @@ $$
 $$
 where $r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}=r_t+r_{t-1}+\cdots+r_{t-q+1}$ is the $q$-period (log) return.
 
-- Under zero autocorrelation, $\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]$; therefore, VR(q)=1.
+- Under zero autocorrelation, $\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]$; therefore, $\text{VR(q)}=1$.
 - When there serial correlation, $\text{VR(q)}>1$.
 
 
