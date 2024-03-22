@@ -97,20 +97,22 @@ Efficiency with respect to an information set implies that it is impossible to m
 
 -   If the abnormal return is unforecastable, and in this sense "random", then the *Efficiency Market Hypothesis* (EMH) is not rejected.
 
-Market efficiency can be tested by revealing information to market participants and measuring the reaction of security prices. If prices do not move when info is revealed, then the market is efficient w.r.t. that info.
+Market efficiency can be tested by **revealing information** to market participants and measuring the reaction of security prices. If prices do not move when info is revealed, then the market is efficient w.r.t. that info.
 
-Challenges of testing EMH: Any test of efficiency must assume an equilibrium model that defines normal security returns. This leads to our null is a *joint test* of market efficiency and a correct equilibrium model.
+**Challenges** of testing EMH: Any test of efficiency must assume an equilibrium model that defines normal security returns. 
 
-The result of this is that when we reject the null, this could be because the market is truly inefficient or because an incorrect equilibrium model has been assumed.
+- This leads to our null is a *joint test* of market efficiency and a correct equilibrium model.
 
--   With the wrong asset pricing model, we can wind up rejecting efficiency. It would be easy to find abnormal returns to be forecastable if we had the wrong equilibrium.
+- The result of this is that when we reject the null, this could be because the market is truly inefficient or because an incorrect equilibrium model has been assumed.
 
--   Asset pricing models give the equilibrium return; abnormal returns are deviations of real prices from equilibriums.
+- With the wrong asset pricing model, we can wind up rejecting efficiency. It would be easy to find abnormal returns to be forecastable if we had the wrong equilibrium.
 
-Types of market efficiency $\rightarrow$ Violations of efficiency:
+- Asset pricing models give the equilibrium return; abnormal returns are deviations of real prices from equilibriums.
 
--   weak form $\rightarrow$ technical analysis or charting earn superior profits (after adjustment for risk).
--   semistrong form $\rightarrow$ fundamental analysis achieves superior returns
+Types of market efficiency $\rightarrow$ **Violations** of efficiency:
+
+-   weak form $\rightarrow$ *technical analysis* or *charting* earn superior profits (after adjustment for risk).
+-   semistrong form $\rightarrow$ *fundamental analysis* achieves superior returns
 -   strong from $\rightarrow$ corporate insiders making profitable trades
 
 ```{r EMH, out.width="50%", fig.cap="EMH", echo=FALSE}
@@ -137,7 +139,7 @@ where $E(e_t)=0$ and $\text{Var}(e_t)=\sigma^2$.
 
 -   $\{e_t\}$ is called the innovations, disturbances, or increments.
 
-    There are differing hypothesis regarding to its distribution:
+    There are differing hypotheses regarding to its distribution:
 
     -   RW1: $e_t\sim \text{IID } (0, \sigma^2)$ meaning increments are Independently and Identically Distributed (IID).
 
@@ -147,7 +149,7 @@ where $E(e_t)=0$ and $\text{Var}(e_t)=\sigma^2$.
 
     -   RW3: $e_t$ is uncorrelated. $\text{Cov}[e_t, e_{t-k}]=0$ for all $k\neq 0$. This is the weakest form of RW.
 
-        -   RW3 allows for dependence in higher moments.
+        -   RW3 allows for **dependence** in higher moments.
 
         -   An example that satisfiies RW3 but not RW1 and RW2: $\text{Cov}[e_t,e_{t−k}]=0$ for all $k\neq 0$, but $\text{Cov}[e_t^2,e_{t−k}^2]\neq0$ for some $k\neq 0$. In words, first moments are uncorrelated, but second moments are correlated; therefore, such a process is not independent.
 
@@ -159,9 +161,9 @@ where $E(e_t)=0$ and $\text{Var}(e_t)=\sigma^2$.
 
 @Cowles1937 proposed a test of RW1 using the frequency of *sequences* and *reversals* in historical stock returns.
 
--   Sequences: pairs of consecutive returns with the same sign ($(+,+)$ or $(-,-)$);
+-   Sequences: pairs of consecutive returns with the same sign $(+,+)$ or $(-,-)$;
 
--   Reversals: consecutive returns with opposite signs ($(+,-)$ or $(-,+)$).
+-   Reversals: consecutive returns with opposite signs $(+,-)$ or $(-,+)$.
 
 More formally, we define $I_t$ an indicator variable as:
 
@@ -175,7 +177,7 @@ I_t =
 \end{align*}
 $$
 
-$I_t$ is an analogy to the *Bernoulli* coin-tossing experiments. That is, when it is a fair coin, $X_t\sim \text{Bernoulli}(p=1/2)$.
+$I_t$ is an analogy to the *Bernoulli* coin-tossing experiments. That is, when it is a fair coin, $X_t\sim \text{Bernoulli } (p=1/2)$.
 
 $$
 \begin{align*}
@@ -216,7 +218,7 @@ $$ where $\xrightarrow{p}$ denotes convergence in probability.
 
 <div class = "boxed">
 ```{exercise, proof1}
-Show $\pi_s=\frac{1}{2}$.
+<em>Show $\pi_s=\frac{1}{2}$.</em>
 
 Hint: This is equivalent to show that 
 $$
@@ -236,11 +238,11 @@ $$
 
 $r_t=\mu+e_t$. Such a drift, either positive or negative, makes sequences more likely than reversals.
 
-For now we assume that log prices follow a normal random walk with drift:
+For now we assume that log prices follow a *normal* random walk with drift:
 
 $$
 p_t=\mu+p_{t-1}+e_t, \quad e_t\sim N(0, \sigma^2).
-$$ Then $I_t$ is no longer a fair coin-toss but is biased in the direction of th drift, i.e.,
+$$ Then $I_t$ is no longer a fair coin-toss but is biased in the direction of the drift, i.e.,
 
 $$
 I_t = 
@@ -264,7 +266,7 @@ Given that $\Phi(.)$ is symmetric,
 
 <div class = "boxed">
 ```{exercise, proof2}
-Show $\pi=\Phi \left(\frac{\mu}{\sigma}\right)$.
+<em>Show $\pi=\Phi \left(\frac{\mu}{\sigma}\right)$.</em>
 $$
 \begin{aligned}[b]
 P(r_t>0) &= P(\mu+e_t>0) \\
@@ -290,7 +292,7 @@ $$
 
 <div class = "boxed">
 ```{exercise, proof3}
-Show $\pi_s=\pi^2+(1-\pi)^2$.
+<em>Show $\pi_s=\pi^2+(1-\pi)^2$.</em>
 
 Hint: use the probability mass function of $Y_t$ in Proof. \@ref(exr:proof1).
 ```
@@ -336,19 +338,28 @@ pi_hat <- sum(It)/length(t)
 pis_hat <- Ns/length(t)
 sigma2 <- (pis_hat*(1-pis_hat) + 2*(pi_hat^3 + (1-pi_hat)^3 - pis_hat^2)) /(length(t))/(1-pis_hat)^4
 sigma <- sqrt(sigma2)
+```
+
+Test for $H_0: \widehat{CJ}=1$.
+
+```{r}
 t_stat <- (CJ_hat-1)/sigma
 t_stat
 p_value <- pnorm(-abs(t_stat)) *2
 list(test_statistic = t_stat, p_value = p_value)
 ```
 
-The estimate is not statistically significantly different from $1$. Therefore, we fail to reject the null hypothesis of random walk. Equivalently, we say that this provides little evidence against the random walk hypothesis.
+The estimate is not statistically significantly different from $1$. 
+
+Therefore, we fail to reject the null hypothesis of random walk. Equivalently, we say that this provides little evidence against the random walk hypothesis.
+
+------------------------------------------------------------------------
 
 ## Autocorrelation Tests
 
 One of the most direct and intuitive tests of the random walk hypotheses for an individual time series is to check for *serial correlation*, correlation between two observations of the same series at different dates.
 
-Under random walk hypothesis, increments $e_t$ are uncorrelated, that is
+Under the random walk hypothesis, increments $e_t$ are uncorrelated, that is
 
 $$
 \gamma(k) \equiv \text{Cov}(e_t, e_{t-k}) = 0 \quad \text{for all } k\neq 0
@@ -364,7 +375,7 @@ $\rho(k)$ is the *autocorrelation coefficient*.
 
 <div class = "boxed">
 ```{exercise proof4}
-To show that $$\text{Cov}(e_t, e_{t-k}) = 0$$ is equivalent to show that $$\text{Cov}(r_t, r_{t-k}) = 0.$$
+<em>Show that $$\text{Cov}(e_t, e_{t-k}) = 0$$ is equivalent to show that $$\text{Cov}(r_t, r_{t-k}) = 0.$$ </em>
 
 Rewrite $r_t$ as
 
@@ -373,7 +384,7 @@ p_t &= \mu + p_{t-1} + e_t & \Rightarrow & \qquad  r_t =  \mu + e_t \\
 p_{t-k} &= \mu + p_{t-k-1} + e_{t-k} & \Rightarrow & \quad  r_{t-k} =  \mu + e_{t-k}
 \end{aligned}
 
-$r_t$ is the first-difference of price at time $t$.
+$r_t$ is the first-difference of the price at time $t$.
 
 Then we have
 
@@ -382,7 +393,7 @@ Then we have
 &= \text{Cov}(e_t, e_{t-k}) \qquad (\mu \text{ is a constant})
 \end{aligned}
 
-That is, the covariance of the first-differences equals to the covariance of the increments. 
+That is, the covariance of the first-differences equals the covariance of the increments. 
 <span style='float:right; margin-right:10px'>&#9633;</span>
 ```
 </div>
@@ -397,7 +408,7 @@ $$
 \bar{r}_T &\equiv \frac{1}{T} \sum_{t=1}^{T} r_t
 \end{aligned}
 $$
-Sample autocorrelation coefficients are asymptotically independent and normally distributed with distribution:
+Sample autocorrelation coefficients are **asymptotically independent and normally distributed** with distribution:
 
 $$
 \sqrt{T} \hat{\rho} (k) \overset{a}{\sim} N(0,1)
@@ -418,14 +429,14 @@ Q_m \equiv T\sum_{k=1}^m \rho^2(k)
 $$
 Since $\rho(k)$ is normally distributed, $\hat{Q}_m$ is distributed as a chi-square distibution of $m$ degrees of freemdom, that is $Q_m \sim \chi_m^2$.
 
-@Ljung1979 provided a correction which yields a better for to the $\chi_m^2$ for small sample sizes:
+@Ljung1979 provided a correction which yields a better fit to the $\chi_m^2$ for small sample sizes:
 
 $$
 Q_m' \equiv T(T+2)\sum_{k=1}^m \frac{\rho^2(k)}{T-k}.
 $$
 $Q'_m$ is the usual Q-statistic version.
 
-By summing the squared autocorrelations, the Q-statistic is designed to detect departures from zero autocorrelations in either direction and at all lags. 
+By summing the squared autocorrelations, the Q-statistic is designed to detect departures from zero autocorrelations in either direction and at all $m$ lags. 
 
 ```{r}
 Box.test(diff(pt), lag=1, type="Ljung-Box")
@@ -433,7 +444,7 @@ Box.test(diff(pt), lag=1, type="Box-Pierce")
 ```
 
 
-### Varriance Ratio Test
+## Varriance Ratio Test
 
 The VR(q) tests for the null hypothesis that the first $q$ autocorrealtions are zero.
 
@@ -446,7 +457,7 @@ where $r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}=r_t+r_{t-1}+\cdots+r_{t-q+1}$ is th
 - When there serial correlation, $\text{VR(q)}>1$.
 
 
-Lo and MacKinlay present a number of test statistics based on the VR(q). Check Lo and MacKinlay [-@Lo-Mackinlay1988; -@Lo1989] for example.
+Lo and MacKinlay present a number of test statistics based on the $\text{VR(q)}$. Check Lo and MacKinlay [-@Lo-Mackinlay1988; -@Lo1989] for example.
 
 ------------------------------------------------------------------------
 

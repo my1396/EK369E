@@ -396,17 +396,18 @@ div.tocify {
 <li><p>We need equilibrium (asset pricing) models for risk adjustments, such as CAPM, to determine the “normal” returns appropriate for bearing the level risk in a security.</p></li>
 <li><p>If the abnormal return is unforecastable, and in this sense “random”, then the <em>Efficiency Market Hypothesis</em> (EMH) is not rejected.</p></li>
 </ul>
-<p>Market efficiency can be tested by revealing information to market participants and measuring the reaction of security prices. If prices do not move when info is revealed, then the market is efficient w.r.t. that info.</p>
-<p>Challenges of testing EMH: Any test of efficiency must assume an equilibrium model that defines normal security returns. This leads to our null is a <em>joint test</em> of market efficiency and a correct equilibrium model.</p>
-<p>The result of this is that when we reject the null, this could be because the market is truly inefficient or because an incorrect equilibrium model has been assumed.</p>
+<p>Market efficiency can be tested by <strong>revealing information</strong> to market participants and measuring the reaction of security prices. If prices do not move when info is revealed, then the market is efficient w.r.t. that info.</p>
+<p><strong>Challenges</strong> of testing EMH: Any test of efficiency must assume an equilibrium model that defines normal security returns.</p>
 <ul>
+<li><p>This leads to our null is a <em>joint test</em> of market efficiency and a correct equilibrium model.</p></li>
+<li><p>The result of this is that when we reject the null, this could be because the market is truly inefficient or because an incorrect equilibrium model has been assumed.</p></li>
 <li><p>With the wrong asset pricing model, we can wind up rejecting efficiency. It would be easy to find abnormal returns to be forecastable if we had the wrong equilibrium.</p></li>
 <li><p>Asset pricing models give the equilibrium return; abnormal returns are deviations of real prices from equilibriums.</p></li>
 </ul>
-<p>Types of market efficiency <span class="math inline">\(\rightarrow\)</span> Violations of efficiency:</p>
+<p>Types of market efficiency <span class="math inline">\(\rightarrow\)</span> <strong>Violations</strong> of efficiency:</p>
 <ul>
-<li>weak form <span class="math inline">\(\rightarrow\)</span> technical analysis or charting earn superior profits (after adjustment for risk).</li>
-<li>semistrong form <span class="math inline">\(\rightarrow\)</span> fundamental analysis achieves superior returns</li>
+<li>weak form <span class="math inline">\(\rightarrow\)</span> <em>technical analysis</em> or <em>charting</em> earn superior profits (after adjustment for risk).</li>
+<li>semistrong form <span class="math inline">\(\rightarrow\)</span> <em>fundamental analysis</em> achieves superior returns</li>
 <li>strong from <span class="math inline">\(\rightarrow\)</span> corporate insiders making profitable trades</li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:EMH"></span>
@@ -429,7 +430,7 @@ p_t = \mu + p_{t-1} + e_t
 <ul>
 <li><p><span class="math inline">\(\mu\)</span> is called the expected price change or <em>drift</em>.</p></li>
 <li><p><span class="math inline">\(\{e_t\}\)</span> is called the innovations, disturbances, or increments.</p>
-<p>There are differing hypothesis regarding to its distribution:</p>
+<p>There are differing hypotheses regarding to its distribution:</p>
 <ul>
 <li><p>RW1: <span class="math inline">\(e_t\sim \text{IID } (0, \sigma^2)\)</span> meaning increments are Independently and Identically Distributed (IID).</p></li>
 <li><p>RW2: <span class="math inline">\(e_t\sim \text{INID } (0, \sigma^2)\)</span> independent but not (necessarily) identically distributed (INID) increments. RW2 is weaker than RW1 because it relaxes the assumption of identically distributed increments.</p>
@@ -438,7 +439,7 @@ p_t = \mu + p_{t-1} + e_t
 </ul></li>
 <li><p>RW3: <span class="math inline">\(e_t\)</span> is uncorrelated. <span class="math inline">\(\text{Cov}[e_t, e_{t-k}]=0\)</span> for all <span class="math inline">\(k\neq 0\)</span>. This is the weakest form of RW.</p>
 <ul>
-<li><p>RW3 allows for dependence in higher moments.</p></li>
+<li><p>RW3 allows for <strong>dependence</strong> in higher moments.</p></li>
 <li><p>An example that satisfiies RW3 but not RW1 and RW2: <span class="math inline">\(\text{Cov}[e_t,e_{t−k}]=0\)</span> for all <span class="math inline">\(k\neq 0\)</span>, but <span class="math inline">\(\text{Cov}[e_t^2,e_{t−k}^2]\neq0\)</span> for some <span class="math inline">\(k\neq 0\)</span>. In words, first moments are uncorrelated, but second moments are correlated; therefore, such a process is not independent.</p></li>
 </ul></li>
 </ul></li>
@@ -449,8 +450,8 @@ p_t = \mu + p_{t-1} + e_t
 <h3>Cowles and Jones Test</h3>
 <p><span class="citation">Cowles and Jones (<a href="#ref-Cowles1937">1937</a>)</span> proposed a test of RW1 using the frequency of <em>sequences</em> and <em>reversals</em> in historical stock returns.</p>
 <ul>
-<li><p>Sequences: pairs of consecutive returns with the same sign (<span class="math inline">\((+,+)\)</span> or <span class="math inline">\((-,-)\)</span>);</p></li>
-<li><p>Reversals: consecutive returns with opposite signs (<span class="math inline">\((+,-)\)</span> or <span class="math inline">\((-,+)\)</span>).</p></li>
+<li><p>Sequences: pairs of consecutive returns with the same sign <span class="math inline">\((+,+)\)</span> or <span class="math inline">\((-,-)\)</span>;</p></li>
+<li><p>Reversals: consecutive returns with opposite signs <span class="math inline">\((+,-)\)</span> or <span class="math inline">\((-,+)\)</span>.</p></li>
 </ul>
 <p>More formally, we define <span class="math inline">\(I_t\)</span> an indicator variable as:</p>
 <p><span class="math display">\[
@@ -462,7 +463,7 @@ I_t =
 \end{cases}
 \end{align*}
 \]</span></p>
-<p><span class="math inline">\(I_t\)</span> is an analogy to the <em>Bernoulli</em> coin-tossing experiments. That is, when it is a fair coin, <span class="math inline">\(X_t\sim \text{Bernoulli}(p=1/2)\)</span>.</p>
+<p><span class="math inline">\(I_t\)</span> is an analogy to the <em>Bernoulli</em> coin-tossing experiments. That is, when it is a fair coin, <span class="math inline">\(X_t\sim \text{Bernoulli } (p=1/2)\)</span>.</p>
 <p><span class="math display">\[
 \begin{align*}
 X_t =
@@ -496,7 +497,7 @@ N_r &amp;\equiv n-N_s.
 \]</span> where <span class="math inline">\(\xrightarrow{p}\)</span> denotes convergence in probability.</p>
 <div class="boxed">
 <div class="exercise">
-<p><span id="exr:proof1" class="exercise"><strong>Proof. 1  </strong></span>Show <span class="math inline">\(\pi_s=\frac{1}{2}\)</span>.</p>
+<p><span id="exr:proof1" class="exercise"><strong>Proof. 1  </strong></span><em>Show <span class="math inline">\(\pi_s=\frac{1}{2}\)</span>.</em></p>
 <p>Hint: This is equivalent to show that
 <span class="math display">\[
 Y_t =
@@ -512,10 +513,10 @@ Y_t =
 <div id="rw-with-drift" class="section level3">
 <h3>RW with drift</h3>
 <p><span class="math inline">\(r_t=\mu+e_t\)</span>. Such a drift, either positive or negative, makes sequences more likely than reversals.</p>
-<p>For now we assume that log prices follow a normal random walk with drift:</p>
+<p>For now we assume that log prices follow a <em>normal</em> random walk with drift:</p>
 <p><span class="math display">\[
 p_t=\mu+p_{t-1}+e_t, \quad e_t\sim N(0, \sigma^2).
-\]</span> Then <span class="math inline">\(I_t\)</span> is no longer a fair coin-toss but is biased in the direction of th drift, i.e.,</p>
+\]</span> Then <span class="math inline">\(I_t\)</span> is no longer a fair coin-toss but is biased in the direction of the drift, i.e.,</p>
 <p><span class="math display">\[
 I_t =
 \begin{cases}
@@ -535,7 +536,7 @@ I_t =
 </ul>
 <div class="boxed">
 <div class="exercise">
-<p><span id="exr:proof2" class="exercise"><strong>Proof. 2  </strong></span>Show <span class="math inline">\(\pi=\Phi \left(\frac{\mu}{\sigma}\right)\)</span>.
+<p><span id="exr:proof2" class="exercise"><strong>Proof. 2  </strong></span><em>Show <span class="math inline">\(\pi=\Phi \left(\frac{\mu}{\sigma}\right)\)</span>.</em>
 <span class="math display">\[
 \begin{aligned}[b]
 P(r_t&gt;0) &amp;= P(\mu+e_t&gt;0) \\
@@ -555,7 +556,7 @@ P(r_t&gt;0) &amp;= P(\mu+e_t&gt;0) \\
 <p><br/></p>
 <div class="boxed">
 <div class="exercise">
-<p><span id="exr:proof3" class="exercise"><strong>Proof. 3  </strong></span>Show <span class="math inline">\(\pi_s=\pi^2+(1-\pi)^2\)</span>.</p>
+<p><span id="exr:proof3" class="exercise"><strong>Proof. 3  </strong></span><em>Show <span class="math inline">\(\pi_s=\pi^2+(1-\pi)^2\)</span>.</em></p>
 <p>Hint: use the probability mass function of <span class="math inline">\(Y_t\)</span> in Proof. <a href="#exr:proof1">1</a>.</p>
 </div>
 </div>
@@ -605,8 +606,9 @@ CJ_hat</code></pre>
 <pre class="r"><code>pi_hat &lt;- sum(It)/length(t)
 pis_hat &lt;- Ns/length(t)
 sigma2 &lt;- (pis_hat*(1-pis_hat) + 2*(pi_hat^3 + (1-pi_hat)^3 - pis_hat^2)) /(length(t))/(1-pis_hat)^4
-sigma &lt;- sqrt(sigma2)
-t_stat &lt;- (CJ_hat-1)/sigma
+sigma &lt;- sqrt(sigma2)</code></pre>
+<p>Test for <span class="math inline">\(H_0: \widehat{CJ}=1\)</span>.</p>
+<pre class="r"><code>t_stat &lt;- (CJ_hat-1)/sigma
 t_stat</code></pre>
 <pre><code>## [1] 0.6474637</code></pre>
 <pre class="r"><code>p_value &lt;- pnorm(-abs(t_stat)) *2
@@ -616,13 +618,15 @@ list(test_statistic = t_stat, p_value = p_value)</code></pre>
 ## 
 ## $p_value
 ## [1] 0.5173319</code></pre>
-<p>The estimate is not statistically significantly different from <span class="math inline">\(1\)</span>. Therefore, we fail to reject the null hypothesis of random walk. Equivalently, we say that this provides little evidence against the random walk hypothesis.</p>
+<p>The estimate is not statistically significantly different from <span class="math inline">\(1\)</span>.</p>
+<p>Therefore, we fail to reject the null hypothesis of random walk. Equivalently, we say that this provides little evidence against the random walk hypothesis.</p>
+<hr />
 </div>
 </div>
 <div id="autocorrelation-tests" class="section level2">
 <h2>Autocorrelation Tests</h2>
 <p>One of the most direct and intuitive tests of the random walk hypotheses for an individual time series is to check for <em>serial correlation</em>, correlation between two observations of the same series at different dates.</p>
-<p>Under random walk hypothesis, increments <span class="math inline">\(e_t\)</span> are uncorrelated, that is</p>
+<p>Under the random walk hypothesis, increments <span class="math inline">\(e_t\)</span> are uncorrelated, that is</p>
 <p><span class="math display">\[
 \gamma(k) \equiv \text{Cov}(e_t, e_{t-k}) = 0 \quad \text{for all } k\neq 0
 \]</span>
@@ -634,19 +638,19 @@ list(test_statistic = t_stat, p_value = p_value)</code></pre>
 <span class="math inline">\(\rho(k)\)</span> is the <em>autocorrelation coefficient</em>.</p>
 <div class="boxed">
 <div class="exercise">
-<p><span id="exr:proof4" class="exercise"><strong>Proof. 4  </strong></span>To show that <span class="math display">\[\text{Cov}(e_t, e_{t-k}) = 0\]</span> is equivalent to show that <span class="math display">\[\text{Cov}(r_t, r_{t-k}) = 0.\]</span></p>
+<p><span id="exr:proof4" class="exercise"><strong>Proof. 4  </strong></span><em>Show that <span class="math display">\[\text{Cov}(e_t, e_{t-k}) = 0\]</span> is equivalent to show that <span class="math display">\[\text{Cov}(r_t, r_{t-k}) = 0.\]</span> </em></p>
 <p>Rewrite <span class="math inline">\(r_t\)</span> as</p>
 <span class="math display">\[\begin{aligned}
 p_t &amp;= \mu + p_{t-1} + e_t &amp; \Rightarrow &amp; \qquad  r_t =  \mu + e_t \\
 p_{t-k} &amp;= \mu + p_{t-k-1} + e_{t-k} &amp; \Rightarrow &amp; \quad  r_{t-k} =  \mu + e_{t-k}
 \end{aligned}\]</span>
-<p><span class="math inline">\(r_t\)</span> is the first-difference of price at time <span class="math inline">\(t\)</span>.</p>
+<p><span class="math inline">\(r_t\)</span> is the first-difference of the price at time <span class="math inline">\(t\)</span>.</p>
 <p>Then we have</p>
 <span class="math display">\[\begin{aligned}
 \text{Cov}(r_t, r_{t-k}) &amp;= \text{Cov}( \mu+e_t, \mu+e_{t-k}) \\
 &amp;= \text{Cov}(e_t, e_{t-k}) \qquad (\mu \text{ is a constant})
 \end{aligned}\]</span>
-<p>That is, the covariance of the first-differences equals to the covariance of the increments.
+<p>That is, the covariance of the first-differences equals the covariance of the increments.
 <span style="float:right; margin-right:10px">□</span></p>
 </div>
 </div>
@@ -658,7 +662,7 @@ p_{t-k} &amp;= \mu + p_{t-k-1} + e_{t-k} &amp; \Rightarrow &amp; \quad  r_{t-k} 
 \bar{r}_T &amp;\equiv \frac{1}{T} \sum_{t=1}^{T} r_t
 \end{aligned}
 \]</span>
-Sample autocorrelation coefficients are asymptotically independent and normally distributed with distribution:</p>
+Sample autocorrelation coefficients are <strong>asymptotically independent and normally distributed</strong> with distribution:</p>
 <p><span class="math display">\[
 \sqrt{T} \hat{\rho} (k) \overset{a}{\sim} N(0,1)
 \]</span>
@@ -674,12 +678,12 @@ H_0: \rho_1 = \rho_2 = \cdots = \rho_m = 0.
 Q_m \equiv T\sum_{k=1}^m \rho^2(k)
 \]</span>
 Since <span class="math inline">\(\rho(k)\)</span> is normally distributed, <span class="math inline">\(\hat{Q}_m\)</span> is distributed as a chi-square distibution of <span class="math inline">\(m\)</span> degrees of freemdom, that is <span class="math inline">\(Q_m \sim \chi_m^2\)</span>.</p>
-<p><span class="citation">Ljung and Box (<a href="#ref-Ljung1979">1979</a>)</span> provided a correction which yields a better for to the <span class="math inline">\(\chi_m^2\)</span> for small sample sizes:</p>
+<p><span class="citation">Ljung and Box (<a href="#ref-Ljung1979">1979</a>)</span> provided a correction which yields a better fit to the <span class="math inline">\(\chi_m^2\)</span> for small sample sizes:</p>
 <p><span class="math display">\[
 Q_m&#39; \equiv T(T+2)\sum_{k=1}^m \frac{\rho^2(k)}{T-k}.
 \]</span>
 <span class="math inline">\(Q&#39;_m\)</span> is the usual Q-statistic version.</p>
-<p>By summing the squared autocorrelations, the Q-statistic is designed to detect departures from zero autocorrelations in either direction and at all lags.</p>
+<p>By summing the squared autocorrelations, the Q-statistic is designed to detect departures from zero autocorrelations in either direction and at all <span class="math inline">\(m\)</span> lags.</p>
 <pre class="r"><code>Box.test(diff(pt), lag=1, type=&quot;Ljung-Box&quot;)</code></pre>
 <pre><code>## 
 ##  Box-Ljung test
@@ -693,8 +697,9 @@ Q_m&#39; \equiv T(T+2)\sum_{k=1}^m \frac{\rho^2(k)}{T-k}.
 ## data:  diff(pt)
 ## X-squared = 0.065517, df = 1, p-value = 0.798</code></pre>
 </div>
-<div id="varriance-ratio-test" class="section level3">
-<h3>Varriance Ratio Test</h3>
+</div>
+<div id="varriance-ratio-test" class="section level2">
+<h2>Varriance Ratio Test</h2>
 <p>The VR(q) tests for the null hypothesis that the first <span class="math inline">\(q\)</span> autocorrealtions are zero.</p>
 <p><span class="math display">\[
 \text{VR(q)} \equiv \frac{\text{Var}[r_t(q)]}{q\cdot \text{Var}[r_t]}
@@ -704,9 +709,8 @@ where <span class="math inline">\(r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}=r_t+r_{t
 <li>Under zero autocorrelation, <span class="math inline">\(\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]\)</span>; therefore, VR(q)=1.</li>
 <li>When there serial correlation, <span class="math inline">\(\text{VR(q)}&gt;1\)</span>.</li>
 </ul>
-<p>Lo and MacKinlay present a number of test statistics based on the VR(q). Check Lo and MacKinlay <span class="citation">(<a href="#ref-Lo-Mackinlay1988">1988</a>, <a href="#ref-Lo1989">1989</a>)</span> for example.</p>
+<p>Lo and MacKinlay present a number of test statistics based on the <span class="math inline">\(\text{VR(q)}\)</span>. Check Lo and MacKinlay <span class="citation">(<a href="#ref-Lo-Mackinlay1988">1988</a>, <a href="#ref-Lo1989">1989</a>)</span> for example.</p>
 <hr />
-</div>
 <div id="references" class="section level3 unnumbered">
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
