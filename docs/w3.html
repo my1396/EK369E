@@ -1,0 +1,5351 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Menghan Yuan" />
+
+<meta name="date" content="2024-03-27" />
+
+<title>Equity Performance Evaluation</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Course Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Equity Performance Evaluation</h1>
+<h4 class="author">Menghan Yuan</h4>
+<h4 class="date">March 27, 2024</h4>
+
+</div>
+
+
+<div id="return-concepts" class="section level2">
+<h2>Return Concepts</h2>
+<div id="simple-returns" class="section level3">
+<h3>Simple returns</h3>
+<p><span class="math inline">\(r_t\)</span> measures the rate of return from <span class="math inline">\(t-1\)</span> to <span class="math inline">\(t\)</span>.
+It is the percentage change in price given by:</p>
+<p><span class="math display">\[
+r_t = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1
+\]</span></p>
+<p>One commonly used equality is</p>
+<p><span class="math display">\[
+P_t = P_{t-1} (1+r_t)
+\]</span></p>
+</div>
+<div id="continuously-compounded-returns" class="section level3">
+<h3>Continuously compounded returns</h3>
+<p><span class="math inline">\(z_t\)</span> measures the log return, also referred to as continuously compounded return.
+It is the first difference of the natural logarithm of prices.</p>
+<p><span class="math display">\[
+z_t = \ln P_t - \ln P_{t-1} = \ln \frac{P_t}{P_{t-1}}
+\]</span></p>
+<p>The <strong>conversion</strong> between log return and simple return:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\color{red}{z_t} &amp;\color{red}{= \ln (1+r_t) }\\
+r_t &amp;= e^{z_t} -1
+\end{aligned}
+\]</span></p>
+<p>Q: Why is <span class="math inline">\(z_t\)</span> continuously compounded return?</p>
+<p>A: This is related to the constant <span class="math inline">\(e\)</span>, Euler number.</p>
+<p>The discovery of the constant itself is credited to Jacob Bernoulli, who attempted to find the value of the following expression:</p>
+<p><span class="math display">\[
+e = \lim_{n\to\infty} \left( 1 + \frac{1}{n} \right)^n
+\]</span></p>
+<p>If you put <span class="math inline">\(\$100\)</span> in a bank with an annual interest rate of <span class="math inline">\(10\%\)</span> and a yearly compounding period. What you get in a year can be expressed as follows:</p>
+<p><span class="math display">\[
+D_t = D_0 \left(1+\frac{R}{n}\right)^{nt} = 100\times \left(1+\frac{10\%}{1}\right)^{1\times1} = 110
+\]</span>
+Note that</p>
+<p><span class="math inline">\(\quad\)</span> <span class="math inline">\(D_0\)</span> is the initial deposit,<br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(D_t\)</span> is the value of the deposit at time <span class="math inline">\(t\)</span>,<br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(R\)</span> is the annual percentage rate (APR),<br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(n\)</span> is the number of compounding periods in one year,<br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(t\)</span> is the number of years from <span class="math inline">\(D_0\)</span> to <span class="math inline">\(D_t\)</span>.</p>
+<p>(For a bank deposit account, the quoted interest rate often refers to as “simple interest” which ignores compounding. For example, an interest rate of <span class="math inline">\(5\%\)</span> payable every six months will be quoted as a simple interest of <span class="math inline">\(10\%\)</span> per annum in the market.)</p>
+<p>Q: What if we compound semi-annually?</p>
+<p>A: That is when <span class="math inline">\(e\)</span> equals 2.</p>
+<p><span class="math display">\[
+D_t = 100\times(1+\frac{10\%}{2})^{2\times1} = 110.25
+\]</span></p>
+<p>What if we compound monthly? <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(n=12\)</span></p>
+<p><span class="math display">\[
+D_t = 100\times(1+\frac{10\%}{12})^{12\times1} = 110.47
+\]</span></p>
+<p>What if we compound daily? <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(n=365\)</span></p>
+<p><span class="math display">\[
+D_t = 100\times(1+\frac{10\%}{365})^{365\times1} = 110.52
+\]</span></p>
+<p><span class="math inline">\(\left(1+\frac{R}{n}\right)^{nt}\)</span> can be rewritten as <span class="math inline">\(\left(1+\frac{1}{\frac{n}{R}}\right)^{\frac{n}{R} \cdot R \cdot t}\)</span>. We have</p>
+<p><span class="math display">\[
+\left(1+\frac{1}{\frac{n}{R}}\right)^{\frac{n}{R} \cdot R \cdot t} \to e^{Rt}
+\]</span>
+as <span class="math inline">\(\frac{n}{R}\to \infty\)</span>.</p>
+<p>Under continuous compounding,</p>
+<p><span class="math display">\[
+\color{red} {D_t = D_0\, e^{Rt}} .
+\]</span></p>
+<pre class="r"><code>R &lt;- 0.1 # annual interest rate
+t &lt;- 1   # total time period
+
+n &lt;- 2 # compound frequency in one year
+100 * (1+R/n)^{n*t}</code></pre>
+<pre><code>## [1] 110.25</code></pre>
+<pre class="r"><code>n &lt;- 12
+100 * (1+R/n)^{n*t}</code></pre>
+<pre><code>## [1] 110.4713</code></pre>
+<pre class="r"><code>n &lt;- 365
+100 * (1+R/n)^{n*t}</code></pre>
+<pre><code>## [1] 110.5156</code></pre>
+<pre class="r"><code>100 * exp(R*t)</code></pre>
+<pre><code>## [1] 110.5171</code></pre>
+<p>Note that</p>
+<ul>
+<li><p><span class="math inline">\(D_t\)</span> under continuous compounding is always larger than those of under fixed compounding frequencies. The higher the frequency, the larger the end value <span class="math inline">\(D_t\)</span> is. This is due to the earnings from “interest-on-interest”.</p></li>
+<li><p><span class="math inline">\(\left(1+\frac{R}{n}\right)^{n}-1\)</span> is the effective interest rate. This is the interest rate you get as a proportion to the amount you put in and it depends on the frequency of compounding.</p></li>
+<li><p>Continuously compounded interest rate is the effective interest rate when compounded continuously (<span class="math inline">\(n\to\infty\)</span>).</p></li>
+</ul>
+<div class="boxed">
+<div class="exercise">
+<p><span id="exr:proof1" class="exercise"><strong>Proof. 1  </strong></span><em>Show <span class="math inline">\(\ln (1+x) \approx x\)</span> as <span class="math inline">\(x\to 0\)</span>.</em></p>
+<p>Let <span class="math inline">\(f(x)=\ln (1+x)\)</span>, its first-order Taylor expansion at <span class="math inline">\(x\)</span> close to <span class="math inline">\(0\)</span> is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(x) \approx f(0) + f^\prime(0)(x-0)
+\end{aligned}
+\]</span></p>
+<p>The first derivative of <span class="math inline">\(f(x)\)</span> is</p>
+<p><span class="math display">\[
+f^\prime(x) = \frac{1}{1+x}.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(x) &amp;\approx f(0) + f^\prime(0)(x-0) \\
+&amp;= \ln(1) + 1\cdot x  \\
+&amp;= x.
+\end{aligned}
+\]</span></p>
+<p><span style="margin-top:-2em; float:right"><span class="math inline">\(\square\)</span></span></p>
+</div>
+</div>
+<pre class="r"><code>f_name &lt;- &quot;data/Titlon_equity_price_2014-2023_daily.csv&quot;
+titlon_data &lt;- read_csv(f_name)
+## group by ISIN, calculate returns
+titlon_group &lt;- titlon_data %&gt;% group_by(ISIN)
+groups &lt;- titlon_group %&gt;% group_split()
+group_key &lt;- titlon_group %&gt;% 
+    group_keys() %&gt;% 
+    mutate(id = row_number())
+group_key</code></pre>
+<pre><code>## # A tibble: 501 × 2
+##    ISIN            id
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 AU000000CSS3     1
+##  2 AU0000057408     2
+##  3 BMG0451H1170     3
+##  4 BMG0670A1099     4
+##  5 BMG067231032     5
+##  6 BMG0702P1086     6
+##  7 BMG1466R1732     7
+##  8 BMG1466R2078     8
+##  9 BMG173841013     9
+## 10 BMG1738J1247    10
+## # ℹ 491 more rows</code></pre>
+<pre class="r"><code># subset companies with more than 3 years&#39; data
+isin_vec &lt;- titlon_group %&gt;% tally() %&gt;% 
+    filter(n&gt;(252*3)) %&gt;% 
+    pull(ISIN)
+id_vec &lt;- sapply(isin_vec, function(isin) which(group_key$ISIN==isin))
+# data for one equity
+i &lt;- 4
+groups[[id_vec[i]]]</code></pre>
+<pre><code>## # A tibble: 951 × 46
+##    Date       `Internal code` SecurityId CompanyId Symbol ISIN         Name     
+##    &lt;date&gt;               &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    
+##  1 2020-02-19         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  2 2020-02-20         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  3 2020-02-21         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  4 2020-02-24         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  5 2020-02-25         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  6 2020-02-26         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  7 2020-02-27         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  8 2020-02-28         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  9 2020-03-02         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+## 10 2020-03-03         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+## # ℹ 941 more rows
+## # ℹ 39 more variables: BestBidPrice &lt;dbl&gt;, BestAskPrice &lt;dbl&gt;, Open &lt;dbl&gt;,
+## #   High &lt;dbl&gt;, Low &lt;dbl&gt;, Close &lt;dbl&gt;, OfficialNumberOfTrades &lt;dbl&gt;,
+## #   OfficialVolume &lt;dbl&gt;, Price &lt;dbl&gt;, AdjustedPrice &lt;dbl&gt;, Dividends &lt;dbl&gt;,
+## #   LDividends &lt;dbl&gt;, CorpAdj &lt;dbl&gt;, DividendAdj &lt;dbl&gt;, Currency &lt;chr&gt;,
+## #   NumberOfShares &lt;dbl&gt;, Exchange &lt;chr&gt;, NOKPerForex &lt;dbl&gt;, mktcap &lt;dbl&gt;,
+## #   OSEBXmktshare_prevmnth &lt;dbl&gt;, OSEBXAlpha_prevmnth &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>groups[[id_vec[i]]] %&gt;% tail()</code></pre>
+<pre><code>## # A tibble: 6 × 46
+##   Date       `Internal code` SecurityId CompanyId Symbol ISIN         Name      
+##   &lt;date&gt;               &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;     
+## 1 2023-11-17         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
+## 2 2023-11-20         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
+## 3 2023-11-21         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
+## 4 2023-11-22         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
+## 5 2023-11-23         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
+## 6 2023-11-24         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
+## # ℹ 39 more variables: BestBidPrice &lt;dbl&gt;, BestAskPrice &lt;dbl&gt;, Open &lt;dbl&gt;,
+## #   High &lt;dbl&gt;, Low &lt;dbl&gt;, Close &lt;dbl&gt;, OfficialNumberOfTrades &lt;dbl&gt;,
+## #   OfficialVolume &lt;dbl&gt;, Price &lt;dbl&gt;, AdjustedPrice &lt;dbl&gt;, Dividends &lt;dbl&gt;,
+## #   LDividends &lt;dbl&gt;, CorpAdj &lt;dbl&gt;, DividendAdj &lt;dbl&gt;, Currency &lt;chr&gt;,
+## #   NumberOfShares &lt;dbl&gt;, Exchange &lt;chr&gt;, NOKPerForex &lt;dbl&gt;, mktcap &lt;dbl&gt;,
+## #   OSEBXmktshare_prevmnth &lt;dbl&gt;, OSEBXAlpha_prevmnth &lt;dbl&gt;,
+## #   OSEBXBeta_prevmnth &lt;dbl&gt;, SMB &lt;dbl&gt;, HML &lt;dbl&gt;, LIQ &lt;dbl&gt;, MOM &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>the_group &lt;- groups[[id_vec[i]]] 
+the_group</code></pre>
+<pre><code>## # A tibble: 951 × 46
+##    Date       `Internal code` SecurityId CompanyId Symbol ISIN         Name     
+##    &lt;date&gt;               &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    
+##  1 2020-02-19         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  2 2020-02-20         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  3 2020-02-21         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  4 2020-02-24         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  5 2020-02-25         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  6 2020-02-26         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  7 2020-02-27         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  8 2020-02-28         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##  9 2020-03-02         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+## 10 2020-03-03         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+## # ℹ 941 more rows
+## # ℹ 39 more variables: BestBidPrice &lt;dbl&gt;, BestAskPrice &lt;dbl&gt;, Open &lt;dbl&gt;,
+## #   High &lt;dbl&gt;, Low &lt;dbl&gt;, Close &lt;dbl&gt;, OfficialNumberOfTrades &lt;dbl&gt;,
+## #   OfficialVolume &lt;dbl&gt;, Price &lt;dbl&gt;, AdjustedPrice &lt;dbl&gt;, Dividends &lt;dbl&gt;,
+## #   LDividends &lt;dbl&gt;, CorpAdj &lt;dbl&gt;, DividendAdj &lt;dbl&gt;, Currency &lt;chr&gt;,
+## #   NumberOfShares &lt;dbl&gt;, Exchange &lt;chr&gt;, NOKPerForex &lt;dbl&gt;, mktcap &lt;dbl&gt;,
+## #   OSEBXmktshare_prevmnth &lt;dbl&gt;, OSEBXAlpha_prevmnth &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>ticker &lt;- the_group$Symbol[1]
+ticker</code></pre>
+<pre><code>## [1] &quot;BWE&quot;</code></pre>
+<pre class="r"><code>the_group$Name[1]</code></pre>
+<pre><code>## [1] &quot;BW Energy Limited&quot;</code></pre>
+<pre class="r"><code># convert to xts
+library(quantmod)
+the_group_xts &lt;- xts(the_group[,c(&quot;AdjustedPrice&quot;)], order.by=the_group$Date)
+# the_group_xts &lt;- xts(the_group[,c(&quot;Price&quot;)], order.by=the_group$Date)
+the_group_xts %&gt;% str()</code></pre>
+<pre><code>## An xts object on 2020-02-19 / 2023-11-24 containing: 
+##   Data:    double [951, 1]
+##   Columns: AdjustedPrice
+##   Index:   Date [951] (TZ: &quot;UTC&quot;)</code></pre>
+<pre class="r"><code>the_group_xts</code></pre>
+<pre><code>##            AdjustedPrice
+## 2020-02-19        24.150
+## 2020-02-20        24.525
+## 2020-02-21        24.370
+## 2020-02-24        21.800
+## 2020-02-25        20.355
+## 2020-02-26        19.742
+## 2020-02-27        17.350
+## 2020-02-28        17.028
+## 2020-03-02        17.294
+## 2020-03-03        19.550
+##        ...              
+## 2023-11-13        29.300
+## 2023-11-14        28.850
+## 2023-11-15        28.750
+## 2023-11-16        26.100
+## 2023-11-17        25.850
+## 2023-11-20        25.550
+## 2023-11-21        24.500
+## 2023-11-22        24.000
+## 2023-11-23        24.100
+## 2023-11-24        24.250</code></pre>
+<pre class="r"><code>prices_monthly &lt;- the_group_xts %&gt;% to.monthly(indexAt = &quot;last&quot;, OHLC=FALSE)
+prices_monthly %&gt;% head(20)</code></pre>
+<pre><code>##            AdjustedPrice
+## 2020-02-28        17.028
+## 2020-03-31         9.070
+## 2020-04-30        12.740
+## 2020-05-29        14.554
+## 2020-06-30        17.168
+## 2020-07-31        17.170
+## 2020-08-31        20.500
+## 2020-09-30        16.750
+## 2020-10-30        14.800
+## 2020-11-30        20.920
+## 2020-12-30        27.600
+## 2021-01-29        24.180
+## 2021-02-26        25.160
+## 2021-03-31        26.880
+## 2021-04-30        27.750
+## 2021-05-31        23.950
+## 2021-06-30        26.200
+## 2021-07-30        26.750
+## 2021-08-31        27.950
+## 2021-09-30        27.900</code></pre>
+<pre class="r"><code>prices_monthly %&gt;% tail(20)</code></pre>
+<pre><code>##            AdjustedPrice
+## 2022-04-29         27.50
+## 2022-05-31         28.84
+## 2022-06-30         25.56
+## 2022-07-29         27.42
+## 2022-08-31         24.82
+## 2022-09-30         21.62
+## 2022-10-31         26.30
+## 2022-11-30         27.06
+## 2022-12-30         25.14
+## 2023-01-31         27.90
+## 2023-02-28         29.24
+## 2023-03-31         26.92
+## 2023-04-28         28.60
+## 2023-05-31         27.25
+## 2023-06-30         25.80
+## 2023-07-31         30.00
+## 2023-08-31         25.65
+## 2023-09-29         27.35
+## 2023-10-31         27.90
+## 2023-11-24         24.25</code></pre>
+<pre class="r"><code>plot(prices_monthly, main = sprintf(&quot;Monthly Price: %s&quot;, ticker))</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># calculate monthly return by hand 
+simple_ret &lt;- (diff(prices_monthly)/lag(prices_monthly)) %&gt;% setNames(&quot;simple_return&quot;) # simple return
+log_ret &lt;- diff(log(prices_monthly)) %&gt;% setNames(&quot;log_return&quot;)   # log return, aka, continuously compounded return
+merge(prices_monthly, simple_ret, log_ret)</code></pre>
+<pre><code>##            AdjustedPrice simple_return   log_return
+## 2020-02-28        17.028            NA           NA
+## 2020-03-31         9.070 -0.4673478976 -0.629886784
+## 2020-04-30        12.740  0.4046306505  0.339774386
+## 2020-05-29        14.554  0.1423861852  0.133119220
+## 2020-06-30        17.168  0.1796069809  0.165181316
+## 2020-07-31        17.170  0.0001164958  0.000116489
+## 2020-08-31        20.500  0.1939429237  0.177261211
+## 2020-09-30        16.750 -0.1829268293 -0.202026628
+## 2020-10-30        14.800 -0.1164179104 -0.123771078
+## 2020-11-30        20.920  0.4135135135  0.346078458
+## 2020-12-30        27.600  0.3193116635  0.277110134
+## 2021-01-29        24.180 -0.1239130435 -0.132289928
+## 2021-02-26        25.160  0.0405293631  0.039729587
+## 2021-03-31        26.880  0.0683624801  0.066127084
+## 2021-04-30        27.750  0.0323660714  0.031853325
+## 2021-05-31        23.950 -0.1369369369 -0.147267516
+## 2021-06-30        26.200  0.0939457203  0.089791087
+## 2021-07-30        26.750  0.0209923664  0.020775063
+## 2021-08-31        27.950  0.0448598131  0.043882726
+## 2021-09-30        27.900 -0.0017889088 -0.001790511
+## 2021-10-29        27.550 -0.0125448029 -0.012624153
+## 2021-11-30        21.100 -0.2341197822 -0.266729495
+## 2021-12-30        20.100 -0.0473933649 -0.048553225
+## 2022-01-31        22.900  0.1393034826  0.130417095
+## 2022-02-28        23.300  0.0174672489  0.017316450
+## 2022-03-31        27.000  0.1587982833  0.147383505
+## 2022-04-29        27.500  0.0185185185  0.018349139
+## 2022-05-31        28.840  0.0487272727  0.047577308
+## 2022-06-30        25.560 -0.1137309293 -0.120734683
+## 2022-07-29        27.420  0.0727699531  0.070244045
+## 2022-08-31        24.820 -0.0948212983 -0.099622894
+## 2022-09-30        21.620 -0.1289282836 -0.138030968
+## 2022-10-31        26.300  0.2164662350  0.195950127
+## 2022-11-30        27.060  0.0288973384  0.028487684
+## 2022-12-30        25.140 -0.0709534368 -0.073596420
+## 2023-01-31        27.900  0.1097852029  0.104166486
+## 2023-02-28        29.240  0.0480286738  0.046910946
+## 2023-03-31        26.920 -0.0793433653 -0.082668130
+## 2023-04-28        28.600  0.0624071322  0.060537213
+## 2023-05-31        27.250 -0.0472027972 -0.048353197
+## 2023-06-30        25.800 -0.0532110092 -0.054679029
+## 2023-07-31        30.000  0.1627906977  0.150822890
+## 2023-08-31        25.650 -0.1450000000 -0.156653810
+## 2023-09-29        27.350  0.0662768031  0.064172957
+## 2023-10-31        27.900  0.0201096892  0.019910160
+## 2023-11-24        24.250 -0.1308243728 -0.140210071</code></pre>
+<pre class="r"><code># calculate monthly return using `PerformanceAnalytics::Return.calculate`
+library(PerformanceAnalytics)
+merge(Return.calculate(prices_monthly, method = &quot;discrete&quot;),
+      Return.calculate(prices_monthly, method = &quot;log&quot;) ) %&gt;%
+    fortify() %&gt;% 
+    setNames(c(&quot;Date&quot;, &quot;Simple Ret&quot;, &quot;Log Ret&quot;)) %&gt;% 
+    knitr::kable(digits = 5, escape=F, caption=&quot;Using `PerformanceAnalytics::Return.calculate`&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;) %&gt;% 
+    scroll_box(height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-5">Table 1: </span>Using <code>PerformanceAnalytics::Return.calculate</code>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Date
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Simple Ret
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Log Ret
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2020-02-28
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-03-31
+</td>
+<td style="text-align:right;">
+-0.46735
+</td>
+<td style="text-align:right;">
+-0.62989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-30
+</td>
+<td style="text-align:right;">
+0.40463
+</td>
+<td style="text-align:right;">
+0.33977
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-29
+</td>
+<td style="text-align:right;">
+0.14239
+</td>
+<td style="text-align:right;">
+0.13312
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+0.17961
+</td>
+<td style="text-align:right;">
+0.16518
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-31
+</td>
+<td style="text-align:right;">
+0.00012
+</td>
+<td style="text-align:right;">
+0.00012
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-31
+</td>
+<td style="text-align:right;">
+0.19394
+</td>
+<td style="text-align:right;">
+0.17726
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-30
+</td>
+<td style="text-align:right;">
+-0.18293
+</td>
+<td style="text-align:right;">
+-0.20203
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-10-30
+</td>
+<td style="text-align:right;">
+-0.11642
+</td>
+<td style="text-align:right;">
+-0.12377
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-11-30
+</td>
+<td style="text-align:right;">
+0.41351
+</td>
+<td style="text-align:right;">
+0.34608
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-12-30
+</td>
+<td style="text-align:right;">
+0.31931
+</td>
+<td style="text-align:right;">
+0.27711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-01-29
+</td>
+<td style="text-align:right;">
+-0.12391
+</td>
+<td style="text-align:right;">
+-0.13229
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-02-26
+</td>
+<td style="text-align:right;">
+0.04053
+</td>
+<td style="text-align:right;">
+0.03973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-03-31
+</td>
+<td style="text-align:right;">
+0.06836
+</td>
+<td style="text-align:right;">
+0.06613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-04-30
+</td>
+<td style="text-align:right;">
+0.03237
+</td>
+<td style="text-align:right;">
+0.03185
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-05-31
+</td>
+<td style="text-align:right;">
+-0.13694
+</td>
+<td style="text-align:right;">
+-0.14727
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-06-30
+</td>
+<td style="text-align:right;">
+0.09395
+</td>
+<td style="text-align:right;">
+0.08979
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-07-30
+</td>
+<td style="text-align:right;">
+0.02099
+</td>
+<td style="text-align:right;">
+0.02078
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-08-31
+</td>
+<td style="text-align:right;">
+0.04486
+</td>
+<td style="text-align:right;">
+0.04388
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-09-30
+</td>
+<td style="text-align:right;">
+-0.00179
+</td>
+<td style="text-align:right;">
+-0.00179
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-10-29
+</td>
+<td style="text-align:right;">
+-0.01254
+</td>
+<td style="text-align:right;">
+-0.01262
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-11-30
+</td>
+<td style="text-align:right;">
+-0.23412
+</td>
+<td style="text-align:right;">
+-0.26673
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-12-30
+</td>
+<td style="text-align:right;">
+-0.04739
+</td>
+<td style="text-align:right;">
+-0.04855
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-01-31
+</td>
+<td style="text-align:right;">
+0.13930
+</td>
+<td style="text-align:right;">
+0.13042
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-02-28
+</td>
+<td style="text-align:right;">
+0.01747
+</td>
+<td style="text-align:right;">
+0.01732
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-03-31
+</td>
+<td style="text-align:right;">
+0.15880
+</td>
+<td style="text-align:right;">
+0.14738
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-04-29
+</td>
+<td style="text-align:right;">
+0.01852
+</td>
+<td style="text-align:right;">
+0.01835
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-05-31
+</td>
+<td style="text-align:right;">
+0.04873
+</td>
+<td style="text-align:right;">
+0.04758
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-06-30
+</td>
+<td style="text-align:right;">
+-0.11373
+</td>
+<td style="text-align:right;">
+-0.12073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-07-29
+</td>
+<td style="text-align:right;">
+0.07277
+</td>
+<td style="text-align:right;">
+0.07024
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-08-31
+</td>
+<td style="text-align:right;">
+-0.09482
+</td>
+<td style="text-align:right;">
+-0.09962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-09-30
+</td>
+<td style="text-align:right;">
+-0.12893
+</td>
+<td style="text-align:right;">
+-0.13803
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-10-31
+</td>
+<td style="text-align:right;">
+0.21647
+</td>
+<td style="text-align:right;">
+0.19595
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-11-30
+</td>
+<td style="text-align:right;">
+0.02890
+</td>
+<td style="text-align:right;">
+0.02849
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-12-30
+</td>
+<td style="text-align:right;">
+-0.07095
+</td>
+<td style="text-align:right;">
+-0.07360
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-01-31
+</td>
+<td style="text-align:right;">
+0.10979
+</td>
+<td style="text-align:right;">
+0.10417
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-02-28
+</td>
+<td style="text-align:right;">
+0.04803
+</td>
+<td style="text-align:right;">
+0.04691
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-03-31
+</td>
+<td style="text-align:right;">
+-0.07934
+</td>
+<td style="text-align:right;">
+-0.08267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-04-28
+</td>
+<td style="text-align:right;">
+0.06241
+</td>
+<td style="text-align:right;">
+0.06054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-05-31
+</td>
+<td style="text-align:right;">
+-0.04720
+</td>
+<td style="text-align:right;">
+-0.04835
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-06-30
+</td>
+<td style="text-align:right;">
+-0.05321
+</td>
+<td style="text-align:right;">
+-0.05468
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-07-31
+</td>
+<td style="text-align:right;">
+0.16279
+</td>
+<td style="text-align:right;">
+0.15082
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-08-31
+</td>
+<td style="text-align:right;">
+-0.14500
+</td>
+<td style="text-align:right;">
+-0.15665
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-09-29
+</td>
+<td style="text-align:right;">
+0.06628
+</td>
+<td style="text-align:right;">
+0.06417
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-10-31
+</td>
+<td style="text-align:right;">
+0.02011
+</td>
+<td style="text-align:right;">
+0.01991
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-11-24
+</td>
+<td style="text-align:right;">
+-0.13082
+</td>
+<td style="text-align:right;">
+-0.14021
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cumulative-returns" class="section level3">
+<h3>Cumulative returns</h3>
+<p>For simple return, the cumulative return from time <span class="math inline">\(0\)</span> to time <span class="math inline">\(T\)</span> is given by:</p>
+<p><span class="math display">\[
+r_{0:T} = \Pi_{t=1}^T (1+r_t) -1.
+\]</span></p>
+<p>For log return</p>
+<p><span class="math display">\[
+z_{0:T} = \sum_{t=1}^T z_t
+\]</span></p>
+<p>Note that we have to back out the simple return from the log return</p>
+<p><span class="math display">\[
+r_{0:T} = \exp(z_{0:T}) -1
+\]</span></p>
+<pre class="r"><code>return_monthly_simple &lt;- Return.calculate(prices_monthly, method = &quot;discrete&quot;)
+return_monthly_simple[1,] &lt;- 0
+cumulative_returns_simple &lt;- cumprod(1 + return_monthly_simple) - 1
+# plot price, monthly ret, and cumu ret
+par(mfrow=c(3,1))
+plot(prices_monthly, main = sprintf(&quot;Monthly adjPrice: %s&quot;, ticker))
+plot(return_monthly_simple, 
+     main = sprintf(&quot;Monthly Return: %s&quot;, ticker))
+plot(cumulative_returns_simple, 
+     main = sprintf(&quot;Monthly Cumulative Return: %s&quot;, ticker))</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:simple-ret"></span>
+<img src="w3_files/figure-html/simple-ret-1.png" alt="Simple returns" width="857.28" />
+<p class="caption">
+Fig. 1: Simple returns
+</p>
+</div>
+<pre class="r"><code>return_monthly_log &lt;- Return.calculate(prices_monthly, method = &quot;log&quot;)
+return_monthly_log[1,] &lt;- 0
+cumulative_returns_log &lt;- exp(cumsum(return_monthly_log)) - 1 # back out the simple return
+par(mfrow=c(3,1))
+plot(prices_monthly, main = sprintf(&quot;Monthly adjPrice: %s&quot;, ticker))
+plot(return_monthly_log, 
+     main = sprintf(&quot;Monthly Return: %s&quot;, ticker))
+plot(cumulative_returns_log, 
+     main = sprintf(&quot;Monthly Cumulative Return: %s&quot;, ticker))</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:log-ret"></span>
+<img src="w3_files/figure-html/log-ret-1.png" alt="Log returns" width="857.28" />
+<p class="caption">
+Fig. 2: Log returns
+</p>
+</div>
+<p>The two types act very differently when it comes to aggregation. Each has an advantage over the other:</p>
+<ul>
+<li><p>simple returns aggregate across assets<br />
+The simple return of a portfolio is the weighted sum of the simple returns of the constituents of the portfolio.</p></li>
+<li><p>log returns aggregate across time<br />
+The log return for a time period is the sum of the log returns of partitions of the time period. For example, the log return for a year is the sum of the log returns of the days within the year.</p></li>
+</ul>
+</div>
+<div id="multiperiod-returns" class="section level3">
+<h3>Multiperiod returns</h3>
+<p>Multiperiod returns are the generalized case of cumulative return by allowing any holding period <span class="math inline">\(k\le T\)</span>.</p>
+<p>The <span class="math inline">\(k\)</span>-period simple return from time <span class="math inline">\(t-k\)</span> to <span class="math inline">\(t\)</span> is given by</p>
+<p><span class="math display">\[
+r_{t}(k) = \frac{P_t-P_{t-k}}{P_{t-k}}.
+\]</span></p>
+<p>It can be expressed as in terms of one-period returns as follows:</p>
+<p><span class="math display">\[
+\begin{aligned}
+r_t(k) &amp;= \prod_{j=0}^{k-1}(1+r_{t-j}) -1 \\
+&amp;= (1+r_t)(1+r_{t-1})\cdots (1+r_{t-k+1})-1 .
+\end{aligned}
+\]</span></p>
+<p>We always like to talk in terms of annual performance as people like to know how much they can expect to make a year in percentage terms. That is why in most of the fund reports, you will find a standard metric called <strong>annualized returns</strong>. It is also known as the <em>Compound Annual Growth Rate</em> (CAGR) or the <em>Geometric Annual Return</em>.</p>
+<p><em>Annualized return</em> under simple returns <span class="math inline">\(r_t^A\)</span> is given by:</p>
+<p><span class="math display">\[
+\begin{split}
+(1+r_t^A)^k &amp;= 1+r_t(k) \\
+r_t^A &amp;= \big(1+r_t(k) \big)^{\frac{1}{k}}-1 = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1 .
+\end{split}
+\]</span></p>
+<p>The <span class="math inline">\(k\)</span>-period log return is given by</p>
+<p><span class="math display">\[
+z_t(k) = \ln \frac{P_t}{P_{t-k}}.
+\]</span></p>
+<p>It is the sum of the <span class="math inline">\(k\)</span> one-period log returns:</p>
+<p><span class="math display">\[
+z_t(k) = \sum_{j=0}^{k-1} z_{t-j} = z_t + z_{t-1} + \cdots + z_{t-k+1}
+\]</span></p>
+<p><em>Annualized return</em> under continuously compounding <span class="math inline">\(z_t^A\)</span> is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+k\,z_t^A &amp;= z_t(k) \\
+z_t^A &amp;= \frac{1}{k}z_t(k) = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j},
+\end{aligned}
+\]</span>
+which is the average one-period log returns.</p>
+<p>To summarize in one table</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="31%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Simple returns</th>
+<th align="left">Log returns</th>
+<th align="left">Back out simple returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Single period</td>
+<td align="left"><span class="math inline">\(r_t=\frac{P_t}{P_{t-1}}-1\)</span></td>
+<td align="left"><span class="math inline">\(z_t=\ln \frac{P_t}{P_{t-1}}\)</span></td>
+<td align="left"><span class="math inline">\(r_t = \exp(z_t)-1\)</span></td>
+</tr>
+<tr class="even">
+<td>Multiperiod</td>
+<td align="left"><span class="math inline">\(r_t(k) = \prod_{j=1}^{k-1}(1+r_{t-j}) -1\)</span></td>
+<td align="left"><span class="math inline">\(z_t(k) = \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
+<td align="left"><span class="math inline">\(r_t(k) = \exp\big(z_t(k)\big)-1\)</span></td>
+</tr>
+<tr class="odd">
+<td>Annualized</td>
+<td align="left"><span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1\)</span></td>
+<td align="left"><span class="math inline">\(z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
+<td align="left"><span class="math inline">\(r_t^A = \exp(z_t^A)-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note that the annualized return here assumes the single period returns are annual returns.</p>
+<p>In case of higher frequency data than annual, i.e., daily, weekly and monthly,
+we have to compound by the number of periods in a year.</p>
+<ul>
+<li><p>daily single period: <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>weekly <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>monthly <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1\)</span>for simple return, <span class="math inline">\(z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>quarterly <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1\)</span>for simple return, <span class="math inline">\(z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+</ul>
+</div>
+<div id="portfolio-returns" class="section level3">
+<h3>Portfolio Returns</h3>
+<p>Consider a buy-and-hold portfolio invested in <span class="math inline">\(k\)</span> different assets. The value at time <span class="math inline">\(t\)</span> is</p>
+<p><span class="math display">\[
+V_t = \sum_{i=1}^k n_i P_{i,t}
+\]</span>
+where <span class="math inline">\(n_i\)</span> is the number of shares invested in asset <span class="math inline">\(i\)</span>.</p>
+<blockquote>
+<p>Buy-and-hold portfolio: Portfolio weights from the initial portfolio are allowed to change over time as prices of the underlying assets change over time. In this case no rebalancing of the portfolio is done. <span class="math inline">\(n_i\)</span> is constant for each asset <span class="math inline">\(i\)</span> over the holding period. The weight increases if an asset’s price increases, and decreases otherwise. This strategy is passive and does not trade further except for the initial asset allocation.</p>
+</blockquote>
+<blockquote>
+<p>Another trading strategy is rebalancing (monthly). This is to buy and trade at the end of each rebalance period such that your portfolio aligns with your target allocation. Regularly rebalancing a portfolio ensures that the investor maintains the desired risk and return characteristics. For instance, if the weight of a particular asset class has increased significantly due to strong performance, rebalancing involves selling a portion of that asset and reinvesting the proceeds in other assets to restore the desired portfolio weight. This is a <em>rebalanced portfolio</em>.</p>
+</blockquote>
+<p>The simple one-period return of the portfolio is a weighted average of the returns of component stocks.</p>
+<p><span class="math display">\[
+r_{p,t} = \frac{V_t}{V_{t-1}}-1
+= \sum_{i=1}^k w_{i,t} r_{i,t}
+\]</span></p>
+<p>This result is useful. We can use the property to get the expected return and variance of the portfolio as:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[r_{p,t}] &amp;= \sum_{i=1}^k w_{i,t} E[r_{i,t}] \\
+\text{Var}[r_{p,t}] &amp;= \sum_{i=1}^k\sum_{j=1}^k w_{i,t}\,w_{j,t}\,\text{Cov}(r_{i,t}, r_{j,t})
+\end{aligned}
+\]</span></p>
+<div class="boxed">
+<div class="exercise">
+<p><span id="exr:proof2" class="exercise"><strong>Proof. 2  </strong></span><em>Show <span class="math inline">\(r_{p,t} = \sum_{i=1}^k w_i r_{i,t}\)</span>.</em></p>
+<p><span class="math display">\[
+\begin{aligned}
+r_{p,t} &amp;= \frac{V_t}{V_{t-1}} -1 \\
+&amp;= \frac{\sum_{i=1}^k n_iP_{i,t}}{\sum_{j=1}^k n_jP_{j,t-1}} -1 \\
+&amp;= \sum_{i=1}^k \frac{n_iP_{i,t-1}}{\sum_{j=1}^k n_jP_{j,t-1}} \cdot \frac{P_{i,t}}{P_{i,t-1}} - 1  \qquad \text{(multiply and divide by } P_{i, t-1} )\\
+&amp;= \sum_i w_{i,t} (r_{i,t}+1) -1 \\
+&amp;= \sum_i w_{i,t} r_{i,t} \qquad (w_{i,t} \text{ sums to 1})
+\end{aligned}
+\]</span>
+where <span class="math inline">\(w_{i,t}= \frac{n_iP_{i,t-1}}{\sum_{j=1}^k n_jP_{j,t-1}}\)</span> is the weight of asset <span class="math inline">\(i\)</span> at time <span class="math inline">\(t-1\)</span>.</p>
+<p><span style="margin-top:-2em; float:right"><span class="math inline">\(\square\)</span></span></p>
+</div>
+</div>
+<p>Note that an asset’s weight in month <span class="math inline">\(t\)</span>, <span class="math inline">\(w_{i,t}\)</span>, is decided by the ratio of the value of the asset to the portfolio value at the beginning of the period, i.e., at time <span class="math inline">\(t-1\)</span>.</p>
+<p>This cross-sectional additivity does not apply to log returns. In stead we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+z_{p,t} &amp;= \ln\,\left(\frac{V_t}{V_{t-1}}\right) \\
+&amp;= \ln \, \left(\frac{\sum_{i=1}^k n_iP_{i,t}}{\sum_{j=1}^k n_jP_{j,t-1}} \right) \\
+&amp;= \ln \, \left(\sum_{i=1}^k\frac{ n_iP_{i,t-1}}{\sum_{j=1}^k n_jP_{j,t-1}} \cdot \frac{P_{i,t}}{P_{i,t-1}} \right) \\
+&amp;= \ln \, \left(\sum_{i=1}^k w_{i,t} \frac{P_{i,t}}{P_{i,t-1}} \right) \\
+&amp;= \ln \, \left(\sum_{i=1}^k w_{i,t} \exp(z_{i,t}) \right) .
+\end{aligned}
+\]</span>
+The log return of the portfolio is not a linear function for the log returns of the components.</p>
+<blockquote>
+<p>Because the continuously compounded portfolio return is not a weighted average of the individual asset continuously compounded returns, the analysis of portfolios is typically performed using simple returns and not continuously compounded returns.</p>
+</blockquote>
+<p>On the other hand, the log returns are additive when we consider the time series of returns:</p>
+<p><span class="math display">\[
+z_{p,t}(k) = \sum_{j=0}^{k-1} z_{p,t-j}.
+\]</span>
+Given the expected values and the covariances of the subperiod returns, it is then easy to compute the expected value and the variance of the full period return.</p>
+<p>In contrast, the time series additivity does not apply to simple returns.</p>
+<p><span class="math display">\[
+r_{p, t}(k) = \prod_{j=0}^{k-1} (1+r_{p,t-j}) -1
+\]</span></p>
+<hr />
+</div>
+</div>
+<div id="portfolio-performance-evaluation" class="section level2">
+<h2>Portfolio performance evaluation</h2>
+<p>We use a portfolio consisting of 2 assets as an example.</p>
+<div id="return" class="section level3">
+<h3>Return</h3>
+<p>Loop through assets to calculate monthly return from daily price data.</p>
+<pre class="r"><code>data_return &lt;- titlon_group %&gt;%  # calculate monthly return
+    group_modify( ~{
+        xts(.$AdjustedPrice, order.by = .$Date) %&gt;%
+            to.monthly(indexAt=&quot;last&quot;, OHLC=FALSE) %&gt;% 
+            Return.calculate() %&gt;% 
+            data.frame() %&gt;% 
+            rownames_to_column(var=&quot;Date&quot;)
+    })  %&gt;% ungroup()
+colnames(data_return)[3] &lt;- &quot;Return_monthly&quot;
+data_return</code></pre>
+<pre><code>## # A tibble: 30,351 × 3
+##    ISIN         Date       Return_monthly
+##    &lt;chr&gt;        &lt;chr&gt;               &lt;dbl&gt;
+##  1 AU000000CSS3 2021-05-31      NA       
+##  2 AU000000CSS3 2021-06-30      -0.0147  
+##  3 AU000000CSS3 2021-07-29       0.0746  
+##  4 AU000000CSS3 2021-08-30       0.208   
+##  5 AU000000CSS3 2021-09-30      -0.195   
+##  6 AU000000CSS3 2021-10-29       0.114   
+##  7 AU000000CSS3 2021-11-29      -0.000128
+##  8 AU000000CSS3 2021-12-29      -0.0640  
+##  9 AU000000CSS3 2022-01-24      -0.0193  
+## 10 AU000000CSS3 2022-02-28       0.00349 
+## # ℹ 30,341 more rows</code></pre>
+<pre class="r"><code>## equity identifiers, ensure one-to-one mapping
+select &lt;- dplyr::select
+unique_id &lt;- titlon_data %&gt;% 
+    distinct(ISIN, .keep_all = TRUE) %&gt;% 
+    select(all_of(c(&quot;SecurityId&quot;, &quot;CompanyId&quot;, &quot;Symbol&quot;, &quot;ISIN&quot;,
+                    &quot;Name&quot;, &quot;Sector&quot;)))
+unique_id</code></pre>
+<pre><code>## # A tibble: 501 × 6
+##    SecurityId CompanyId Symbol ISIN         Name               Sector           
+##         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;              &lt;chr&gt;            
+##  1    1304857     12720 2020   BMG9156K1018 2020 Bulkers       Industrials      
+##  2    1301972     12440 FIVEPG DK0060945467 5th Planet Games   Consumer Discret…
+##  3         NA        NA AASB   NO0010672181 Aasen Sparebank    Financials       
+##  4       6085      2017 ABG    NO0003021909 ABG Sundal Collier Financials       
+##  5    1301198     12348 ABL    NO0010715394 ABL GROUP          Industrials      
+##  6    1304655     12701 ADE    NO0010844038 Adevinta           Consumer Discret…
+##  7    1304652     12701 ADEA   NO0010843998 Adevinta ser. A    Consumer Discret…
+##  8         NA        NA ADS    CY0108052115 ADS Crude Carriers Industrials      
+##  9    1251504     11273 AEGA   NO0010626559 Aega               Financials       
+## 10         NA        NA AEGA   NO0012958539 AEGA               Financials       
+## # ℹ 491 more rows</code></pre>
+<pre class="r"><code>## add company info
+data_return &lt;- data_return %&gt;% 
+    left_join(unique_id, by=&quot;ISIN&quot;) %&gt;% 
+    select(&quot;ISIN&quot;, &quot;Date&quot;,
+           &quot;Symbol&quot;, &quot;Name&quot;, &quot;Sector&quot;, 
+           &quot;Return_monthly&quot;)
+
+## select complete cases
+start_date &lt;- ymd(&quot;2015-01-01&quot;)
+end_date &lt;- ymd(&quot;2022-12-31&quot;)
+data_return &lt;- data_return %&gt;% 
+    mutate(Date = ymd(Date)) %&gt;% 
+    filter(between(Date, start_date, end_date))
+ISIN_vec &lt;- data_return %&gt;% group_by(ISIN) %&gt;% 
+    tally(sort=TRUE) %&gt;% 
+    filter(n==96) %&gt;% 
+    pull(ISIN)
+ISIN_vec %&gt;% length() # 142 complete cases</code></pre>
+<pre><code>## [1] 142</code></pre>
+<pre class="r"><code>data_return &lt;- data_return %&gt;% filter(ISIN %in% ISIN_vec)    
+data_return</code></pre>
+<pre><code>## # A tibble: 13,632 × 6
+##    ISIN         Date       Symbol Name   Sector Return_monthly
+##    &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;
+##  1 BMG0451H1170 2015-01-30 ARCHER Archer Energy       -0.240  
+##  2 BMG0451H1170 2015-02-27 ARCHER Archer Energy       -0.228  
+##  3 BMG0451H1170 2015-03-31 ARCHER Archer Energy        0.00844
+##  4 BMG0451H1170 2015-04-30 ARCHER Archer Energy        0.167  
+##  5 BMG0451H1170 2015-05-29 ARCHER Archer Energy       -0.0394 
+##  6 BMG0451H1170 2015-06-30 ARCHER Archer Energy        0.00746
+##  7 BMG0451H1170 2015-07-31 ARCHER Archer Energy       -0.215  
+##  8 BMG0451H1170 2015-08-31 ARCHER Archer Energy       -0.401  
+##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy       -0.130  
+## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy       -0.0769 
+## # ℹ 13,622 more rows</code></pre>
+<p>Get sample data for two assets.</p>
+<pre class="r"><code>k &lt;- 2 # number of asset
+sample_data &lt;- data_return %&gt;% 
+    filter(ISIN %in% c(&quot;BMG0451H1170&quot;, &quot;NO0003079709&quot;))
+sample_data</code></pre>
+<pre><code>## # A tibble: 192 × 6
+##    ISIN         Date       Symbol Name   Sector Return_monthly
+##    &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;
+##  1 BMG0451H1170 2015-01-30 ARCHER Archer Energy       -0.240  
+##  2 BMG0451H1170 2015-02-27 ARCHER Archer Energy       -0.228  
+##  3 BMG0451H1170 2015-03-31 ARCHER Archer Energy        0.00844
+##  4 BMG0451H1170 2015-04-30 ARCHER Archer Energy        0.167  
+##  5 BMG0451H1170 2015-05-29 ARCHER Archer Energy       -0.0394 
+##  6 BMG0451H1170 2015-06-30 ARCHER Archer Energy        0.00746
+##  7 BMG0451H1170 2015-07-31 ARCHER Archer Energy       -0.215  
+##  8 BMG0451H1170 2015-08-31 ARCHER Archer Energy       -0.401  
+##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy       -0.130  
+## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy       -0.0769 
+## # ℹ 182 more rows</code></pre>
+<pre class="r"><code>ret_mat &lt;- sample_data %&gt;% pull(Return_monthly) %&gt;% 
+    matrix(ncol=k)
+ret_mat %&gt;% dim()</code></pre>
+<pre><code>## [1] 96  2</code></pre>
+<pre class="r"><code>wts &lt;- rep(1/k, k) 
+wts</code></pre>
+<pre><code>## [1] 0.5 0.5</code></pre>
+<p>Calculate portfolio return manually (most concise). It is straightforward to calculate rebalanced, as the begin of period weights are always the same.
+But it is a bit cumbersome to calculate buy-and-hold as we need to update the weight for each period.</p>
+<p>Here shows an example of buy-and-hold.</p>
+<pre class="r"><code># option 1, matrix representation
+ptf_ret &lt;- ret_mat %*% matrix(wts, ncol=1)
+names(ptf_ret) &lt;- &quot;port_ret_manual&quot;
+ptf_ret %&gt;% head(10)</code></pre>
+<pre><code>##               [,1]
+##  [1,] -0.122990026
+##  [2,] -0.043001570
+##  [3,]  0.022356632
+##  [4,]  0.247278035
+##  [5,]  0.003363661
+##  [6,] -0.036708697
+##  [7,] -0.007408891
+##  [8,] -0.253805031
+##  [9,] -0.061228133
+## [10,]  0.081909129</code></pre>
+<p>Alternatively, we can use <code>PerformanceAnalytics</code> package. It provides many functions convenient for performance evaluation. We need to convert the data to <code>xts</code> before providing it as the input for <code>PerformanceAnalytics</code> functions.</p>
+<pre class="r"><code>## using PerformanceAnalytics::Return.portfolio
+sample_data &lt;- sample_data %&gt;%      # standardize date
+    mutate(yrmon=as.yearmon(Date))
+sample_data &lt;- sample_data %&gt;%  
+    mutate(Date=as.Date(yrmon, frac=1))
+return_xts &lt;- sample_data %&gt;% pull(Return_monthly) %&gt;% 
+    matrix(ncol=k) %&gt;% 
+    xts(order.by = sample_data$Date %&gt;% unique())
+colnames(return_xts) &lt;- sample_data$Symbol %&gt;% unique()
+return_xts %&gt;% str()</code></pre>
+<pre><code>## An xts object on 2015-01-31 / 2022-12-31 containing: 
+##   Data:    double [96, 2]
+##   Columns: ARCHER, KIT
+##   Index:   Date [96] (TZ: &quot;UTC&quot;)</code></pre>
+<pre class="r"><code>return_xts %&gt;% 
+    data.frame %&gt;% 
+    knitr::kable(digits = 5, caption = &quot;Component asset monthly returns&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;) %&gt;% 
+    scroll_box(height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-7">Table 2: </span>Component asset monthly returns
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+ARCHER
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+KIT
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2015-01-31
+</td>
+<td style="text-align:right;">
+-0.24010
+</td>
+<td style="text-align:right;">
+-0.00588
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-02-28
+</td>
+<td style="text-align:right;">
+-0.22801
+</td>
+<td style="text-align:right;">
+0.14201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-03-31
+</td>
+<td style="text-align:right;">
+0.00844
+</td>
+<td style="text-align:right;">
+0.03627
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:right;">
+0.16736
+</td>
+<td style="text-align:right;">
+0.32719
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-05-31
+</td>
+<td style="text-align:right;">
+-0.03943
+</td>
+<td style="text-align:right;">
+0.04615
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-06-30
+</td>
+<td style="text-align:right;">
+0.00746
+</td>
+<td style="text-align:right;">
+-0.08088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-07-31
+</td>
+<td style="text-align:right;">
+-0.21481
+</td>
+<td style="text-align:right;">
+0.20000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-08-31
+</td>
+<td style="text-align:right;">
+-0.40094
+</td>
+<td style="text-align:right;">
+-0.10667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-09-30
+</td>
+<td style="text-align:right;">
+-0.12992
+</td>
+<td style="text-align:right;">
+0.00746
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-10-31
+</td>
+<td style="text-align:right;">
+-0.07692
+</td>
+<td style="text-align:right;">
+0.24074
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-11-30
+</td>
+<td style="text-align:right;">
+-0.16176
+</td>
+<td style="text-align:right;">
+0.06567
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-12-31
+</td>
+<td style="text-align:right;">
+-0.27485
+</td>
+<td style="text-align:right;">
+0.09244
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-01-31
+</td>
+<td style="text-align:right;">
+-0.27419
+</td>
+<td style="text-align:right;">
+0.05128
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-02-29
+</td>
+<td style="text-align:right;">
+-0.40667
+</td>
+<td style="text-align:right;">
+-0.02683
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-03-31
+</td>
+<td style="text-align:right;">
+0.80899
+</td>
+<td style="text-align:right;">
+0.08772
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-04-30
+</td>
+<td style="text-align:right;">
+0.46998
+</td>
+<td style="text-align:right;">
+0.07126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-05-31
+</td>
+<td style="text-align:right;">
+-0.09296
+</td>
+<td style="text-align:right;">
+0.00899
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-06-30
+</td>
+<td style="text-align:right;">
+-0.16149
+</td>
+<td style="text-align:right;">
+-0.01114
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-07-31
+</td>
+<td style="text-align:right;">
+-0.11111
+</td>
+<td style="text-align:right;">
+0.26126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-08-31
+</td>
+<td style="text-align:right;">
+-0.17292
+</td>
+<td style="text-align:right;">
+-0.03036
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-09-30
+</td>
+<td style="text-align:right;">
+0.20907
+</td>
+<td style="text-align:right;">
+0.01289
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-10-31
+</td>
+<td style="text-align:right;">
+0.40000
+</td>
+<td style="text-align:right;">
+0.01273
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-11-30
+</td>
+<td style="text-align:right;">
+-0.04167
+</td>
+<td style="text-align:right;">
+0.08618
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-12-31
+</td>
+<td style="text-align:right;">
+0.95652
+</td>
+<td style="text-align:right;">
+-0.00331
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-01-31
+</td>
+<td style="text-align:right;">
+0.30159
+</td>
+<td style="text-align:right;">
+0.10448
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-02-28
+</td>
+<td style="text-align:right;">
+-0.29878
+</td>
+<td style="text-align:right;">
+0.08108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-03-31
+</td>
+<td style="text-align:right;">
+0.18261
+</td>
+<td style="text-align:right;">
+-0.09444
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-04-30
+</td>
+<td style="text-align:right;">
+-0.04412
+</td>
+<td style="text-align:right;">
+0.09618
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-05-31
+</td>
+<td style="text-align:right;">
+-0.12692
+</td>
+<td style="text-align:right;">
+0.04499
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-06-30
+</td>
+<td style="text-align:right;">
+-0.13833
+</td>
+<td style="text-align:right;">
+0.10000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-07-31
+</td>
+<td style="text-align:right;">
+0.18098
+</td>
+<td style="text-align:right;">
+0.11742
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-08-31
+</td>
+<td style="text-align:right;">
+-0.14545
+</td>
+<td style="text-align:right;">
+-0.07684
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-09-30
+</td>
+<td style="text-align:right;">
+0.21581
+</td>
+<td style="text-align:right;">
+-0.01469
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-10-31
+</td>
+<td style="text-align:right;">
+-0.18833
+</td>
+<td style="text-align:right;">
+-0.11553
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-11-30
+</td>
+<td style="text-align:right;">
+-0.13860
+</td>
+<td style="text-align:right;">
+0.01124
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-12-31
+</td>
+<td style="text-align:right;">
+0.19785
+</td>
+<td style="text-align:right;">
+-0.02917
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-01-31
+</td>
+<td style="text-align:right;">
+0.04876
+</td>
+<td style="text-align:right;">
+0.18026
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-02-28
+</td>
+<td style="text-align:right;">
+-0.12334
+</td>
+<td style="text-align:right;">
+0.03636
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-03-31
+</td>
+<td style="text-align:right;">
+-0.12662
+</td>
+<td style="text-align:right;">
+0.01754
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-04-30
+</td>
+<td style="text-align:right;">
+0.16481
+</td>
+<td style="text-align:right;">
+0.10216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-05-31
+</td>
+<td style="text-align:right;">
+0.15319
+</td>
+<td style="text-align:right;">
+0.07301
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-06-30
+</td>
+<td style="text-align:right;">
+-0.01292
+</td>
+<td style="text-align:right;">
+0.01134
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-07-31
+</td>
+<td style="text-align:right;">
+-0.14486
+</td>
+<td style="text-align:right;">
+-0.03466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-08-31
+</td>
+<td style="text-align:right;">
+-0.21749
+</td>
+<td style="text-align:right;">
+0.03485
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-09-30
+</td>
+<td style="text-align:right;">
+0.06145
+</td>
+<td style="text-align:right;">
+-0.00306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-10-31
+</td>
+<td style="text-align:right;">
+-0.07895
+</td>
+<td style="text-align:right;">
+-0.12590
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-11-30
+</td>
+<td style="text-align:right;">
+-0.12286
+</td>
+<td style="text-align:right;">
+0.04684
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-12-31
+</td>
+<td style="text-align:right;">
+-0.29235
+</td>
+<td style="text-align:right;">
+-0.02685
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-01-31
+</td>
+<td style="text-align:right;">
+0.08631
+</td>
+<td style="text-align:right;">
+-0.01149
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-02-28
+</td>
+<td style="text-align:right;">
+0.17797
+</td>
+<td style="text-align:right;">
+0.03488
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-03-31
+</td>
+<td style="text-align:right;">
+-0.11151
+</td>
+<td style="text-align:right;">
+-0.02247
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-04-30
+</td>
+<td style="text-align:right;">
+0.12348
+</td>
+<td style="text-align:right;">
+0.10345
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-05-31
+</td>
+<td style="text-align:right;">
+-0.28649
+</td>
+<td style="text-align:right;">
+-0.04996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-06-30
+</td>
+<td style="text-align:right;">
+0.14394
+</td>
+<td style="text-align:right;">
+0.05263
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-07-31
+</td>
+<td style="text-align:right;">
+0.02980
+</td>
+<td style="text-align:right;">
+0.11087
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-08-31
+</td>
+<td style="text-align:right;">
+-0.10825
+</td>
+<td style="text-align:right;">
+-0.07045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-09-30
+</td>
+<td style="text-align:right;">
+-0.05529
+</td>
+<td style="text-align:right;">
+-0.02526
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-10-31
+</td>
+<td style="text-align:right;">
+-0.11832
+</td>
+<td style="text-align:right;">
+0.00864
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-11-30
+</td>
+<td style="text-align:right;">
+-0.16883
+</td>
+<td style="text-align:right;">
+0.00321
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-12-31
+</td>
+<td style="text-align:right;">
+0.10417
+</td>
+<td style="text-align:right;">
+0.17395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-01-31
+</td>
+<td style="text-align:right;">
+-0.09119
+</td>
+<td style="text-align:right;">
+-0.07454
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-02-29
+</td>
+<td style="text-align:right;">
+-0.01557
+</td>
+<td style="text-align:right;">
+0.03144
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-03-31
+</td>
+<td style="text-align:right;">
+-0.36801
+</td>
+<td style="text-align:right;">
+-0.18286
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-30
+</td>
+<td style="text-align:right;">
+-0.07119
+</td>
+<td style="text-align:right;">
+0.25874
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-31
+</td>
+<td style="text-align:right;">
+0.23653
+</td>
+<td style="text-align:right;">
+0.08889
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+0.04116
+</td>
+<td style="text-align:right;">
+0.00510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-31
+</td>
+<td style="text-align:right;">
+-0.02791
+</td>
+<td style="text-align:right;">
+0.26903
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-31
+</td>
+<td style="text-align:right;">
+0.13636
+</td>
+<td style="text-align:right;">
+0.09066
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-30
+</td>
+<td style="text-align:right;">
+-0.10947
+</td>
+<td style="text-align:right;">
+0.11736
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-10-31
+</td>
+<td style="text-align:right;">
+0.01182
+</td>
+<td style="text-align:right;">
+-0.03241
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-11-30
+</td>
+<td style="text-align:right;">
+0.44626
+</td>
+<td style="text-align:right;">
+-0.04593
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-12-31
+</td>
+<td style="text-align:right;">
+-0.00646
+</td>
+<td style="text-align:right;">
+0.03899
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-01-31
+</td>
+<td style="text-align:right;">
+0.36098
+</td>
+<td style="text-align:right;">
+-0.10265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-02-28
+</td>
+<td style="text-align:right;">
+-0.06810
+</td>
+<td style="text-align:right;">
+0.04551
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-03-31
+</td>
+<td style="text-align:right;">
+0.11923
+</td>
+<td style="text-align:right;">
+0.29411
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-04-30
+</td>
+<td style="text-align:right;">
+0.19817
+</td>
+<td style="text-align:right;">
+-0.07088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-05-31
+</td>
+<td style="text-align:right;">
+-0.13193
+</td>
+<td style="text-align:right;">
+0.08707
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-06-30
+</td>
+<td style="text-align:right;">
+0.02423
+</td>
+<td style="text-align:right;">
+-0.09108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-07-31
+</td>
+<td style="text-align:right;">
+-0.05699
+</td>
+<td style="text-align:right;">
+-0.02115
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-08-31
+</td>
+<td style="text-align:right;">
+-0.09920
+</td>
+<td style="text-align:right;">
+-0.01440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-09-30
+</td>
+<td style="text-align:right;">
+0.24051
+</td>
+<td style="text-align:right;">
+-0.05219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-10-31
+</td>
+<td style="text-align:right;">
+-0.01020
+</td>
+<td style="text-align:right;">
+0.00906
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-11-30
+</td>
+<td style="text-align:right;">
+-0.21237
+</td>
+<td style="text-align:right;">
+0.07016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-12-31
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+<td style="text-align:right;">
+0.22789
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-01-31
+</td>
+<td style="text-align:right;">
+0.11257
+</td>
+<td style="text-align:right;">
+-0.04025
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-02-28
+</td>
+<td style="text-align:right;">
+-0.23294
+</td>
+<td style="text-align:right;">
+-0.08168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-03-31
+</td>
+<td style="text-align:right;">
+0.01227
+</td>
+<td style="text-align:right;">
+-0.03125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-04-30
+</td>
+<td style="text-align:right;">
+-0.10606
+</td>
+<td style="text-align:right;">
+-0.06995
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-05-31
+</td>
+<td style="text-align:right;">
+0.36441
+</td>
+<td style="text-align:right;">
+0.02489
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-06-30
+</td>
+<td style="text-align:right;">
+-0.13043
+</td>
+<td style="text-align:right;">
+-0.07392
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-07-31
+</td>
+<td style="text-align:right;">
+0.01429
+</td>
+<td style="text-align:right;">
+0.18871
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-08-31
+</td>
+<td style="text-align:right;">
+0.08310
+</td>
+<td style="text-align:right;">
+-0.03837
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-09-30
+</td>
+<td style="text-align:right;">
+-0.14174
+</td>
+<td style="text-align:right;">
+-0.06135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-10-31
+</td>
+<td style="text-align:right;">
+0.11515
+</td>
+<td style="text-align:right;">
+0.23805
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-11-30
+</td>
+<td style="text-align:right;">
+0.00136
+</td>
+<td style="text-align:right;">
+0.01073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-12-31
+</td>
+<td style="text-align:right;">
+-0.06649
+</td>
+<td style="text-align:right;">
+0.19108
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>Return.portfolio</code> can do buy-and-hold and rebalanced strategies rather easily.
+We do not need to calculate the weight on our own in case of buy-and-hold.</p>
+<pre class="r"><code># buy and hold ptf
+ptf_bh &lt;- Return.portfolio(R = return_xts, weights = wts, verbose = TRUE)
+# rebalanced ptf
+ptf_rebal &lt;- Return.portfolio(R = return_xts, weights = wts, rebalance_on=&quot;month&quot;, verbose = TRUE)</code></pre>
+<p>Plot the portfolio return time series.</p>
+<pre class="r"><code>plot_data &lt;- ptf_bh$returns %&gt;% 
+    merge(ptf_rebal$returns) %&gt;% 
+    setNames(c(&quot;buy-and-hold&quot;, &quot;rebalance&quot;))
+plot(plot_data, multi.panel=TRUE, main=&quot;Portfolio monthly return&quot;)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>By setting <code>verbose = TRUE</code>, it allows us to check intermediary calculations, such as contributions, weight for each asset.</p>
+<p>Here we check the end of period weight.</p>
+<pre class="r"><code># plot end of period weights
+eop_weight_bh &lt;- ptf_bh$EOP.Weight
+eop_weight_rebal &lt;- ptf_rebal$EOP.Weight
+par(mfrow = c(2, 1), mar = c(2, 4, 2, 2))
+plot.xts(eop_weight_bh$KIT)
+plot.xts(eop_weight_rebal$KIT)</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:eop-weight"></span>
+<img src="w3_files/figure-html/eop-weight-1.png" alt="Weight of `KIT` under buy-and-hold and rebalancing." width="1195.2" />
+<p class="caption">
+Fig. 3: Weight of <code>KIT</code> under buy-and-hold and rebalancing.
+</p>
+</div>
+<p>We see that the weight of <code>KIT</code> basically skyrockets and dominates the portfolio, taking up more than <span class="math inline">\(99\%\)</span> of the portfolio.
+This is due to its strong performance.</p>
+<p>Now we check the relative performance of the two assets.</p>
+<pre class="r"><code>## check relative performance by calculating the equity curve
+equity_curve_xts &lt;- return_xts %&gt;% 
+    apply(2, function(col) cumprod(1 + col))
+equity_curve_xts &lt;- xts(equity_curve_xts, index(return_xts))
+colnames(equity_curve_xts) &lt;- colnames(return_xts)
+plot(equity_curve_xts, multi.panel=TRUE, yaxis.same=FALSE)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Q: what does the begin of period weight look like?</p>
+<p>A: a horizontal line at <span class="math inline">\(y=50\%\)</span>.</p>
+<pre class="r"><code>bop_weight_rebal &lt;- ptf_rebal$BOP.Weight
+plot(bop_weight_rebal$KIT)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="risk-adjusted-returns" class="section level3">
+<h3>Risk-adjusted returns</h3>
+<p>Excess return and Sharpe ratio.</p>
+<pre class="r"><code>## excess return
+f_name &lt;- &quot;data/NO_Rf-OSEBX_2015-2023_monthly.csv&quot;
+rfr &lt;- read_csv(f_name)
+rfr &lt;- rfr %&gt;% mutate(yrmon=as.yearmon(Date))
+ptf_ret3 &lt;- ptf_rebal$returns %&gt;% 
+    data.frame(row.names = index(ptf_bh$returns)) %&gt;% 
+    as_tibble(rownames=&quot;Date&quot;) %&gt;% 
+    mutate(yrmon=as.yearmon(Date))
+bind_cols(ptf_ret, ptf_ret3) # cross validate hand and computer calculations</code></pre>
+<pre><code>## # A tibble: 96 × 4
+##        ...1 Date       portfolio.returns yrmon    
+##       &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt; &lt;yearmon&gt;
+##  1 -0.123   2015-01-31          -0.123   Jan 2015 
+##  2 -0.0430  2015-02-28          -0.0430  Feb 2015 
+##  3  0.0224  2015-03-31           0.0224  Mar 2015 
+##  4  0.247   2015-04-30           0.247   Apr 2015 
+##  5  0.00336 2015-05-31           0.00336 May 2015 
+##  6 -0.0367  2015-06-30          -0.0367  Jun 2015 
+##  7 -0.00741 2015-07-31          -0.00741 Jul 2015 
+##  8 -0.254   2015-08-31          -0.254   Aug 2015 
+##  9 -0.0612  2015-09-30          -0.0612  Sep 2015 
+## 10  0.0819  2015-10-31           0.0819  Oct 2015 
+## # ℹ 86 more rows</code></pre>
+<p>Merge with risk free rate.</p>
+<pre class="r"><code>colnames(ptf_ret3)[2] &lt;- &quot;port_ret&quot;
+ptf_ret3 &lt;- ptf_ret3 %&gt;% 
+    left_join(rfr[,-1], by=&quot;yrmon&quot;) %&gt;% 
+    mutate(excess_ret = port_ret-rf_1month)
+ptf_ret3</code></pre>
+<pre><code>## # A tibble: 96 × 7
+##    Date     port_ret yrmon mkt_return_monthly rf_1month rf_annualized excess_ret
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;yea&gt;              &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+##  1 2015-01… -0.123   Jan …            0.0350    0.0012        0.0145    -0.124  
+##  2 2015-02… -0.0430  Feb …            0.0326    0.00113       0.0136    -0.0441 
+##  3 2015-03…  0.0224  Mar …            0.00578   0.00127       0.0153     0.0211 
+##  4 2015-04…  0.247   Apr …            0.0326    0.00123       0.0149     0.246  
+##  5 2015-05…  0.00336 May …            0.00988   0.00117       0.0141     0.00219
+##  6 2015-06… -0.0367  Jun …           -0.0257    0.00102       0.0123    -0.0377 
+##  7 2015-07… -0.00741 Jul …            0.0156    0.00097       0.0117    -0.00838
+##  8 2015-08… -0.254   Aug …           -0.0702    0.00095       0.0115    -0.255  
+##  9 2015-09… -0.0612  Sep …           -0.0207    0.00083       0.0100    -0.0621 
+## 10 2015-10…  0.0819  Oct …            0.0575    0.0008        0.00964    0.0811 
+## # ℹ 86 more rows</code></pre>
+<p>Monthly mean and volatility</p>
+<ul>
+<li>arithmetic mean (AM) portfolio return <span class="math inline">\(\bar{r}_{p, 0:T}\)</span></li>
+</ul>
+<p><span class="math display">\[
+\text{Arithmetic } \bar{r}_{p, 0:T} = \frac{\sum_{t=1}^T r_{p,t}}{T}
+\]</span></p>
+<ul>
+<li>geometric mean (GM) portfolio return</li>
+</ul>
+<p><span class="math display">\[
+\text{Geometric } \bar{r}_{p, 0:T} = \left[\prod_{t=1}^T (1+r_{p,t}) \right] ^{\frac{1}{T}}-1
+\]</span>
+Written as <span class="math inline">\(\bar{r}_p\)</span> in short, representing the arithmetic/geometric mean return of the portfolio from time <span class="math inline">\(0\)</span> to time <span class="math inline">\(T\)</span>.</p>
+<ul>
+<li><p>Arithmetic average sometimes cannot precisely reflect historical gains and losses. Suppose the original capital of <span class="math inline">\(\$100\)</span> is invested over a two-month period with 10% return in the first month and <span class="math inline">\(10\%\)</span> loss in the second month.</p>
+<ul>
+<li><p>The arithmetic average return is <span class="math inline">\((10\% - 10\%)/2=0\%\)</span>, which implies that there is no change in the <span class="math inline">\(\$100\)</span> invested. However, the actual gain/loss for the investment grows from <span class="math inline">\(\$100\)</span> to <span class="math inline">\(\$110\)</span> in the first month, and drops 10% from <span class="math inline">\(\$110\)</span> to <span class="math inline">\(\$99\)</span> in the second month, indicating an actual loss of <span class="math inline">\(\$1\)</span>.</p></li>
+<li><p>The geometric return is <span class="math inline">\((1.1\times0.9)^{0.5}-1\approx -0.5\%\)</span>, indicating a loss of <span class="math inline">\(-0.5\%\)</span> per month. The geometric return that incorporates the compounding effect of growth is a better indication of historical performance.</p></li>
+</ul></li>
+<li><p>Geometric mean is <strong>smaller than or equal to</strong> arithmetic mean and the equality holds if and only if <span class="math inline">\(r_{p,1}=r_{p,2}=\cdots=r_{p,T}\)</span>. This can be proven by using <strong>Jensen’s inequality</strong> that says, for any concave function <span class="math inline">\(g(x)\)</span>,</p></li>
+</ul>
+<p><span class="math display">\[
+E[g(x)] \le g(E[x]).
+\]</span>
+And <span class="math inline">\(\ln(x)\)</span> is a concave function.</p>
+<ul>
+<li>Common practice is to report geometric mean portfolio return.</li>
+</ul>
+<pre class="r"><code># arithmetic mean monthly returns
+mean(ptf_ret3$port_ret)</code></pre>
+<pre><code>## [1] 0.01681626</code></pre>
+<pre class="r"><code># geometric mean
+mean.geometric(ptf_ret3$port_ret) </code></pre>
+<pre><code>## [1] 0.009155608</code></pre>
+<pre class="r"><code>prod(1+ptf_ret3$port_ret)^(1/96)-1</code></pre>
+<pre><code>## [1] 0.009155608</code></pre>
+<pre class="r"><code># mean excess return
+mean(ptf_ret3$excess_ret) </code></pre>
+<pre><code>## [1] 0.01599762</code></pre>
+<pre class="r"><code>mean.geometric(ptf_ret3$excess_ret)</code></pre>
+<pre><code>## [1] 0.008326127</code></pre>
+<pre class="r"><code># standard deviation
+sd(ptf_ret3$port_ret)</code></pre>
+<pre><code>## [1] 0.1278693</code></pre>
+<p>Portfolio return and standard deviation are usually published as annualized.</p>
+<ul>
+<li>annualized arithmetic return assuming <span class="math inline">\(r_{p,t}\)</span> being monthly return</li>
+</ul>
+<p><span class="math display">\[
+r_{p}^A = \frac{12}{T}\sum_{t=1}^T r_{p,t} = 12\times \bar{r}_p
+\]</span></p>
+<ul>
+<li>annualized geometric return</li>
+</ul>
+<p><span class="math display">\[
+r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
+\]</span></p>
+<ul>
+<li>annualized standard deviation</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma_{p}^A &amp;= \sqrt{12} \sigma_p \\
+\sigma_p^2 &amp;= \frac{1}{T-1} \sum_{t=1}^T (r_{p,t}-\bar{r}_p)^2
+\end{aligned}
+\]</span></p>
+<p>It is possible to use <code>Return.annualized</code>, <code>StdDev.annualized</code> from the <code>PerformanceAnalytics</code> package to get the annualized statistics, but we need to convert the portfolio return as an <code>xts</code> object.</p>
+<pre class="r"><code># convert to xts
+ptf_xts &lt;- xts(ptf_ret3[,-c(1,3)], order.by=ymd(ptf_ret3$Date))
+ptf_xts %&gt;% 
+    data.frame %&gt;% 
+    knitr::kable(digits = 5, caption = &quot;Portfolio return in `xts`&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;) %&gt;% 
+    scroll_box(height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-15">Table 3: </span>Portfolio return in <code>xts</code>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+port_ret
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mkt_return_monthly
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+rf_1month
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+rf_annualized
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+excess_ret
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2015-01-31
+</td>
+<td style="text-align:right;">
+-0.12299
+</td>
+<td style="text-align:right;">
+0.03498
+</td>
+<td style="text-align:right;">
+0.00120
+</td>
+<td style="text-align:right;">
+0.01450
+</td>
+<td style="text-align:right;">
+-0.12419
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-02-28
+</td>
+<td style="text-align:right;">
+-0.04300
+</td>
+<td style="text-align:right;">
+0.03262
+</td>
+<td style="text-align:right;">
+0.00113
+</td>
+<td style="text-align:right;">
+0.01364
+</td>
+<td style="text-align:right;">
+-0.04413
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-03-31
+</td>
+<td style="text-align:right;">
+0.02236
+</td>
+<td style="text-align:right;">
+0.00578
+</td>
+<td style="text-align:right;">
+0.00127
+</td>
+<td style="text-align:right;">
+0.01535
+</td>
+<td style="text-align:right;">
+0.02109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:right;">
+0.24728
+</td>
+<td style="text-align:right;">
+0.03256
+</td>
+<td style="text-align:right;">
+0.00123
+</td>
+<td style="text-align:right;">
+0.01486
+</td>
+<td style="text-align:right;">
+0.24605
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-05-31
+</td>
+<td style="text-align:right;">
+0.00336
+</td>
+<td style="text-align:right;">
+0.00988
+</td>
+<td style="text-align:right;">
+0.00117
+</td>
+<td style="text-align:right;">
+0.01413
+</td>
+<td style="text-align:right;">
+0.00219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-06-30
+</td>
+<td style="text-align:right;">
+-0.03671
+</td>
+<td style="text-align:right;">
+-0.02566
+</td>
+<td style="text-align:right;">
+0.00102
+</td>
+<td style="text-align:right;">
+0.01231
+</td>
+<td style="text-align:right;">
+-0.03773
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-07-31
+</td>
+<td style="text-align:right;">
+-0.00741
+</td>
+<td style="text-align:right;">
+0.01561
+</td>
+<td style="text-align:right;">
+0.00097
+</td>
+<td style="text-align:right;">
+0.01170
+</td>
+<td style="text-align:right;">
+-0.00838
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-08-31
+</td>
+<td style="text-align:right;">
+-0.25381
+</td>
+<td style="text-align:right;">
+-0.07016
+</td>
+<td style="text-align:right;">
+0.00095
+</td>
+<td style="text-align:right;">
+0.01146
+</td>
+<td style="text-align:right;">
+-0.25476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-09-30
+</td>
+<td style="text-align:right;">
+-0.06123
+</td>
+<td style="text-align:right;">
+-0.02072
+</td>
+<td style="text-align:right;">
+0.00083
+</td>
+<td style="text-align:right;">
+0.01001
+</td>
+<td style="text-align:right;">
+-0.06206
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-10-31
+</td>
+<td style="text-align:right;">
+0.08191
+</td>
+<td style="text-align:right;">
+0.05749
+</td>
+<td style="text-align:right;">
+0.00080
+</td>
+<td style="text-align:right;">
+0.00964
+</td>
+<td style="text-align:right;">
+0.08111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-11-30
+</td>
+<td style="text-align:right;">
+-0.04805
+</td>
+<td style="text-align:right;">
+0.02198
+</td>
+<td style="text-align:right;">
+0.00108
+</td>
+<td style="text-align:right;">
+0.01304
+</td>
+<td style="text-align:right;">
+-0.04913
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015-12-31
+</td>
+<td style="text-align:right;">
+-0.09121
+</td>
+<td style="text-align:right;">
+-0.02942
+</td>
+<td style="text-align:right;">
+0.00087
+</td>
+<td style="text-align:right;">
+0.01049
+</td>
+<td style="text-align:right;">
+-0.09208
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-01-31
+</td>
+<td style="text-align:right;">
+-0.11146
+</td>
+<td style="text-align:right;">
+-0.08083
+</td>
+<td style="text-align:right;">
+0.00085
+</td>
+<td style="text-align:right;">
+0.01025
+</td>
+<td style="text-align:right;">
+-0.11231
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-02-29
+</td>
+<td style="text-align:right;">
+-0.21675
+</td>
+<td style="text-align:right;">
+0.02063
+</td>
+<td style="text-align:right;">
+0.00080
+</td>
+<td style="text-align:right;">
+0.00964
+</td>
+<td style="text-align:right;">
+-0.21755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-03-31
+</td>
+<td style="text-align:right;">
+0.44835
+</td>
+<td style="text-align:right;">
+0.00917
+</td>
+<td style="text-align:right;">
+0.00070
+</td>
+<td style="text-align:right;">
+0.00843
+</td>
+<td style="text-align:right;">
+0.44765
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-04-30
+</td>
+<td style="text-align:right;">
+0.27062
+</td>
+<td style="text-align:right;">
+0.04938
+</td>
+<td style="text-align:right;">
+0.00069
+</td>
+<td style="text-align:right;">
+0.00831
+</td>
+<td style="text-align:right;">
+0.26993
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-05-31
+</td>
+<td style="text-align:right;">
+-0.04198
+</td>
+<td style="text-align:right;">
+0.01819
+</td>
+<td style="text-align:right;">
+0.00068
+</td>
+<td style="text-align:right;">
+0.00819
+</td>
+<td style="text-align:right;">
+-0.04266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-06-30
+</td>
+<td style="text-align:right;">
+-0.08631
+</td>
+<td style="text-align:right;">
+-0.02341
+</td>
+<td style="text-align:right;">
+0.00073
+</td>
+<td style="text-align:right;">
+0.00880
+</td>
+<td style="text-align:right;">
+-0.08704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-07-31
+</td>
+<td style="text-align:right;">
+0.07508
+</td>
+<td style="text-align:right;">
+0.01621
+</td>
+<td style="text-align:right;">
+0.00068
+</td>
+<td style="text-align:right;">
+0.00819
+</td>
+<td style="text-align:right;">
+0.07440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-08-31
+</td>
+<td style="text-align:right;">
+-0.10164
+</td>
+<td style="text-align:right;">
+0.01028
+</td>
+<td style="text-align:right;">
+0.00073
+</td>
+<td style="text-align:right;">
+0.00880
+</td>
+<td style="text-align:right;">
+-0.10237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-09-30
+</td>
+<td style="text-align:right;">
+0.11098
+</td>
+<td style="text-align:right;">
+0.00608
+</td>
+<td style="text-align:right;">
+0.00082
+</td>
+<td style="text-align:right;">
+0.00988
+</td>
+<td style="text-align:right;">
+0.11016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-10-31
+</td>
+<td style="text-align:right;">
+0.20636
+</td>
+<td style="text-align:right;">
+0.02491
+</td>
+<td style="text-align:right;">
+0.00078
+</td>
+<td style="text-align:right;">
+0.00940
+</td>
+<td style="text-align:right;">
+0.20558
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-11-30
+</td>
+<td style="text-align:right;">
+0.02225
+</td>
+<td style="text-align:right;">
+0.02888
+</td>
+<td style="text-align:right;">
+0.00107
+</td>
+<td style="text-align:right;">
+0.01292
+</td>
+<td style="text-align:right;">
+0.02118
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-12-31
+</td>
+<td style="text-align:right;">
+0.47661
+</td>
+<td style="text-align:right;">
+0.04148
+</td>
+<td style="text-align:right;">
+0.00087
+</td>
+<td style="text-align:right;">
+0.01049
+</td>
+<td style="text-align:right;">
+0.47574
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-01-31
+</td>
+<td style="text-align:right;">
+0.20303
+</td>
+<td style="text-align:right;">
+0.01353
+</td>
+<td style="text-align:right;">
+0.00059
+</td>
+<td style="text-align:right;">
+0.00710
+</td>
+<td style="text-align:right;">
+0.20244
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-02-28
+</td>
+<td style="text-align:right;">
+-0.10885
+</td>
+<td style="text-align:right;">
+-0.00411
+</td>
+<td style="text-align:right;">
+0.00076
+</td>
+<td style="text-align:right;">
+0.00916
+</td>
+<td style="text-align:right;">
+-0.10961
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-03-31
+</td>
+<td style="text-align:right;">
+0.04408
+</td>
+<td style="text-align:right;">
+-0.00351
+</td>
+<td style="text-align:right;">
+0.00068
+</td>
+<td style="text-align:right;">
+0.00819
+</td>
+<td style="text-align:right;">
+0.04340
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-04-30
+</td>
+<td style="text-align:right;">
+0.02603
+</td>
+<td style="text-align:right;">
+0.01426
+</td>
+<td style="text-align:right;">
+0.00069
+</td>
+<td style="text-align:right;">
+0.00831
+</td>
+<td style="text-align:right;">
+0.02534
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-05-31
+</td>
+<td style="text-align:right;">
+-0.04096
+</td>
+<td style="text-align:right;">
+0.01818
+</td>
+<td style="text-align:right;">
+0.00072
+</td>
+<td style="text-align:right;">
+0.00867
+</td>
+<td style="text-align:right;">
+-0.04168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-06-30
+</td>
+<td style="text-align:right;">
+-0.01916
+</td>
+<td style="text-align:right;">
+-0.01656
+</td>
+<td style="text-align:right;">
+0.00060
+</td>
+<td style="text-align:right;">
+0.00722
+</td>
+<td style="text-align:right;">
+-0.01976
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-07-31
+</td>
+<td style="text-align:right;">
+0.14920
+</td>
+<td style="text-align:right;">
+0.04857
+</td>
+<td style="text-align:right;">
+0.00056
+</td>
+<td style="text-align:right;">
+0.00674
+</td>
+<td style="text-align:right;">
+0.14864
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-08-31
+</td>
+<td style="text-align:right;">
+-0.11115
+</td>
+<td style="text-align:right;">
+0.01005
+</td>
+<td style="text-align:right;">
+0.00057
+</td>
+<td style="text-align:right;">
+0.00686
+</td>
+<td style="text-align:right;">
+-0.11172
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-09-30
+</td>
+<td style="text-align:right;">
+0.10056
+</td>
+<td style="text-align:right;">
+0.05842
+</td>
+<td style="text-align:right;">
+0.00056
+</td>
+<td style="text-align:right;">
+0.00674
+</td>
+<td style="text-align:right;">
+0.10000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-10-31
+</td>
+<td style="text-align:right;">
+-0.15193
+</td>
+<td style="text-align:right;">
+0.03047
+</td>
+<td style="text-align:right;">
+0.00052
+</td>
+<td style="text-align:right;">
+0.00626
+</td>
+<td style="text-align:right;">
+-0.15245
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-11-30
+</td>
+<td style="text-align:right;">
+-0.06368
+</td>
+<td style="text-align:right;">
+-0.01254
+</td>
+<td style="text-align:right;">
+0.00056
+</td>
+<td style="text-align:right;">
+0.00674
+</td>
+<td style="text-align:right;">
+-0.06424
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-12-31
+</td>
+<td style="text-align:right;">
+0.08434
+</td>
+<td style="text-align:right;">
+0.02211
+</td>
+<td style="text-align:right;">
+0.00056
+</td>
+<td style="text-align:right;">
+0.00674
+</td>
+<td style="text-align:right;">
+0.08378
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-01-31
+</td>
+<td style="text-align:right;">
+0.11451
+</td>
+<td style="text-align:right;">
+-0.00422
+</td>
+<td style="text-align:right;">
+0.00063
+</td>
+<td style="text-align:right;">
+0.00759
+</td>
+<td style="text-align:right;">
+0.11388
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-02-28
+</td>
+<td style="text-align:right;">
+-0.04349
+</td>
+<td style="text-align:right;">
+0.01080
+</td>
+<td style="text-align:right;">
+0.00078
+</td>
+<td style="text-align:right;">
+0.00940
+</td>
+<td style="text-align:right;">
+-0.04427
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-03-31
+</td>
+<td style="text-align:right;">
+-0.05454
+</td>
+<td style="text-align:right;">
+-0.01763
+</td>
+<td style="text-align:right;">
+0.00079
+</td>
+<td style="text-align:right;">
+0.00952
+</td>
+<td style="text-align:right;">
+-0.05533
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-04-30
+</td>
+<td style="text-align:right;">
+0.13348
+</td>
+<td style="text-align:right;">
+0.06785
+</td>
+<td style="text-align:right;">
+0.00076
+</td>
+<td style="text-align:right;">
+0.00916
+</td>
+<td style="text-align:right;">
+0.13272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-05-31
+</td>
+<td style="text-align:right;">
+0.11310
+</td>
+<td style="text-align:right;">
+0.01809
+</td>
+<td style="text-align:right;">
+0.00068
+</td>
+<td style="text-align:right;">
+0.00819
+</td>
+<td style="text-align:right;">
+0.11242
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-06-30
+</td>
+<td style="text-align:right;">
+-0.00079
+</td>
+<td style="text-align:right;">
+0.00413
+</td>
+<td style="text-align:right;">
+0.00064
+</td>
+<td style="text-align:right;">
+0.00771
+</td>
+<td style="text-align:right;">
+-0.00143
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-07-31
+</td>
+<td style="text-align:right;">
+-0.08976
+</td>
+<td style="text-align:right;">
+0.01963
+</td>
+<td style="text-align:right;">
+0.00065
+</td>
+<td style="text-align:right;">
+0.00783
+</td>
+<td style="text-align:right;">
+-0.09041
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-08-31
+</td>
+<td style="text-align:right;">
+-0.09132
+</td>
+<td style="text-align:right;">
+0.01148
+</td>
+<td style="text-align:right;">
+0.00068
+</td>
+<td style="text-align:right;">
+0.00819
+</td>
+<td style="text-align:right;">
+-0.09200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-09-30
+</td>
+<td style="text-align:right;">
+0.02920
+</td>
+<td style="text-align:right;">
+0.03482
+</td>
+<td style="text-align:right;">
+0.00082
+</td>
+<td style="text-align:right;">
+0.00988
+</td>
+<td style="text-align:right;">
+0.02838
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-10-31
+</td>
+<td style="text-align:right;">
+-0.10242
+</td>
+<td style="text-align:right;">
+-0.05180
+</td>
+<td style="text-align:right;">
+0.00082
+</td>
+<td style="text-align:right;">
+0.00988
+</td>
+<td style="text-align:right;">
+-0.10324
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-11-30
+</td>
+<td style="text-align:right;">
+-0.03801
+</td>
+<td style="text-align:right;">
+-0.03224
+</td>
+<td style="text-align:right;">
+0.00095
+</td>
+<td style="text-align:right;">
+0.01146
+</td>
+<td style="text-align:right;">
+-0.03896
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-12-31
+</td>
+<td style="text-align:right;">
+-0.15960
+</td>
+<td style="text-align:right;">
+-0.07145
+</td>
+<td style="text-align:right;">
+0.00089
+</td>
+<td style="text-align:right;">
+0.01073
+</td>
+<td style="text-align:right;">
+-0.16049
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-01-31
+</td>
+<td style="text-align:right;">
+0.03741
+</td>
+<td style="text-align:right;">
+0.04484
+</td>
+<td style="text-align:right;">
+0.00084
+</td>
+<td style="text-align:right;">
+0.01013
+</td>
+<td style="text-align:right;">
+0.03657
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-02-28
+</td>
+<td style="text-align:right;">
+0.10642
+</td>
+<td style="text-align:right;">
+0.03588
+</td>
+<td style="text-align:right;">
+0.00086
+</td>
+<td style="text-align:right;">
+0.01037
+</td>
+<td style="text-align:right;">
+0.10556
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-03-31
+</td>
+<td style="text-align:right;">
+-0.06699
+</td>
+<td style="text-align:right;">
+-0.00251
+</td>
+<td style="text-align:right;">
+0.00104
+</td>
+<td style="text-align:right;">
+0.01255
+</td>
+<td style="text-align:right;">
+-0.06803
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-04-30
+</td>
+<td style="text-align:right;">
+0.11346
+</td>
+<td style="text-align:right;">
+0.02062
+</td>
+<td style="text-align:right;">
+0.00103
+</td>
+<td style="text-align:right;">
+0.01243
+</td>
+<td style="text-align:right;">
+0.11243
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-05-31
+</td>
+<td style="text-align:right;">
+-0.16822
+</td>
+<td style="text-align:right;">
+-0.03272
+</td>
+<td style="text-align:right;">
+0.00105
+</td>
+<td style="text-align:right;">
+0.01267
+</td>
+<td style="text-align:right;">
+-0.16927
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-06-30
+</td>
+<td style="text-align:right;">
+0.09829
+</td>
+<td style="text-align:right;">
+0.01472
+</td>
+<td style="text-align:right;">
+0.00114
+</td>
+<td style="text-align:right;">
+0.01377
+</td>
+<td style="text-align:right;">
+0.09715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-07-31
+</td>
+<td style="text-align:right;">
+0.07034
+</td>
+<td style="text-align:right;">
+-0.00635
+</td>
+<td style="text-align:right;">
+0.00114
+</td>
+<td style="text-align:right;">
+0.01377
+</td>
+<td style="text-align:right;">
+0.06920
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-08-31
+</td>
+<td style="text-align:right;">
+-0.08935
+</td>
+<td style="text-align:right;">
+0.00250
+</td>
+<td style="text-align:right;">
+0.00117
+</td>
+<td style="text-align:right;">
+0.01413
+</td>
+<td style="text-align:right;">
+-0.09052
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-09-30
+</td>
+<td style="text-align:right;">
+-0.04028
+</td>
+<td style="text-align:right;">
+0.02939
+</td>
+<td style="text-align:right;">
+0.00130
+</td>
+<td style="text-align:right;">
+0.01571
+</td>
+<td style="text-align:right;">
+-0.04158
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-10-31
+</td>
+<td style="text-align:right;">
+-0.05484
+</td>
+<td style="text-align:right;">
+0.01291
+</td>
+<td style="text-align:right;">
+0.00140
+</td>
+<td style="text-align:right;">
+0.01693
+</td>
+<td style="text-align:right;">
+-0.05624
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-11-30
+</td>
+<td style="text-align:right;">
+-0.08281
+</td>
+<td style="text-align:right;">
+0.00490
+</td>
+<td style="text-align:right;">
+0.00143
+</td>
+<td style="text-align:right;">
+0.01730
+</td>
+<td style="text-align:right;">
+-0.08424
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-12-31
+</td>
+<td style="text-align:right;">
+0.13906
+</td>
+<td style="text-align:right;">
+0.03213
+</td>
+<td style="text-align:right;">
+0.00141
+</td>
+<td style="text-align:right;">
+0.01705
+</td>
+<td style="text-align:right;">
+0.13765
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-01-31
+</td>
+<td style="text-align:right;">
+-0.08287
+</td>
+<td style="text-align:right;">
+-0.01894
+</td>
+<td style="text-align:right;">
+0.00137
+</td>
+<td style="text-align:right;">
+0.01656
+</td>
+<td style="text-align:right;">
+-0.08424
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-02-29
+</td>
+<td style="text-align:right;">
+0.00793
+</td>
+<td style="text-align:right;">
+-0.09143
+</td>
+<td style="text-align:right;">
+0.00135
+</td>
+<td style="text-align:right;">
+0.01632
+</td>
+<td style="text-align:right;">
+0.00658
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-03-31
+</td>
+<td style="text-align:right;">
+-0.27544
+</td>
+<td style="text-align:right;">
+-0.14830
+</td>
+<td style="text-align:right;">
+0.00052
+</td>
+<td style="text-align:right;">
+0.00626
+</td>
+<td style="text-align:right;">
+-0.27596
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-30
+</td>
+<td style="text-align:right;">
+0.09378
+</td>
+<td style="text-align:right;">
+0.09614
+</td>
+<td style="text-align:right;">
+0.00023
+</td>
+<td style="text-align:right;">
+0.00276
+</td>
+<td style="text-align:right;">
+0.09355
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-31
+</td>
+<td style="text-align:right;">
+0.16271
+</td>
+<td style="text-align:right;">
+0.02794
+</td>
+<td style="text-align:right;">
+0.00008
+</td>
+<td style="text-align:right;">
+0.00096
+</td>
+<td style="text-align:right;">
+0.16263
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+0.02313
+</td>
+<td style="text-align:right;">
+-0.00195
+</td>
+<td style="text-align:right;">
+0.00018
+</td>
+<td style="text-align:right;">
+0.00216
+</td>
+<td style="text-align:right;">
+0.02295
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-31
+</td>
+<td style="text-align:right;">
+0.12056
+</td>
+<td style="text-align:right;">
+0.03900
+</td>
+<td style="text-align:right;">
+0.00014
+</td>
+<td style="text-align:right;">
+0.00168
+</td>
+<td style="text-align:right;">
+0.12042
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-31
+</td>
+<td style="text-align:right;">
+0.11351
+</td>
+<td style="text-align:right;">
+0.03998
+</td>
+<td style="text-align:right;">
+0.00008
+</td>
+<td style="text-align:right;">
+0.00096
+</td>
+<td style="text-align:right;">
+0.11343
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-30
+</td>
+<td style="text-align:right;">
+0.00395
+</td>
+<td style="text-align:right;">
+-0.00369
+</td>
+<td style="text-align:right;">
+0.00020
+</td>
+<td style="text-align:right;">
+0.00240
+</td>
+<td style="text-align:right;">
+0.00375
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-10-31
+</td>
+<td style="text-align:right;">
+-0.01029
+</td>
+<td style="text-align:right;">
+-0.05168
+</td>
+<td style="text-align:right;">
+0.00036
+</td>
+<td style="text-align:right;">
+0.00433
+</td>
+<td style="text-align:right;">
+-0.01065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-11-30
+</td>
+<td style="text-align:right;">
+0.20017
+</td>
+<td style="text-align:right;">
+0.14601
+</td>
+<td style="text-align:right;">
+0.00023
+</td>
+<td style="text-align:right;">
+0.00276
+</td>
+<td style="text-align:right;">
+0.19994
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-12-31
+</td>
+<td style="text-align:right;">
+0.01627
+</td>
+<td style="text-align:right;">
+0.04684
+</td>
+<td style="text-align:right;">
+0.00029
+</td>
+<td style="text-align:right;">
+0.00349
+</td>
+<td style="text-align:right;">
+0.01598
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-01-31
+</td>
+<td style="text-align:right;">
+0.12916
+</td>
+<td style="text-align:right;">
+-0.00726
+</td>
+<td style="text-align:right;">
+0.00026
+</td>
+<td style="text-align:right;">
+0.00312
+</td>
+<td style="text-align:right;">
+0.12890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-02-28
+</td>
+<td style="text-align:right;">
+-0.01129
+</td>
+<td style="text-align:right;">
+0.04155
+</td>
+<td style="text-align:right;">
+0.00026
+</td>
+<td style="text-align:right;">
+0.00312
+</td>
+<td style="text-align:right;">
+-0.01155
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-03-31
+</td>
+<td style="text-align:right;">
+0.20667
+</td>
+<td style="text-align:right;">
+0.05143
+</td>
+<td style="text-align:right;">
+0.00020
+</td>
+<td style="text-align:right;">
+0.00240
+</td>
+<td style="text-align:right;">
+0.20647
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-04-30
+</td>
+<td style="text-align:right;">
+0.06364
+</td>
+<td style="text-align:right;">
+0.01661
+</td>
+<td style="text-align:right;">
+0.00017
+</td>
+<td style="text-align:right;">
+0.00204
+</td>
+<td style="text-align:right;">
+0.06347
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-05-31
+</td>
+<td style="text-align:right;">
+-0.02243
+</td>
+<td style="text-align:right;">
+0.03382
+</td>
+<td style="text-align:right;">
+0.00015
+</td>
+<td style="text-align:right;">
+0.00180
+</td>
+<td style="text-align:right;">
+-0.02258
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-06-30
+</td>
+<td style="text-align:right;">
+-0.03342
+</td>
+<td style="text-align:right;">
+0.00728
+</td>
+<td style="text-align:right;">
+0.00011
+</td>
+<td style="text-align:right;">
+0.00132
+</td>
+<td style="text-align:right;">
+-0.03353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-07-31
+</td>
+<td style="text-align:right;">
+-0.03907
+</td>
+<td style="text-align:right;">
+0.01188
+</td>
+<td style="text-align:right;">
+0.00012
+</td>
+<td style="text-align:right;">
+0.00144
+</td>
+<td style="text-align:right;">
+-0.03919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-08-31
+</td>
+<td style="text-align:right;">
+-0.05680
+</td>
+<td style="text-align:right;">
+0.00668
+</td>
+<td style="text-align:right;">
+0.00017
+</td>
+<td style="text-align:right;">
+0.00204
+</td>
+<td style="text-align:right;">
+-0.05697
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-09-30
+</td>
+<td style="text-align:right;">
+0.09416
+</td>
+<td style="text-align:right;">
+0.01879
+</td>
+<td style="text-align:right;">
+0.00037
+</td>
+<td style="text-align:right;">
+0.00445
+</td>
+<td style="text-align:right;">
+0.09379
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-10-31
+</td>
+<td style="text-align:right;">
+-0.00057
+</td>
+<td style="text-align:right;">
+0.02532
+</td>
+<td style="text-align:right;">
+0.00040
+</td>
+<td style="text-align:right;">
+0.00481
+</td>
+<td style="text-align:right;">
+-0.00097
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-11-30
+</td>
+<td style="text-align:right;">
+-0.07111
+</td>
+<td style="text-align:right;">
+-0.00965
+</td>
+<td style="text-align:right;">
+0.00057
+</td>
+<td style="text-align:right;">
+0.00686
+</td>
+<td style="text-align:right;">
+-0.07168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-12-31
+</td>
+<td style="text-align:right;">
+0.11394
+</td>
+<td style="text-align:right;">
+0.01707
+</td>
+<td style="text-align:right;">
+0.00067
+</td>
+<td style="text-align:right;">
+0.00807
+</td>
+<td style="text-align:right;">
+0.11327
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-01-31
+</td>
+<td style="text-align:right;">
+0.03616
+</td>
+<td style="text-align:right;">
+-0.02212
+</td>
+<td style="text-align:right;">
+0.00073
+</td>
+<td style="text-align:right;">
+0.00880
+</td>
+<td style="text-align:right;">
+0.03543
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-02-28
+</td>
+<td style="text-align:right;">
+-0.15731
+</td>
+<td style="text-align:right;">
+0.02325
+</td>
+<td style="text-align:right;">
+0.00074
+</td>
+<td style="text-align:right;">
+0.00892
+</td>
+<td style="text-align:right;">
+-0.15805
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-03-31
+</td>
+<td style="text-align:right;">
+-0.00949
+</td>
+<td style="text-align:right;">
+0.04923
+</td>
+<td style="text-align:right;">
+0.00087
+</td>
+<td style="text-align:right;">
+0.01049
+</td>
+<td style="text-align:right;">
+-0.01036
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-04-30
+</td>
+<td style="text-align:right;">
+-0.08801
+</td>
+<td style="text-align:right;">
+-0.01707
+</td>
+<td style="text-align:right;">
+0.00081
+</td>
+<td style="text-align:right;">
+0.00976
+</td>
+<td style="text-align:right;">
+-0.08882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-05-31
+</td>
+<td style="text-align:right;">
+0.19465
+</td>
+<td style="text-align:right;">
+0.03837
+</td>
+<td style="text-align:right;">
+0.00083
+</td>
+<td style="text-align:right;">
+0.01001
+</td>
+<td style="text-align:right;">
+0.19382
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-06-30
+</td>
+<td style="text-align:right;">
+-0.10218
+</td>
+<td style="text-align:right;">
+-0.09097
+</td>
+<td style="text-align:right;">
+0.00114
+</td>
+<td style="text-align:right;">
+0.01377
+</td>
+<td style="text-align:right;">
+-0.10332
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-07-31
+</td>
+<td style="text-align:right;">
+0.10150
+</td>
+<td style="text-align:right;">
+0.07084
+</td>
+<td style="text-align:right;">
+0.00135
+</td>
+<td style="text-align:right;">
+0.01632
+</td>
+<td style="text-align:right;">
+0.10015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-08-31
+</td>
+<td style="text-align:right;">
+0.02237
+</td>
+<td style="text-align:right;">
+-0.00360
+</td>
+<td style="text-align:right;">
+0.00169
+</td>
+<td style="text-align:right;">
+0.02047
+</td>
+<td style="text-align:right;">
+0.02068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-09-30
+</td>
+<td style="text-align:right;">
+-0.10155
+</td>
+<td style="text-align:right;">
+-0.11683
+</td>
+<td style="text-align:right;">
+0.00225
+</td>
+<td style="text-align:right;">
+0.02734
+</td>
+<td style="text-align:right;">
+-0.10380
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-10-31
+</td>
+<td style="text-align:right;">
+0.17660
+</td>
+<td style="text-align:right;">
+0.06589
+</td>
+<td style="text-align:right;">
+0.00228
+</td>
+<td style="text-align:right;">
+0.02771
+</td>
+<td style="text-align:right;">
+0.17432
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-11-30
+</td>
+<td style="text-align:right;">
+0.00604
+</td>
+<td style="text-align:right;">
+0.03855
+</td>
+<td style="text-align:right;">
+0.00270
+</td>
+<td style="text-align:right;">
+0.03289
+</td>
+<td style="text-align:right;">
+0.00334
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-12-31
+</td>
+<td style="text-align:right;">
+0.06230
+</td>
+<td style="text-align:right;">
+-0.02602
+</td>
+<td style="text-align:right;">
+0.00253
+</td>
+<td style="text-align:right;">
+0.03079
+</td>
+<td style="text-align:right;">
+0.05977
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code># Compute the annualized arithmetic mean
+Return.annualized(ptf_xts$port_ret, geometric = FALSE)</code></pre>
+<pre><code>##                    port_ret
+## Annualized Return 0.2017952</code></pre>
+<pre class="r"><code>mean(ptf_ret3$port_ret)*12</code></pre>
+<pre><code>## [1] 0.2017952</code></pre>
+<pre class="r"><code># Compute the annualized geometric mean
+Return.annualized(ptf_xts$port_ret, geometric = TRUE)</code></pre>
+<pre><code>##                    port_ret
+## Annualized Return 0.1155721</code></pre>
+<pre class="r"><code>prod(1+ptf_ret3$port_ret)^(12/96)-1</code></pre>
+<pre><code>## [1] 0.1155721</code></pre>
+<pre class="r"><code># Compute the annualized standard deviation
+StdDev.annualized(ptf_xts$port_ret)</code></pre>
+<pre><code>##                                port_ret
+## Annualized Standard Deviation 0.4429521</code></pre>
+<pre class="r"><code>sd(ptf_ret3$port_ret)*sqrt(12)</code></pre>
+<pre><code>## [1] 0.4429521</code></pre>
+<p>Histogram of portfolio returns.</p>
+<pre class="r"><code># histogram to check normality
+chart.Histogram(ptf_xts$port_ret, methods = c(&quot;add.density&quot;, &quot;add.normal&quot;))</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><strong>Skewness</strong> <span class="math inline">\(\mu_3\)</span> is the third (normalized) moment about the mean.<br />
+It measures the asymmetry of the distribution, with symmetric distribution having <span class="math inline">\(\mu_3=0\)</span>.</p>
+<ul>
+<li><span class="math inline">\(\mu_3&gt;0\)</span> means positively skewed, i.e., long right tail.</li>
+<li><span class="math inline">\(\mu_3&lt;0\)</span> means negatively skewed, i.e., long left tail.</li>
+</ul>
+<p><span class="math display">\[
+\mu_3 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^3}{\sigma_p^3}
+\]</span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
+<img src="images/Skewness.png" alt="Diagram of Skew" width="70%" />
+<p class="caption">
+Fig. 4: Diagram of Skew
+</p>
+</div>
+<p><strong>Kurtosis</strong> <span class="math inline">\(K_p\)</span> is the fourth (normalized) moment about the mean.<br />
+It measures the tail behavior.</p>
+<p><span class="math display">\[
+\mu_4 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^4}{\sigma_p^4}
+\]</span></p>
+<p>The kurtosis for a standard normal distribution is three. For this reason, we subtract three from <span class="math inline">\(\mu_4\)</span> to get the “excess kurtosis”.</p>
+<ul>
+<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a heavy-tailed distribution.</li>
+<li><span class="math inline">\(\mu_4-3&lt;0\)</span> indicate a light-tailed distribution.</li>
+</ul>
+<pre class="r"><code># skewness and kurtosis
+skewness(ptf_xts$port_ret)</code></pre>
+<pre><code>## [1] 0.7779903</code></pre>
+<pre class="r"><code>kurtosis(ptf_xts$port_ret)</code></pre>
+<pre><code>## [1] 1.69699</code></pre>
+<div id="sharpe-ratio" class="section level4">
+<h4>Sharpe ratio</h4>
+<p>The Sharpe ratio was first introduced by <span class="citation">Sharpe (<a href="#ref-Sharpe1966">1966</a>)</span> as the (arithmetic) average portfolio excess return over the sample period divided by the standard deviation of the portfolio return over that period.
+Sharpe ratio measure the portfolio’s excess return per unit of standard deviation.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Sharpe Ratio} &amp;= S_p = \frac{\bar{r}_p-\bar{r}_f}{\sigma_p} \\
+\text{Annualized Sharpe Ratio} &amp;= S_p^A = \frac{\bar{r}_p-\bar{r}_f}{\sigma_p} \times \sqrt{12}
+\end{aligned}
+\]</span>
+where <span class="math inline">\(\bar{r}_f\)</span> is the (arithmetic) average return of the risk free rate for the time period under evaluation.</p>
+<p>Note that consistency is required between portfolio and risk free rate for</p>
+<ul>
+<li>time period.</li>
+<li>frequency, i.e., monthly or yearly.</li>
+</ul>
+<p>Also note that</p>
+<ul>
+<li><p>The common practice is to use <strong>arithmetic mean</strong> in the numerator. This is referred to as “Modified Sharpe” ratio.</p></li>
+<li><p>When the numerator uses the geometric mean, the ratio is referred to as “Geometric Sharpe” ratio to distinguish. (Not commonly used.)</p></li>
+</ul>
+<pre class="r"><code># monthly Sharpe ratio
+with(ptf_ret3, mean(excess_ret)/sd(port_ret)) </code></pre>
+<pre><code>## [1] 0.1251092</code></pre>
+<p>Alternatively, we can use the <code>PerformanceAnalytics::SharpeRatio</code> function.<br />
+Again in order to use it, we must provide the portfolio return as an <code>xts</code> object.</p>
+<pre class="r"><code># use arithmetic return
+SharpeRatio(R=ptf_xts$port_ret, Rf=ptf_xts$rf_1month)</code></pre>
+<pre><code>##                                   port_ret
+## StdDev Sharpe (Rf=0.1%, p=95%): 0.12510917
+## VaR Sharpe (Rf=0.1%, p=95%):    0.10094484
+## ES Sharpe (Rf=0.1%, p=95%):     0.08362338</code></pre>
+<pre class="r"><code># Compute the annualized Sharpe ratio
+with(ptf_ret3, mean(excess_ret)/sd(port_ret))*sqrt(12)</code></pre>
+<pre><code>## [1] 0.4333909</code></pre>
+<pre class="r"><code>ann_sharpe &lt;- Return.annualized(ptf_xts$excess_ret, geometric = FALSE)/StdDev.annualized(ptf_xts$port_ret)
+ann_sharpe</code></pre>
+<pre><code>##                   excess_ret
+## Annualized Return  0.4333909</code></pre>
+<pre class="r"><code># SharpeRatio.annualized use geometric return as default
+SharpeRatio.annualized(R=ptf_xts$port_ret, Rf=ptf_xts$rf_1month, geometric=FALSE)</code></pre>
+<pre><code>##                                  port_ret
+## Annualized Sharpe Ratio (Rf=1%) 0.4333909</code></pre>
+<pre class="r"><code># Geometric Sharpe is the default
+SharpeRatio.annualized(R=ptf_xts$port_ret, Rf=ptf_xts$rf_1month, geometric=TRUE)</code></pre>
+<pre><code>##                                  port_ret
+## Annualized Sharpe Ratio (Rf=1%) 0.2361843</code></pre>
+<pre class="r"><code># verify with hand calculation
+Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xts$port_ret)</code></pre>
+<pre><code>##                   excess_ret
+## Annualized Return  0.2361843</code></pre>
+</div>
+<div id="information-ratio" class="section level4">
+<h4>Information ratio</h4>
+<p>While the Sharpe ratio measures the excess return as the difference between the return of the portfolio and the risk-free rate, the <strong>information ratio</strong>, on the other hand, measures the portfolio performance against a comparable benchmark rather than the risk-free rate.</p>
+<p>The portfolio return in excess of the return of the benchmark is known as the <em>active return</em>, and the variability of the active return is known as the <em>active risk</em> or <em>tracking error</em> of the portfolio.</p>
+<p>The information ratio is the active return per unit of active risk.</p>
+<p><span class="math display">\[
+IR_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(\bar{r}_m\)</span> is the average return for the benchmark; and</li>
+<li><span class="math inline">\(\sigma_{p-m}\)</span> is the standard deviation for the active return, i.e., return of portfolio in excess of the benchmark return.</li>
+</ul>
+</div>
+<div id="beta-coefficient-adjusted-measures" class="section level4">
+<h4>Beta coefficient-adjusted measures</h4>
+<p>Sharpe and Information ratios use standard deviation as the measure of portfolio risk. An alternative risk measure is the beta coefficient based on the CAPM model.</p>
+<p>Recall that the beta coefficient can be estimated using the follow regression</p>
+<p><span class="math display">\[
+r_{i,\color{red}{t}} - r_{f,\color{red}{t}} = \alpha_i + \beta_i (r_{m,\color{red}{t}}-r_{f,\color{red}{t}}) + \varepsilon_{i,\color{red}{t}} .
+\]</span>
+The OLS <span class="math inline">\(\beta_i\)</span> estimate can be expressed as</p>
+<p><span class="math display">\[
+\hat{\beta}_i = \frac{\text{Cov}(R_{m}^e, R_{i}^e)}{\text{Var}(R_{i}^e)}
+\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(R^e_i=r_i-r_f\)</span> stands for the excess return on asset <span class="math inline">\(i\)</span>, and</li>
+<li><span class="math inline">\(R^e_m=r_m-r_f\)</span> stands for the excess return on the market index.</li>
+</ul>
+<p><strong>Treynor ratio</strong> is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.</p>
+<p>The Trynor ratio is computed as</p>
+<p><span class="math display">\[
+T_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
+\]</span>
+Note that the only relevant risk in the computation of the Treynor ratio is systematic risk.</p>
+<p><strong>Jensen’s alpha</strong> measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio’s beta and the average market return.</p>
+<p><span class="math display">\[
+\alpha_p =  \bar{r}_p - \left[\bar{r}_f + \beta_p(\bar{r}_m-\bar{r}_f)\right]
+\]</span></p>
+<p><span style="font-family: Courier, sans-serif; "><strong>Exercise</strong></span></p>
+<p><span style="font-family: Courier, sans-serif; ">Given the following information about the return on a portfolio, the market index and risk free returns.</span></p>
+<table style="margin-left: auto; margin-right: auto;" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col style="width: 150px;" />
+<col span="3" width="80" />
+</colgroup>
+<tbody>
+<tr style="height: 23px; border-bottom: 1pt solid black;">
+<td style="height: 23px;">
+Year
+</td>
+<td style="width: 130px; height: 23px; text-align: right;">
+Portfolio
+</td>
+<td style="width: 130px; height: 23px; text-align: right;">
+Market index
+</td>
+<td style="width: 135.96875px; height: 23px; text-align: right;">
+Risk free rate
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+1
+</td>
+<td class="xl63" style="width: 130px; height: 23px;" align="right">
+14%
+</td>
+<td class="xl63" style="width: 130px; height: 23px;" align="right">
+12%
+</td>
+<td class="xl63" style="width: 135.96875px; height: 23px;" align="right">
+7%
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+2
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+10
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+7
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+7.5
+</td>
+</tr>
+<tr style="height: 19px;">
+<td style="height: 19px; text-align: left;" align="right">
+3
+</td>
+<td style="width: 130px; height: 19px;" align="right">
+19
+</td>
+<td style="width: 130px; height: 19px;" align="right">
+20
+</td>
+<td style="width: 135.96875px; height: 19px;" align="right">
+7.7
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+4
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+-8
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+-2
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+7.5
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+5
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+23
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+12
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+8.5
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+6
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+28
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+23
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+8
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+7
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+20
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+17
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+7.3
+</td>
+</tr>
+<tr style="height: 23.5px;">
+<td style="width: 130px; height: 23.5px; text-align: left;" align="right">
+8
+</td>
+<td style="width: 130px; height: 23.5px;" align="right">
+14
+</td>
+<td style="width: 130px; height: 23.5px;" align="right">
+20
+</td>
+<td style="width: 135.96875px; height: 23.5px;" align="right">
+7
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; text-align: left;" align="right">
+9
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+-9
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+-5
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+7.5
+</td>
+</tr>
+<tr style="height: 23px; border-bottom: 1pt solid black;">
+<td style="height: 23px; text-align: left;" align="right">
+10
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+19
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+16
+</td>
+<td style="width: 135.96875px; height: 23px;" align="right">
+8
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px;">
+Average
+</td>
+<td class="xl64" style="width: 130px; height: 23px;" align="right">
+13%
+</td>
+<td class="xl64" style="width: 130px; height: 23px;" align="right">
+12%
+</td>
+<td class="xl64" style="width: 135.96875px; height: 23px;" align="right">
+7.6%
+</td>
+</tr>
+<tr style="height: 23px; border-bottom: 1pt solid black;">
+<td style="height: 23px;">
+Standard deviation
+</td>
+<td class="xl64" style="width: 130px; height: 23px;" align="right">
+12.39%
+</td>
+<td class="xl64" style="width: 130px; height: 23px;" align="right">
+9.43%
+</td>
+<td class="xl64" style="width: 135.96875px; height: 23px;" align="right">
+0.47%
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px;">
+Cov(<span class="math inline">\(r_p\)</span>, <span class="math inline">\(r_m\)</span>)
+</td>
+<td style="width: 130px; height: 23px;" align="right">
+0.0107
+</td>
+<td style="width: 130px; height: 23px;">
+ 
+</td>
+<td style="width: 135.96875px; height: 23px;">
+ 
+</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<div style="font-family: Courier, sans-serif; ">
+<ol style="list-style-type: decimal">
+<li>Calculate the beta.</li>
+</ol>
+<p><span class="math display">\[
+\beta_p = \frac{\text{Cov}(r_p, r_m)}{\text{Var}(r_m)} = \frac{0.0107}{9.43\%^2} = 1.203
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Calculate the Sharpe ratio.</li>
+</ol>
+<p><span class="math display">\[
+S_p = \frac{\bar{r}_p-\bar{r}_f}{\sigma_p} = \frac{(13-7.6)\%}{12.39\%} = 0.436
+\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Calculate the Treynor ratio.</li>
+</ol>
+<p><span class="math display">\[
+T_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p} = \frac{(13-7.6)\%}{1.203} = 0.0449
+\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Calculate Jensen’s Alpha.</li>
+</ol>
+<p><span class="math display">\[
+\alpha_p =  \bar{r}_p - \left[\bar{r}_f + \beta_p(\bar{r}_m-\bar{r}_f)\right] = 13\% - 7.6\% - 1.203\times (12-7.6)\% = 0.107\%
+\]</span></p>
+</div>
+<p> </p>
+</div>
+<div id="m-squared" class="section level4">
+<h4>M-squared</h4>
+<p>The M-squared (<span class="math inline">\(M^2\)</span>) measure is first introduced by Franco Modigliani.
+<span class="math inline">\(M^2\)</span> provides a direct comparison between the leverage-adjusted portfolio and the market portfolio.</p>
+<p>A managed portfolio <span class="math inline">\(p\)</span> is mixed with a position in the risk free asset to make the “leverage-adjusted” (or “adjusted” in short) portfolio have the same volatility as the market.
+Suppose the managed portfolio p has a total variability equal to <span class="math inline">\(1.5\times \sigma_m\)</span>. The “adjusted” portfolio <span class="math inline">\(p^*\)</span> is found by investing a weight <span class="math inline">\(w\)</span> in <span class="math inline">\(p\)</span> and a weight <span class="math inline">\((1 − w)\)</span> in the risk free asset, such that the portfolio has the same standard deviation as the market:</p>
+<p><span class="math display">\[
+\begin{aligned}
+r_{p^*} &amp;= w\, r_p + (1-w)\, r_f \\
+\sigma_{p^*} &amp;= w\sigma_p + (1-w)\sigma_{r_f} = w\sigma_p + (1-w)\cdot 0 = w\sigma_p
+\end{aligned}
+\]</span>
+Let</p>
+<p><span class="math display">\[
+\sigma_{p^*} = \sigma_m ,
+\]</span>
+we have</p>
+<p><span class="math display">\[
+w\sigma_p = \sigma_m \Rightarrow w=\frac{\sigma_m}{\sigma_p} = \frac{\sigma_m}{1.5\sigma_m} = \frac{2}{3}
+\]</span>
+By investing two thirds in <span class="math inline">\(p\)</span> and one third in the risk free asset <span class="math inline">\(r_f\)</span>, achieve the same volatility as the market.</p>
+<p>Since <span class="math inline">\(P^∗\)</span> and <span class="math inline">\(m\)</span> have the same volatility, we may compare their returns simply by calculating the difference:</p>
+<p><span class="math display">\[
+M_p^2 = r_{p^*} - r_m .
+\]</span></p>
+</div>
+</div>
+<div id="downside-risk-measures" class="section level3">
+<h3>Downside risk measures</h3>
+<p>When the return distribution is asymmetric (skewed), investors use additional risk measures that focus on describing the potential losses.</p>
+<ul>
+<li><p>The <strong>Semi-Deviation</strong> is the calculation of the variability of returns below the mean return.
+<span class="math display">\[
+\begin{aligned}
+\text{Semi } \sigma_p &amp;= \sqrt{\frac{1}{n}\textstyle \sum_{t=1}^T \big[\min(r_{p,t}-\bar{r}_p, 0)\big]^2 } \\
+\text{Annualized Semi } \sigma_p^A &amp;= \sqrt{\frac{1}{n}\textstyle \sum_{t=1}^T \big[\min(r_{p,t}-\bar{r}_p, 0)\big]^2 } \times \sqrt{12}
+\end{aligned}
+\]</span>
+where <span class="math inline">\(n\)</span> is either the number of observations of the entire series or the number of observations in the subset of the series falling below the average.</p></li>
+<li><p><strong>Value-at-Risk</strong> (VaR) corresponds to the <span class="math inline">\(5\%\)</span> quantile of the return distribution, meaning that a more negative return can only happen with a probability of <span class="math inline">\(5\%\)</span>. For example you might ask: “what is the largest loss I could potentially take within the next quarter such that I only have <span class="math inline">\(5\%\)</span> probability of observing an even larger loss?”</p></li>
+<li><p>The <strong>expected shortfall</strong> (ES) is another measure of risk that focuses on the average loss below the <span class="math inline">\(5\%\)</span> VaR quantile.</p></li>
+</ul>
+<pre class="r"><code>## downside risk measures
+# Calculate the SemiDeviation
+SemiDeviation(ptf_xts$port_ret)</code></pre>
+<pre><code>##                  port_ret
+## Semi-Deviation 0.08114918</code></pre>
+<pre class="r"><code>sd(ptf_xts$port_ret)</code></pre>
+<pre><code>## [1] 0.1278693</code></pre>
+<pre class="r"><code># Calculate the value at risk, p is the loss probability level
+VaR(ptf_xts$port_ret, p=.025)</code></pre>
+<pre><code>##       port_ret
+## VaR -0.1892158</code></pre>
+<pre class="r"><code>VaR(ptf_xts$port_ret, p=.05)</code></pre>
+<pre><code>##       port_ret
+## VaR -0.1584788</code></pre>
+<pre class="r"><code># Calculate the expected shortfall
+ES(ptf_xts$port_ret, p=.025)</code></pre>
+<pre><code>##      port_ret
+## ES -0.1892158</code></pre>
+<pre class="r"><code>ES(ptf_xts$port_ret, p=.05)</code></pre>
+<pre><code>##      port_ret
+## ES -0.1913056</code></pre>
+<p>The other popular downside risk estimate, the <strong>maximum drawdown</strong> (MDD) of the portfolio, measures the largest loss from peak to trough over the examination period.</p>
+<p>The maximum drawdown of the portfolio indicates the maximum possible loss investors have ever experienced over the examination period.</p>
+<p><span class="math display">\[
+MDD = \frac{LP-PV}{PV}
+\]</span></p>
+<ul>
+<li>where <span class="math inline">\(LP\)</span> is the lowest value after peak value, this is also called “Trough Value”;</li>
+<li><span class="math inline">\(PV\)</span> is the peak value.</li>
+</ul>
+<pre class="r"><code># Table of drawdowns
+maxDrawdown(ptf_xts$port_ret)</code></pre>
+<pre><code>## [1] 0.5840139</code></pre>
+<pre class="r"><code>table.Drawdowns(ptf_xts$port_ret)</code></pre>
+<pre><code>##         From     Trough         To   Depth Length To Trough Recovery
+## 1 2018-06-30 2020-03-31 2021-03-31 -0.5840     34        22       12
+## 2 2015-06-30 2016-02-29 2016-12-31 -0.5637     19         9       10
+## 3 2022-02-28 2022-04-30 2022-12-31 -0.2388     11         3        8
+## 4 2017-08-31 2017-11-30 2018-05-31 -0.2232     10         4        6
+## 5 2015-01-31 2015-02-28 2015-04-30 -0.1607      4         2        2</code></pre>
+<pre class="r"><code># Plot of drawdowns
+chart.Drawdown(ptf_xts$port_ret)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## rolling annualized mean and volatility
+chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;Return.annualized&quot;)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;StdDev.annualized&quot;)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-25-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;SharpeRatio.annualized&quot;, Rf=ptf_xts$excess_ret)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-25-3.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="references" class="section level3 unnumbered">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Sharpe1966" class="csl-entry">
+Sharpe, William F. 1966. <span>“Mutual Fund Performance.”</span> <em>The Journal of Business</em> 39: 119–38. <a href="http://www.jstor.org/stable/2351741">http://www.jstor.org/stable/2351741</a>.
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -274,7 +274,8 @@ P(r_t>0) &= P(\mu+e_t>0) \\
 &= P\left( \frac{e_t}{\sigma} > -\frac{\mu}{\sigma}\right) \quad\;\; e_t\sim N(0, \sigma^2), \text{ then } \frac{e_t}{\sigma}\sim N(0,1) \\
 &= P \left( \frac{e_t}{\sigma} < \frac{\mu}{\sigma} \right) \\
 &= \Phi \left(\frac{\mu}{\sigma} \right) 
-\end{aligned}  \square
+\end{aligned}  
+\square
 $$
 ```
 </div>

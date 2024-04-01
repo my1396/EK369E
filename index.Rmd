@@ -9,10 +9,11 @@ This webpage provides coding practice for EK369E.
 
 [Mar 22, EMH and RW](w2.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w2.rmd); 
 
+[Apr 4, Performance Evaluation](w3.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w3.rmd); 
 
 <hr>
 
-**Office hour**: 14:00-16:00 Fridays in teaching weeks.
+**Office hour**: 14:00-16:00 by appointment on Fridays in teaching weeks.
 
 **Location**: Hovedbygning A257.
 
