@@ -9,7 +9,7 @@ This webpage provides coding practice for EK369E.
 
 [Mar 22, EMH and RW](w2.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w2.rmd); 
 
-[Apr 4, Performance Evaluation](w3.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w3.rmd); 
+[Apr 4, Performance Evaluation](w3.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w3.rmd); [Download Data](https://drive.google.com/file/d/1Xop4n2ZjP4IytKI_Xyqp0NHxwK-GpZPk/view?usp=share_link);
 
 <hr>
 
