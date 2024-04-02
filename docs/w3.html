@@ -2822,7 +2822,8 @@ r_{p}^A = \frac{12}{T}\sum_{t=1}^T r_{p,t} = 12\times \bar{r}_p
 r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
 \]</span></p>
 <ul>
-<li>annualized standard deviation</li>
+<li>annualized standard deviation.<br />
+Note that in Finance, the standard deviation of returns is usually called <em>volatility</em>.</li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
@@ -4840,6 +4841,26 @@ skewness(ptf_xts$port_ret)</code></pre>
 <pre><code>## [1] 0.7779903</code></pre>
 <pre class="r"><code>kurtosis(ptf_xts$port_ret)</code></pre>
 <pre><code>## [1] 1.69699</code></pre>
+<pre class="r"><code># summary statistic
+returns_statistics &lt;- table.Stats(ptf_xts$port_ret)
+returns_statistics</code></pre>
+<pre><code>##                 port_ret
+## Observations     96.0000
+## NAs               0.0000
+## Minimum          -0.2754
+## Quartile 1       -0.0680
+## Median            0.0014
+## Arithmetic Mean   0.0168
+## Geometric Mean    0.0092
+## Quartile 3        0.1008
+## Maximum           0.4766
+## SE Mean           0.0131
+## LCL Mean (0.95)  -0.0091
+## UCL Mean (0.95)   0.0427
+## Variance          0.0164
+## Stdev             0.1279
+## Skewness          0.7780
+## Kurtosis          1.6970</code></pre>
 <div id="sharpe-ratio" class="section level4">
 <h4>Sharpe ratio</h4>
 <p>The Sharpe ratio was first introduced by <span class="citation">Sharpe (<a href="#ref-Sharpe1966">1966</a>)</span> as the (arithmetic) average portfolio excess return over the sample period divided by the standard deviation of the portfolio return over that period.
@@ -4898,7 +4919,7 @@ Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xt
 <p>The portfolio return in excess of the return of the benchmark is known as the <em>active return</em>, and the variability of the active return is known as the <em>active risk</em> or <em>tracking error</em> of the portfolio.</p>
 <p>The information ratio is the active return per unit of active risk.</p>
 <p><span class="math display">\[
-IR_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\text{Information Ratio}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
 \]</span>
 where</p>
 <ul>
@@ -4925,7 +4946,7 @@ where</p>
 <p><strong>Treynor ratio</strong> is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.</p>
 <p>The Trynor ratio is computed as</p>
 <p><span class="math display">\[
-T_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
+\text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
 \]</span>
 Note that the only relevant risk in the computation of the Treynor ratio is systematic risk.</p>
 <p><strong>Jensen’s alpha</strong> measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio’s beta and the average market return.</p>
@@ -5206,9 +5227,28 @@ M_p^2 = r_{p^*} - r_m .
 \end{aligned}
 \]</span>
 where <span class="math inline">\(n\)</span> is either the number of observations of the entire series or the number of observations in the subset of the series falling below the average.</p></li>
-<li><p><strong>Value-at-Risk</strong> (VaR) corresponds to the <span class="math inline">\(5\%\)</span> quantile of the return distribution, meaning that a more negative return can only happen with a probability of <span class="math inline">\(5\%\)</span>. For example you might ask: “what is the largest loss I could potentially take within the next quarter such that I only have <span class="math inline">\(5\%\)</span> probability of observing an even larger loss?”</p></li>
-<li><p>The <strong>expected shortfall</strong> (ES) is another measure of risk that focuses on the average loss below the <span class="math inline">\(5\%\)</span> VaR quantile.</p></li>
+<li><p><strong>Value-at-Risk</strong> (VaR) measures the potential loss in value of a risky asset or portfolio over a defined period for a given confidence interval. It corresponds to a probability <span class="math inline">\(p\)</span>, which is a confidence level.</p></li>
 </ul>
+<p>A <span class="math inline">\(p\)</span> VaR means that the probability of a loss greater than VaR is (at most) <span class="math inline">\((p)\)</span> while the probability of a loss less than VaR is (at least) <span class="math inline">\(1-p\)</span>.</p>
+<pre><code>-  For example, a one-day $5\%$ VaR of $\$1$ million implies the portfolio has a $5\%$ chance that the value of the asset drops more than $\$1$ million over one day. In other words, there is a $95\%$ probability that the asset makes a profit or lose less than $\$1$ million over a day.
+
+-  Different conventions are used for $p$. You can tell by the magnitude whether it refers to a confidence level or a significance level. For instance, sometimes you see $95\%$ VaR (confidence level) and $5\%$ VaR (significance level).
+
+- To obtain a sample estimate of $5\%$ VaR, we sort the observations from high to low. The VaR is the return at the $5$th percentile of the empirical sample distribution.
+
+- More formally,
+
+$$
+\text{VaR}(\alpha) = -F^{-1}(-\alpha)
+$$
+where $F(\cdot)$ is the cdf of the portfolio return $r_p$.</code></pre>
+<ul>
+<li>The <strong>expected shortfall</strong> (ES) is the expected value of the loss, given the loss is greater than the VaR.</li>
+</ul>
+<p><span class="math display">\[
+\text{ES}(\alpha) = -E[r_p \vert r_p \leq F^{-1}(-\alpha)]
+\]</span>
+- VaR is the most optimistic measure of worst-case scenarios as it takes the smallest loss of all these cases, while ES informs the magnitudes of potential losses given that the loss is greater than the VaR.</p>
 <pre class="r"><code>## downside risk measures
 # Calculate the SemiDeviation
 SemiDeviation(ptf_xts$port_ret)</code></pre>
@@ -5216,20 +5256,20 @@ SemiDeviation(ptf_xts$port_ret)</code></pre>
 ## Semi-Deviation 0.08114918</code></pre>
 <pre class="r"><code>sd(ptf_xts$port_ret)</code></pre>
 <pre><code>## [1] 0.1278693</code></pre>
-<pre class="r"><code># Calculate the value at risk, p is the loss probability level
-VaR(ptf_xts$port_ret, p=.025)</code></pre>
-<pre><code>##       port_ret
-## VaR -0.1892158</code></pre>
-<pre class="r"><code>VaR(ptf_xts$port_ret, p=.05)</code></pre>
+<pre class="r"><code># Calculate the value at risk, p is the confidence level
+VaR(ptf_xts$port_ret, p=.95) # 95% VaR</code></pre>
 <pre><code>##       port_ret
 ## VaR -0.1584788</code></pre>
+<pre class="r"><code>VaR(ptf_xts$port_ret, p=.99) # 99% VaR</code></pre>
+<pre><code>##       port_ret
+## VaR -0.2278215</code></pre>
 <pre class="r"><code># Calculate the expected shortfall
-ES(ptf_xts$port_ret, p=.025)</code></pre>
-<pre><code>##      port_ret
-## ES -0.1892158</code></pre>
-<pre class="r"><code>ES(ptf_xts$port_ret, p=.05)</code></pre>
+ES(ptf_xts$port_ret, p=.95)</code></pre>
 <pre><code>##      port_ret
 ## ES -0.1913056</code></pre>
+<pre class="r"><code>ES(ptf_xts$port_ret, p=.99)</code></pre>
+<pre><code>##      port_ret
+## ES -0.2278215</code></pre>
 <p>The other popular downside risk estimate, the <strong>maximum drawdown</strong> (MDD) of the portfolio, measures the largest loss from peak to trough over the examination period.</p>
 <p>The maximum drawdown of the portfolio indicates the maximum possible loss investors have ever experienced over the examination period.</p>
 <p><span class="math display">\[
@@ -5251,14 +5291,14 @@ maxDrawdown(ptf_xts$port_ret)</code></pre>
 ## 5 2015-01-31 2015-02-28 2015-04-30 -0.1607      4         2        2</code></pre>
 <pre class="r"><code># Plot of drawdowns
 chart.Drawdown(ptf_xts$port_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>## rolling annualized mean and volatility
 chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;Return.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;StdDev.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-25-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-26-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;SharpeRatio.annualized&quot;, Rf=ptf_xts$excess_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-25-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-26-3.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 </div>
 <div id="references" class="section level3 unnumbered">

@@ -1,0 +1,361 @@
+---
+title: "Performance Optimization"
+author: "Menghan Yuan"
+date: "April 2, 2024"
+output: 
+    bookdown::html_document2:
+        toc: true
+        toc_float: true
+        toc_depth: 4
+        number_sections: false
+        css: style.css
+bibliography: bibli.bib
+link-citations: yes
+biblio-style: apalike
+nocite: |
+    @IntroCompFinR
+---
+
+```{r setup, include=F, echo=F}
+library(knitr) # load packages
+library(kableExtra)
+library(tidyverse)
+library(bookdown)
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts <- options(knitr.kable.NA = "")
+
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
+```
+
+
+
+
+
+## Portfolio opportunity set
+
+The collection of all feasible investment possibilities set, or *portfolio opportunity set*, in the case of two assets is simply all possible portfolios that can be formed by varying the portfolio weights such that the weights sum to one.
+
+We summarize the expected return-risk (mean-volatility) properties of the feasible portfolios in a plot with portfolio expected return, $\mu_p$, on the vertical axis and portfolio standard deviation, $\sigma_p$, on the horizontal axis. 
+
+
+Given the following set up for two assets A and B:
+
+```{r}
+mu.A = 0.175
+sig.A = 0.258
+sig2.A = sig.A^2
+
+mu.B = 0.055
+sig.B = 0.115
+sig2.B = sig.B^2
+
+rho.AB = -0.164
+sig.AB = rho.AB*sig.A*sig.B
+```
+
+### Equally weighted
+
+First we consider an equally weighted portfolio $p_1$.
+```{r}
+# equally weighted
+x.A = 0.5
+x.B = 0.5
+mu.p1 = x.A*mu.A + x.B*mu.B
+sig2.p1 = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p1 = sqrt(sig2.p1)
+data.tbl = t(c(mu.p1=mu.p1, sig.p1=sig.p1, sig.avg=0.5*sig.A+0.5*sig.B))
+data.tbl
+```
+
+
+This portfolio has expected return half-way between the expected returns on assets  A and  B, but the portfolio standard deviation is less than half-way between the asset standard deviations. This reflects risk reduction via diversification.
+
+The equally weighted portfolio has expected return half way between the expected returns on assets A and B, but has standard deviation (volatility) that is less than half way between the standard deviations of the two assets.
+
+For long-only portfolios, we can show that this is a general result as long as the correlation between the two assets is not perfectly positive.
+
+### Long-short portfolio
+
+Now we allow for short selling.
+
+> To short an asset one borrows the asset, usually from a broker, and then sells it. The proceeds from the short sale are usually kept on account with a broker and there may be restrictions on the use of these funds for the purchase of other assets. The short position is closed out when the asset is repurchased and then returned to original owner. If the asset drops in value then a gain is made on the short sale and if the asset increases in value a loss is made. 
+
+```{r}
+# long-short portfolio
+x.A = 1.5
+x.B = -0.5
+mu.p2 = x.A*mu.A + x.B*mu.B
+sig2.p2 = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p2 = sqrt(sig2.p2)
+data.tbl = t(c(mu.p2=mu.p2, sig.p2=sig.p2, sig.avg=1.5*sig.A-0.5*sig.B))
+data.tbl
+```
+
+This portfolio has both a higher expected return and standard deviation than asset A. 
+The high standard deviation is due to the short sale, which is a type of leverage, and the negative correlation between assets A and B.
+
+> Leverage refers to an investment that is financed through borrowing. Here, the short sale of asset B produces borrowed funds used to purchase more of asset A. This increases the risk (portfolio standard deviation) of the investment.
+
+Now we calculate the portfolio opportunity set.
+Here the portfolio weight on asset A, $x_A$, is varied from $-0.4$ to $1.4$ at a step of 0.1 and, since $x_B=1−x_A$, the weight on asset B then varies from $1.4$ to $-0.4$. 
+
+```{r}
+x.A = seq(from=-0.4, to=1.4, by=0.1)
+x.B = 1 - x.A
+mu.p = x.A*mu.A + x.B*mu.B
+sig2.p = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p = sqrt(sig2.p)
+port.names = paste("portfolio", 1:length(x.A), sep=" ")
+data.tbl = as.data.frame(cbind(x.A, x.B, mu.p, sig.p))
+rownames(data.tbl) = port.names
+col.names = c("$x_{A}$","$x_{B}$", "$\\mu_{p}$", "$\\sigma_{p}$" )
+kbl(data.tbl, col.names=col.names) %>%
+   kable_styling(full_width=FALSE)
+```
+
+Portfolios 1-4 and 16-19 are the long-short portfolios and portfolios 5-15 are the long-only portfolios. 
+
+The risk-return properties of this set of feasible portfolios can be visualized using:
+
+```{r}
+# mu.p ~ sig.p scatter
+cex.val = 1.5
+col_vec = c(rep("blue", 4), rep("black", 2),
+            "green", rep("black", 8), rep("blue", 4))
+plot(sig.p, mu.p, type="b", pch=16, cex=cex.val,
+     ylim=c(0, max(mu.p)), xlim=c(0, max(sig.p)), 
+     xlab=expression(sigma[p]), ylab=expression(mu[p]),
+     cex.lab=1.5, col=col_vec)
+text(x=sig.A, y=mu.A, labels="Asset A", pos=4)
+text(x=sig.B, y=mu.B, labels="Asset B", pos=4)
+```
+
+- The black dots plus the green dot represent the long-only portfolios;
+    - The black dot labeled "Asset A" is the portfolio which invests $100\%$ in asset A, i.e., ($x_A=1, x_B=0$);
+    - The black dot labeled "Asset B" is the portfolio which invests $100\%$ in asset B, i.e.,  ($x_A=0, x_B=1$);
+- The blue dots represent long-short portfolios;
+- The green dot represents the *global minimum variance portfolio* (GMV). This portfolio has the property that it has the smallest variance/volatility among all feasible portfolios.
+
+
+Computing the global minimum variable portfolio is a constriained optimization problem:
+
+$$
+\begin{align*}
+\underset{x_{A},x_{B}}{\min}\sigma_{p}^{2} & =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}\\
+~s.t.~x_{A}+x_{B} & =1.
+\end{align*}
+$$
+
+This constrained optimization problem can be solved using two methods analytically. 
+
+- The first method, called the method of substitution, uses the constraint to substitute out one of the variables to transform the constrained optimization problem in two variables into an unconstrained optimization problem in one variable. 
+
+$$
+\min_{x_{A}}\sigma_{p}^{2}=x_{A}^{2}\sigma_{A}^{2}+(1-x_{A})^{2}\sigma_{B}^{2}+2x_{A}(1-x_{A})\sigma_{AB}.
+$$
+Apply the first order condition to solve the unconstrained optimization problem.
+
+- The second method, called the method of Lagrange multipliers, introduces an auxiliary variable called the Lagrange multiplier and transforms the constrained optimization problem in two variables into an unconstrained optimization problem in three variables.
+
+The Lagrangian function is formed by adding to  $\sigma_p^2$ the homogenous constraint multiplied by an auxiliary variable $\lambda$ (the Lagrange multiplier) giving:
+
+$$
+L(x_{A},x_{B},\lambda)=x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}+\lambda(x_{A}+x_{B}-1).
+$$
+
+<img src="https://drive.google.com/thumbnail?id=1N7wP5IfQOjSeB3omZtagmT5tzHqrOUcO&sz=w1000" alt="different rho values" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
+
+-  The closer $\rho_{AB}$ is to $-1$ the more curved is the frontier toward the y-axis and the higher is the possible diversification benefit. 
+- There is noticeable curvature even for positive values of  $\rho_{AB}$.
+
+
+<img src="https://drive.google.com/thumbnail?id=1GljEacgeeGjGl5NY_fwLptWPHPODACv4&sz=w1000" alt="perfect correlation" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
+
+
+- If  $\rho_{AB}=1$, then the portfolio frontier approaches a straight line connecting assets A and B.
+- If  $\rho_{AB}=-1$, there exists a portfolio of A and B that has positive expected return and zero variance.
+
+
+
+<img src="https://drive.google.com/thumbnail?id=1HF1Mj3sApukpi4dQ5ERbs89zqlBm3ftw&sz=w1000" alt="effiient ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
+
+- Efficient portfolios are the feasible portfolios that have the highest expected return for a given level of risk as measured by portfolio standard deviation.
+- Inefficient portfolios are the portfolios such that there is another feasible portfolio that has the same risk but with a lower expected return.
+
+
+Tangency portfolio represents the portfolio which maximizes Sharpe ratio. 
+
+<img src="https://drive.google.com/thumbnail?id=1pTKSSwWI5Od5MrSfDqI6axOlPjVfI_zh&sz=w1000" alt="tangency ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
+
+We can determine the proportions of each asset in the tangency portfolio by finding the values of  $x_A$ and $x_B$ that maximize the Sharpe ratio of a portfolio.
+
+Formally, we solve the constrained maximization problem:
+
+$$
+\begin{align*}
+\underset{x_{A},x_{B}}{\max}~\mathrm{SR}_{p} &= \frac{\mu_{p}-r_{f}}{\sigma_{p}}~s.t.\\
+\mu_{p} & =x_{A}\mu_{A}+x_{B}\mu_{B},\\
+\sigma_{p}^{2} & =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB},\\
+1 & =x_{A}+x_{B}.
+\end{align*}
+$$
+
+## Portfolio optimization with `IntroCompFinR` 
+
+To create an equally weighted portfolio use:
+```{r}
+library(IntroCompFinR)
+mu.vec <- c(mu.A, mu.B)
+sigma2.mat <- matrix(c(sig2.A, sig.AB^2, sig.AB^2, sig2.B), ncol=2)
+
+k <- 2 # number of assets
+ew <- rep(1,k)/k
+equalWeight.portfolio <- getPortfolio(er=mu.vec, cov.mat=sigma2.mat, weights=ew)
+equalWeight.portfolio
+```
+
+The global minimum variance portfolio (allowing for short sales) is computed using:
+```{r}
+gmin.port <- globalMin.portfolio(mu.vec, sigma2.mat)
+gmin.port
+```
+
+- If short sales are not allowed, then set `shorts = TRUE`.
+
+
+You can compute the portfolio with a target expected return.
+```{r}
+target.return <-  mu.vec[1]
+e.port.msft <-  efficient.portfolio(mu.vec, sigma2.mat, target.return)
+e.port.msft
+```
+
+
+The tangency portfolio can be computed as:
+```{r}
+r.f <- .005
+tan.port <- tangency.portfolio(mu.vec, sigma2.mat, risk.free = r.f)
+tan.port
+```
+
+
+The function `efficient.frontier()` constructs the set of efficient portfolios.
+```{r}
+ef <- efficient.frontier(mu.vec, sigma2.mat, alpha.min=-0.5, 
+                        alpha.max=2, nport=20)
+summary(ef)
+```
+
+
+Use the `plot()` function to create a simple plot the efficient frontier:
+```{r}
+plot(ef, plot.assets=T, col="blue", pch=16)
+points(gmin.port$sd, gmin.port$er, col="green", pch=16, cex=2) 
+text(gmin.port$sd, gmin.port$er, labels = "Global min", pos = 4) 
+points(tan.port$sd, tan.port$er, col="red", pch=16, cex=2) 
+text(tan.port$sd, tan.port$er, labels = "Tangency", pos = 3) 
+sr.tan = (tan.port$er - r.f)/tan.port$sd 
+abline(a=r.f, b=sr.tan, col="green", lwd=2)
+```
+
+
+<span style="font-family: Courier, sans-serif; ">**Exercise**</span>
+
+<span style="font-family: Courier, sans-serif; ">Annual estimates of the GWN model parameters for Boeing and Microsoft are given in the table below: </span>
+
+<table border="0" cellspacing="0" cellpadding="0"><colgroup><col width="170px" /><col span="2" width="77" /></colgroup>
+<tbody>
+<tr style="border-bottom: 1pt solid black;">
+<td height="21">&nbsp;</td>
+<td style="font-weight: bold; width: 77px; text-align: right;" >Boeing</td>
+<td style="font-weight: bold; width: 97px; text-align: right;" >Microsoft</td>
+</tr>
+<tr>
+<td height="21">$\mu$</td>
+<td align="right">0.149</td>
+<td align="right">0.331</td>
+</tr>
+<tr>
+<td height="21">$\sigma^2$</td>
+<td align="right">0.069</td>
+<td align="right">0.136</td>
+</tr>
+<tr style="border-top: 1pt solid black;">
+<td height="21">$\rho$(Boeing, Microsoft)</td>
+<td style="text-align: center;" colspan="2" align="right">-0.008&nbsp;</td>
+</tr>
+</tbody>
+</table>
+
+<div style="font-family: Courier, sans-serif; ">
+
+Use an annual risk-free rate of $3\%$ per year for the T-bill. 
+
+1. Create the following portfolios.
+
+    - Combinations of Boeing and Microsoft (with  $x_{boeing}= −1, −0.9, \ldots, 2$ and $x_{msft}= 1−x_{boeing}$) 
+    
+    - Combinations of Boeing and T-bills (with $x{boeing}=0,0.1,\ldots,2$)
+    
+    - Combinations of Microsoft and T-bills (with $x{msft}=0,0.1,\ldots,2$)
+    For each portfolio, compute  $E(R_p)$, $\text{var}(R_p)$ and $\text{SD}(R_p)$
+    
+    - For each portfolio, plot  $E(R_p)$ vs. $\text{SD}(R_p)$ 
+    
+    - Compute the Sharpe’s slope for Boeing and Microsoft. Which asset has the highest slope value?
+
+2. Compute the global minimum variance portfolio (GMV).
+
+    - Compute the weights of Boeing and Microsoft in the GMV portfolio.
+    
+    - Compute $E(R_p)$, $\text{var}(R_p)$ and $\text{SD}(R_p)$ for the GMV portfolio.
+    
+    - Compute Sharpe’s slope for the GMV portfolio.
+    
+
+3. Compute the tangency portfolio.
+    
+    - Compute the weights of Boeing and Microsoft in the tangency portfolio.
+    
+    - Compute $E(R_p)$, $\text{var}(R_p)$ and $\text{SD}(R_p)$ for the tangency portfolio.
+    
+    - Compute Sharpe’s slope for the tangency portfolio.
+    
+
+</div>
+
+
+------------------------------------------------------------------------
+
+### References
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,8 +12,6 @@ output:
 bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
-header-includes:
-- \usepackage[width=\textwidth]{caption}
 ---
 
 ```{r setup, include=F, echo=F}
@@ -748,7 +746,8 @@ $$
 r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
 $$
 
-- annualized standard deviation
+- annualized standard deviation. \
+Note that in Finance, the standard deviation of returns is usually called *volatility*.
 
 $$
 \begin{aligned}
@@ -828,6 +827,11 @@ kurtosis(ptf_xts$port_ret)
 ```
 
 
+```{r}
+# summary statistic
+returns_statistics <- table.Stats(ptf_xts$port_ret)
+returns_statistics
+```
 
 
 #### Sharpe ratio
@@ -895,7 +899,7 @@ The portfolio return in excess of the return of the benchmark is known as the *a
 The information ratio is the active return per unit of active risk.
 
 $$
-IR_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\text{Information Ratio}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
 $$
 where 
 
@@ -928,7 +932,7 @@ where
 The Trynor ratio is computed as
 
 $$
-T_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
+\text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
 $$
 Note that the only relevant risk in the computation of the Treynor ratio is systematic risk. 
 
@@ -1113,9 +1117,29 @@ $$
 $$
 where $n$ is either the number of observations of the entire series or the number of observations in the subset of the series falling below the average.
 
-- **Value-at-Risk** (VaR) corresponds to the $5\%$ quantile of the return distribution, meaning that a more negative return can only happen with a probability of $5\%$. For example you might ask: "what is the largest loss I could potentially take within the next quarter such that I only have $5\%$ probability of observing an even larger loss?" 
+- **Value-at-Risk** (VaR) measures the potential loss in value of a risky asset or portfolio over a defined period for a given confidence interval. It corresponds to a probability $p$, which is a confidence level.
 
-- The **expected shortfall** (ES) is another measure of risk that focuses on the average loss below the $5\%$ VaR quantile.
+A $p$ VaR means that the probability of a loss greater than VaR is (at most) $(p)$ while the probability of a loss less than VaR is (at least) $1-p$.
+
+    -  For example, a one-day $5\%$ VaR of $\$1$ million implies the portfolio has a $5\%$ chance that the value of the asset drops more than $\$1$ million over one day. In other words, there is a $95\%$ probability that the asset makes a profit or lose less than $\$1$ million over a day.
+
+    -  Different conventions are used for $p$. You can tell by the magnitude whether it refers to a confidence level or a significance level. For instance, sometimes you see $95\%$ VaR (confidence level) and $5\%$ VaR (significance level).
+
+    - To obtain a sample estimate of $5\%$ VaR, we sort the observations from high to low. The VaR is the return at the $5$th percentile of the empirical sample distribution.
+    
+    - More formally,
+    
+    $$
+    \text{VaR}(\alpha) = -F^{-1}(-\alpha)
+    $$
+    where $F(\cdot)$ is the cdf of the portfolio return $r_p$.
+
+- The **expected shortfall** (ES) is the expected value of the loss, given the loss is greater than the VaR. 
+
+$$
+\text{ES}(\alpha) = -E[r_p \vert r_p \leq F^{-1}(-\alpha)]
+$$
+    -  VaR is the most optimistic measure of worst-case scenarios as it takes the smallest loss of all these cases, while ES informs the magnitudes of potential losses given that the loss is greater than the VaR.
 
 
 ```{r}
@@ -1124,14 +1148,13 @@ where $n$ is either the number of observations of the entire series or the numbe
 SemiDeviation(ptf_xts$port_ret)
 sd(ptf_xts$port_ret)
 
-# Calculate the value at risk, p is the loss probability level
-VaR(ptf_xts$port_ret, p=.025)
-VaR(ptf_xts$port_ret, p=.05)
-
+# Calculate the value at risk, p is the confidence level
+VaR(ptf_xts$port_ret, p=.95) # 95% VaR
+VaR(ptf_xts$port_ret, p=.99) # 99% VaR
 
 # Calculate the expected shortfall
-ES(ptf_xts$port_ret, p=.025)
-ES(ptf_xts$port_ret, p=.05)
+ES(ptf_xts$port_ret, p=.95)
+ES(ptf_xts$port_ret, p=.99)
 ```
 
 The other popular downside risk estimate, the **maximum drawdown** (MDD) of the portfolio, measures the largest loss from peak to trough over the examination period.

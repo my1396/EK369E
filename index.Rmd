@@ -11,6 +11,8 @@ This webpage provides coding practice for EK369E.
 
 [Apr 4, Performance Evaluation](w3.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w3.rmd); [Download Data](https://drive.google.com/file/d/1Xop4n2ZjP4IytKI_Xyqp0NHxwK-GpZPk/view?usp=share_link);
 
+[Apr 5, Portfolio Optimization](w4.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w4.rmd); 
+
 <hr>
 
 **Office hour**: 14:00-16:00 by appointment on Fridays in teaching weeks.

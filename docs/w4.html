@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Menghan Yuan" />
+
+<meta name="date" content="2024-04-02" />
+
+<title>Performance Optimization</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Course Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Performance Optimization</h1>
+<h4 class="author">Menghan Yuan</h4>
+<h4 class="date">April 2, 2024</h4>
+
+</div>
+
+
+<div id="portfolio-opportunity-set" class="section level2">
+<h2>Portfolio opportunity set</h2>
+<p>The collection of all feasible investment possibilities set, or <em>portfolio opportunity set</em>, in the case of two assets is simply all possible portfolios that can be formed by varying the portfolio weights such that the weights sum to one.</p>
+<p>We summarize the expected return-risk (mean-volatility) properties of the feasible portfolios in a plot with portfolio expected return, <span class="math inline">\(\mu_p\)</span>, on the vertical axis and portfolio standard deviation, <span class="math inline">\(\sigma_p\)</span>, on the horizontal axis.</p>
+<p>Given the following set up for two assets A and B:</p>
+<pre class="r"><code>mu.A = 0.175
+sig.A = 0.258
+sig2.A = sig.A^2
+
+mu.B = 0.055
+sig.B = 0.115
+sig2.B = sig.B^2
+
+rho.AB = -0.164
+sig.AB = rho.AB*sig.A*sig.B</code></pre>
+<div id="equally-weighted" class="section level3">
+<h3>Equally weighted</h3>
+<p>First we consider an equally weighted portfolio <span class="math inline">\(p_1\)</span>.</p>
+<pre class="r"><code># equally weighted
+x.A = 0.5
+x.B = 0.5
+mu.p1 = x.A*mu.A + x.B*mu.B
+sig2.p1 = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p1 = sqrt(sig2.p1)
+data.tbl = t(c(mu.p1=mu.p1, sig.p1=sig.p1, sig.avg=0.5*sig.A+0.5*sig.B))
+data.tbl</code></pre>
+<pre><code>##      mu.p1    sig.p1 sig.avg
+## [1,] 0.115 0.1323416  0.1865</code></pre>
+<p>This portfolio has expected return half-way between the expected returns on assets A and B, but the portfolio standard deviation is less than half-way between the asset standard deviations. This reflects risk reduction via diversification.</p>
+<p>The equally weighted portfolio has expected return half way between the expected returns on assets A and B, but has standard deviation (volatility) that is less than half way between the standard deviations of the two assets.</p>
+<p>For long-only portfolios, we can show that this is a general result as long as the correlation between the two assets is not perfectly positive.</p>
+</div>
+<div id="long-short-portfolio" class="section level3">
+<h3>Long-short portfolio</h3>
+<p>Now we allow for short selling.</p>
+<blockquote>
+<p>To short an asset one borrows the asset, usually from a broker, and then sells it. The proceeds from the short sale are usually kept on account with a broker and there may be restrictions on the use of these funds for the purchase of other assets. The short position is closed out when the asset is repurchased and then returned to original owner. If the asset drops in value then a gain is made on the short sale and if the asset increases in value a loss is made.</p>
+</blockquote>
+<pre class="r"><code># long-short portfolio
+x.A = 1.5
+x.B = -0.5
+mu.p2 = x.A*mu.A + x.B*mu.B
+sig2.p2 = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p2 = sqrt(sig2.p2)
+data.tbl = t(c(mu.p2=mu.p2, sig.p2=sig.p2, sig.avg=1.5*sig.A-0.5*sig.B))
+data.tbl</code></pre>
+<pre><code>##      mu.p2    sig.p2 sig.avg
+## [1,] 0.235 0.4004673  0.3295</code></pre>
+<p>This portfolio has both a higher expected return and standard deviation than asset A.
+The high standard deviation is due to the short sale, which is a type of leverage, and the negative correlation between assets A and B.</p>
+<blockquote>
+<p>Leverage refers to an investment that is financed through borrowing. Here, the short sale of asset B produces borrowed funds used to purchase more of asset A. This increases the risk (portfolio standard deviation) of the investment.</p>
+</blockquote>
+<p>Now we calculate the portfolio opportunity set.
+Here the portfolio weight on asset A, <span class="math inline">\(x_A\)</span>, is varied from <span class="math inline">\(-0.4\)</span> to <span class="math inline">\(1.4\)</span> at a step of 0.1 and, since <span class="math inline">\(x_B=1−x_A\)</span>, the weight on asset B then varies from <span class="math inline">\(1.4\)</span> to <span class="math inline">\(-0.4\)</span>.</p>
+<pre class="r"><code>x.A = seq(from=-0.4, to=1.4, by=0.1)
+x.B = 1 - x.A
+mu.p = x.A*mu.A + x.B*mu.B
+sig2.p = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p = sqrt(sig2.p)
+port.names = paste(&quot;portfolio&quot;, 1:length(x.A), sep=&quot; &quot;)
+data.tbl = as.data.frame(cbind(x.A, x.B, mu.p, sig.p))
+rownames(data.tbl) = port.names
+col.names = c(&quot;$x_{A}$&quot;,&quot;$x_{B}$&quot;, &quot;$\\mu_{p}$&quot;, &quot;$\\sigma_{p}$&quot; )
+kbl(data.tbl, col.names=col.names) %&gt;%
+   kable_styling(full_width=FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(x_{A}\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(x_{B}\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\mu_{p}\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\sigma_{p}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+portfolio 1
+</td>
+<td style="text-align:right;">
+-0.4
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+0.2049903
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 2
+</td>
+<td style="text-align:right;">
+-0.3
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+0.1792663
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 3
+</td>
+<td style="text-align:right;">
+-0.2
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.031
+</td>
+<td style="text-align:right;">
+0.1550554
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 4
+</td>
+<td style="text-align:right;">
+-0.1
+</td>
+<td style="text-align:right;">
+1.1
+</td>
+<td style="text-align:right;">
+0.043
+</td>
+<td style="text-align:right;">
+0.1331855
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 5
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.055
+</td>
+<td style="text-align:right;">
+0.1150000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 6
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+0.9
+</td>
+<td style="text-align:right;">
+0.067
+</td>
+<td style="text-align:right;">
+0.1024794
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 7
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+0.079
+</td>
+<td style="text-align:right;">
+0.0978237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 8
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+0.091
+</td>
+<td style="text-align:right;">
+0.1021143
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 9
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.103
+</td>
+<td style="text-align:right;">
+0.1143487
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 10
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.115
+</td>
+<td style="text-align:right;">
+0.1323416
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 11
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.127
+</td>
+<td style="text-align:right;">
+0.1540890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 12
+</td>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+<td style="text-align:right;">
+0.139
+</td>
+<td style="text-align:right;">
+0.1782216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 13
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+0.151
+</td>
+<td style="text-align:right;">
+0.2038943
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 14
+</td>
+<td style="text-align:right;">
+0.9
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+0.163
+</td>
+<td style="text-align:right;">
+0.2305932
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 15
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.175
+</td>
+<td style="text-align:right;">
+0.2580000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 16
+</td>
+<td style="text-align:right;">
+1.1
+</td>
+<td style="text-align:right;">
+-0.1
+</td>
+<td style="text-align:right;">
+0.187
+</td>
+<td style="text-align:right;">
+0.2859111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 17
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+-0.2
+</td>
+<td style="text-align:right;">
+0.199
+</td>
+<td style="text-align:right;">
+0.3141923
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 18
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:right;">
+-0.3
+</td>
+<td style="text-align:right;">
+0.211
+</td>
+<td style="text-align:right;">
+0.3427518
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+portfolio 19
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+-0.4
+</td>
+<td style="text-align:right;">
+0.223
+</td>
+<td style="text-align:right;">
+0.3715255
+</td>
+</tr>
+</tbody>
+</table>
+<p>Portfolios 1-4 and 16-19 are the long-short portfolios and portfolios 5-15 are the long-only portfolios.</p>
+<p>The risk-return properties of this set of feasible portfolios can be visualized using:</p>
+<pre class="r"><code># mu.p ~ sig.p scatter
+cex.val = 1.5
+col_vec = c(rep(&quot;blue&quot;, 4), rep(&quot;black&quot;, 2),
+            &quot;green&quot;, rep(&quot;black&quot;, 8), rep(&quot;blue&quot;, 4))
+plot(sig.p, mu.p, type=&quot;b&quot;, pch=16, cex=cex.val,
+     ylim=c(0, max(mu.p)), xlim=c(0, max(sig.p)), 
+     xlab=expression(sigma[p]), ylab=expression(mu[p]),
+     cex.lab=1.5, col=col_vec)
+text(x=sig.A, y=mu.A, labels=&quot;Asset A&quot;, pos=4)
+text(x=sig.B, y=mu.B, labels=&quot;Asset B&quot;, pos=4)</code></pre>
+<p><img src="w4_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>The black dots plus the green dot represent the long-only portfolios;
+<ul>
+<li>The black dot labeled “Asset A” is the portfolio which invests <span class="math inline">\(100\%\)</span> in asset A, i.e., (<span class="math inline">\(x_A=1, x_B=0\)</span>);</li>
+<li>The black dot labeled “Asset B” is the portfolio which invests <span class="math inline">\(100\%\)</span> in asset B, i.e., (<span class="math inline">\(x_A=0, x_B=1\)</span>);</li>
+</ul></li>
+<li>The blue dots represent long-short portfolios;</li>
+<li>The green dot represents the <em>global minimum variance portfolio</em> (GMV). This portfolio has the property that it has the smallest variance/volatility among all feasible portfolios.</li>
+</ul>
+<p>Computing the global minimum variable portfolio is a constriained optimization problem:</p>
+<p><span class="math display">\[
+\begin{align*}
+\underset{x_{A},x_{B}}{\min}\sigma_{p}^{2} &amp; =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}\\
+~s.t.~x_{A}+x_{B} &amp; =1.
+\end{align*}
+\]</span></p>
+<p>This constrained optimization problem can be solved using two methods analytically.</p>
+<ul>
+<li>The first method, called the method of substitution, uses the constraint to substitute out one of the variables to transform the constrained optimization problem in two variables into an unconstrained optimization problem in one variable.</li>
+</ul>
+<p><span class="math display">\[
+\min_{x_{A}}\sigma_{p}^{2}=x_{A}^{2}\sigma_{A}^{2}+(1-x_{A})^{2}\sigma_{B}^{2}+2x_{A}(1-x_{A})\sigma_{AB}.
+\]</span>
+Apply the first order condition to solve the unconstrained optimization problem.</p>
+<ul>
+<li>The second method, called the method of Lagrange multipliers, introduces an auxiliary variable called the Lagrange multiplier and transforms the constrained optimization problem in two variables into an unconstrained optimization problem in three variables.</li>
+</ul>
+<p>The Lagrangian function is formed by adding to <span class="math inline">\(\sigma_p^2\)</span> the homogenous constraint multiplied by an auxiliary variable <span class="math inline">\(\lambda\)</span> (the Lagrange multiplier) giving:</p>
+<p><span class="math display">\[
+L(x_{A},x_{B},\lambda)=x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}+\lambda(x_{A}+x_{B}-1).
+\]</span></p>
+<p><img src="https://drive.google.com/thumbnail?id=1N7wP5IfQOjSeB3omZtagmT5tzHqrOUcO&sz=w1000" alt="different rho values" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
+<ul>
+<li>The closer <span class="math inline">\(\rho_{AB}\)</span> is to <span class="math inline">\(-1\)</span> the more curved is the frontier toward the y-axis and the higher is the possible diversification benefit.</li>
+<li>There is noticeable curvature even for positive values of <span class="math inline">\(\rho_{AB}\)</span>.</li>
+</ul>
+<p><img src="https://drive.google.com/thumbnail?id=1GljEacgeeGjGl5NY_fwLptWPHPODACv4&sz=w1000" alt="perfect correlation" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
+<ul>
+<li>If <span class="math inline">\(\rho_{AB}=1\)</span>, then the portfolio frontier approaches a straight line connecting assets A and B.</li>
+<li>If <span class="math inline">\(\rho_{AB}=-1\)</span>, there exists a portfolio of A and B that has positive expected return and zero variance.</li>
+</ul>
+<p><img src="https://drive.google.com/thumbnail?id=1HF1Mj3sApukpi4dQ5ERbs89zqlBm3ftw&sz=w1000" alt="effiient ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
+<ul>
+<li>Efficient portfolios are the feasible portfolios that have the highest expected return for a given level of risk as measured by portfolio standard deviation.</li>
+<li>Inefficient portfolios are the portfolios such that there is another feasible portfolio that has the same risk but with a lower expected return.</li>
+</ul>
+<p>Tangency portfolio represents the portfolio which maximizes Sharpe ratio.</p>
+<p><img src="https://drive.google.com/thumbnail?id=1pTKSSwWI5Od5MrSfDqI6axOlPjVfI_zh&sz=w1000" alt="tangency ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
+<p>We can determine the proportions of each asset in the tangency portfolio by finding the values of <span class="math inline">\(x_A\)</span> and <span class="math inline">\(x_B\)</span> that maximize the Sharpe ratio of a portfolio.</p>
+<p>Formally, we solve the constrained maximization problem:</p>
+<p><span class="math display">\[
+\begin{align*}
+\underset{x_{A},x_{B}}{\max}~\mathrm{SR}_{p} &amp;= \frac{\mu_{p}-r_{f}}{\sigma_{p}}~s.t.\\
+\mu_{p} &amp; =x_{A}\mu_{A}+x_{B}\mu_{B},\\
+\sigma_{p}^{2} &amp; =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB},\\
+1 &amp; =x_{A}+x_{B}.
+\end{align*}
+\]</span></p>
+</div>
+</div>
+<div id="portfolio-optimization-with-introcompfinr" class="section level2">
+<h2>Portfolio optimization with <code>IntroCompFinR</code></h2>
+<p>To create an equally weighted portfolio use:</p>
+<pre class="r"><code>library(IntroCompFinR)
+mu.vec &lt;- c(mu.A, mu.B)
+sigma2.mat &lt;- matrix(c(sig2.A, sig.AB^2, sig.AB^2, sig2.B), ncol=2)
+
+k &lt;- 2 # number of assets
+ew &lt;- rep(1,k)/k
+equalWeight.portfolio &lt;- getPortfolio(er=mu.vec, cov.mat=sigma2.mat, weights=ew)
+equalWeight.portfolio</code></pre>
+<pre><code>## Call:
+## getPortfolio(er = mu.vec, cov.mat = sigma2.mat, weights = ew)
+## 
+## Portfolio expected return:     0.115 
+## Portfolio standard deviation:  0.1412766 
+## Portfolio weights:
+## [1] 0.5 0.5</code></pre>
+<p>The global minimum variance portfolio (allowing for short sales) is computed using:</p>
+<pre class="r"><code>gmin.port &lt;- globalMin.portfolio(mu.vec, sigma2.mat)
+gmin.port</code></pre>
+<pre><code>## Call:
+## globalMin.portfolio(er = mu.vec, cov.mat = sigma2.mat)
+## 
+## Portfolio expected return:     0.07486614 
+## Portfolio standard deviation:  0.1050691 
+## Portfolio weights:
+## [1] 0.1656 0.8344</code></pre>
+<ul>
+<li>If short sales are not allowed, then set <code>shorts = TRUE</code>.</li>
+</ul>
+<p>You can compute the portfolio with a target expected return.</p>
+<pre class="r"><code>target.return &lt;-  mu.vec[1]
+e.port.msft &lt;-  efficient.portfolio(mu.vec, sigma2.mat, target.return)
+e.port.msft</code></pre>
+<pre><code>## Call:
+## efficient.portfolio(er = mu.vec, cov.mat = sigma2.mat, target.return = target.return)
+## 
+## Portfolio expected return:     0.175 
+## Portfolio standard deviation:  0.258 
+## Portfolio weights:
+## [1] 1 0</code></pre>
+<p>The tangency portfolio can be computed as:</p>
+<pre class="r"><code>r.f &lt;- .005
+tan.port &lt;- tangency.portfolio(mu.vec, sigma2.mat, risk.free = r.f)
+tan.port</code></pre>
+<pre><code>## Call:
+## tangency.portfolio(er = mu.vec, cov.mat = sigma2.mat, risk.free = r.f)
+## 
+## Portfolio expected return:     0.1034 
+## Portfolio standard deviation:  0.1246921 
+## Portfolio weights:
+## [1] 0.4033 0.5967</code></pre>
+<p>The function <code>efficient.frontier()</code> constructs the set of efficient portfolios.</p>
+<pre class="r"><code>ef &lt;- efficient.frontier(mu.vec, sigma2.mat, alpha.min=-0.5, 
+                        alpha.max=2, nport=20)
+summary(ef)</code></pre>
+<pre><code>## $call
+## efficient.frontier(er = mu.vec, cov.mat = sigma2.mat, nport = 20, 
+##     alpha.min = -0.5, alpha.max = 2)
+## 
+## $er
+##       port 1       port 2       port 3       port 4       port 5       port 6 
+##  0.225066930  0.211891422  0.198715914  0.185540406  0.172364898  0.159189391 
+##       port 7       port 8       port 9      port 10      port 11      port 12 
+##  0.146013883  0.132838375  0.119662867  0.106487360  0.093311852  0.080136344 
+##      port 13      port 14      port 15      port 16      port 17      port 18 
+##  0.066960836  0.053785328  0.040609821  0.027434313  0.014258805  0.001083297 
+##      port 19      port 20 
+## -0.012092210 -0.025267718 
+## 
+## $sd
+##    port 1    port 2    port 3    port 4    port 5    port 6    port 7    port 8 
+## 0.3687406 0.3391362 0.3098059 0.2808355 0.2523492 0.2245311 0.1976636 0.1721924 
+##    port 9   port 10   port 11   port 12   port 13   port 14   port 15   port 16 
+## 0.1488358 0.1287500 0.1136822 0.1057985 0.1067032 0.1161913 0.1324306 0.1532903 
+##   port 17   port 18   port 19   port 20 
+## 0.1771455 0.2029428 0.2300295 0.2580000 
+## 
+## $weights
+##                [,1]        [,2]
+## port 1   1.41722441 -0.41722441
+## port 2   1.30742851 -0.30742851
+## port 3   1.19763262 -0.19763262
+## port 4   1.08783672 -0.08783672
+## port 5   0.97804082  0.02195918
+## port 6   0.86824492  0.13175508
+## port 7   0.75844902  0.24155098
+## port 8   0.64865313  0.35134687
+## port 9   0.53885723  0.46114277
+## port 10  0.42906133  0.57093867
+## port 11  0.31926543  0.68073457
+## port 12  0.20946953  0.79053047
+## port 13  0.09967364  0.90032636
+## port 14 -0.01012226  1.01012226
+## port 15 -0.11991816  1.11991816
+## port 16 -0.22971406  1.22971406
+## port 17 -0.33950996  1.33950996
+## port 18 -0.44930586  1.44930586
+## port 19 -0.55910175  1.55910175
+## port 20 -0.66889765  1.66889765
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;summary.Markowitz&quot;</code></pre>
+<p>Use the <code>plot()</code> function to create a simple plot the efficient frontier:</p>
+<pre class="r"><code>plot(ef, plot.assets=T, col=&quot;blue&quot;, pch=16)
+points(gmin.port$sd, gmin.port$er, col=&quot;green&quot;, pch=16, cex=2) 
+text(gmin.port$sd, gmin.port$er, labels = &quot;Global min&quot;, pos = 4) 
+points(tan.port$sd, tan.port$er, col=&quot;red&quot;, pch=16, cex=2) 
+text(tan.port$sd, tan.port$er, labels = &quot;Tangency&quot;, pos = 3) 
+sr.tan = (tan.port$er - r.f)/tan.port$sd 
+abline(a=r.f, b=sr.tan, col=&quot;green&quot;, lwd=2)</code></pre>
+<p><img src="w4_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span style="font-family: Courier, sans-serif; "><strong>Exercise</strong></span></p>
+<p><span style="font-family: Courier, sans-serif; ">Annual estimates of the GWN model parameters for Boeing and Microsoft are given in the table below: </span></p>
+<table border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col width="170px" />
+<col span="2" width="77" />
+</colgroup>
+<tbody>
+<tr style="border-bottom: 1pt solid black;">
+<td height="21">
+ 
+</td>
+<td style="font-weight: bold; width: 77px; text-align: right;">
+Boeing
+</td>
+<td style="font-weight: bold; width: 97px; text-align: right;">
+Microsoft
+</td>
+</tr>
+<tr>
+<td height="21">
+<span class="math inline">\(\mu\)</span>
+</td>
+<td align="right">
+0.149
+</td>
+<td align="right">
+0.331
+</td>
+</tr>
+<tr>
+<td height="21">
+<span class="math inline">\(\sigma^2\)</span>
+</td>
+<td align="right">
+0.069
+</td>
+<td align="right">
+0.136
+</td>
+</tr>
+<tr style="border-top: 1pt solid black;">
+<td height="21">
+<span class="math inline">\(\rho\)</span>(Boeing, Microsoft)
+</td>
+<td style="text-align: center;" colspan="2" align="right">
+-0.008 
+</td>
+</tr>
+</tbody>
+</table>
+<div style="font-family: Courier, sans-serif; ">
+<p>Use an annual risk-free rate of <span class="math inline">\(3\%\)</span> per year for the T-bill.</p>
+<ol style="list-style-type: decimal">
+<li><p>Create the following portfolios.</p>
+<ul>
+<li><p>Combinations of Boeing and Microsoft (with <span class="math inline">\(x_{boeing}= −1, −0.9, \ldots, 2\)</span> and <span class="math inline">\(x_{msft}= 1−x_{boeing}\)</span>)</p></li>
+<li><p>Combinations of Boeing and T-bills (with <span class="math inline">\(x{boeing}=0,0.1,\ldots,2\)</span>)</p></li>
+<li><p>Combinations of Microsoft and T-bills (with <span class="math inline">\(x{msft}=0,0.1,\ldots,2\)</span>)
+For each portfolio, compute <span class="math inline">\(E(R_p)\)</span>, <span class="math inline">\(\text{var}(R_p)\)</span> and <span class="math inline">\(\text{SD}(R_p)\)</span></p></li>
+<li><p>For each portfolio, plot <span class="math inline">\(E(R_p)\)</span> vs. <span class="math inline">\(\text{SD}(R_p)\)</span></p></li>
+<li><p>Compute the Sharpe’s slope for Boeing and Microsoft. Which asset has the highest slope value?</p></li>
+</ul></li>
+<li><p>Compute the global minimum variance portfolio (GMV).</p>
+<ul>
+<li><p>Compute the weights of Boeing and Microsoft in the GMV portfolio.</p></li>
+<li><p>Compute <span class="math inline">\(E(R_p)\)</span>, <span class="math inline">\(\text{var}(R_p)\)</span> and <span class="math inline">\(\text{SD}(R_p)\)</span> for the GMV portfolio.</p></li>
+<li><p>Compute Sharpe’s slope for the GMV portfolio.</p></li>
+</ul></li>
+<li><p>Compute the tangency portfolio.</p>
+<ul>
+<li><p>Compute the weights of Boeing and Microsoft in the tangency portfolio.</p></li>
+<li><p>Compute <span class="math inline">\(E(R_p)\)</span>, <span class="math inline">\(\text{var}(R_p)\)</span> and <span class="math inline">\(\text{SD}(R_p)\)</span> for the tangency portfolio.</p></li>
+<li><p>Compute Sharpe’s slope for the tangency portfolio.</p></li>
+</ul></li>
+</ol>
+</div>
+<hr />
+<div id="references" class="section level3 unnumbered">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-IntroCompFinR" class="csl-entry">
+Zivot, Eric. n.d. <em>Introduction to Computational Finance in r</em>. Econ 424 in University of Washington, Seattle. <a href="https://rdrr.io/rforge/IntroCompFinR/">https://rdrr.io/rforge/IntroCompFinR/</a>.
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
