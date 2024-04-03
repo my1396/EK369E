@@ -55,10 +55,49 @@ The collection of all feasible investment possibilities set, or *portfolio oppor
 
 We summarize the expected return-risk (mean-volatility) properties of the feasible portfolios in a plot with portfolio expected return, $\mu_p$, on the vertical axis and portfolio standard deviation, $\sigma_p$, on the horizontal axis. 
 
+Recall we have the expected return and variance of the portfolio return as follows:
+
+$$
+\begin{aligned}
+E[r_{p,t}] &= \sum_{i=1}^k w_{i,t} E[r_{i,t}] \\
+\text{Var}[r_{p,t}] &= \sum_{i=1}^k\sum_{j=1}^k w_{i,t}\,w_{j,t}\,\text{Cov}(r_{i,t}, r_{j,t})
+\end{aligned}
+$$
 
 Given the following set up for two assets A and B:
 
+<table border="0" cellspacing="0" cellpadding="0"><colgroup><col width="100px" /><col span="2" width="77" /></colgroup>
+<tbody>
+<tr style="border-bottom: 1pt solid black;">
+<td height="21">&nbsp;</td>
+<td style="font-weight: bold; width: 77px; text-align: right;" >Asset A</td>
+<td style="font-weight: bold; width: 97px; text-align: right;" >Asset B</td>
+</tr>
+<tr>
+<td height="21">$\mu$</td>
+<td align="right">0.175</td>
+<td align="right">0.055</td>
+</tr>
+<tr>
+<td height="21">$\sigma$</td>
+<td align="right">0.258</td>
+<td align="right">0.115</td>
+</tr>
+<tr style="border-top: 1pt solid black;">
+<td height="21">$\rho_{AB}$</td>
+<td style="text-align: center;" colspan="2" align="right">-0.164</td>
+</tr>
+</tbody>
+</table>
+
+&nbsp;
+
+### Equally weighted
+
+First we consider an equally weighted portfolio $p_1$.
+
 ```{r}
+# initialize parameters
 mu.A = 0.175
 sig.A = 0.258
 sig2.A = sig.A^2
@@ -71,9 +110,6 @@ rho.AB = -0.164
 sig.AB = rho.AB*sig.A*sig.B
 ```
 
-### Equally weighted
-
-First we consider an equally weighted portfolio $p_1$.
 ```{r}
 # equally weighted
 x.A = 0.5
@@ -94,7 +130,7 @@ For long-only portfolios, we can show that this is a general result as long as t
 
 ### Long-short portfolio
 
-Now we allow for short selling.
+Now we consider a second portfolio $p_2$ which allows for short selling.
 
 > To short an asset one borrows the asset, usually from a broker, and then sells it. The proceeds from the short sale are usually kept on account with a broker and there may be restrictions on the use of these funds for the purchase of other assets. The short position is closed out when the asset is repurchased and then returned to original owner. If the asset drops in value then a gain is made on the short sale and if the asset increases in value a loss is made. 
 
@@ -155,7 +191,9 @@ text(x=sig.B, y=mu.B, labels="Asset B", pos=4)
 - The green dot represents the *global minimum variance portfolio* (GMV). This portfolio has the property that it has the smallest variance/volatility among all feasible portfolios.
 
 
-Computing the global minimum variable portfolio is a constriained optimization problem:
+## Global minimum variance portfolio
+
+Computing the global minimum variance portfolio is a constrained optimization problem:
 
 $$
 \begin{align*}
@@ -166,20 +204,37 @@ $$
 
 This constrained optimization problem can be solved using two methods analytically. 
 
-- The first method, called the method of substitution, uses the constraint to substitute out one of the variables to transform the constrained optimization problem in two variables into an unconstrained optimization problem in one variable. 
-
+- The first method, called the *method of substitution*, uses the constraint to substitute out one of the variables to transform the constrained optimization problem in two variables into an unconstrained optimization problem in one variable. 
 $$
 \min_{x_{A}}\sigma_{p}^{2}=x_{A}^{2}\sigma_{A}^{2}+(1-x_{A})^{2}\sigma_{B}^{2}+2x_{A}(1-x_{A})\sigma_{AB}.
 $$
-Apply the first order condition to solve the unconstrained optimization problem.
 
-- The second method, called the method of Lagrange multipliers, introduces an auxiliary variable called the Lagrange multiplier and transforms the constrained optimization problem in two variables into an unconstrained optimization problem in three variables.
+    Apply the first order condition to solve the unconstrained optimization problem.
+    
+    $$
+    0=\frac{d\sigma_{p}^{2}}{dx_{A}}=2x_{A}^{\min}\sigma_{A}^{2}-2(1-x_{A}^{\min})\sigma_{B}^{2}+2\sigma_{AB}(1-2x_{A}^{\min}).
+    $$
+    
+    We have the asset allocation for GMV portfolio:
+    
+    $$
+    \begin{align} 
+    x_{A}^{\min} &= \frac{\sigma_{B}^{2}-\sigma_{AB}}{\sigma_{A}^{2}+\sigma_{B}^{2}-2\sigma_{AB}},   \label{eq:gmv} \tag{1} \\
+    x_{B}^{\min} &= 1-x_{A}^{\min}.
+    \end{align}
+    $$
 
-The Lagrangian function is formed by adding to  $\sigma_p^2$ the homogenous constraint multiplied by an auxiliary variable $\lambda$ (the Lagrange multiplier) giving:
+- The second method, called the method of *Lagrange multipliers*, introduces an auxiliary variable called the Lagrange multiplier and transforms the constrained optimization problem in two variables into an unconstrained optimization problem in three variables.
+
+    The Lagrangian function is formed by adding to  $\sigma_p^2$ the homogenous constraint multiplied by an auxiliary variable $\lambda$ (the Lagrange multiplier) giving:
 
 $$
 L(x_{A},x_{B},\lambda)=x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}+\lambda(x_{A}+x_{B}-1).
 $$
+
+
+
+The shape of the investment possibilities set is very sensitive to the correlation between assets $A$ and $B$ given the other parameters. The following figure shows the portfolio frontiers for $\rho_{AB}=-0.9, -0.5, 0, 0.5, 0.9$.
 
 <img src="https://drive.google.com/thumbnail?id=1N7wP5IfQOjSeB3omZtagmT5tzHqrOUcO&sz=w1000" alt="different rho values" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
 
@@ -191,7 +246,7 @@ $$
 
 
 - If  $\rho_{AB}=1$, then the portfolio frontier approaches a straight line connecting assets A and B.
-- If  $\rho_{AB}=-1$, there exists a portfolio of A and B that has positive expected return and zero variance.
+- If  $\rho_{AB}=-1$, there exists a portfolio of A and B that has positive expected return and zero variance. Meaning arbitrage oppotunity.
 
 
 
@@ -201,7 +256,9 @@ $$
 - Inefficient portfolios are the portfolios such that there is another feasible portfolio that has the same risk but with a lower expected return.
 
 
-Tangency portfolio represents the portfolio which maximizes Sharpe ratio. 
+## Tangent portfolio
+
+Tangent/optimal portfolio represents the portfolio which maximizes Sharpe ratio. 
 
 <img src="https://drive.google.com/thumbnail?id=1pTKSSwWI5Od5MrSfDqI6axOlPjVfI_zh&sz=w1000" alt="tangency ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
 
@@ -216,6 +273,14 @@ $$
 \sigma_{p}^{2} & =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB},\\
 1 & =x_{A}+x_{B}.
 \end{align*}
+$$
+The solution to this optimization problem is:
+
+$$
+\begin{align}
+x_{A}^{tan} & =\frac{(\mu_{A}-r_{f})\sigma_{B}^{2}-(\mu_{B}-r_{f})\sigma_{AB}}{(\mu_{A}-r_{f})\sigma_{B}^{2}+(\mu_{B}-r_{f})\sigma_{A}^{2}-(\mu_{A}-r_{f}+\mu_{B}-r_{f})\sigma_{AB}},\label{eq:tangency-port} \tag{2}\\
+x_{B}^{tan} & =1-x_{A}^{tan}.\nonumber 
+\end{align}
 $$
 
 ## Portfolio optimization with `IntroCompFinR` 
@@ -244,8 +309,8 @@ gmin.port
 You can compute the portfolio with a target expected return.
 ```{r}
 target.return <-  mu.vec[1]
-e.port.msft <-  efficient.portfolio(mu.vec, sigma2.mat, target.return)
-e.port.msft
+e.port.target <-  efficient.portfolio(mu.vec, sigma2.mat, target.return)
+e.port.target
 ```
 
 
@@ -307,35 +372,36 @@ abline(a=r.f, b=sr.tan, col="green", lwd=2)
 
 <div style="font-family: Courier, sans-serif; ">
 
-Use an annual risk-free rate of $3\%$ per year for the T-bill. 
+Use an annual risk-free rate of $3\%$ per year for the T-bill (risk free rate). 
 
 1. Create the following portfolios.
 
     - Combinations of Boeing and Microsoft (with  $x_{boeing}= −1, −0.9, \ldots, 2$ and $x_{msft}= 1−x_{boeing}$) 
     
-    - Combinations of Boeing and T-bills (with $x{boeing}=0,0.1,\ldots,2$)
+    - Combinations of Boeing and T-bills (with $x_{boeing}=0,0.1,\ldots,2$)
     
-    - Combinations of Microsoft and T-bills (with $x{msft}=0,0.1,\ldots,2$)
-    For each portfolio, compute  $E(R_p)$, $\text{var}(R_p)$ and $\text{SD}(R_p)$
+    - Combinations of Microsoft and T-bills (with $x_{msft}=0,0.1,\ldots,2$). 
     
-    - For each portfolio, plot  $E(R_p)$ vs. $\text{SD}(R_p)$ 
+    - For each portfolio, compute  $E(r_p)$, $\text{Var}(r_p)$ and $\text{SD}(r_p)$
+    
+    - For each portfolio, plot  $E(r_p)$ vs. $\text{SD}(r_p)$ 
     
     - Compute the Sharpe’s slope for Boeing and Microsoft. Which asset has the highest slope value?
 
 2. Compute the global minimum variance portfolio (GMV).
 
-    - Compute the weights of Boeing and Microsoft in the GMV portfolio.
+    - Compute the weights of Boeing and Microsoft in the GMV portfolio using the analytical formula \eqref{eq:gmv} and cross validate your results using the `globalMin.portfolio` function.
     
-    - Compute $E(R_p)$, $\text{var}(R_p)$ and $\text{SD}(R_p)$ for the GMV portfolio.
+    - Compute $E(r_p)$, $\text{Var}(r_p)$ and $\text{SD}(r_p)$ for the GMV portfolio.
     
     - Compute Sharpe’s slope for the GMV portfolio.
     
 
 3. Compute the tangency portfolio.
     
-    - Compute the weights of Boeing and Microsoft in the tangency portfolio.
+    - Compute the weights of Boeing and Microsoft in the tangency portfolio using the analytical formula \eqref{eq:tangency-port} and cross validate your results using the `tangency.portfolio` function.
     
-    - Compute $E(R_p)$, $\text{var}(R_p)$ and $\text{SD}(R_p)$ for the tangency portfolio.
+    - Compute $E(r_p)$, $\text{Var}(r_p)$ and $\text{SD}(r_p)$ for the tangency portfolio.
     
     - Compute Sharpe’s slope for the tangency portfolio.
     
