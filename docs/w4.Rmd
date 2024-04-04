@@ -380,8 +380,9 @@ Use an annual risk-free rate of $3\%$ per year for the T-bill (risk free rate).
     
     - Combinations of Boeing and T-bills (with $x_{boeing}=0,0.1,\ldots,2$)
     
-    - Combinations of Microsoft and T-bills (with $x_{msft}=0,0.1,\ldots,2$)
-    For each portfolio, compute  $E(r_p)$, $\text{Var}(r_p)$ and $\text{SD}(r_p)$
+    - Combinations of Microsoft and T-bills (with $x_{msft}=0,0.1,\ldots,2$). 
+    
+    - For each portfolio, compute  $E(r_p)$, $\text{Var}(r_p)$ and $\text{SD}(r_p)$
     
     - For each portfolio, plot  $E(r_p)$ vs. $\text{SD}(r_p)$ 
     
@@ -393,7 +394,7 @@ Use an annual risk-free rate of $3\%$ per year for the T-bill (risk free rate).
     
     - Compute $E(r_p)$, $\text{Var}(r_p)$ and $\text{SD}(r_p)$ for the GMV portfolio.
     
-    - Compute Sharpe’s slope to the ope for the GMV portfolio.
+    - Compute Sharpe’s slope for the GMV portfolio.
     
 
 3. Compute the tangency portfolio.

@@ -168,7 +168,7 @@ Note that
 
 - $\left(1+\frac{R}{n}\right)^{n}-1$ is the effective interest rate. This is the interest rate you get as a proportion to the amount you put in and it depends on the frequency of compounding.
 
-- Continuously compounded interest rate is the effective interest rate when compounded continuously ($n\to\infty$).
+- Continuously compounded interest rate is the effective interest rate when compounded continuously $(n\to\infty).$
 
 <div class = "boxed">
 ```{exercise, proof1}
@@ -202,6 +202,8 @@ $$
 <span style='margin-top:-2em; float:right'>$\square$</span>
 ```
 </div>
+
+**From prices to returns.**
 
 ```{r}
 f_name <- "data/Titlon_equity_price_2014-2023_daily.csv"
@@ -244,9 +246,11 @@ the_group_xts <- xts(the_group[,c("AdjustedPrice")], order.by=the_group$Date)
 the_group_xts %>% str()
 the_group_xts
 
+# from daily to monthly
 prices_monthly <- the_group_xts %>% to.monthly(indexAt = "last", OHLC=FALSE)
 prices_monthly %>% head(20)
 prices_monthly %>% tail(20)
+# price plot
 plot(prices_monthly, main = sprintf("Monthly Price: %s", ticker))
 
 # calculate monthly return by hand 

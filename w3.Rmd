@@ -168,7 +168,7 @@ Note that
 
 - $\left(1+\frac{R}{n}\right)^{n}-1$ is the effective interest rate. This is the interest rate you get as a proportion to the amount you put in and it depends on the frequency of compounding.
 
-- Continuously compounded interest rate is the effective interest rate when compounded continuously ($n\to\infty$).
+- Continuously compounded interest rate is the effective interest rate when compounded continuously $(n\to\infty).$
 
 <div class = "boxed">
 ```{exercise, proof1}
@@ -202,6 +202,8 @@ $$
 <span style='margin-top:-2em; float:right'>$\square$</span>
 ```
 </div>
+
+**From prices to returns.**
 
 ```{r}
 f_name <- "data/Titlon_equity_price_2014-2023_daily.csv"
@@ -244,9 +246,11 @@ the_group_xts <- xts(the_group[,c("AdjustedPrice")], order.by=the_group$Date)
 the_group_xts %>% str()
 the_group_xts
 
+# from daily to monthly
 prices_monthly <- the_group_xts %>% to.monthly(indexAt = "last", OHLC=FALSE)
 prices_monthly %>% head(20)
 prices_monthly %>% tail(20)
+# price plot
 plot(prices_monthly, main = sprintf("Monthly Price: %s", ticker))
 
 # calculate monthly return by hand 
@@ -500,9 +504,10 @@ We use a portfolio consisting of 2 assets as an example.
 
 ### Return
 
-Loop through assets to calculate monthly return from daily price data.
+Loop through assets to calculate monthly returns from daily price data.
 ```{r get-monthly-return}
-data_return <- titlon_group %>%  # calculate monthly return
+# calculate monthly return
+data_return <- titlon_group %>%  
     group_modify( ~{
         xts(.$AdjustedPrice, order.by = .$Date) %>%
             to.monthly(indexAt="last", OHLC=FALSE) %>% 
@@ -528,7 +533,7 @@ data_return <- data_return %>%
            "Symbol", "Name", "Sector", 
            "Return_monthly")
 
-## select complete cases
+## subset complete cases
 start_date <- ymd("2015-01-01")
 end_date <- ymd("2022-12-31")
 data_return <- data_return %>% 
@@ -545,7 +550,7 @@ data_return
 
 
 
-Get sample data for two assets.
+Get sample data for two assets and create an equally-weighted portfolio of them.
 
 ```{r get-sample-data}
 k <- 2 # number of asset
@@ -711,7 +716,7 @@ Written as $\bar{r}_p$ in short, representing the arithmetic/geometric mean retu
 $$
 E[g(x)] \le g(E[x]).
 $$
-And $\ln(x)$ is a concave function.
+    And $\ln(x)$ is a concave function.
 
 - Common practice is to report geometric mean portfolio return.
 

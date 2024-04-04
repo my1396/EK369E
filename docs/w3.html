@@ -454,7 +454,7 @@ n &lt;- 2 # compound frequency in one year
 <ul>
 <li><p><span class="math inline">\(D_t\)</span> under continuous compounding is always larger than those of under fixed compounding frequencies. The higher the frequency, the larger the end value <span class="math inline">\(D_t\)</span> is. This is due to the earnings from “interest-on-interest”.</p></li>
 <li><p><span class="math inline">\(\left(1+\frac{R}{n}\right)^{n}-1\)</span> is the effective interest rate. This is the interest rate you get as a proportion to the amount you put in and it depends on the frequency of compounding.</p></li>
-<li><p>Continuously compounded interest rate is the effective interest rate when compounded continuously (<span class="math inline">\(n\to\infty\)</span>).</p></li>
+<li><p>Continuously compounded interest rate is the effective interest rate when compounded continuously <span class="math inline">\((n\to\infty).\)</span></p></li>
 </ul>
 <div class="boxed">
 <div class="exercise">
@@ -480,6 +480,7 @@ f(x) &amp;\approx f(0) + f^\prime(0)(x-0) \\
 <p><span style="margin-top:-2em; float:right"><span class="math inline">\(\square\)</span></span></p>
 </div>
 </div>
+<p><strong>From prices to returns.</strong></p>
 <pre class="r"><code>f_name &lt;- &quot;data/Titlon_equity_price_2014-2023_daily.csv&quot;
 titlon_data &lt;- read_csv(f_name)
 ## group by ISIN, calculate returns
@@ -607,7 +608,8 @@ the_group_xts %&gt;% str()</code></pre>
 ## 2023-11-22        24.000
 ## 2023-11-23        24.100
 ## 2023-11-24        24.250</code></pre>
-<pre class="r"><code>prices_monthly &lt;- the_group_xts %&gt;% to.monthly(indexAt = &quot;last&quot;, OHLC=FALSE)
+<pre class="r"><code># from daily to monthly
+prices_monthly &lt;- the_group_xts %&gt;% to.monthly(indexAt = &quot;last&quot;, OHLC=FALSE)
 prices_monthly %&gt;% head(20)</code></pre>
 <pre><code>##            AdjustedPrice
 ## 2020-02-28        17.028
@@ -652,7 +654,8 @@ prices_monthly %&gt;% head(20)</code></pre>
 ## 2023-09-29         27.35
 ## 2023-10-31         27.90
 ## 2023-11-24         24.25</code></pre>
-<pre class="r"><code>plot(prices_monthly, main = sprintf(&quot;Monthly Price: %s&quot;, ticker))</code></pre>
+<pre class="r"><code># price plot
+plot(prices_monthly, main = sprintf(&quot;Monthly Price: %s&quot;, ticker))</code></pre>
 <p><img src="w3_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># calculate monthly return by hand 
 simple_ret &lt;- (diff(prices_monthly)/lag(prices_monthly)) %&gt;% setNames(&quot;simple_return&quot;) # simple return
