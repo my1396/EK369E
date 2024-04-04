@@ -1455,8 +1455,9 @@ r_{p, t}(k) = \prod_{j=0}^{k-1} (1+r_{p,t-j}) -1
 <p>We use a portfolio consisting of 2 assets as an example.</p>
 <div id="return" class="section level3">
 <h3>Return</h3>
-<p>Loop through assets to calculate monthly return from daily price data.</p>
-<pre class="r"><code>data_return &lt;- titlon_group %&gt;%  # calculate monthly return
+<p>Loop through assets to calculate monthly returns from daily price data.</p>
+<pre class="r"><code># calculate monthly return
+data_return &lt;- titlon_group %&gt;%  
     group_modify( ~{
         xts(.$AdjustedPrice, order.by = .$Date) %&gt;%
             to.monthly(indexAt=&quot;last&quot;, OHLC=FALSE) %&gt;% 
@@ -1508,7 +1509,7 @@ data_return &lt;- data_return %&gt;%
            &quot;Symbol&quot;, &quot;Name&quot;, &quot;Sector&quot;, 
            &quot;Return_monthly&quot;)
 
-## select complete cases
+## subset complete cases
 start_date &lt;- ymd(&quot;2015-01-01&quot;)
 end_date &lt;- ymd(&quot;2022-12-31&quot;)
 data_return &lt;- data_return %&gt;% 
@@ -1536,7 +1537,7 @@ data_return</code></pre>
 ##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy       -0.130  
 ## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy       -0.0769 
 ## # ℹ 13,622 more rows</code></pre>
-<p>Get sample data for two assets.</p>
+<p>Get sample data for two assets and create an equally-weighted portfolio of them.</p>
 <pre class="r"><code>k &lt;- 2 # number of asset
 sample_data &lt;- data_return %&gt;% 
     filter(ISIN %in% c(&quot;BMG0451H1170&quot;, &quot;NO0003079709&quot;))
@@ -1564,7 +1565,7 @@ wts</code></pre>
 <pre><code>## [1] 0.5 0.5</code></pre>
 <p>Calculate portfolio return manually (most concise). It is straightforward to calculate rebalanced, as the begin of period weights are always the same.
 But it is a bit cumbersome to calculate buy-and-hold as we need to update the weight for each period.</p>
-<p>Here shows an example of buy-and-hold.</p>
+<p>Here shows an example of rebalancing monthly.</p>
 <pre class="r"><code># option 1, matrix representation
 ptf_ret &lt;- ret_mat %*% matrix(wts, ncol=1)
 names(ptf_ret) &lt;- &quot;port_ret_manual&quot;
@@ -5230,26 +5231,22 @@ M_p^2 = r_{p^*} - r_m .
 \end{aligned}
 \]</span>
 where <span class="math inline">\(n\)</span> is either the number of observations of the entire series or the number of observations in the subset of the series falling below the average.</p></li>
-<li><p><strong>Value-at-Risk</strong> (VaR) measures the potential loss in value of a risky asset or portfolio over a defined period for a given confidence interval. It corresponds to a probability <span class="math inline">\(p\)</span>, which is a confidence level.</p></li>
-</ul>
+<li><p><strong>Value-at-Risk</strong> (VaR) measures the potential loss in value of a risky asset or portfolio over a defined period for a given confidence interval. It corresponds to a probability <span class="math inline">\(p\)</span>, which is a confidence level.</p>
 <p>A <span class="math inline">\(p\)</span> VaR means that the probability of a loss greater than VaR is (at most) <span class="math inline">\((p)\)</span> while the probability of a loss less than VaR is (at least) <span class="math inline">\(1-p\)</span>.</p>
-<pre><code>-  For example, a one-day $5\%$ VaR of $\$1$ million implies the portfolio has a $5\%$ chance that the value of the asset drops more than $\$1$ million over one day. In other words, there is a $95\%$ probability that the asset makes a profit or lose less than $\$1$ million over a day.
-
--  Different conventions are used for $p$. You can tell by the magnitude whether it refers to a confidence level or a significance level. For instance, sometimes you see $95\%$ VaR (confidence level) and $5\%$ VaR (significance level).
-
-- To obtain a sample estimate of $5\%$ VaR, we sort the observations from high to low. The VaR is the return at the $5$th percentile of the empirical sample distribution.
-
-- More formally,
-
-$$
-\text{VaR}(\alpha) = -F^{-1}(-\alpha)
-$$
-where $F(\cdot)$ is the cdf of the portfolio return $r_p$.</code></pre>
 <ul>
-<li>The <strong>expected shortfall</strong> (ES) is the expected value of the loss, given the loss is greater than the VaR.</li>
+<li><p>For example, a one-day <span class="math inline">\(5\%\)</span> VaR of <span class="math inline">\(\$1\)</span> million implies the portfolio has a <span class="math inline">\(5\%\)</span> chance that the value of the asset drops more than <span class="math inline">\(\$1\)</span> million over one day. In other words, there is a <span class="math inline">\(95\%\)</span> probability that the asset makes a profit or lose less than <span class="math inline">\(\$1\)</span> million over a day.</p></li>
+<li><p>Different conventions are used for <span class="math inline">\(p\)</span>. You can tell by the magnitude whether it refers to a confidence level or a significance level. For instance, sometimes you see <span class="math inline">\(95\%\)</span> VaR (confidence level) and <span class="math inline">\(5\%\)</span> VaR (significance level).</p></li>
+<li><p>To obtain a sample estimate of <span class="math inline">\(5\%\)</span> VaR, we sort the observations from high to low. The VaR is the return at the <span class="math inline">\(5\)</span>th percentile of the empirical sample distribution.</p></li>
+<li><p>More formally,
+<span class="math display">\[
+\text{VaR}(\alpha) = -F^{-1}(\alpha)
+\]</span>
+where <span class="math inline">\(F(\cdot)\)</span> is the cdf of the portfolio return <span class="math inline">\(r_p\)</span>.</p></li>
+</ul></li>
+<li><p>The <strong>expected shortfall</strong> (ES) is the expected value of the loss, given the loss is greater than the VaR.</p></li>
 </ul>
 <p><span class="math display">\[
-\text{ES}(\alpha) = -E[r_p \vert r_p \leq F^{-1}(-\alpha)]
+\text{ES}(\alpha) = E[r_p \vert r_p \leq F^{-1}(\alpha)]
 \]</span>
 - VaR is the most optimistic measure of worst-case scenarios as it takes the smallest loss of all these cases, while ES informs the magnitudes of potential losses given that the loss is greater than the VaR.</p>
 <pre class="r"><code>## downside risk measures
