@@ -1,5 +1,5 @@
 ---
-title: "Performance Optimization"
+title: "Portfolio Optimization"
 author: "Menghan Yuan"
 date: "April 2, 2024"
 output: 
@@ -303,7 +303,7 @@ gmin.port <- globalMin.portfolio(mu.vec, sigma2.mat)
 gmin.port
 ```
 
-- If short sales are not allowed, then set `shorts = TRUE`.
+- If short sales are not allowed, then set `shorts = FALSE`.
 
 
 You can compute the portfolio with a target expected return.
