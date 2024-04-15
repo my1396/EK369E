@@ -13,6 +13,8 @@ This webpage provides coding practice for EK369E.
 
 [Apr 5, Portfolio Optimization](w4.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w4.rmd); 
 
+[Apr 18, Event Studies](w5.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w5.rmd); 
+
 <hr>
 
 **Office hour**: 14:00-16:00 by appointment on Fridays in teaching weeks.

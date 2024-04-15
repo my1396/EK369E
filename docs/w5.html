@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Menghan Yuan" />
+
+<meta name="date" content="2024-04-08" />
+
+<title>Event Studies</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Course Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Event Studies</h1>
+<h4 class="author">Menghan Yuan</h4>
+<h4 class="date">April 8, 2024</h4>
+
+</div>
+
+
+<p>An event study attempts to measure the valuation effects of a corporate event, such as a merger or earnings announcement, by examining the response of the stock price around the announcement of the event.</p>
+<p>One underlying assumption is that the market processes information about the event in an efficient and unbiased manner.</p>
+<p>Thus, we should be able to see the effect of the event on prices.</p>
+<p>The event that affects a firm’s valuation may be:</p>
+<ol style="list-style-type: decimal">
+<li><p>within the firm’s control, such as the event of the announcement of a stock split.</p></li>
+<li><p>outside the firm’s control, such as a macroeconomic announcement that will affect the firm’s future operations in some way.</p></li>
+</ol>
+<p>Various events have been examined:</p>
+<ul>
+<li>mergers and acquisitions</li>
+<li>earnings announcements</li>
+<li>issues of new debt and equity</li>
+<li>announcements of macroeconomic variables</li>
+<li>IPO’s</li>
+<li>dividend announcements.</li>
+<li>etc.</li>
+</ul>
+<p>The steps for an event study are as follows:</p>
+<ul>
+<li>Event Definition</li>
+<li>Selection Criteria</li>
+<li>Normal and Abnormal Return Measurement</li>
+<li>Estimation Procedure</li>
+<li>Testing Procedure</li>
+<li>Empirical Results</li>
+<li>Interpretation</li>
+</ul>
+<p>Definition of an event: We have to define what an event is. It must be unexpected. Also, we must know the exact date of the event.</p>
+<p>Frequency of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.</p>
+<p>Sample Selection: We have to decide what is the universe of companies in the sample.</p>
+<p>Horizon of the event study: If markets are efficient, we should consider short horizons –i.e., a few days. However, people have looked at long-horizons. Event studies can be categorized by horizon:</p>
+<ul>
+<li>Short horizon (from 1-month before to 1-month after the event)</li>
+<li>Long horizon (up to 5 years after the event).</li>
+</ul>
+<p><img src="https://drive.google.com/thumbnail?id=1VgBn7h15rvdwgZgS_iNXDfSTv9FF-j0J&sz=w1000" alt="event study" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
+<p>Some notations:</p>
+<ul>
+<li><p>Let <span class="math inline">\(t=T_0\)</span> to <span class="math inline">\(T_1\)</span> be the estimation window, <span class="math inline">\(L_1=T_1-T_0\)</span> be the length of the estimation window;</p></li>
+<li><p><span class="math inline">\(t=T_1+1\)</span> to <span class="math inline">\(T_2\)</span> be the event window and of length <span class="math inline">\(L_2=T_2-T_1\)</span>;</p>
+<ul>
+<li><p>Note that even if the event being considered is an announcement on given date, it is typical to set the event window length to be larger than one. This allows for some imprecision in the event date. Sometimes, <em>leakage</em> occurs when information regarding a relevant event is released to a small group of investors before official public release. In this case the stock price might start to increase (in the case of a “good news” announcement) <u>days or weeks before the official announcement date</u>. Any abnormal return on the <em>exact</em> announcement date is then a poor indicator of the total impact of the information release.</p></li>
+<li><p>A better indicator would be the <strong>cumulative abnormal return</strong> (CAR), which is simply the sum of all abnormal returns over the time period of interest. The cumulative abnormal return thus captures the total firm-specific stock movement for the entire period that the market might be responding to new information.</p></li>
+</ul></li>
+<li><p><span class="math inline">\(t=T_2+1\)</span> to <span class="math inline">\(T_3\)</span> be the post-event window and of length <span class="math inline">\(L_3=T_3-T_2\)</span>.</p></li>
+</ul>
+<p>We can always decompose a return as</p>
+<p><span class="math display">\[
+r_{i,t} = E[r_{i,t}\vert X_{i,t}] + \varepsilon_{i,t},
+\]</span>
+where</p>
+<ul>
+<li><p><span class="math inline">\(r_{i,t}\)</span> is the single-period return on asset <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span>,</p></li>
+<li><p><span class="math inline">\(E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}\)</span> is the expected return for asset <span class="math inline">\(i\)</span>:</p>
+<ul>
+<li>constant mean return model assumes <span class="math inline">\(\mu_{i,t}=\mu_i\)</span>,</li>
+<li>market model assumes <span class="math inline">\(\mu_{i,t}=\alpha_i+\beta_ir_{m,t}\)</span> ,</li>
+<li>CAPM, Fama-French factor models <span class="math inline">\(\mu_{i,t}=\alpha_i + \boldsymbol{\lambda_{t}}&#39;\boldsymbol{b}_i\)</span> based on Arbitrage Pricing Theory (APT);</li>
+</ul></li>
+<li><p><span class="math inline">\(\varepsilon_{i,t}\)</span> is the disturbance term with <span class="math inline">\(E[\varepsilon_{i,t}]=0\)</span> and <span class="math inline">\(\text{Var}[\varepsilon_{i,t}]=\sigma_{\varepsilon_i}^2\)</span>.</p>
+<ul>
+<li>In case of market model,</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[
+\hat{\sigma}_{\varepsilon_i}^2 = \frac{1}{L_1-2}\sum_{t=T_0+1}^{T_1} (r_{i,t}-\hat{\alpha}_i-\hat{\beta}_ir_{m,t})^2.
+\]</span></p>
+<p>We use data from <span class="math inline">\(T_0\)</span> to <span class="math inline">\(T_1\)</span> to estimate the expected return model.</p>
+<p>Given the parameter estimates, we back out the abnormal return as the difference between the realized return <span class="math inline">\(r_{i,t}\)</span> and the normal return <span class="math inline">\(E[r_{i,t}\vert X_{i,t}]\)</span>:</p>
+<p><span class="math display">\[
+AR_{i,t} = r_{i,t} - E[r_{i,t}\vert X_{i,t}] ,
+\]</span></p>
+<p>where <span class="math inline">\(t = T_1+1, \ldots, T_2\)</span> indicating the event window.</p>
+<p>The abnormal return is the disturbance term of the expected return model calculated on an <em>out of sample basis</em>.</p>
+<p>In case of the market model,</p>
+<p><span class="math display">\[
+\begin{align}
+AR_{i,t} \equiv \varepsilon_{i,t} &amp;= r_{i,t} - \hat{r}_i \\
+&amp;= r_{i,t} - \hat{\alpha}_i - \hat{\beta}_i r_{m,t} \;,
+\end{align}
+\]</span></p>
+<p>which is the difference between the observed return and the predicted return based on the expected return model of your choice.</p>
+<div id="firm-1-time-period" class="section level3">
+<h3>1 firm 1 time period</h3>
+<p>Formulate the hypothesis test based on 1 firm 1 time period:</p>
+<ul>
+<li><span class="math inline">\(H_0:\)</span> the event has no impact on the behavior of returns (mean or variance), i.e., <span class="math inline">\(r_{i,t}=E[r_{i,t}] \Longrightarrow \text{AR}_{i,t}=0\)</span>.</li>
+<li><span class="math inline">\(H_1: \text{AR}_{i,t} \neq 0\)</span> event has no effect on stock price.</li>
+</ul>
+<p>Under <span class="math inline">\(H_0\)</span>, conditional on the event window market returns, the abnormal returns will be jointly normally distributed with a zero conditional mean and conditional variance <span class="math inline">\(\sigma^2(AR_{i,t})\)</span></p>
+<p><span class="math display">\[
+\sigma^2(AR_{i,t}) \sim N(0,\,\sigma^2(AR_{i,t})) ,
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\begin{align}
+\sigma^2(AR_{i,t}) &amp;= \sigma^2_{\varepsilon_i} + \frac{1}{L_1} \left[1+\frac{(r_{m,t}-\hat{\mu}_m)^2}{\hat{\sigma}^2_m} \right]  \label{eq:variance-AR}\tag{1} \\
+\hat{\mu}_m &amp;= \frac{1}{L_1}\sum_{T_0+1}^{T_1} r_{m,t} \\
+\hat{\sigma}^2_m &amp;= \frac{1}{L_1-1} \sum_{T_0+1}^{T_1} (r_{m,t}-\hat{\mu}_m)^2 .
+\end{align}
+\]</span></p>
+<ul>
+<li><p>The first component of <span class="math inline">\(\eqref{eq:variance-AR}\)</span> is the the disturbance variance <span class="math inline">\(\sigma^2_{\varepsilon_i}\)</span>, and</p></li>
+<li><p>the second component is additional variance due to <strong>sampling error</strong> in <span class="math inline">\(\alpha_i\)</span> and <span class="math inline">\(\beta_i\)</span>.</p>
+<p>This sampling error, which is common for all the elements of the abnormal return vector, will lead to <strong>serial correlation</strong> of the abnormal returns despite the fact that the true disturbances are independent through time.<br />
+As the length of the estimation window <span class="math inline">\(L_1\)</span> becomes large, the second term will approach zero as the sampling error of the parameters vanishes, and the abnormal returns across time periods will become <strong>independent asymptotically</strong>.</p>
+<p>That is, asymptotically, <span class="math inline">\(\sigma^2(AR_{i,t}) = \sigma^2_{\varepsilon_i}\)</span>.</p></li>
+</ul>
+<p>We use the following test statistic</p>
+<p><span class="math display">\[
+t_{AR_{i,t}} = \frac{AR_{i,t}}{\sqrt{\hat{\sigma}^2(AR_{i,t})}} \sim N(0,1).
+\]</span>
+Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\vert t_{AR_{i,t}}\vert &gt;1.96\)</span>.</p>
+<p>The abnormal return observations must be aggregated in order to draw overall inferences for the event of interest.</p>
+<p>The aggregation is along two dimensions</p>
+<ul>
+<li>through time and</li>
+<li>across securities.</li>
+</ul>
+<p>We will first consider aggregation through time for an individual security and then will consider aggregation both across securities and through time.</p>
+</div>
+<div id="firm-multiple-time-periods" class="section level3">
+<h3>1 firm multiple time periods</h3>
+<p>Define <span class="math inline">\(\text{CAR}(t_1, t_2)\)</span> as the cumulative abnormal return for security <span class="math inline">\(i\)</span> from
+<span class="math inline">\(t_1\)</span> to <span class="math inline">\(t_2\)</span> (a sampling period):</p>
+<p><span class="math display">\[
+\text{CAR}_{i}(t_1, t_2) \equiv \sum_{t=t_1+1}^{t_2} AR_{i, t}.
+\]</span></p>
+<p>Asymptotically (as <span class="math inline">\(L_1\)</span> increases) the variance of <span class="math inline">\(\text{CAR}_{i}\)</span> is</p>
+<p><span class="math display">\[
+\sigma^2_i(t_1, t_2) = (t_2-t_1)\;\sigma^2_{\varepsilon_i}  .
+\]</span></p>
+<p>This means the variance of CAR scales with the variance of the single time period AR, depending on the length of the time period.</p>
+<p>The distribution of the CAR under <span class="math inline">\(H_0\)</span> is</p>
+<p><span class="math display">\[
+\text{CAR}_{i}(t_1, t_2) \sim N(0, \sigma^2_i(t_1, t_2)).
+\]</span></p>
+<p>Formulate the hypothesis test based on 1 firm and an event window:</p>
+<ul>
+<li><span class="math inline">\(H_0: \text{CAR}_i = 0\)</span></li>
+<li><span class="math inline">\(H_1: \text{CAR}_i \neq 0\)</span></li>
+</ul>
+<p>We use the following test statistic</p>
+<p><span class="math display">\[
+t_{CAR_{i}}(t_1, t_2) = \frac{CAR_{i}(t_1, t_2)}{\sqrt{\hat{\sigma}^2_i(t_1, t_2)}} \sim N(0,1).
+\]</span>
+Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\vert t_{CAR_{i}}\vert &gt;1.96\)</span>.</p>
+<p>Possible conclusions:</p>
+<ul>
+<li><p>If not reject <span class="math inline">\(H_0\)</span> for <span class="math inline">\(t_{CAR_{i}}(-10, -1)\)</span>: before the event there is no effect on stock prices <span class="math inline">\(\rightarrow\)</span> no info leakage.</p></li>
+<li><p>If reject <span class="math inline">\(H_0\)</span> for <span class="math inline">\(t_{CAR_{i}}(1, 10)\)</span>: after the event take place, there is still effect of the event up until 10 days.</p></li>
+</ul>
+</div>
+<div id="all-firms-and-multiple-time-periods" class="section level3">
+<h3>All firms and multiple time periods</h3>
+<p>The above result applies to a sample of <em>one event</em>. In order to use get the sample average estimate, we need a sample of many event observations. We then aggregate across events/securities.
+Here we assume that</p>
+<ul>
+<li>There is not any correlation across <em>securities</em>. This ensures that the <span class="math inline">\(\text{CAR}\)</span> will be independent across securities.</li>
+<li>For large <span class="math inline">\(L_1\)</span>, the abnormal returns <span class="math inline">\(\text{AR}\)</span> are independent through <em>time</em>.</li>
+</ul>
+<p>We have the <strong>cumulative average abnormal return</strong> <span class="math inline">\(\overline{\text{CAR}}\)</span> and its variance as follows:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\overline{\text{CAR}}(t_1, t_2) &amp;= \frac{1}{N}\sum_{i=1}^N \text{CAR}_i(t_1, t_2) = \frac{1}{N}\sum_{i=1}^N\sum_{t=t_1+1}^{t_2} \text{AR}_{i,t} \\
+\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &amp;= \bar{\sigma}^2(t_1, t_2) = \frac{1}{N^2}\sum_{i=1}^N \sigma_i^2(t_1, t_2) = \frac{t_2-t_1}{N^2} \sum_{i=1}^N \sigma_{\varepsilon_i}^2\;.
+\end{aligned}
+\]</span></p>
+<p>Note that</p>
+<ul>
+<li><p>As the number of events <span class="math inline">\(N\)</span> increases, the variance of CAR decreases, reflecting the effects of diversification.</p></li>
+<li><p>The assumption that the event windows of the <span class="math inline">\(N\)</span> securities do not overlap is used to set the covariance terms to zero.</p></li>
+</ul>
+<p>Equivalently, one can first aggregate over securities, then over time. That is,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\overline{\text{CAR}}(t_1, t_2) &amp;=  \sum_{t=t_1+1}^{t_2} \left( \frac{1}{N}\sum_{i=1}^N \text{AR}_{i,t} \right) =  \sum_{t=t_1+1}^{t_2} \overline{\text{AR}}_t \\
+\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &amp;= \sum_{t=t_1+1}^{t_2} \text{Var}(\overline{\text{AR}}_t) .
+\end{aligned}
+\]</span></p>
+<p>In case of independent identically distributed <span class="math inline">\(\text{AR}_{i,t}\)</span>, <span class="math inline">\(\overline{\text{CAR}}\)</span> has the expected value and variance as follows:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\overline{\text{CAR}}(t_1, t_2) &amp;= (t_2-t_1)\, E[\varepsilon_i]  \\
+\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &amp;= \frac{t_2-t_1}{N} \sigma_{\varepsilon_i}^2\;.
+\end{aligned}
+\]</span></p>
+<p>Formulate the hypothesis test based on all firms and an event window:</p>
+<ul>
+<li><span class="math inline">\(H_0: \overline{\text{CAR}}_i = 0\)</span></li>
+<li><span class="math inline">\(H_1: \overline{\text{CAR}}_i \neq 0\)</span></li>
+</ul>
+<p>Under <span class="math inline">\(H_0\)</span> the cumulative average abnormal return follows the normal distribution:</p>
+<p><span class="math display">\[
+\overline{\text{CAR}}(t_1, t_2) \sim N(0, \bar{\sigma}^2(t_1, t_2)).
+\]</span></p>
+<p>A traditional t-statistic can be used to test <span class="math inline">\(H_0\)</span> using</p>
+<p><span class="math display">\[
+t_{\overline{\text{CAR}}}(t_1, t_2) = \frac{\overline{\text{CAR}}(t_1, t_2)}{\sqrt{\bar{\sigma}^2(t_1, t_2)}} \sim N(0,1).
+\]</span></p>
+<p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\vert t_{\overline{\text{CAR}}}\vert &gt;1.96\)</span>.</p>
+<hr />
+</div>
+<div id="mackinlay-1997-paper" class="section level2">
+<h2>Mackinlay (1997) paper</h2>
+<p><span class="citation">MacKinlay (<a href="#ref-MacKinlay1997">1997</a>)</span> aimed to examine the impact of the earnings announcement on the value of the firm’s equity. Intuitively, higher than expected earnings disclosures should be associated with price increases, while lower than expected earnings with decreases.</p>
+<p>MacKinlay showed the CAR’s for 3 groups of earnings disclosure based on the deviation of the actual earnings from the expected earnings:</p>
+<ul>
+<li>good news if actual exceeds expected by more than <span class="math inline">\(2.5\%\)</span>;</li>
+<li>bad news if actual is more than <span class="math inline">\(2.5\%\)</span> less than expected;</li>
+<li>no news if actual falls within the <span class="math inline">\(+2.5\%\)</span> range centered about expected.</li>
+</ul>
+<p>Specify the parameters of the empirical design to analyze the equity return:</p>
+<ul>
+<li>Abnormal returns and cumulative abnormal returns are calculated for day <span class="math inline">\(-20\)</span> til day <span class="math inline">\(20\)</span>, i.e., an event window of 41 days.</li>
+<li>For each announcement the 250 trading day period prior to the event window is used as the estimation window.</li>
+<li>The observation interval is set to one day, thus daily stock returns are used.</li>
+</ul>
+<p><img src="https://drive.google.com/thumbnail?id=1kYR6P6s-Jd00H8_-6QQ3VnY4XkoTs3IZ&sz=w1000" alt="CAR" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
+<p>Focusing on the announcement day (day <span class="math inline">\(0\)</span>):</p>
+<ul>
+<li><p>for the good news firms, sample average CAR is <span class="math inline">\(0.975\%\)</span> and the standard error of the one day good news sample average CAR is <span class="math inline">\(0.104\%\)</span>, the t-statistic is <span class="math inline">\(9.28\)</span> and the <span class="math inline">\(H_0\)</span> that the event has no impact is stongly rejected.</p></li>
+<li><p>for the bad news firms, the event day sample CAR average is <span class="math inline">\(-0.679\%\)</span>, with a standard error of <span class="math inline">\(0.098\%\)</span>, leading to t-statistic equal to <span class="math inline">\(-6.93\)</span> and again strong evidence against <span class="math inline">\(H_0\)</span>.</p></li>
+</ul>
+</div>
+<div id="clustering-of-event-windows" class="section level2">
+<h2>Clustering of event windows</h2>
+<p>When the event windows overlap, the covariances between the abnormal returns will not be zero, i.e., there is cross correlation. Two options to mitigate the problem:</p>
+<ul>
+<li>the abnormal returns can be aggregated into a portfolios consisting of firms having the event at same time, apply the same analysis but to portfolios.</li>
+<li>in case of total clustering where there is an event on the same day for a number of firms, one could use a multivariate regression model with dummy variables for the event date.</li>
+</ul>
+<hr />
+</div>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<div style="font-family: Courier, sans-serif; ">
+<p><strong>Question 1</strong></p>
+<p>Consider an event study with 250 events. Suppose that abnormal returns for event <span class="math inline">\(i\)</span> on day <span class="math inline">\(t\)</span> are independent and identically distributed:</p>
+<p><span class="math display">\[
+\text{AR}_{i,t} \overset{iid}{\sim} N(0, \sigma^2),
+\]</span>
+with <span class="math inline">\(\sigma^2=0.1\)</span>.</p>
+<p>The cumulative abnormal return during the event window <span class="math inline">\((t_1, t_2)\)</span> for event <span class="math inline">\(i\)</span> is:</p>
+<p><span class="math display">\[
+\text{CAR}_{i}(t_1, t_2) = \sum_{t=t_1+1}^{t_2} \text{AR}_{i,t}
+\]</span></p>
+<ol type="pa">
+<li>
+Consider only the day of the event <span class="math inline">\((t=0)\)</span>. When the average abnormal return on day <span class="math inline">\(0\)</span> is 0.02, can you conclude whether the event has an impact on stock prices? Show your calculations to support your answer.
+</li>
+<li style="margin-bottom: 10px;">
+Consider two-sided test of the null hypothesis of zero cumulative average abnormal returns for <span class="math inline">\(\overline{\text{CAR}}(-11, -1)=0.1\)</span> and <span class="math inline">\(\overline{\text{CAR}}(-11, 30)=0.48\)</span> at the <span class="math inline">\(5\%\)</span> level. What is the distribution of theses cumulative average abnormal returns? Can you reject the null hypothesis? What can you infer about the event?
+</li>
+<li style="margin-bottom: 10px;">
+Discuss the trade-offs involved when choosing the length of the event window.
+</li>
+</ol>
+<p> </p>
+<p><strong>Question 2</strong></p>
+<p>Abnormal returns are sampled at a frequency of one day. The event window length is three days. The mean abnormal return over the event window is <span class="math inline">\(0.3\%\)</span> per day. You have a sample of <span class="math inline">\(50\)</span> event observations. The abnormal returns are independent across the event observations as well as across event days for a given event observation. For <span class="math inline">\(25\)</span> of the event observations the daily standard deviation of the abnormal return is <span class="math inline">\(3\%\)</span> and for the remaining <span class="math inline">\(25\)</span> observations the daily standard deviation is <span class="math inline">\(6\%\)</span>. Given this information, formulate the hypothesis test against <span class="math inline">\(\overline{\text{CAR}}(t_1, t_1+3)\)</span>.</p>
+<p>Hint: now we have a case of independent yet non-identical abnormal returns.</p>
+</div>
+<hr />
+<div id="references" class="section level3 unnumbered">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-MacKinlay1997" class="csl-entry">
+MacKinlay, A. Craig. 1997. <span>“Event Studies in Economics and Finance.”</span> <em>Journal of Economic Literature</em> 35 (1): 13–39. <a href="http://www.jstor.org/stable/2729691">http://www.jstor.org/stable/2729691</a>.
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

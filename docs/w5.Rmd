@@ -1,0 +1,413 @@
+---
+title: "Event Studies"
+author: "Menghan Yuan"
+date: "April 8, 2024"
+output: 
+    bookdown::html_document2:
+        toc: true
+        toc_float: true
+        toc_depth: 4
+        number_sections: false
+        css: style.css
+bibliography: bibli.bib
+link-citations: yes
+biblio-style: apalike
+nocite: |
+    @MacKinlay1997
+---
+
+```{r setup, include=F, echo=F}
+library(knitr) # load packages
+library(kableExtra)
+library(tidyverse)
+library(bookdown)
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts <- options(knitr.kable.NA = "")
+
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
+```
+
+
+
+An event study attempts to measure the valuation effects of a corporate event, such as a merger or earnings announcement, by examining the response of the stock price around the announcement of the event.
+
+One underlying assumption is that the market processes information about the event in an efficient and unbiased manner.
+
+Thus, we should be able to see the effect of the event on prices.
+
+The event that affects a firm's valuation may be:
+
+1) within the firm's control, such as the event of the announcement of a stock split.
+
+2) outside the firm's control, such as a macroeconomic announcement that will affect the firm's future operations in some way.
+
+
+Various events have been examined:
+
+- mergers and acquisitions
+- earnings announcements
+- issues of new debt and equity 
+- announcements of macroeconomic variables 
+- IPO’s
+- dividend announcements. 
+- etc.
+
+
+The steps for an event study are as follows:
+
+- Event Definition
+- Selection Criteria
+- Normal and Abnormal Return Measurement 
+- Estimation Procedure
+- Testing Procedure 
+- Empirical Results 
+- Interpretation
+
+
+Definition of an event: We have to define what an event is. It must be unexpected. Also, we must know the exact date of the event.
+
+Frequency of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.
+
+Sample Selection: We have to decide what is the universe of companies in the sample.
+
+Horizon of the event study: If markets are efficient, we should consider short horizons –i.e., a few days. However, people have looked at long-horizons. Event studies can be categorized by horizon:
+
+- Short horizon (from 1-month before to 1-month after the event) 
+- Long horizon (up to 5 years after the event).
+
+<img src="https://drive.google.com/thumbnail?id=1VgBn7h15rvdwgZgS_iNXDfSTv9FF-j0J&sz=w1000" alt="event study" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
+
+Some notations:
+
+- Let $t=T_0$ to $T_1$ be the estimation window, $L_1=T_1-T_0$ be the length of the estimation window;
+
+- $t=T_1+1$ to $T_2$ be the event window and of length $L_2=T_2-T_1$;
+
+    - Note that even if the event being considered is an announcement on given date, it is typical to set the event window length to be larger than one. This allows for some imprecision in the event date. Sometimes, *leakage* occurs when information regarding a relevant event is released to a small group of investors before official public release. In this case the stock price might start to increase (in the case of a “good news” announcement) <u>days or weeks before the official announcement date</u>. Any abnormal return on the *exact* announcement date is then a poor indicator of the total impact of the information release.
+    
+    - A better indicator would be the **cumulative abnormal return** (CAR), which is simply the sum of all abnormal returns over the time period of interest. The cumulative abnormal return thus captures the total firm-specific stock movement for the entire period that the market might be responding to new information.
+    
+- $t=T_2+1$ to $T_3$ be the post-event window and of length $L_3=T_3-T_2$.
+
+We can always decompose a return as
+
+$$
+r_{i,t} = E[r_{i,t}\vert X_{i,t}] + \varepsilon_{i,t},
+$$
+where 
+
+- $r_{i,t}$ is the single-period return on asset $i$ at time $t$, 
+
+- $E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}$ is the expected return for asset $i$:
+    - constant mean return model assumes $\mu_{i,t}=\mu_i$,
+    - market model assumes $\mu_{i,t}=\alpha_i+\beta_ir_{m,t}$ ,
+    - CAPM, Fama-French factor models $\mu_{i,t}=\alpha_i + \boldsymbol{\lambda_{t}}'\boldsymbol{b}_i$ based on Arbitrage Pricing Theory (APT);
+    
+- $\varepsilon_{i,t}$ is the disturbance term with $E[\varepsilon_{i,t}]=0$ and $\text{Var}[\varepsilon_{i,t}]=\sigma_{\varepsilon_i}^2$.
+    - In case of market model, 
+    
+$$
+\hat{\sigma}_{\varepsilon_i}^2 = \frac{1}{L_1-2}\sum_{t=T_0+1}^{T_1} (r_{i,t}-\hat{\alpha}_i-\hat{\beta}_ir_{m,t})^2.
+$$
+
+
+
+We use data from $T_0$ to $T_1$ to estimate the expected return model. 
+
+Given the parameter estimates, we back out the abnormal return as the difference between the realized return $r_{i,t}$ and the normal return $E[r_{i,t}\vert X_{i,t}]$:
+
+$$
+AR_{i,t} = r_{i,t} - E[r_{i,t}\vert X_{i,t}] ,
+$$
+
+where $t = T_1+1, \ldots, T_2$ indicating the event window.
+
+The abnormal return is the disturbance term of the expected return model calculated on an *out of sample basis*.
+
+In case of the market model,
+
+$$
+\begin{align}
+AR_{i,t} \equiv \varepsilon_{i,t} &= r_{i,t} - \hat{r}_i \\
+&= r_{i,t} - \hat{\alpha}_i - \hat{\beta}_i r_{m,t} \;,
+\end{align}
+$$
+
+which is the difference between the observed return and the predicted return based on the expected return model of your choice.
+
+
+### 1 firm 1 time period
+
+Formulate the hypothesis test based on 1 firm 1 time period:
+
+- $H_0:$ the event has no impact on the behavior of returns (mean or variance), i.e., $r_{i,t}=E[r_{i,t}] \Longrightarrow \text{AR}_{i,t}=0$.
+- $H_1: \text{AR}_{i,t} \neq 0$ event has no effect on stock price.
+
+
+Under $H_0$, conditional on the event window market returns, the abnormal returns will be jointly normally distributed with a zero conditional mean and conditional variance $\sigma^2(AR_{i,t})$ 
+
+
+$$
+\sigma^2(AR_{i,t}) \sim N(0,\,\sigma^2(AR_{i,t})) ,
+$$
+
+where
+
+$$
+\begin{align}
+\sigma^2(AR_{i,t}) &= \sigma^2_{\varepsilon_i} + \frac{1}{L_1} \left[1+\frac{(r_{m,t}-\hat{\mu}_m)^2}{\hat{\sigma}^2_m} \right]  \label{eq:variance-AR}\tag{1} \\
+\hat{\mu}_m &= \frac{1}{L_1}\sum_{T_0+1}^{T_1} r_{m,t} \\
+\hat{\sigma}^2_m &= \frac{1}{L_1-1} \sum_{T_0+1}^{T_1} (r_{m,t}-\hat{\mu}_m)^2 .
+\end{align}
+$$
+
+- The first component of $\eqref{eq:variance-AR}$ is the the disturbance variance $\sigma^2_{\varepsilon_i}$, and 
+- the second component is additional variance due to **sampling error** in $\alpha_i$ and $\beta_i$.
+
+    This sampling error, which is common for all the elements of the abnormal return vector, will lead to **serial correlation** of the abnormal returns despite the fact that the true disturbances are independent through time. \
+    As the length of the estimation window $L_1$ becomes large, the second term will approach zero as the sampling error of the parameters vanishes, and the abnormal returns across time periods will become **independent asymptotically**.
+
+    That is, asymptotically, $\sigma^2(AR_{i,t}) = \sigma^2_{\varepsilon_i}$.
+
+We use the following test statistic
+
+$$
+t_{AR_{i,t}} = \frac{AR_{i,t}}{\sqrt{\hat{\sigma}^2(AR_{i,t})}} \sim N(0,1).
+$$
+Reject $H_0$ if $\vert t_{AR_{i,t}}\vert >1.96$.
+
+The abnormal return observations must be aggregated in order to draw overall inferences for the event of interest. 
+
+The aggregation is along two dimensions 
+
+- through time and 
+- across securities. 
+
+We will first consider aggregation through time for an individual security and then will consider aggregation both across securities and through time.
+
+### 1 firm multiple time periods
+
+Define $\text{CAR}(t_1, t_2)$ as the cumulative abnormal return for security $i$ from
+$t_1$ to $t_2$ (a sampling period):
+
+$$
+\text{CAR}_{i}(t_1, t_2) \equiv \sum_{t=t_1+1}^{t_2} AR_{i, t}.
+$$
+
+
+Asymptotically (as $L_1$ increases) the variance of $\text{CAR}_{i}$ is
+
+$$
+\sigma^2_i(t_1, t_2) = (t_2-t_1)\;\sigma^2_{\varepsilon_i}  .
+$$
+
+This means the variance of CAR scales with the variance of the single time period AR, depending on the length of the time period.
+
+The distribution of the CAR under $H_0$ is
+
+$$
+\text{CAR}_{i}(t_1, t_2) \sim N(0, \sigma^2_i(t_1, t_2)).
+$$
+
+
+Formulate the hypothesis test based on 1 firm and an event window:
+
+- $H_0: \text{CAR}_i = 0$
+- $H_1: \text{CAR}_i \neq 0$
+
+We use the following test statistic
+
+$$
+t_{CAR_{i}}(t_1, t_2) = \frac{CAR_{i}(t_1, t_2)}{\sqrt{\hat{\sigma}^2_i(t_1, t_2)}} \sim N(0,1).
+$$
+Reject $H_0$ if $\vert t_{CAR_{i}}\vert >1.96$.
+
+Possible conclusions:
+
+- If not reject $H_0$ for $t_{CAR_{i}}(-10, -1)$: before the event there is no effect on stock prices $\rightarrow$ no info leakage.
+
+- If reject $H_0$ for $t_{CAR_{i}}(1, 10)$: after the event take place, there is still effect of the event up until 10 days.
+
+
+### All firms and multiple time periods
+
+The above result applies to a sample of *one event*. In order to use get the sample average estimate, we need a sample of many event observations. We then aggregate across events/securities. 
+Here we assume that 
+
+- There is not any correlation across *securities*. This ensures that the $\text{CAR}$ will be independent across securities.
+- For large $L_1$, the abnormal returns $\text{AR}$ are independent through *time*.
+
+
+We have the **cumulative average abnormal return** $\overline{\text{CAR}}$ and its variance as follows:
+
+$$
+\begin{aligned}
+\overline{\text{CAR}}(t_1, t_2) &= \frac{1}{N}\sum_{i=1}^N \text{CAR}_i(t_1, t_2) = \frac{1}{N}\sum_{i=1}^N\sum_{t=t_1+1}^{t_2} \text{AR}_{i,t} \\
+\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &= \bar{\sigma}^2(t_1, t_2) = \frac{1}{N^2}\sum_{i=1}^N \sigma_i^2(t_1, t_2) = \frac{t_2-t_1}{N^2} \sum_{i=1}^N \sigma_{\varepsilon_i}^2\;.
+\end{aligned}
+$$
+
+Note that 
+
+- As the number of events $N$ increases, the variance of CAR decreases, reflecting the effects of diversification.
+
+- The assumption that the event windows of the $N$ securities do not overlap is used to set the covariance terms to zero.
+
+Equivalently, one can first aggregate over securities, then over time. That is,
+
+$$
+\begin{aligned}
+\overline{\text{CAR}}(t_1, t_2) &=  \sum_{t=t_1+1}^{t_2} \left( \frac{1}{N}\sum_{i=1}^N \text{AR}_{i,t} \right) =  \sum_{t=t_1+1}^{t_2} \overline{\text{AR}}_t \\
+\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &= \sum_{t=t_1+1}^{t_2} \text{Var}(\overline{\text{AR}}_t) .
+\end{aligned}
+$$
+
+
+In case of independent identically distributed $\text{AR}_{i,t}$, $\overline{\text{CAR}}$ has the expected value and variance as follows:
+
+$$
+\begin{aligned}
+\overline{\text{CAR}}(t_1, t_2) &= (t_2-t_1)\, E[\varepsilon_i]  \\
+\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &= \frac{t_2-t_1}{N} \sigma_{\varepsilon_i}^2\;.
+\end{aligned}
+$$
+
+
+Formulate the hypothesis test based on all firms and an event window:
+
+- $H_0: \overline{\text{CAR}}_i = 0$
+- $H_1: \overline{\text{CAR}}_i \neq 0$
+
+
+Under $H_0$ the cumulative average abnormal return follows the normal distribution:
+
+$$
+\overline{\text{CAR}}(t_1, t_2) \sim N(0, \bar{\sigma}^2(t_1, t_2)).
+$$
+
+A traditional t-statistic can be used to test $H_0$ using
+
+$$
+t_{\overline{\text{CAR}}}(t_1, t_2) = \frac{\overline{\text{CAR}}(t_1, t_2)}{\sqrt{\bar{\sigma}^2(t_1, t_2)}} \sim N(0,1).
+$$
+
+Reject $H_0$ if $\vert t_{\overline{\text{CAR}}}\vert >1.96$.
+
+
+------------------------------------------------------------------------
+
+## Mackinlay (1997) paper
+
+@MacKinlay1997 aimed to examine the impact of the earnings announcement on the value of the firm's equity. Intuitively, higher than expected earnings disclosures should be associated with price increases, while lower than expected earnings with decreases.
+
+MacKinlay showed the CAR's for 3 groups of earnings disclosure based on the deviation of the actual earnings from the expected earnings:
+
+- good news if actual exceeds expected by more than $2.5\%$;
+- bad news if actual is more than $2.5\%$ less than expected;
+- no news if actual falls within the $+2.5\%$ range centered about expected.
+
+
+Specify the parameters of the empirical design to analyze the equity return:
+
+- Abnormal returns and cumulative abnormal returns are calculated for day $-20$ til day $20$, i.e., an event window of 41 days.
+- For each announcement the 250 trading day period prior to the event window is used as the estimation window.
+- The observation interval is set to one day, thus daily stock returns are used.
+
+
+
+<img src="https://drive.google.com/thumbnail?id=1kYR6P6s-Jd00H8_-6QQ3VnY4XkoTs3IZ&sz=w1000" alt="CAR" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
+
+Focusing on the announcement day (day $0$):
+
+- for the good news firms, sample average CAR is $0.975\%$ and the standard error of the one day good news sample average CAR is $0.104\%$, the t-statistic is $9.28$ and the $H_0$ that the event has no impact is stongly rejected.
+
+- for the bad news firms, the event day sample CAR average is $-0.679\%$, with a standard error of $0.098\%$, leading to t-statistic equal to $-6.93$ and again strong evidence against $H_0$.
+
+
+## Clustering of event windows
+
+When the event windows overlap, the covariances between the abnormal returns will not be zero, i.e., there is cross correlation. Two options to mitigate the problem:
+
+- the abnormal returns can be aggregated into a portfolios consisting of firms having the event at same time, apply the same analysis but to portfolios.
+- in case of total clustering where there is an event on the same day for a number of firms, one could use a multivariate regression model with dummy variables for the event date.
+
+------------------------------------------------------------------------
+
+## Exercise
+
+<div style="font-family: Courier, sans-serif; ">
+
+**Question 1**
+
+Consider an event study with 250 events. Suppose that abnormal returns for event $i$ on day $t$ are independent and identically distributed:
+
+$$
+\text{AR}_{i,t} \overset{iid}{\sim} N(0, \sigma^2), 
+$$
+with $\sigma^2=0.1$.
+
+The cumulative abnormal return during the event window $(t_1, t_2)$ for event $i$ is:
+
+$$
+\text{CAR}_{i}(t_1, t_2) = \sum_{t=t_1+1}^{t_2} \text{AR}_{i,t}
+$$
+
+<ol type="pa">
+
+<li> Consider only the day of the event $(t=0)$. When the average abnormal return on day $0$ is 0.02, can you conclude whether the event has an impact on stock prices? Show your calculations to support your answer.</li>
+
+
+<li style="margin-bottom: 10px;"> Consider two-sided test of the null hypothesis of zero cumulative average abnormal returns for $\overline{\text{CAR}}(-11, -1)=0.1$ and $\overline{\text{CAR}}(-11, 30)=0.48$ at the $5\%$ level. What is the distribution of theses cumulative average abnormal returns? Can you reject the null hypothesis? What can you infer about the event?</li>
+
+
+<li style="margin-bottom: 10px;"> Discuss the trade-offs involved when choosing the length of the event window. </li>
+
+</ol>
+
+&nbsp;
+
+**Question 2**
+
+Abnormal returns are sampled at a frequency of one day. The event window length is three days. The mean abnormal return over the event window is $0.3\%$ per day. You have a sample of $50$ event observations. The abnormal returns are independent across the event observations as well as across event days for a given event observation. For $25$ of the event observations the daily standard deviation of the abnormal return is $3\%$ and for the remaining $25$ observations the daily standard deviation is $6\%$. Given this information, formulate the hypothesis test against $\overline{\text{CAR}}(t_1, t_1+3)$.
+
+Hint: now we have a case of independent yet non-identical abnormal returns.
+
+
+</div>
+
+
+
+------------------------------------------------------------------------
+
+### References
+
+
+
+
+
+
+
+
+
+
+
+
+

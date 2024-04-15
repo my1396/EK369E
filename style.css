@@ -33,3 +33,31 @@ a img:focus {
 caption {
     width: 100%;
 }
+
+/* bullet list */
+@counter-style paren-lower-alpha {
+  system: extends lower-alpha;
+  suffix: ") ";
+}
+@counter-style paren-decimal {
+  system: extends decimal;
+  suffix: ") ";
+}
+[type="pa"] {
+  list-style: paren-lower-alpha;
+}
+[type="p1"] {
+  list-style: paren-decimal;
+}
+
+li {
+  margin-bottom: 10px;  /* spacing under each bullet point */
+}
+
+
+
+
+
+
+
+
