@@ -393,8 +393,8 @@ To summarize in one table
 |               | Simple returns    | Log returns     | Back out simple returns |
 | -------------------------- | :------------------------------------------------------- | :---------------------------------------------- | :---------------------------------------------- |
 | Single period | $r_t=\frac{P_t}{P_{t-1}}-1$  | $z_t=\ln \frac{P_t}{P_{t-1}}$  | $r_t = \exp(z_t)-1$ |
-| Multiperiod   | $r_t(k) = \prod_{j=1}^{k-1}(1+r_{t-j}) -1$   | $z_t(k) = \sum_{j=0}^{k-1} z_{t-j}$  | $r_t(k) = \exp\big(z_t(k)\big)-1$ |
-| Annualized    | $r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1$ | $z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}$ | $r_t^A = \exp(z_t^A)-1$ |
+| Multiperiod   | $r_t(k) = \prod_{j=0}^{k-1}(1+r_{t-j}) -1$   | $z_t(k) = \sum_{j=0}^{k-1} z_{t-j}$  | $r_t(k) = \exp\big(z_t(k)\big)-1$ |
+| Annualized    | $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1$ | $z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}$ | $r_t^A = \exp(z_t^A)-1$ |
 
 
 Note that the annualized return here assumes the single period returns are annual returns.
@@ -402,13 +402,13 @@ Note that the annualized return here assumes the single period returns are annua
 In case of higher frequency data than annual, i.e., daily, weekly and monthly,
 we have to compound by the number of periods in a year. 
 
-- daily single period: $r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1$ for simple return, $z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return.
+- daily single period: $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1$ for simple return, $z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return.
 
-- weekly $r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1$ for simple return, $z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return.
+- weekly $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1$ for simple return, $z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return.
 
-- monthly $r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1$for simple return, $z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return. 
+- monthly $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1$ for simple return, $z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return. 
 
-- quarterly $r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1$for simple return, $z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return. 
+- quarterly $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1$ for simple return, $z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return. 
 
 ### Portfolio Returns
 
@@ -904,7 +904,10 @@ The portfolio return in excess of the return of the benchmark is known as the *a
 The information ratio is the active return per unit of active risk.
 
 $$
-\text{Information Ratio}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\begin{aligned}
+\text{Information Ratio} &= \text{IR}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \\
+\text{Annualized Informatione Ratio} &= \text{IR}_p^A = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \times \sqrt{12}
+\end{aligned}
 $$
 where 
 
@@ -934,7 +937,7 @@ where
 
 **Treynor ratio** is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.
 
-The Trynor ratio is computed as
+The Treynor ratio is computed as
 
 $$
 \text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}

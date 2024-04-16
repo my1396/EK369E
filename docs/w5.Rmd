@@ -13,7 +13,7 @@ bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
 nocite: |
-    @MacKinlay1997
+    @MacKinlay1997, @Campbell1996Chap4
 ---
 
 ```{r setup, include=F, echo=F}
@@ -192,7 +192,7 @@ We use the following test statistic
 $$
 t_{AR_{i,t}} = \frac{AR_{i,t}}{\sqrt{\hat{\sigma}^2(AR_{i,t})}} \sim N(0,1).
 $$
-Reject $H_0$ if $\vert t_{AR_{i,t}}\vert >1.96$.
+Reject $H_0$ at $5\%$ significance level if $\vert t_{AR_{i,t}}\vert >1.96$.
 
 The abnormal return observations must be aggregated in order to draw overall inferences for the event of interest. 
 

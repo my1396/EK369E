@@ -1360,13 +1360,13 @@ which is the average one-period log returns.</p>
 </tr>
 <tr class="even">
 <td>Multiperiod</td>
-<td align="left"><span class="math inline">\(r_t(k) = \prod_{j=1}^{k-1}(1+r_{t-j}) -1\)</span></td>
+<td align="left"><span class="math inline">\(r_t(k) = \prod_{j=0}^{k-1}(1+r_{t-j}) -1\)</span></td>
 <td align="left"><span class="math inline">\(z_t(k) = \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
 <td align="left"><span class="math inline">\(r_t(k) = \exp\big(z_t(k)\big)-1\)</span></td>
 </tr>
 <tr class="odd">
 <td>Annualized</td>
-<td align="left"><span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1\)</span></td>
+<td align="left"><span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1\)</span></td>
 <td align="left"><span class="math inline">\(z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
 <td align="left"><span class="math inline">\(r_t^A = \exp(z_t^A)-1\)</span></td>
 </tr>
@@ -1376,10 +1376,10 @@ which is the average one-period log returns.</p>
 <p>In case of higher frequency data than annual, i.e., daily, weekly and monthly,
 we have to compound by the number of periods in a year.</p>
 <ul>
-<li><p>daily single period: <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
-<li><p>weekly <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
-<li><p>monthly <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1\)</span>for simple return, <span class="math inline">\(z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
-<li><p>quarterly <span class="math inline">\(r_t^A = \left[\prod_{j=1}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1\)</span>for simple return, <span class="math inline">\(z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>daily single period: <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>weekly <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>monthly <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>quarterly <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
 </ul>
 </div>
 <div id="portfolio-returns" class="section level3">
@@ -4923,7 +4923,10 @@ Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xt
 <p>The portfolio return in excess of the return of the benchmark is known as the <em>active return</em>, and the variability of the active return is known as the <em>active risk</em> or <em>tracking error</em> of the portfolio.</p>
 <p>The information ratio is the active return per unit of active risk.</p>
 <p><span class="math display">\[
-\text{Information Ratio}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\begin{aligned}
+\text{Information Ratio} &amp;= \text{IR}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \\
+\text{Annualized Informatione Ratio} &amp;= \text{IR}_p^A = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \times \sqrt{12}
+\end{aligned}
 \]</span>
 where</p>
 <ul>
@@ -4948,7 +4951,7 @@ where</p>
 <li><span class="math inline">\(R^e_m=r_m-r_f\)</span> stands for the excess return on the market index.</li>
 </ul>
 <p><strong>Treynor ratio</strong> is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.</p>
-<p>The Trynor ratio is computed as</p>
+<p>The Treynor ratio is computed as</p>
 <p><span class="math display">\[
 \text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
 \]</span>

@@ -342,7 +342,7 @@ abline(a=r.f, b=sr.tan, col="green", lwd=2)
 ```
 
 
-<span style="font-family: Courier, sans-serif; ">**Exercise**</span>
+## Exercise
 
 <span style="font-family: Courier, sans-serif; ">Annual estimates of the GWN model parameters for Boeing and Microsoft are given in the table below: </span>
 

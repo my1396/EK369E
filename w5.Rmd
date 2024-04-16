@@ -13,7 +13,7 @@ bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
 nocite: |
-    @MacKinlay1997
+    @MacKinlay1997, @Campbell1996Chap4
 ---
 
 ```{r setup, include=F, echo=F}
