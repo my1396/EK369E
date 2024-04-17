@@ -45,7 +45,12 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
+About the exam, you can bring your own **formula sheets**. 
 
+- There is no requirements regarding how many pages you can bring, what you write on the sheets, etc.
+- Formula sheets will also be provided on Inspera at the exam.
+
+------------------------------------------------------------------------
 
 An event study attempts to measure the valuation effects of a corporate event, such as a merger or earnings announcement, by examining the response of the stock price around the announcement of the event.
 
