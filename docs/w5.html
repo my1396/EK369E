@@ -369,7 +369,7 @@ div.tocify {
 
 <p>About the exam, you can bring your own <strong>formula sheets</strong>.</p>
 <ul>
-<li>There is no requirements regarding how many pages you can bring, what you write on the sheets, etc.</li>
+<li>There is no requirement regarding how many pages you can bring, what you write on the sheets, etc.</li>
 <li>Formula sheets will also be provided on Inspera at the exam.</li>
 </ul>
 <hr />
@@ -402,7 +402,7 @@ div.tocify {
 <li>Interpretation</li>
 </ul>
 <p>Definition of an event: We have to define what an event is. It must be unexpected. Also, we must know the exact date of the event.</p>
-<p>Frequency of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.</p>
+<p>Frequency/Interval of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.</p>
 <p>Sample Selection: We have to decide what is the universe of companies in the sample.</p>
 <p>Horizon of the event study: If markets are efficient, we should consider short horizons –i.e., a few days. However, people have looked at long-horizons. Event studies can be categorized by horizon:</p>
 <ul>
@@ -427,11 +427,11 @@ r_{i,t} = E[r_{i,t}\vert X_{i,t}] + \varepsilon_{i,t},
 where</p>
 <ul>
 <li><p><span class="math inline">\(r_{i,t}\)</span> is the single-period return on asset <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span>,</p></li>
-<li><p><span class="math inline">\(E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}\)</span> is the expected return for asset <span class="math inline">\(i\)</span>:</p>
+<li><p><span class="math inline">\(E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}\)</span> is the expected return for asset <span class="math inline">\(i\)</span>. Options for the normal return models:</p>
 <ul>
 <li>constant mean return model assumes <span class="math inline">\(\mu_{i,t}=\mu_i\)</span>,</li>
 <li>market model assumes <span class="math inline">\(\mu_{i,t}=\alpha_i+\beta_ir_{m,t}\)</span> ,</li>
-<li>CAPM, Fama-French factor models <span class="math inline">\(\mu_{i,t}=\alpha_i + \boldsymbol{\lambda_{t}}&#39;\boldsymbol{b}_i\)</span> based on Arbitrage Pricing Theory (APT);</li>
+<li>CAPM, Fama-French three-factor models <span class="math inline">\(\mu_{i,t}=\alpha_i + \boldsymbol{\lambda_{t}}&#39;\boldsymbol{b}_i\)</span> based on Arbitrage Pricing Theory (APT), etc.</li>
 </ul></li>
 <li><p><span class="math inline">\(\varepsilon_{i,t}\)</span> is the disturbance term with <span class="math inline">\(E[\varepsilon_{i,t}]=0\)</span> and <span class="math inline">\(\text{Var}[\varepsilon_{i,t}]=\sigma_{\varepsilon_i}^2\)</span>.</p>
 <ul>
@@ -461,7 +461,7 @@ AR_{i,t} \equiv \varepsilon_{i,t} &amp;= r_{i,t} - \hat{r}_i \\
 <p>Formulate the hypothesis test based on 1 firm 1 time period:</p>
 <ul>
 <li><span class="math inline">\(H_0:\)</span> the event has no impact on the behavior of returns (mean or variance), i.e., <span class="math inline">\(r_{i,t}=E[r_{i,t}] \Longrightarrow \text{AR}_{i,t}=0\)</span>.</li>
-<li><span class="math inline">\(H_1: \text{AR}_{i,t} \neq 0\)</span> event has no effect on stock price.</li>
+<li><span class="math inline">\(H_1: \text{AR}_{i,t} \neq 0\)</span> event has effects on stock price.</li>
 </ul>
 <p>Under <span class="math inline">\(H_0\)</span>, conditional on the event window market returns, the abnormal returns will be jointly normally distributed with a zero conditional mean and conditional variance <span class="math inline">\(\sigma^2(AR_{i,t})\)</span></p>
 <p><span class="math display">\[

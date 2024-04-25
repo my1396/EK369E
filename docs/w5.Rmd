@@ -47,7 +47,7 @@ knitr::knit_hooks$set(output = function(x, options) {
 
 About the exam, you can bring your own **formula sheets**. 
 
-- There is no requirements regarding how many pages you can bring, what you write on the sheets, etc.
+- There is no requirement regarding how many pages you can bring, what you write on the sheets, etc.
 - Formula sheets will also be provided on Inspera at the exam.
 
 ------------------------------------------------------------------------
@@ -89,7 +89,7 @@ The steps for an event study are as follows:
 
 Definition of an event: We have to define what an event is. It must be unexpected. Also, we must know the exact date of the event.
 
-Frequency of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.
+Frequency/Interval of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.
 
 Sample Selection: We have to decide what is the universe of companies in the sample.
 
@@ -121,10 +121,10 @@ where
 
 - $r_{i,t}$ is the single-period return on asset $i$ at time $t$, 
 
-- $E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}$ is the expected return for asset $i$:
+- $E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}$ is the expected return for asset $i$. Options for the normal return models:
     - constant mean return model assumes $\mu_{i,t}=\mu_i$,
     - market model assumes $\mu_{i,t}=\alpha_i+\beta_ir_{m,t}$ ,
-    - CAPM, Fama-French factor models $\mu_{i,t}=\alpha_i + \boldsymbol{\lambda_{t}}'\boldsymbol{b}_i$ based on Arbitrage Pricing Theory (APT);
+    - CAPM, Fama-French three-factor models $\mu_{i,t}=\alpha_i + \boldsymbol{\lambda_{t}}'\boldsymbol{b}_i$ based on Arbitrage Pricing Theory (APT), etc.
     
 - $\varepsilon_{i,t}$ is the disturbance term with $E[\varepsilon_{i,t}]=0$ and $\text{Var}[\varepsilon_{i,t}]=\sigma_{\varepsilon_i}^2$.
     - In case of market model, 
@@ -164,7 +164,7 @@ which is the difference between the observed return and the predicted return bas
 Formulate the hypothesis test based on 1 firm 1 time period:
 
 - $H_0:$ the event has no impact on the behavior of returns (mean or variance), i.e., $r_{i,t}=E[r_{i,t}] \Longrightarrow \text{AR}_{i,t}=0$.
-- $H_1: \text{AR}_{i,t} \neq 0$ event has no effect on stock price.
+- $H_1: \text{AR}_{i,t} \neq 0$ event has effects on stock price.
 
 
 Under $H_0$, conditional on the event window market returns, the abnormal returns will be jointly normally distributed with a zero conditional mean and conditional variance $\sigma^2(AR_{i,t})$ 
