@@ -391,7 +391,14 @@ $$
 
 **Question 2**
 
-Abnormal returns are sampled at a frequency of one day. The event window length is three days. The mean abnormal return over the event window is $0.3\%$ per day. You have a sample of $50$ event observations. The abnormal returns are independent across the event observations as well as across event days for a given event observation. For $25$ of the event observations the daily standard deviation of the abnormal return is $3\%$ and for the remaining $25$ observations the daily standard deviation is $6\%$. Given this information, formulate the hypothesis test against $\overline{\text{CAR}}(t_1, t_1+3)$.
+Abnormal returns are sampled at a frequency of one day. The event window length is three days. You have a sample of $50$ event observations. 
+The abnormal returns are independent across the event observations as well as across event days for a given event observation. 
+
+
+The mean abnormal return over the event window is $0.3\%$ per day. <br/>
+For $25$ of the event observations the daily standard deviation of the abnormal return is $3\%$ and for the remaining $25$ observations the daily standard deviation is $6\%$. 
+
+Given this information, formulate the hypothesis test against $\overline{\text{CAR}}(t_1, t_1+3)$.
 
 Hint: now we have a case of independent yet non-identical abnormal returns.
 

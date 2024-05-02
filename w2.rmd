@@ -438,7 +438,7 @@ $$
 $$
 Q_m \equiv T\sum_{k=1}^m \rho^2(k)
 $$
-Since $\rho(k)$ is normally distributed, $\hat{Q}_m$ is distributed as a chi-square distibution of $m$ degrees of freemdom, that is $Q_m \sim \chi_m^2$.
+Since $\rho(k)$ is normally distributed, $\hat{Q}_m$ is distributed as a *chi-square distribution* of $m$ degrees of freedom, that is $Q_m \sim \chi_m^2$.
 
 @Ljung1979 provided a correction which yields a better fit to the $\chi_m^2$ for small sample sizes:
 
