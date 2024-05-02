@@ -387,9 +387,18 @@ div.tocify {
 <p>Three forms of efficiency corresponding to differing information sets:</p>
 <ol style="list-style-type: decimal">
 <li>weak-from (historical market trading data, such as prices, volumes)</li>
-<li>semistrong-form (fundamental data, such as earnings, dividends, accounting practices)</li>
-<li>strong-form (insider info, such as mergers and acquisitions)</li>
+<li>semistrong-form (weak-form set <strong>+</strong> all publicly available information, such as <em>fundamental data</em>, including earnings, dividends, accounting practices)</li>
+<li>strong-form (semistrong-from set <strong>+</strong> insider info, such as mergers and acquisitions)</li>
 </ol>
+<p>The direction of valid implication is</p>
+<p><span class="math display">\[
+\text{Strong-form EMH} \Longrightarrow \text{semistrong-form EMH} \Longrightarrow \text{weak-form EMH}
+\]</span>
+Note that</p>
+<ul>
+<li>stronger form of EMH indicates weaker form of EMH;</li>
+<li>violation of weaker EMH indicates violation of stronger form of EMH.</li>
+</ul>
 <p>Efficiency with respect to an information set implies that it is impossible to make economic profits by trading on the basis of [that information set].</p>
 <ul>
 <li><p>Here by economic profits, we mean “abnormal/superior” returns after adjustment for risk and costs.</p></li>
@@ -699,8 +708,8 @@ Q_m&#39; \equiv T(T+2)\sum_{k=1}^m \frac{\rho^2(k)}{T-k}.
 ## X-squared = 0.065517, df = 1, p-value = 0.798</code></pre>
 </div>
 </div>
-<div id="varriance-ratio-test" class="section level2">
-<h2>Varriance Ratio Test</h2>
+<div id="variance-ratio-test" class="section level2">
+<h2>Variance Ratio Test</h2>
 <p>The VR(q) tests for the null hypothesis that the first <span class="math inline">\(q\)</span> autocorrealtions are zero.</p>
 <p><span class="math display">\[
 \text{VR(q)} \equiv \frac{\text{Var}[r_t(q)]}{q\cdot \text{Var}[r_t]}
@@ -708,7 +717,7 @@ Q_m&#39; \equiv T(T+2)\sum_{k=1}^m \frac{\rho^2(k)}{T-k}.
 where <span class="math inline">\(r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}=r_t+r_{t-1}+\cdots+r_{t-q+1}\)</span> is the <span class="math inline">\(q\)</span>-period (log) return.</p>
 <ul>
 <li>Under zero autocorrelation, <span class="math inline">\(\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]\)</span>; therefore, <span class="math inline">\(\text{VR(q)}=1\)</span>.</li>
-<li>When there serial correlation, <span class="math inline">\(\text{VR(q)}\)</span> is away from <span class="math inline">\(1\)</span>.</li>
+<li>When there exists serial correlation, <span class="math inline">\(\text{VR(q)}\)</span> moves away from <span class="math inline">\(1\)</span>.</li>
 </ul>
 <p>Lo and MacKinlay present a number of test statistics based on the <span class="math inline">\(\text{VR(q)}\)</span>. Check Lo and MacKinlay <span class="citation">(<a href="#ref-Lo-Mackinlay1988">1988</a>, <a href="#ref-Lo1989">1989</a>)</span> for example.</p>
 <hr />

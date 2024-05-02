@@ -171,7 +171,7 @@ Under $H_0$, conditional on the event window market returns, the abnormal return
 
 
 $$
-\sigma^2(AR_{i,t}) \sim N(0,\,\sigma^2(AR_{i,t})) ,
+AR_{i,t} \sim N(0,\,\sigma^2(AR_{i,t})) ,
 $$
 
 where

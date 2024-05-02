@@ -86,8 +86,18 @@ Formally, the market is said to be efficient with respect to some *information s
 Three forms of efficiency corresponding to differing information sets:
 
 1.  weak-from (historical market trading data, such as prices, volumes)
-2.  semistrong-form (fundamental data, such as earnings, dividends, accounting practices)
-3.  strong-form (insider info, such as mergers and acquisitions)
+2.  semistrong-form (weak-form set **+** all publicly available information, such as *fundamental data*, including earnings, dividends, accounting practices)
+3.  strong-form (semistrong-from set **+** insider info, such as mergers and acquisitions)
+
+The direction of valid implication is
+
+$$
+\text{Strong-form EMH} \Longrightarrow \text{semistrong-form EMH} \Longrightarrow \text{weak-form EMH}
+$$
+Note that
+
+- stronger form of EMH indicates weaker form of EMH;
+- violation of weaker EMH indicates violation of stronger form of EMH.
 
 Efficiency with respect to an information set implies that it is impossible to make economic profits by trading on the basis of [that information set].
 
@@ -445,7 +455,7 @@ Box.test(diff(pt), lag=1, type="Box-Pierce")
 ```
 
 
-## Varriance Ratio Test
+## Variance Ratio Test
 
 The VR(q) tests for the null hypothesis that the first $q$ autocorrealtions are zero.
 
@@ -455,7 +465,7 @@ $$
 where $r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}=r_t+r_{t-1}+\cdots+r_{t-q+1}$ is the $q$-period (log) return.
 
 - Under zero autocorrelation, $\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]$; therefore, $\text{VR(q)}=1$.
-- When there serial correlation, $\text{VR(q)}$ is away from $1$.
+- When there exists serial correlation, $\text{VR(q)}$ moves away from $1$.
 
 
 Lo and MacKinlay present a number of test statistics based on the $\text{VR(q)}$. Check Lo and MacKinlay [-@Lo-Mackinlay1988; -@Lo1989] for example.

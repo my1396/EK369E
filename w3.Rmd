@@ -942,7 +942,13 @@ The Treynor ratio is computed as
 $$
 \text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}
 $$
-Note that the only relevant risk in the computation of the Treynor ratio is systematic risk. 
+Note that 
+
+- the only relevant risk in the computation of the Treynor ratio is systematic risk. It assumes that the portfolio is fully diversified. Appropriate for diversified equity funds, the element of unsystematic risk would be negligible.
+
+- Sharpe ratio assumes that the relevant risk is total risk (systematic and unsystematic risk), and it measures excess return per unit of total risk. It is appropriate for the portfolio that is less diversified.
+
+- Jensen's alpha also assumes that the relevant risk is systematic risk.
 
 **Jensen's alpha** measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio's beta and the average market return.
 
