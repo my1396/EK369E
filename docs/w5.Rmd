@@ -298,8 +298,8 @@ $$
 
 Formulate the hypothesis test based on all firms and an event window:
 
-- $H_0: \overline{\text{CAR}}_i = 0$
-- $H_1: \overline{\text{CAR}}_i \neq 0$
+- $H_0: \overline{\text{CAR}}(t_1, t_2) = 0$
+- $H_1: \overline{\text{CAR}}(t_1, t_2) \neq 0$
 
 
 Under $H_0$ the cumulative average abnormal return follows the normal distribution:
@@ -396,7 +396,7 @@ The abnormal returns are independent across the event observations as well as ac
 
 
 The mean abnormal return over the event window is $0.3\%$ per day. <br/>
-For $25$ of the event observations the daily standard deviation of the abnormal return is $3\%$ and for the remaining $25$ observations the daily standard deviation is $6\%$. 
+For $25$ of the event observations the daily *standard deviation* of the abnormal return is $3\%$ and for the remaining $25$ observations the daily *standard deviation* is $6\%$. 
 
 Given this information, formulate the hypothesis test against $\overline{\text{CAR}}(t_1, t_1+3)$.
 
