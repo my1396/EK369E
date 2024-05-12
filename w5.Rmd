@@ -274,9 +274,12 @@ Note that
 
 - As the number of events $N$ increases, the variance of CAR decreases, reflecting the effects of diversification.
 
+- $\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right]$ scales proportionally with the length of the event window, $t_2-t_1$.
+
 - The assumption that the event windows of the $N$ securities do not overlap is used to set the covariance terms to zero.
 
-Equivalently, one can first aggregate over securities, then over time. That is,
+
+**Equivalently**, one can first aggregate over securities, then over time. That is,
 
 $$
 \begin{aligned}
@@ -284,9 +287,9 @@ $$
 \text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &= \sum_{t=t_1+1}^{t_2} \text{Var}(\overline{\text{AR}}_t) .
 \end{aligned}
 $$
+where $\overline{\text{AR}}_t = \frac{1}{N}\sum_{i=1}^N \text{AR}_{i,t}$ is the (cross-sectional) average abnormal return.
 
-
-In case of independent identically distributed $\text{AR}_{i,t}$, $\overline{\text{CAR}}$ has the expected value and variance as follows:
+In case of *independent identically distributed* $\text{AR}_{i,t}$, $\overline{\text{CAR}}$ has the expected value and variance as follows:
 
 $$
 \begin{aligned}

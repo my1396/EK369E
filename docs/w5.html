@@ -545,16 +545,18 @@ Here we assume that</p>
 <p>Note that</p>
 <ul>
 <li><p>As the number of events <span class="math inline">\(N\)</span> increases, the variance of CAR decreases, reflecting the effects of diversification.</p></li>
+<li><p><span class="math inline">\(\text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right]\)</span> scales proportionally with the length of the event window, <span class="math inline">\(t_2-t_1\)</span>.</p></li>
 <li><p>The assumption that the event windows of the <span class="math inline">\(N\)</span> securities do not overlap is used to set the covariance terms to zero.</p></li>
 </ul>
-<p>Equivalently, one can first aggregate over securities, then over time. That is,</p>
+<p><strong>Equivalently</strong>, one can first aggregate over securities, then over time. That is,</p>
 <p><span class="math display">\[
 \begin{aligned}
 \overline{\text{CAR}}(t_1, t_2) &amp;=  \sum_{t=t_1+1}^{t_2} \left( \frac{1}{N}\sum_{i=1}^N \text{AR}_{i,t} \right) =  \sum_{t=t_1+1}^{t_2} \overline{\text{AR}}_t \\
 \text{Var}\left[\overline{\text{CAR}}(t_1, t_2)\right] &amp;= \sum_{t=t_1+1}^{t_2} \text{Var}(\overline{\text{AR}}_t) .
 \end{aligned}
-\]</span></p>
-<p>In case of independent identically distributed <span class="math inline">\(\text{AR}_{i,t}\)</span>, <span class="math inline">\(\overline{\text{CAR}}\)</span> has the expected value and variance as follows:</p>
+\]</span>
+where <span class="math inline">\(\overline{\text{AR}}_t = \frac{1}{N}\sum_{i=1}^N \text{AR}_{i,t}\)</span> is the (cross-sectional) average abnormal return.</p>
+<p>In case of <em>independent identically distributed</em> <span class="math inline">\(\text{AR}_{i,t}\)</span>, <span class="math inline">\(\overline{\text{CAR}}\)</span> has the expected value and variance as follows:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \overline{\text{CAR}}(t_1, t_2) &amp;= (t_2-t_1)\, E[\varepsilon_i]  \\
