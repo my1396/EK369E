@@ -812,18 +812,24 @@ include_graphics("images/Skewness.png")
 
 
 **Kurtosis** $K_p$ is the fourth (normalized) moment about the mean. \
-It measures the tail behavior.
+It measures the tail behavior in comparison with the normal distribution.
+
 
 $$
 \mu_4 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^4}{\sigma_p^4}
 $$
 
-The kurtosis for a standard normal distribution is three. For this reason, we subtract three from $\mu_4$ to get the "excess kurtosis".
+The kurtosis for any normal distribution is three. For this reason, we subtract three from $\mu_4$ to get the "excess kurtosis".
 
-- $\mu_4-3>0$ indicate a heavy-tailed distribution.
-- $\mu_4-3<0$ indicate a light-tailed distribution.
+- $\mu_4-3>0$ indicate a [heavy-tailed][] distribution with higher chances of outliers (sharper peak).
+- $\mu_4-3<0$ indicate a light-tailed distribution with lower chances of outliers (flatter peak).
 
+Distinguish from standard deviation.
 
+`PerformanceAnalytics::kurtosis(x)` returns excess kurtosis by default. 
+Need to specify `method="moment"` in order to get the original kurtosis.
+
+`moments::kurtosis(x)` returns the original kurtosis. Need to be compared with 3 on your own.
 
 ```{r}
 # skewness and kurtosis
@@ -1209,7 +1215,7 @@ chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = "SharpeRatio.an
 
 
 
-
+[heavy-tailed]: https://stats.stackexchange.com/a/172532
 
 
 

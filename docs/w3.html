@@ -4831,15 +4831,19 @@ Fig. 4: Diagram of Skew
 </p>
 </div>
 <p><strong>Kurtosis</strong> <span class="math inline">\(K_p\)</span> is the fourth (normalized) moment about the mean.<br />
-It measures the tail behavior.</p>
+It measures the tail behavior in comparison with the normal distribution.</p>
 <p><span class="math display">\[
 \mu_4 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^4}{\sigma_p^4}
 \]</span></p>
-<p>The kurtosis for a standard normal distribution is three. For this reason, we subtract three from <span class="math inline">\(\mu_4\)</span> to get the “excess kurtosis”.</p>
+<p>The kurtosis for any normal distribution is three. For this reason, we subtract three from <span class="math inline">\(\mu_4\)</span> to get the “excess kurtosis”.</p>
 <ul>
-<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a heavy-tailed distribution.</li>
-<li><span class="math inline">\(\mu_4-3&lt;0\)</span> indicate a light-tailed distribution.</li>
+<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a <a href="https://stats.stackexchange.com/a/172532">heavy-tailed</a> distribution with higher chances of outliers (sharper peak).</li>
+<li><span class="math inline">\(\mu_4-3&lt;0\)</span> indicate a light-tailed distribution with lower chances of outliers (flatter peak).</li>
 </ul>
+<p>Distinguish from standard deviation.</p>
+<p><code>PerformanceAnalytics::kurtosis(x)</code> returns excess kurtosis by default.
+Need to specify <code>method="moment"</code> in order to get the original kurtosis.</p>
+<p><code>moments::kurtosis(x)</code> returns the original kurtosis. Need to be compared with 3 on your own.</p>
 <pre class="r"><code># skewness and kurtosis
 skewness(ptf_xts$port_ret)</code></pre>
 <pre><code>## [1] 0.7779903</code></pre>
