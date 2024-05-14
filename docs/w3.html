@@ -4815,6 +4815,8 @@ StdDev.annualized(ptf_xts$port_ret)</code></pre>
 <pre class="r"><code># histogram to check normality
 chart.Histogram(ptf_xts$port_ret, methods = c(&quot;add.density&quot;, &quot;add.normal&quot;))</code></pre>
 <p><img src="w3_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="skewness-and-kurtosis" class="section level4">
+<h4>Skewness and Kurtosis</h4>
 <p><strong>Skewness</strong> <span class="math inline">\(\mu_3\)</span> is the third (normalized) moment about the mean.<br />
 It measures the asymmetry of the distribution, with symmetric distribution having <span class="math inline">\(\mu_3=0\)</span>.</p>
 <ul>
@@ -4825,29 +4827,69 @@ It measures the asymmetry of the distribution, with symmetric distribution havin
 \mu_3 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^3}{\sigma_p^3}
 \]</span></p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
-<img src="images/Skewness.png" alt="Diagram of Skew" width="70%" />
+<img src="images/Skewness.png" alt="Diagram of Skewness." width="70%" />
 <p class="caption">
-Fig. 4: Diagram of Skew
+Fig. 4: Diagram of Skewness.
 </p>
 </div>
+<pre class="r"><code># skewness
+skewness(ptf_xts$port_ret)</code></pre>
+<pre><code>## [1] 0.7779903</code></pre>
 <p><strong>Kurtosis</strong> <span class="math inline">\(K_p\)</span> is the fourth (normalized) moment about the mean.<br />
-It measures the tail behavior in comparison with the normal distribution.</p>
+It measures the <em>tail behavior</em> in comparison with the normal distribution.</p>
 <p><span class="math display">\[
 \mu_4 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^4}{\sigma_p^4}
 \]</span></p>
 <p>The kurtosis for any normal distribution is three. For this reason, we subtract three from <span class="math inline">\(\mu_4\)</span> to get the “excess kurtosis”.</p>
 <ul>
-<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a <a href="https://stats.stackexchange.com/a/172532">heavy-tailed</a> distribution with higher chances of outliers (sharper peak).</li>
-<li><span class="math inline">\(\mu_4-3&lt;0\)</span> indicate a light-tailed distribution with lower chances of outliers (flatter peak).</li>
+<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a <a href="https://stats.stackexchange.com/a/172532">heavy-tailed</a> distribution with higher chances of outliers.
+<ul>
+<li>Note that we cannot infer from kurtosis the shape of the peak. <span class="math inline">\(\mu_4-3&gt;0\)</span> can associate with either a falttened (e.g., <span class="math inline">\(t\)</span>-distribution, see Fig. <a href="#fig:fig-t">5</a>) or a pointy peak (Laplace distribution, see Fig. <a href="#fig:fig-Laplace">6</a>).</li>
+</ul></li>
+<li><span class="math inline">\(\mu_4-3&lt;0\)</span> indicate a light-tailed distribution with lower chances of outliers.</li>
 </ul>
-<p>Distinguish from standard deviation.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-t"></span>
+<img src="images/t%20distribution.png" alt="Examples of heavy-tailed distributions." width="70%" />
+<p class="caption">
+Fig. 5: Examples of heavy-tailed distributions.
+</p>
+</div>
+<p><span class="math inline">\(t\)</span>-distribution has higher kurtosis than normal distributions.</p>
+<ul>
+<li>Meaning that <span class="math inline">\(t\)</span>-distribution has a higher probability of obtaining values that are far from the mean than a normal distribution.</li>
+<li>It is less peaked in the center and higher in the tails than normal distribution.</li>
+<li>As the degree of freedom increases, <span class="math inline">\(t\)</span>-distribution approximates to normal distribution, kurtosis decreases and approximates to 3.</li>
+</ul>
+<pre class="r"><code>set.seed(125)
+rnorm(1000) %&gt;% moments::kurtosis()</code></pre>
+<pre><code>## [1] 3.037806</code></pre>
+<pre class="r"><code>rt(1000, df=1) %&gt;% moments::kurtosis()</code></pre>
+<pre><code>## [1] 503.3928</code></pre>
+<pre class="r"><code>rt(1000, df=2) %&gt;% moments::kurtosis()</code></pre>
+<pre><code>## [1] 61.25994</code></pre>
+<pre class="r"><code>rt(1000, df=10) %&gt;% moments::kurtosis()</code></pre>
+<pre><code>## [1] 4.303517</code></pre>
+<pre class="r"><code>rt(1000, df=30) %&gt;% moments::kurtosis()</code></pre>
+<pre><code>## [1] 3.646411</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-Laplace"></span>
+<img src="images/Laplace%20distribution.webp" alt="**Laplace distribution**. The dotted green curve shows a normal distribution. The blue curve shows a Laplace distribution with kurtosis of 6.54. On the far left and right sides of the distribution—the tails—the space below the Laplace distribution curve (blue) is slightly thicker than the space below the normal distribution curve (green). This is an example of a heavy-tailed distribution yet with a sharper peak." width="70%" />
+<p class="caption">
+Fig. 6: <strong>Laplace distribution</strong>. The dotted green curve shows a normal distribution. The blue curve shows a Laplace distribution with kurtosis of 6.54. On the far left and right sides of the distribution—the tails—the space below the Laplace distribution curve (blue) is slightly thicker than the space below the normal distribution curve (green). This is an example of a heavy-tailed distribution yet with a sharper peak.
+</p>
+</div>
+<p>Distinguish from standard deviation/variance.</p>
+<p>Standard deviation and kurtosis are both measures of the variability of a distribution, but they are not directly related.<br />
+Two distributions with identical means and standard deviations can have very different shapes, and kurtosis is one of the measures of that difference.
+It looks at how much of the ‘weight’ of the distribution (recall that the total weight, or the area under the curve, is 1) is sitting in the tails as opposed to the middle of the distribution.</p>
+<ul>
+<li>Standard deviation is useful for measuring the spread.</li>
+<li>Kurtosis focuses on detecting outliers.</li>
+</ul>
 <p><code>PerformanceAnalytics::kurtosis(x)</code> returns excess kurtosis by default.
 Need to specify <code>method="moment"</code> in order to get the original kurtosis.</p>
 <p><code>moments::kurtosis(x)</code> returns the original kurtosis. Need to be compared with 3 on your own.</p>
-<pre class="r"><code># skewness and kurtosis
-skewness(ptf_xts$port_ret)</code></pre>
-<pre><code>## [1] 0.7779903</code></pre>
-<pre class="r"><code>kurtosis(ptf_xts$port_ret)</code></pre>
+<pre class="r"><code># kurtosis
+kurtosis(ptf_xts$port_ret)</code></pre>
 <pre><code>## [1] 1.69699</code></pre>
 <pre class="r"><code># summary statistic
 returns_statistics &lt;- table.Stats(ptf_xts$port_ret)
@@ -4869,6 +4911,7 @@ returns_statistics</code></pre>
 ## Stdev             0.1279
 ## Skewness          0.7780
 ## Kurtosis          1.6970</code></pre>
+</div>
 <div id="sharpe-ratio" class="section level4">
 <h4>Sharpe ratio</h4>
 <p>The Sharpe ratio was first introduced by <span class="citation">Sharpe (<a href="#ref-Sharpe1966">1966</a>)</span> as the (arithmetic) average portfolio excess return over the sample period divided by the standard deviation of the portfolio return over that period.
@@ -5303,14 +5346,14 @@ maxDrawdown(ptf_xts$port_ret)</code></pre>
 ## 5 2015-01-31 2015-02-28 2015-04-30 -0.1607      4         2        2</code></pre>
 <pre class="r"><code># Plot of drawdowns
 chart.Drawdown(ptf_xts$port_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>## rolling annualized mean and volatility
 chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;Return.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;StdDev.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-26-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-28-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;SharpeRatio.annualized&quot;, Rf=ptf_xts$excess_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-26-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-28-3.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 </div>
 <div id="references" class="section level3 unnumbered">

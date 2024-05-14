@@ -44,7 +44,6 @@ knitr::knit_hooks$set(output = function(x, options) {
 ```
 
 
-
 ## Return Concepts
 
 ### Simple returns
@@ -795,6 +794,8 @@ Histogram of portfolio returns.
 chart.Histogram(ptf_xts$port_ret, methods = c("add.density", "add.normal"))
 ```
 
+#### Skewness and Kurtosis
+
 
 **Skewness** $\mu_3$ is the third (normalized) moment about the mean. \
 It measures the asymmetry of the distribution, with symmetric distribution having $\mu_3=0$.
@@ -806,13 +807,19 @@ $$
 \mu_3 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^3}{\sigma_p^3}
 $$
 
-```{r fig.cap="Diagram of Skew", out.width="70%", echo=FALSE}
+```{r fig.cap="Diagram of Skewness.", out.width="70%", echo=FALSE}
 include_graphics("images/Skewness.png")
 ```
 
+```{r}
+# skewness
+skewness(ptf_xts$port_ret)
+```
+
+
 
 **Kurtosis** $K_p$ is the fourth (normalized) moment about the mean. \
-It measures the tail behavior in comparison with the normal distribution.
+It measures the *tail behavior* in comparison with the normal distribution.
 
 
 $$
@@ -821,10 +828,46 @@ $$
 
 The kurtosis for any normal distribution is three. For this reason, we subtract three from $\mu_4$ to get the "excess kurtosis".
 
-- $\mu_4-3>0$ indicate a [heavy-tailed][] distribution with higher chances of outliers (sharper peak).
-- $\mu_4-3<0$ indicate a light-tailed distribution with lower chances of outliers (flatter peak).
+- $\mu_4-3>0$ indicate a [heavy-tailed][] distribution with higher chances of outliers.
+    - Note that we cannot infer from kurtosis the shape of the peak. $\mu_4-3>0$ can associate with either a falttened (e.g., $t$-distribution, see Fig. \@ref(fig:fig-t)) or a pointy peak (Laplace distribution, see Fig. \@ref(fig:fig-Laplace)).
+- $\mu_4-3<0$ indicate a light-tailed distribution with lower chances of outliers.
 
-Distinguish from standard deviation.
+
+```{r fig-t, fig.cap="Examples of heavy-tailed distributions.", out.width="70%", echo=FALSE}
+include_graphics("images/t distribution.png")
+```
+
+$t$-distribution has higher kurtosis than normal distributions. 
+
+- Meaning that $t$-distribution has a higher probability of obtaining values that are far from the mean than a normal distribution.
+- It is less peaked in the center and higher in the tails than normal distribution.
+- As the degree of freedom increases, $t$-distribution approximates to normal distribution, kurtosis decreases and approximates to 3.
+
+```{r}
+set.seed(125)
+rnorm(1000) %>% moments::kurtosis()
+rt(1000, df=1) %>% moments::kurtosis()
+rt(1000, df=2) %>% moments::kurtosis()
+rt(1000, df=10) %>% moments::kurtosis()
+rt(1000, df=30) %>% moments::kurtosis()
+```
+
+
+```{r fig-Laplace, fig.cap="**Laplace distribution**. The dotted green curve shows a normal distribution. The blue curve shows a Laplace distribution with kurtosis of 6.54. On the far left and right sides of the distribution—the tails—the space below the Laplace distribution curve (blue) is slightly thicker than the space below the normal distribution curve (green). This is an example of a heavy-tailed distribution yet with a sharper peak.", out.width="70%", echo=FALSE}
+include_graphics("images/Laplace distribution.webp")
+```
+
+
+
+Distinguish from standard deviation/variance. 
+
+Standard deviation and kurtosis are both measures of the variability of a distribution, but they are not directly related. \
+Two distributions with identical means and standard deviations can have very different shapes, and kurtosis is one of the measures of that difference. 
+It looks at how much of the ‘weight’ of the distribution (recall that the total weight, or the area under the curve, is 1) is sitting in the tails as opposed to the middle of the distribution. 
+
+
+- Standard deviation is useful for measuring the spread.
+- Kurtosis focuses on detecting outliers. 
 
 `PerformanceAnalytics::kurtosis(x)` returns excess kurtosis by default. 
 Need to specify `method="moment"` in order to get the original kurtosis.
@@ -832,8 +875,7 @@ Need to specify `method="moment"` in order to get the original kurtosis.
 `moments::kurtosis(x)` returns the original kurtosis. Need to be compared with 3 on your own.
 
 ```{r}
-# skewness and kurtosis
-skewness(ptf_xts$port_ret)
+# kurtosis
 kurtosis(ptf_xts$port_ret)
 ```
 
