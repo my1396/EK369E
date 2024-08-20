@@ -9,14 +9,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Menghan Yuan" />
 
 
-<title>EK369E</title>
+<title>FF Factors</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,8 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
@@ -220,6 +223,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -227,6 +293,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -261,37 +337,42 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">EK369E</h1>
+<h1 class="title toc-ignore">FF Factors</h1>
+<h4 class="author">Menghan Yuan</h4>
+<h4 class="date">20/08/2024</h4>
 
 </div>
 
 
-<p>This webpage provides coding practice for EK369E.</p>
-<p><a href="FF_factors.html">Aug 20, 2024, FF 3-factor</a>     <a
-href="FF_factors.Rmd">Download <code>Rmd</code> File</a>; <a
-href="https://drive.google.com/file/d/1N0zdMqasX3p0NcODSBcJvDZlNLHYePjm/view?usp=share_link">Download
-Data</a>;</p>
-<p><a href="w1.html">Mar 21, CAPM</a>     <a href="w1.rmd">Download
-<code>Rmd</code> File</a>; <a
-href="https://github.com/my1396/EK369E/tree/main/data">Download
-Data</a>;</p>
-<p><a href="w2.html">Mar 22, EMH and RW</a>     <a
-href="w2.rmd">Download <code>Rmd</code> File</a>;</p>
-<p><a href="w3.html">Apr 4, Performance Evaluation</a>     <a
-href="w3.Rmd">Download <code>Rmd</code> File</a>; <a
-href="https://drive.google.com/file/d/1Xop4n2ZjP4IytKI_Xyqp0NHxwK-GpZPk/view?usp=share_link">Download
-Data</a>;</p>
-<p><a href="w4.html">Apr 5, Portfolio Optimization</a>     <a
-href="w4.Rmd">Download <code>Rmd</code> File</a>;</p>
-<p><a href="w5.html">Apr 18, Event Studies</a>     <a
-href="w5.Rmd">Download <code>Rmd</code> File</a>;</p>
-<hr>
-<p><strong>Office hour</strong>: 14:00-16:00 by appointment on Fridays
-in teaching weeks.</p>
-<p><strong>Location</strong>: Hovedbygning A257.</p>
+<style type="text/css">
+.main-container {
+  max-width: 100% !important;
+  margin: auto;
+}
+</style>
+<p>We have Fama-French pricing factor data from 2000-01 to 2024-06.
+We want to have a look at its descriptive statistics.</p>
+<p>Descriptive statistics</p>
+<pre><code>##             Mkt-RF         SMB         HML        RF
+## Min.    -17.230000 -17.2000000 -13.8300000 0.0000000
+## 1st Qu.  -2.020000  -1.8475000  -1.6925000 0.0100000
+## Median    1.175000   0.0850000  -0.0500000 0.0900000
+## Mean      0.577551   0.1342517   0.1777211 0.1418707
+## 3rd Qu.   3.307500   1.8400000   1.7775000 0.2275000
+## Max.     13.650000  21.3600000  12.8800000 0.5600000
+## 2.5%     -9.424250  -5.0090000  -7.4225000 0.0000000
+## 50%       1.175000   0.0850000  -0.0500000 0.0900000
+## 97.5%     8.697000   6.0207500   7.8932500 0.4767500
+## sd        4.609053   3.2149253   3.4991826 0.1596741</code></pre>
+<p>Histogram of SMB
+<img src="FF_factors_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Histogram of HML
+<img src="FF_factors_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -324,6 +405,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

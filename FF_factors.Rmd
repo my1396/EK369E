@@ -1,0 +1,71 @@
+---
+title: "FF Factors"
+author: "Menghan Yuan"
+date: "20/08/2024"
+output: 
+    bookdown::html_document2:
+        toc: true
+        toc_float: true
+        toc_depth: 4
+        number_sections: false
+        css: style.css
+bibliography: bibli.bib
+link-citations: yes
+biblio-style: apalike
+---
+
+<style type="text/css">
+.main-container {
+  max-width: 100% !important;
+  margin: auto;
+}
+</style>
+
+
+```{r setup, include=F, echo=F}
+library(knitr)
+library(tidyverse)
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(warning = FALSE, echo = FALSE, message=FALSE, fig.align="center", fig.pos = "H")
+```
+
+We have Fama-French pricing factor data from 2000-01 to 2024-06. 
+We want to have a look at its descriptive statistics.
+
+```{r}
+data <- read_csv("data/FF_3Factors_US_monthly.csv")
+get_stat <- function(x, q_list=c(0.025, 0.5, 0.975)){
+    ## Return extended summary statistics with quantiles and sd.
+    #    @q_list: vector of quantiles to calculate;
+    x <- na.omit(x)
+    c(summary(x), quantile(x, q_list), "sd"=sd(x) )
+}
+```
+
+
+Descriptive statistics
+```{r descrptive-analysis}
+apply(data[,-1], 2, get_stat)
+```
+
+Histogram of SMB
+```{r}
+ggplot(data) +
+    geom_histogram(aes(x=SMB, y=..density..), 
+                   fill="#BDBCBC", 
+                   color="black", 
+                   binwidth = 2, 
+                   boundary=0) +
+    labs(x="Small minus big, SMB")
+```
+
+Histogram of HML
+```{r}
+ggplot(data) +
+    geom_histogram(aes(x=HML, y=..density..), 
+                   fill="#BDBCBC", 
+                   color="black", 
+                   binwidth = 2, 
+                   boundary=0) +
+    labs(x="High minus low, HML")
+```

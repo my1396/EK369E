@@ -1,6 +1,7 @@
 name: "EK360E-website"
 output_dir: "docs"
-include: ["w1.rmd", "w2.rmd", "w3.Rmd", "w4.Rmd", "w5.Rmd", "sitemap.xml"]
+include: ["w1.rmd", "w2.rmd", "w3.Rmd", "w4.Rmd", "w5.Rmd", "sitemap.xml",
+          "FF_factors.Rmd"]
 navbar:
   title: "Course Website"
   left:

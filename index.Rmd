@@ -4,6 +4,8 @@ title: "EK369E"
 
 This webpage provides coding practice for EK369E. 
 
+[Aug 20, 2024, FF 3-factor](FF_factors.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](FF_factors.Rmd); [Download Data](https://drive.google.com/file/d/1N0zdMqasX3p0NcODSBcJvDZlNLHYePjm/view?usp=share_link);
+
 [Mar 21, CAPM](w1.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w1.rmd); [Download Data](https://github.com/my1396/EK369E/tree/main/data);
 
 
