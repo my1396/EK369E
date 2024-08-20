@@ -43,12 +43,12 @@ get_stat <- function(x, q_list=c(0.025, 0.5, 0.975)){
 ```
 
 
-Descriptive statistics
+### Descriptive statistics
 ```{r descrptive-analysis}
 apply(data[,-1], 2, get_stat)
 ```
 
-Histogram of SMB
+### Histogram of SMB
 ```{r}
 ggplot(data) +
     geom_histogram(aes(x=SMB, y=..density..), 
@@ -59,7 +59,7 @@ ggplot(data) +
     labs(x="Small minus big, SMB")
 ```
 
-Histogram of HML
+### Histogram of HML
 ```{r}
 ggplot(data) +
     geom_histogram(aes(x=HML, y=..density..), 
