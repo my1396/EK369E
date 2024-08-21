@@ -29,6 +29,8 @@ library(tidyverse)
 opts_chunk$set(warning = FALSE, echo = FALSE, message=FALSE, fig.align="center", fig.pos = "H")
 ```
 
+## Descriptive analysis 
+
 We have Fama-French pricing factor data from 2000-01 to 2024-06. 
 We want to have a look at its descriptive statistics.
 
@@ -69,3 +71,18 @@ ggplot(data) +
                    boundary=0) +
     labs(x="High minus low, HML")
 ```
+
+
+## Risk Free Rate (RFR)
+
+- Before 2013 NIBOR: [Norges Bank](https://www.norges-bank.no/en/topics/Statistics/Historical-monetary-statistics/)
+
+- After 2013 Norwegian Overnight Weighted Average rate: [Norske Finansielle Referenser AS (NoRe)](https://nore-benchmarks.com)
+
+- [Titlon](https://titlon.uit.no/tabledefs.php): 3 months Norwegian Government Bills, from the `bondindex` table, `CloseYield field`.
+
+
+Financial service companies publish surveys about financial data. For instance, PwC Norge.
+
+- Here is their annual report about RFF: <https://www.pwc.no/no/publikasjoner/risikopremien.html>
+
