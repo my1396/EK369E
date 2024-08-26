@@ -63,7 +63,7 @@ include_graphics("./images/step2.png")
 ```
 
 
-You can either choose from the math symbols provided by the editor, or type *LaTeX* equations directly, which is must faster! 
+You can either choose from the math symbols provided by the editor, or type *LaTeX* equations directly, which is much faster! 
 
 See a LaTeX equation tutorial [HERE](https://www.overleaf.com/learn/latex/Mathematical_expressions).
 
