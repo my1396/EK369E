@@ -828,7 +828,7 @@ $$
 
 The kurtosis for any normal distribution is three. For this reason, we subtract three from $\mu_4$ to get the "excess kurtosis".
 
-- $\mu_4-3>0$ indicate a [heavy-tailed][] distribution with higher chances of outliers.
+- $\mu_4-3>0$ indicate a heavy-tailed distribution with higher chances of outliers.
     - Note that we cannot infer from kurtosis the shape of the peak. $\mu_4-3>0$ can associate with either a falttened (e.g., $t$-distribution, see Fig. \@ref(fig:fig-t)) or a pointy peak (Laplace distribution, see Fig. \@ref(fig:fig-Laplace)).
 - $\mu_4-3<0$ indicate a light-tailed distribution with lower chances of outliers.
 

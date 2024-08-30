@@ -68,6 +68,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -1344,7 +1345,7 @@ which is the average one-period log returns.</p>
 <col width="26%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th align="left">Simple returns</th>
 <th align="left">Log returns</th>
@@ -1352,19 +1353,19 @@ which is the average one-period log returns.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Single period</td>
 <td align="left"><span class="math inline">\(r_t=\frac{P_t}{P_{t-1}}-1\)</span></td>
 <td align="left"><span class="math inline">\(z_t=\ln \frac{P_t}{P_{t-1}}\)</span></td>
 <td align="left"><span class="math inline">\(r_t = \exp(z_t)-1\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Multiperiod</td>
 <td align="left"><span class="math inline">\(r_t(k) = \prod_{j=0}^{k-1}(1+r_{t-j}) -1\)</span></td>
 <td align="left"><span class="math inline">\(z_t(k) = \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
 <td align="left"><span class="math inline">\(r_t(k) = \exp\big(z_t(k)\big)-1\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Annualized</td>
 <td align="left"><span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1\)</span></td>
 <td align="left"><span class="math inline">\(z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
@@ -4842,7 +4843,7 @@ It measures the <em>tail behavior</em> in comparison with the normal distributio
 \]</span></p>
 <p>The kurtosis for any normal distribution is three. For this reason, we subtract three from <span class="math inline">\(\mu_4\)</span> to get the “excess kurtosis”.</p>
 <ul>
-<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a <a href="https://stats.stackexchange.com/a/172532">heavy-tailed</a> distribution with higher chances of outliers.
+<li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a heavy-tailed distribution with higher chances of outliers.
 <ul>
 <li>Note that we cannot infer from kurtosis the shape of the peak. <span class="math inline">\(\mu_4-3&gt;0\)</span> can associate with either a falttened (e.g., <span class="math inline">\(t\)</span>-distribution, see Fig. <a href="#fig:fig-t">5</a>) or a pointy peak (Laplace distribution, see Fig. <a href="#fig:fig-Laplace">6</a>).</li>
 </ul></li>
@@ -5358,7 +5359,7 @@ chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;Return.an
 </div>
 <div id="references" class="section level3 unnumbered">
 <h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Sharpe1966" class="csl-entry">
 Sharpe, William F. 1966. <span>“Mutual Fund Performance.”</span> <em>The Journal of Business</em> 39: 119–38. <a href="http://www.jstor.org/stable/2351741">http://www.jstor.org/stable/2351741</a>.
 </div>
