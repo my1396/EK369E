@@ -1,7 +1,7 @@
 ---
 title: "FF Factors"
 author: "Menghan Yuan"
-date: "20/08/2024"
+date: "18/09/2024"
 output: 
     bookdown::html_document2:
         toc: true
@@ -24,9 +24,29 @@ biblio-style: apalike
 
 ```{r setup, include=F, echo=F}
 library(knitr)
+library(kableExtra)
+library(bookdown)
 library(tidyverse)
 # don't show code unless we explicitly set echo = TRUE
-opts_chunk$set(warning = FALSE, echo = FALSE, message=FALSE, fig.align="center", fig.pos = "H")
+opts_chunk$set(warning = FALSE, echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
 ```
 
 ## Descriptive analysis 
@@ -72,6 +92,7 @@ ggplot(data) +
     labs(x="High minus low, HML")
 ```
 
+___
 
 ## Risk Free Rate (RFR)
 
@@ -85,4 +106,148 @@ ggplot(data) +
 Financial service companies publish surveys about financial data. For instance, PwC Norge.
 
 - Here is their annual report about RFF: <https://www.pwc.no/no/publikasjoner/risikopremien.html>
+
+___
+
+## AAPL case study
+
+```{r}
+library(quantmod)
+aapl <- getSymbols("AAPL", 
+           src = 'yahoo', 
+           from = "2014-08-01", 
+           to = "2024-09-17",   
+           auto.assign = FALSE
+           )
+aapl
+```
+
+
+Candlestick Plot
+
+```{r}
+chartSeries(aapl, subset="2024-09", theme=chartTheme('white',up.col='green',dn.col='red'))
+```
+
+Calculate monthly return, $r_t = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1$.
+
+You may either use the function `quantmod::monthlyReturn()` or calculate manually.
+```{r}
+aapl <- aapl %>% 
+    apply.monthly(last)
+aapl$return <- monthlyReturn(aapl$AAPL.Adjusted, type='arithmetic')
+aapl <- head(aapl, -1)
+aapl
+```
+
+```{r}
+# calculate manually
+with(aapl, AAPL.Adjusted/lag(AAPL.Adjusted)-1)
+```
+
+
+Merge equity data with FF factors.
+```{r}
+reg_data <- aapl %>% 
+    as_tibble() %>% 
+    add_column(Date=index(aapl), .before = 1)
+reg_data <- reg_data %>% 
+    mutate(year=year(Date),
+           mon=month(Date))
+data <- data %>% mutate_at(vars(-Date), ~./100)
+data <- data %>% 
+    mutate(year=year(Date),
+           mon=month(Date))
+reg_data <- reg_data %>% 
+    left_join(data[,-1], by=c("year","mon"))
+reg_data
+```
+
+Calculate excess return.
+```{r}
+# calculate excess return
+reg_data <- reg_data %>% 
+    mutate(eRi = return-RF) %>% 
+    rename(rmrf=`Mkt-RF`)
+reg_data  %>% 
+    select(-year,-mon) %>% 
+    knitr::kable(floating.environment="sidewaystable", digits = 5, escape=F) %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down") %>% 
+    scroll_box(width = "100%", height = "500px")
+```
+
+
+Calculate annualized excess return.
+
+$$
+r^A = \left(1+\text{HPR}(T)\right)^{\frac{12}{T}}-1 = \left[\prod_{t=1}^T (1+r_{t}) \right]^{\frac{12}{T}}-1
+$$
+
+```{r}
+n <- nrow(reg_data)-1 # number of months
+r_A <- prod(reg_data$eRi+1, na.rm = TRUE)^{12/n}-1
+r_A
+```
+
+Plot excess return and ERP.
+```{r fig.keep=2}
+plot_data <- xts(reg_data[,c("eRi","rmrf")], order.by = reg_data$Date)
+plot_data
+col_vec <- c("black", "red")
+plot.xts(plot_data, col = col_vec, main = "Excess Returns on Asset and Market")
+addLegend("topright", 
+          legend.names = c("META", "Equity Risk Premium"), 
+          lty = c(1, 1), 
+          lwd = c(2, 2),
+          col = col_vec,
+          bg = "white",
+          box.col = "white")
+```
+
+
+### CAPM
+
+CAPM as a regression can be expressed as
+
+$$
+r_{t} - r_{f,t} = \alpha + \beta (r_{m,t}-r_{f,t}) + \varepsilon_{t}
+$$ 
+where $\alpha_i$ (intercept) and $\beta_i$ (slope) are the parameters to estimate.
+
+We use the following data to estimate the parameters.
+
+-   $r$ is the return of the asset;
+-   $r_m$ is the return of the market portfolio.
+-   $r_f$ is the risk free rate of interest; 
+-   $r_t-r_{f,t}$ is the excess return on the asset;
+-   $r_m-r_{f,t}$ is the Equity Risk Premium.
+
+```{r}
+capm_ml <- lm(eRi~rmrf, data=reg_data)
+summary(capm_ml)
+```
+
+### FF 3-factor
+
+The Fama-French three-factor model as a regression can be expressed as
+
+$$
+r_{t} - r_{f,t} = \alpha + \beta^{RMRF} (r_{m,t}-r_{f,t}) + \beta^{SMB}SMB_t + \beta^{HML}HML_t + \varepsilon_{t}
+$$ 
+
+```{r}
+FF_ml <- lm(eRi~rmrf+SMB+HML, data=reg_data)
+summary(FF_ml)
+```
+
+Merge the two models in one table.
+```{r, results='asis'}
+library(stargazer)
+stargazer(capm_ml, FF_ml, type="html", 
+          title="Regression Results for AAPL", 
+          align = TRUE)
+```
+
+
+
 
