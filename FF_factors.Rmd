@@ -177,11 +177,16 @@ reg_data  %>%
 ```
 
 
-Calculate annualized excess return.
+Calculate annualized average excess return.
 
 $$
-r^A = \left(1+\text{HPR}(T)\right)^{\frac{12}{T}}-1 = \left[\prod_{t=1}^T (1+r_{t}) \right]^{\frac{12}{T}}-1
+\begin{aligned}
+r^A &= \big(1+\text{HPR}(T)\big)^{\frac{12}{T}}-1 \\
+&= \left[\prod_{t=1}^T (1+r_{t}) \right]^{\frac{12}{T}}-1
+\end{aligned}
 $$
+Note that the formula indicate $\text{HPR}(T) = \left[\prod_{t=1}^T (1+r_{t}) \right]-1$, which is the holding period return for $T$-period.
+
 
 ```{r}
 n <- nrow(reg_data)-1 # number of months
@@ -204,6 +209,7 @@ addLegend("topright",
           box.col = "white")
 ```
 
+___
 
 ### CAPM
 
@@ -216,9 +222,9 @@ where $\alpha_i$ (intercept) and $\beta_i$ (slope) are the parameters to estimat
 
 We use the following data to estimate the parameters.
 
--   $r$ is the return of the asset;
--   $r_m$ is the return of the market portfolio.
--   $r_f$ is the risk free rate of interest; 
+-   $r_t$ is the return of the asset at time $t$;
+-   $r_{m,t}$ is the return of the market portfolio.
+-   $r_{f,t}$ is the risk free rate of interest; 
 -   $r_t-r_{f,t}$ is the excess return on the asset;
 -   $r_m-r_{f,t}$ is the Equity Risk Premium.
 
@@ -226,6 +232,8 @@ We use the following data to estimate the parameters.
 capm_ml <- lm(eRi~rmrf, data=reg_data)
 summary(capm_ml)
 ```
+
+___
 
 ### FF 3-factor
 
@@ -248,6 +256,16 @@ stargazer(capm_ml, FF_ml, type="html",
           align = TRUE)
 ```
 
+&nbsp;
+
+___
+
+### Excel options
+
+*Excel* can achieve the same results. You use `Analysis ToolPak` $\rightarrow$ `Regression` to conduct the regression. It will generate similar regression tables for you.
+
+- How to load `Analysis ToolPal`: \
+<https://www.goskills.com/Excel/Resources/Excel-data-analysis-toolpak>
 
 
 
