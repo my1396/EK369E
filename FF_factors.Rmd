@@ -218,12 +218,12 @@ CAPM as a regression can be expressed as
 $$
 r_{t} - r_{f,t} = \alpha + \beta (r_{m,t}-r_{f,t}) + \varepsilon_{t}
 $$ 
-where $\alpha_i$ (intercept) and $\beta_i$ (slope) are the parameters to estimate.
+where $\alpha$ (intercept) and $\beta$ (slope) are the parameters to estimate.
 
 We use the following data to estimate the parameters.
 
--   $r_t$ is the return of the asset at time $t$;
--   $r_{m,t}$ is the return of the market portfolio.
+-   $r_t$ is the return on the asset at time $t$;
+-   $r_{m,t}$ is the return on the market portfolio;
 -   $r_{f,t}$ is the risk free rate of interest; 
 -   $r_t-r_{f,t}$ is the excess return on the asset;
 -   $r_m-r_{f,t}$ is the Equity Risk Premium.
