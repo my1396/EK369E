@@ -185,7 +185,7 @@ r^A &= \big(1+\text{HPR}(T)\big)^{\frac{12}{T}}-1 \\
 &= \left[\prod_{t=1}^T (1+r_{t}) \right]^{\frac{12}{T}}-1
 \end{aligned}
 $$
-Note that the formula indicate $\text{HPR}(T) = \left[\prod_{t=1}^T (1+r_{t}) \right]-1$, which is the holding period return for $T$-period.
+Note that the formula indicates $\text{HPR}(T) = \left[\prod_{t=1}^T (1+r_{t}) \right]-1$, which is the holding period return for $T$-period.
 
 
 ```{r}
@@ -218,12 +218,12 @@ CAPM as a regression can be expressed as
 $$
 r_{t} - r_{f,t} = \alpha + \beta (r_{m,t}-r_{f,t}) + \varepsilon_{t}
 $$ 
-where $\alpha_i$ (intercept) and $\beta_i$ (slope) are the parameters to estimate.
+where $\alpha$ (intercept) and $\beta$ (slope) are the parameters to estimate.
 
 We use the following data to estimate the parameters.
 
--   $r_t$ is the return of the asset at time $t$;
--   $r_{m,t}$ is the return of the market portfolio.
+-   $r_t$ is the return on the asset at time $t$;
+-   $r_{m,t}$ is the return on the market portfolio;
 -   $r_{f,t}$ is the risk free rate of interest; 
 -   $r_t-r_{f,t}$ is the excess return on the asset;
 -   $r_m-r_{f,t}$ is the Equity Risk Premium.
@@ -264,7 +264,7 @@ ___
 
 *Excel* can achieve the same results. You use `Analysis ToolPak` $\rightarrow$ `Regression` to conduct the regression. It will generate similar regression tables for you.
 
-- How to load `Analysis ToolPal`: \
+- How to load `Analysis ToolPak`: \
 <https://www.goskills.com/Excel/Resources/Excel-data-analysis-toolpak>
 
 

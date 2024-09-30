@@ -185,7 +185,7 @@ r^A &= \big(1+\text{HPR}(T)\big)^{\frac{12}{T}}-1 \\
 &= \left[\prod_{t=1}^T (1+r_{t}) \right]^{\frac{12}{T}}-1
 \end{aligned}
 $$
-Note that the formula indicate $\text{HPR}(T) = \left[\prod_{t=1}^T (1+r_{t}) \right]-1$, which is the holding period return for $T$-period.
+Note that the formula indicates $\text{HPR}(T) = \left[\prod_{t=1}^T (1+r_{t}) \right]-1$, which is the holding period return for $T$-period.
 
 
 ```{r}
@@ -264,7 +264,7 @@ ___
 
 *Excel* can achieve the same results. You use `Analysis ToolPak` $\rightarrow$ `Regression` to conduct the regression. It will generate similar regression tables for you.
 
-- How to load `Analysis ToolPal`: \
+- How to load `Analysis ToolPak`: \
 <https://www.goskills.com/Excel/Resources/Excel-data-analysis-toolpak>
 
 
