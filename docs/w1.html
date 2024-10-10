@@ -3149,7 +3149,8 @@ F Statistic
 <li><p>Explanatory power: the <span class="math inline">\(R^2\)</span> (<span class="math inline">\(.178\)</span>) tells us that variation in the excess returns of the market index explains about 17.8% of the variation in Archer’s returns. The adjusted <span class="math inline">\(R^2\)</span> (which is slightly smaller) imposes a penalty for extra number of predictors.</p></li>
 <li><p>The intercept (<span class="math inline">\(-.021\)</span>) is the estimate of Archer’s alpha. The number in parentheses is the standard error (SE). <em>T</em>-statistic is about <span class="math inline">\(1\)</span>, lower than the conventional cutoff for statistical significance is a probability of less than <span class="math inline">\(5\%\)</span>, which requires a <em>t</em>-statistic of about <span class="math inline">\(2.0\)</span>.</p>
 <ul>
-<li>We fail to reject <span class="math inline">\(H_0: \alpha=0\)</span>.</li>
+<li><p>We fail to reject <span class="math inline">\(H_0: \alpha=0\)</span>.</p></li>
+<li><p>Here, we approximate the t-distribution to a standard normal distribution when the degrees of freedom are high. In our case, with <span class="math inline">\(94\)</span> (<span class="math inline">\(n-K=96-2\)</span>) degrees of freedom, we use the critical value of the standard normal distribution for simplification. This applies to the hypothesis tests in what follows too.</p></li>
 </ul></li>
 <li><p>The slope (<span class="math inline">\(2.234\)</span>) is the estimate of beta, meaning that its share price tended to move 2.234% for every 1% move in the market index.</p>
 <ul>

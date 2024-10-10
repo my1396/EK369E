@@ -196,6 +196,7 @@ r_A
 
 Plot excess return and ERP.
 ```{r fig.keep=2}
+library(xts)
 plot_data <- xts(reg_data[,c("eRi","rmrf")], order.by = reg_data$Date)
 plot_data
 col_vec <- c("black", "red")

@@ -157,6 +157,8 @@ Several things worth looking at:
 -   The intercept ($-.021$) is the estimate of Archer's alpha. The number in parentheses is the standard error (SE). *T*-statistic is about $1$, lower than the conventional cutoff for statistical significance is a probability of less than $5\%$, which requires a *t*-statistic of about $2.0$.
 
     -   We fail to reject $H_0: \alpha=0$.
+    
+    -   Here, we approximate the t-distribution to a standard normal distribution when the degrees of freedom are high. In our case, with $94$ ($n-K=96-2$) degrees of freedom, we use the critical value of the standard normal distribution for simplification. This applies to the hypothesis tests in what follows too.
 
 -   The slope ($2.234$) is the estimate of beta, meaning that its share price tended to move 2.234% for every 1% move in the market index.
 
