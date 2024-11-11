@@ -16,6 +16,9 @@ title: "Lab Scripts for Course Example Demonstration"
 
 [Apr 18, 2024, Event Studies](w5.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w5.Rmd); 
 
+[AR(1)](timeSeries1.html)
+
+
 <hr>
 
 **Office hour**: By appointment.

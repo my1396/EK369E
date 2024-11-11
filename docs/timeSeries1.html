@@ -9,14 +9,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Menghan Yuan" />
 
 
-<title>Lab Scripts for Course Example Demonstration</title>
+<title>Autocorrelated Series</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,8 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
@@ -220,6 +223,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -227,6 +293,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -261,37 +337,67 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Lab Scripts for Course Example
-Demonstration</h1>
+<h1 class="title toc-ignore">Autocorrelated Series</h1>
+<h4 class="author">Menghan Yuan</h4>
+<h4 class="date">Nov 10, 2024</h4>
 
 </div>
 
 
-<p><a href="FF_factors.html">Sept 18, 2024, FF 3-factor</a>     <a
-href="FF_factors.Rmd">Download <code>Rmd</code> File</a>; <a
-href="https://drive.google.com/file/d/1N0zdMqasX3p0NcODSBcJvDZlNLHYePjm/view?usp=share_link">Download
-Data</a>;</p>
-<p><a href="w1.html">Mar 21, 2024, CAPM</a>     <a
-href="w1.rmd">Download <code>Rmd</code> File</a>; <a
-href="https://github.com/my1396/EK369E/tree/main/data">Download
-Data</a>;</p>
-<p><a href="w2.html">Mar 22, 2024, EMH and RW</a>     <a
-href="w2.rmd">Download <code>Rmd</code> File</a>;</p>
-<p><a href="w3.html">Apr 4, 2024, Performance Evaluation</a>     <a
-href="w3.Rmd">Download <code>Rmd</code> File</a>; <a
-href="https://drive.google.com/file/d/1Xop4n2ZjP4IytKI_Xyqp0NHxwK-GpZPk/view?usp=share_link">Download
-Data</a>;</p>
-<p><a href="w4.html">Apr 5, 2024, Portfolio Optimization</a>     <a
-href="w4.Rmd">Download <code>Rmd</code> File</a>;</p>
-<p><a href="w5.html">Apr 18, 2024, Event Studies</a>     <a
-href="w5.Rmd">Download <code>Rmd</code> File</a>;</p>
-<p><a href="timeSeries1.html">AR(1)</a></p>
-<hr>
-<p><strong>Office hour</strong>: By appointment.</p>
-<p><strong>Office location</strong>: Hovedbygning A257.</p>
+<div id="ar1-visualization" class="section level1">
+<h1>AR(1) Visualization</h1>
+<p>The first-order autoregressive process, denoted AR(1), is
+<span class="math display">\[
+\varepsilon_t = \rho \varepsilon_{t-1} + w_t
+\]</span>
+where <span class="math inline">\(w_t\)</span> is a strictly stationary and ergodic white noise process with 0 mean and variance <span class="math inline">\(\sigma^2_w\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:WN"></span>
+<img src="images/white_noise.png" alt="White noise process with $\sigma=20$." width="80%" />
+<p class="caption">
+Fig. 1: White noise process with <span class="math inline">\(\sigma=20\)</span>.
+</p>
+</div>
+<p>To illustrate the behavior of the AR(1) process, Fig. <a href="#fig:AR1">2</a> plots two simulated AR(1) processes.
+Each is generated using the white noise process et displayed in Fig. <a href="#fig:WN">1</a>.</p>
+<p>The plot in Fig. <a href="#fig:AR1">2</a>(a) sets <span class="math inline">\(\rho=0.5\)</span> and the plot in Fig. <a href="#fig:AR1">2</a>(b) sets <span class="math inline">\(\rho=0.95\)</span>.</p>
+<p>Remarks</p>
+<ul>
+<li>Fig. <a href="#fig:AR1">2</a>(b) is more smooth than Fig. <a href="#fig:AR1">2</a>(a).</li>
+<li>The smoothing increases with <span class="math inline">\(\rho\)</span>.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:AR1"></span>
+<img src="images/autocorrelated_series.png" alt="Simulated AR(1) processes with positive $\rho$. (a) $\rho=0.5$, (b) $\rho=0.95$. White noise uses the series in Fig.&amp;nbsp;\@ref(fig:WN)." width="80%" />
+<p class="caption">
+Fig. 2: Simulated AR(1) processes with positive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=0.5\)</span>, (b) <span class="math inline">\(\rho=0.95\)</span>. White noise uses the series in Fig. <a href="#fig:WN">1</a>.
+</p>
+</div>
+<hr />
+<p>We have seen the cases when <span class="math inline">\(\rho\)</span> is positive, now let’s consider when <span class="math inline">\(\rho\)</span> is negative.
+Fig. <a href="#fig:AR1-neg">3</a>(a) shows an AR(1) process with <span class="math inline">\(\rho=-0.5\)</span>, and Fig. <a href="#fig:AR1-neg">3</a>(a) shows an AR(1) process with <span class="math inline">\(\rho=-0.95\,.\)</span></p>
+<p>We see that the sample path is very choppy when <span class="math inline">\(\rho\)</span> is negative. The different patterns for positive and negative <span class="math inline">\(\rho\)</span>’s are due to their autocorrelation functions (ACFs).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:AR1-neg"></span>
+<img src="images/autocorrelated_series_negative-rho.png" alt="Simulated AR(1) processes with negtive $\rho$. (a) $\rho=-0.5$, (b) $\rho=-0.95$. White noise uses the series in Fig.&amp;nbsp;\@ref(fig:WN)." width="80%" />
+<p class="caption">
+Fig. 3: Simulated AR(1) processes with negtive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=-0.5\)</span>, (b) <span class="math inline">\(\rho=-0.95\)</span>. White noise uses the series in Fig. <a href="#fig:WN">1</a>.
+</p>
+</div>
+</div>
+<div id="mathematical-properties" class="section level1">
+<h1>Mathematical Properties</h1>
+<p>Let’s formulate a AR(1) model as follows:</p>
+<p><span class="math display" id="eq:AR1">\[
+\begin{align} \tag{1}
+\varepsilon_t = \rho \varepsilon_{t-1} + w_t
+\end{align}
+\]</span>
+where <span class="math inline">\(w_t\)</span> is a white noise series with mean zero and variance <span class="math inline">\(\sigma^2_w\)</span>. We also assume <span class="math inline">\(|\rho|&lt;1\)</span>.</p>
+<p>We can represent AR(1) model</p>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -324,6 +430,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

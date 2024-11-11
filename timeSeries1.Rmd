@@ -1,0 +1,230 @@
+---
+title: "Autocorrelated Series"
+author: "Menghan Yuan"
+date: "Nov 10, 2024"
+output: 
+    bookdown::html_document2:
+        toc: true
+        toc_float: true
+        toc_depth: 4
+        number_sections: false
+        css: "style.css"
+bibliography: bibli.bib
+link-citations: yes
+biblio-style: apalike
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=F, echo=F}
+library(knitr) # load packages
+library(kableExtra)
+library(tidyverse)
+library(latex2exp)
+library(stargazer)
+library(xts)
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts <- options(knitr.kable.NA = "")
+
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
+# add labels to multi-panel figures
+put.fig.letter <- function(label, location="topleft", x=NULL, y=NULL, 
+                           offset=c(0, 0), ...) {
+    # offset[1]: negative to move to the left; positive to move to the right
+    # offset[2]: negative to move downward; positive to move upward
+    if(length(label) > 1) {
+        warning("length(label) > 1, using label[1]")
+    }
+    if(is.null(x) | is.null(y)) {
+        coords <- switch(location,
+                         topleft = c(0.015,0.98),
+                         topcenter = c(0.5525,0.98),
+                         topright = c(0.985, 0.98),
+                         bottomleft = c(0.015, 0.02), 
+                         bottomcenter = c(0.5525, 0.02), 
+                         bottomright = c(0.985, 0.02),
+                         c(0.015, 0.98) )
+    } else {
+        coords <- c(x,y)
+    }
+    this.x <- grconvertX(coords[1] + offset[1], from="nfc", to="user")
+    this.y <- grconvertY(coords[2] + offset[2], from="nfc", to="user")
+    text(labels=label[1], x=this.x, y=this.y, xpd=T, ...)
+}
+```
+
+
+# AR(1) Visualization
+
+The first-order autoregressive process, denoted AR(1), is
+$$
+\varepsilon_t = \rho \varepsilon_{t-1} + w_t
+$$
+where $w_t$ is a strictly stationary and ergodic white noise process with 0 mean and variance $\sigma^2_w$. 
+
+```{r echo=FALSE, include=F}
+n <- 100
+eff_seed <- sample(1:2^15, 1)
+eff_seed <- 14375
+set.seed(eff_seed)
+print(sprintf("Seed for session: %s", eff_seed))
+w <- rnorm(n, sd=20)
+f_name <- "images/white_noise.png"
+ppi <- 300
+png(f_name, width=9.4*ppi, height=4.61*ppi, res=ppi)
+plot(w, type='l', main=TeX("White noise, $\\sigma=20$"), 
+     ylab=TeX("$w_t$"), xlab="Time", cex.lab=1.5)
+dev.off()
+```
+
+```{r WN, echo=FALSE, out.width = "80%", fig.cap="White noise process with $\\sigma=20$."}
+include_graphics(f_name)
+```
+
+
+To illustrate the behavior of the AR(1) process, Fig. \@ref(fig:AR1) plots two simulated AR(1) processes. 
+Each is generated using the white noise process et displayed in Fig. \@ref(fig:WN).
+
+The plot in Fig. \@ref(fig:AR1)(a) sets $\rho=0.5$ and the plot in Fig. \@ref(fig:AR1)(b) sets $\rho=0.95$.
+
+Remarks
+
+- Fig. \@ref(fig:AR1)(b) is more smooth than Fig. \@ref(fig:AR1)(a). 
+- The smoothing increases with $\rho$.
+
+```{r echo=FALSE, include=F}
+# simulate AR(1)
+# rho=0.5
+epsilon_1 <- NULL
+epsilon_1[1] <- 1
+for (i in 2:n) {
+  epsilon_1[i] <- 0.5*epsilon_1[i-1] + w[i]
+}
+# rho=0.95
+epsilon_2 <- NULL
+epsilon_2[1] <- 1
+for (i in 2:n) {
+  epsilon_2[i] <- 0.95*epsilon_2[i-1] + w[i]
+}
+```
+
+```{r echo=FALSE, include=F}
+f_name <- "images/autocorrelated_series.png"
+my.locations <- rep("topleft", 2)
+png(f_name, width=9.35*ppi, height=7.12*ppi, res=ppi)
+par(mfrow=c(2,1), oma=c(0,0.5,0,2), mgp=c(2,0.8,0), xpd=T )
+par(mar=c(2.5, 3.5, 2, 1))
+plot(epsilon_1, type="l", main=TeX("$\\rho=0.5$"), 
+     xlab=" ", ylab=TeX("$\\epsilon_t$"), cex.lab=1.5 )
+put.fig.letter(label="(a)", location=my.locations[1], font=2, offset = c(0.1, -0.15))
+par(mar=c(3.5, 3.5, 1, 1), xpd=T)
+plot(epsilon_2, type="l", main=TeX("$\\rho=0.95$"), 
+     xlab="Time", ylab=TeX("$\\epsilon_t$"), cex.lab=1.5 )
+put.fig.letter(label="(b)", location=my.locations[2], font=2, offset = c(0.1, -0.1))
+dev.off()
+```
+
+
+
+```{r AR1, echo=FALSE, out.width = "80%", fig.cap="Simulated AR(1) processes with positive $\\rho$. (a) $\\rho=0.5$, (b) $\\rho=0.95$. White noise uses the series in Fig.&nbsp;\\@ref(fig:WN)."}
+include_graphics(f_name)
+```
+
+___
+
+We have seen the cases when $\rho$ is positive, now let's consider when $\rho$ is negative.
+Fig. \@ref(fig:AR1-neg)(a) shows an AR(1) process with $\rho=-0.5$, and Fig. \@ref(fig:AR1-neg)(a) shows an AR(1) process with $\rho=-0.95\,.$
+
+We see that the sample path is very choppy when $\rho$ is negative. The different patterns for positive and negative $\rho$'s are due to their autocorrelation functions (ACFs).
+
+```{r echo=FALSE}
+# rho=-0.5
+epsilon_3 <- NULL
+epsilon_3[1] <- 1
+for (i in 2:n) {
+  epsilon_3[i] <- -0.5*epsilon_3[i-1] + w[i]
+}
+
+# rho=-0.95
+epsilon_4 <- NULL
+epsilon_4[1] <- 1
+for (i in 2:n) {
+  epsilon_4[i] <- -1*epsilon_4[i-1] + w[i]
+}
+```
+
+
+
+```{r echo=FALSE, include=F}
+f_name <- "images/autocorrelated_series_negative-rho.png"
+my.locations <- rep("topleft", 2)
+png(f_name, width=9.35*ppi, height=7.12*ppi, res=ppi)
+par(mfrow=c(2,1), oma=c(0,0.5,0,2), mgp=c(2,0.8,0), xpd=T )
+par(mar=c(2.5, 3.5, 2, 1))
+plot(epsilon_3, type="l", main=TeX("$\\rho = -0.5$"), 
+     xlab=" ", ylab=TeX("$\\epsilon_t$"), cex.lab=1.5 )
+put.fig.letter(label="(a)", location=my.locations[1], font=2, offset = c(0.1, -0.15))
+par(mar=c(3.5, 3.5, 1, 1), xpd=T)
+plot(epsilon_4, type="l", main=TeX("$\\rho = -0.95$"), 
+     xlab=" ", ylab=TeX("$\\epsilon_t$"), cex.lab=1.5 )
+put.fig.letter(label="(b)", location=my.locations[2], font=2, offset = c(0.1, -0.1))
+dev.off()
+```
+
+
+```{r AR1-neg, echo=FALSE, out.width = "80%", fig.cap="Simulated AR(1) processes with negtive $\\rho$. (a) $\\rho=-0.5$, (b) $\\rho=-0.95$. White noise uses the series in Fig.&nbsp;\\@ref(fig:WN)."}
+include_graphics(f_name)
+```
+
+
+# Mathematical Properties
+
+Let's formulate a AR(1) model as follows:
+
+$$
+\begin{align} (\#eq:AR1)
+\varepsilon_t = \rho \varepsilon_{t-1} + w_t 
+\end{align}
+$$
+where $w_t$ is a white noise series with mean zero and variance $\sigma^2_w$. We also assume $|\rho|<1$.
+
+We can represent AR(1) model as a linear combination of the innovation $w_t$.
+
+$$
+\begin{aligned}
+\varepsilon_t &= \rho \varepsilon_{t-1} + w_t 
+\end{aligned}
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
