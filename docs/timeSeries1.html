@@ -366,32 +366,106 @@ Each is generated using the white noise process et displayed in Fig. <a href="#f
 <li>The smoothing increases with <span class="math inline">\(\rho\)</span>.</li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:AR1"></span>
-<img src="images/autocorrelated_series.png" alt="Simulated AR(1) processes with positive $\rho$. (a) $\rho=0.5$, (b) $\rho=0.95$. White noise uses the series in Fig.&amp;nbsp;\@ref(fig:WN)." width="80%" />
+<img src="images/autocorrelated_series.png" alt="Simulated AR(1) processes with positive $\rho$. (a) $\rho=0.5$, (b) $\rho=0.95$. Both use the white noise series in Fig.&amp;nbsp;\@ref(fig:WN)." width="80%" />
 <p class="caption">
-Fig. 2: Simulated AR(1) processes with positive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=0.5\)</span>, (b) <span class="math inline">\(\rho=0.95\)</span>. White noise uses the series in Fig. <a href="#fig:WN">1</a>.
+Fig. 2: Simulated AR(1) processes with positive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=0.5\)</span>, (b) <span class="math inline">\(\rho=0.95\)</span>. Both use the white noise series in Fig. <a href="#fig:WN">1</a>.
 </p>
 </div>
 <hr />
-<p>We have seen the cases when <span class="math inline">\(\rho\)</span> is positive, now let’s consider when <span class="math inline">\(\rho\)</span> is negative.
+<p>We have seen the cases when <span class="math inline">\(\rho\)</span> is positive, now let’s consider when <span class="math inline">\(\rho\)</span> is <strong>negative</strong>.
 Fig. <a href="#fig:AR1-neg">3</a>(a) shows an AR(1) process with <span class="math inline">\(\rho=-0.5\)</span>, and Fig. <a href="#fig:AR1-neg">3</a>(a) shows an AR(1) process with <span class="math inline">\(\rho=-0.95\,.\)</span></p>
-<p>We see that the sample path is very choppy when <span class="math inline">\(\rho\)</span> is negative. The different patterns for positive and negative <span class="math inline">\(\rho\)</span>’s are due to their autocorrelation functions (ACFs).</p>
+<p>We see that <span style="color:#337ab7">the sample path is very choppy when <span class="math inline">\(\rho\)</span> is negative</span>. The different patterns for positive and negative <span class="math inline">\(\rho\)</span>’s are due to their <span style="color:#008B45FF"><em>autocorrelation functions</em></span> (ACFs).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:AR1-neg"></span>
-<img src="images/autocorrelated_series_negative-rho.png" alt="Simulated AR(1) processes with negtive $\rho$. (a) $\rho=-0.5$, (b) $\rho=-0.95$. White noise uses the series in Fig.&amp;nbsp;\@ref(fig:WN)." width="80%" />
+<img src="images/autocorrelated_series_negative-rho.png" alt="Simulated AR(1) processes with negtive $\rho$. (a) $\rho=-0.5$, (b) $\rho=-0.95$. Both use the white noise series in Fig.&amp;nbsp;\@ref(fig:WN)." width="80%" />
 <p class="caption">
-Fig. 3: Simulated AR(1) processes with negtive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=-0.5\)</span>, (b) <span class="math inline">\(\rho=-0.95\)</span>. White noise uses the series in Fig. <a href="#fig:WN">1</a>.
+Fig. 3: Simulated AR(1) processes with negtive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=-0.5\)</span>, (b) <span class="math inline">\(\rho=-0.95\)</span>. Both use the white noise series in Fig. <a href="#fig:WN">1</a>.
 </p>
 </div>
+<hr />
 </div>
-<div id="mathematical-properties" class="section level1">
-<h1>Mathematical Properties</h1>
-<p>Let’s formulate a AR(1) model as follows:</p>
+<div id="mathematical-representation" class="section level1">
+<h1>Mathematical Representation</h1>
+<p>Let’s formulate an AR(1) model as follows:</p>
 <p><span class="math display" id="eq:AR1">\[
 \begin{align} \tag{1}
 \varepsilon_t = \rho \varepsilon_{t-1} + w_t
 \end{align}
 \]</span>
 where <span class="math inline">\(w_t\)</span> is a white noise series with mean zero and variance <span class="math inline">\(\sigma^2_w\)</span>. We also assume <span class="math inline">\(|\rho|&lt;1\)</span>.</p>
-<p>We can represent AR(1) model</p>
+<p>We can represent the AR(1) model as a linear combination of the innovations <span class="math inline">\(w_t\)</span>.</p>
+<p>By iterating backwards <span class="math inline">\(k\)</span> times, we get</p>
+<p><span class="math display">\[
+\begin{aligned}
+\varepsilon_t &amp;= \rho \,\varepsilon_{t-1} + w_t \\
+&amp;= \rho\, (\rho \, \varepsilon_{t-2} + w_{t-1}) + w_t \\
+&amp;= \rho^2 \varepsilon_{t-2} + \rho w_{t-1} + w_t \\
+&amp;\quad \vdots \\
+&amp;= \rho^k \varepsilon_{t-k} + \sum_{j=0}^{k-1} \rho^j \,w_{t-j} \,.
+\end{aligned}
+\]</span>
+This suggests that, by continuing to iterate backward, and provided that <span class="math inline">\(|\rho|&lt;1\)</span> and <span class="math inline">\(\sup_t \text{Var}(\varepsilon_t)&lt;\infty\)</span>, we can represent <span class="math inline">\(\varepsilon_t\)</span> as a linear process given by</p>
+<p><span class="math display">\[
+\color{#EE0000FF}{\varepsilon_t = \sum_{j=0}^\infty \rho^j \,w_{t-j}} \,.
+\]</span></p>
+<hr />
+<div id="expectation" class="section level2">
+<h2>Expectation</h2>
+<p><span class="math inline">\(\varepsilon_t\)</span> is stationary with mean zero.</p>
+<p><span class="math display">\[
+E(\varepsilon_t) = \sum_{j=0}^\infty \rho^j \, E(w_{t-j})
+\]</span></p>
+<hr />
+</div>
+<div id="autocovariance" class="section level2">
+<h2>Autocovariance</h2>
+<p>The <span style="color:#008B45FF">autocovariance function</span> of the AR(1) process is
+<span class="math display">\[
+\begin{aligned}
+\gamma (h) &amp;= \text{Cov}(\varepsilon_{t+h}, \varepsilon_t) \\
+&amp;= E(\varepsilon_{t+h}, \varepsilon_t) \\
+&amp;= E\left[\left(\sum_{j=0}^\infty \rho^j \,w_{t+h-j}\right)  \left(\sum_{k=0}^\infty \rho^k \,w_{t-k}\right) \right] \\
+&amp;= \sum_{l=0}^{\infty} \rho^{h+l} \rho^l \sigma_w^2 \\
+&amp;= \sigma_w^2 \cdot \rho^{h} \cdot \sum_{l=0}^{\infty} \rho^{2l}  \\
+&amp;= \frac{\sigma_w^2 \cdot \rho^{h} }{1-\rho^2}, \quad h&gt;0 \,.
+\end{aligned}
+\]</span>
+When <span class="math inline">\(h=0\)</span>,
+<span class="math display">\[
+\gamma(0) = \frac{\sigma_w^2}{1-\rho^2}
+\]</span>
+is the <span style="color:#008B45FF">variance of the process</span> <span class="math inline">\(\text{Var}(\varepsilon_t)\)</span>.</p>
+<p>Note that</p>
+<ul>
+<li><span class="math inline">\(\gamma(0) \ge |\gamma (h)|\)</span> for all <span class="math inline">\(h\)</span>. Maximum value at 0 lag.</li>
+<li><span class="math inline">\(\gamma (h)\)</span> is symmetric, i.e., <span class="math inline">\(\gamma (-h) = \gamma (h)\)</span></li>
+</ul>
+<hr />
+</div>
+<div id="autocorrelation" class="section level2">
+<h2>Autocorrelation</h2>
+<p>The <span style="color:#008B45FF">autocorrelation function</span> (ACF) is given by</p>
+<p><span class="math display">\[
+\rho(h) = \frac{\gamma (h)}{\gamma (0)} = \rho^h,
+\]</span>
+which is simply the correlation between <span class="math inline">\(\varepsilon_{t+h}\)</span> and <span class="math inline">\(\varepsilon_{t}\,.\)</span></p>
+<p>Note that <span class="math inline">\(\rho(h)\)</span> satisfies the recursion
+<span class="math display">\[
+\rho(h) = \rho\cdot \rho(h-1) \,.
+\]</span></p>
+<ul>
+<li>For <span class="math inline">\(\rho &gt;0\)</span>, <span class="math inline">\(\rho(h)=\rho^h&gt;0\)</span> observations close together are positively correlated with each other. The larger the <span class="math inline">\(\rho\)</span>, the larger the correlation.</li>
+<li>For <span class="math inline">\(\rho &lt;0\)</span>, the sign of the ACF <span class="math inline">\(\rho(h)=\rho^h\)</span> depends on the time interval.
+<ul>
+<li>When <span class="math inline">\(h\)</span> is even, <span class="math inline">\(\rho(h)\)</span> is positive;</li>
+<li>when <span class="math inline">\(h\)</span> is odd, <span class="math inline">\(\rho(h)\)</span> is negative.</li>
+</ul>
+This result means that observations at contiguous time points are negatively correlated, but observations two time points apart are positively correlated.
+<ul>
+<li>For example, if an observation, <span class="math inline">\(\varepsilon_t\)</span>, is positive, the next observation, <span class="math inline">\(\varepsilon_{t+1}\)</span>, is typically negative, and the next observation, <span class="math inline">\(\varepsilon_{t+2}\)</span>, is typically positive. Thus, in this case, the sample path is very choppy.</li>
+</ul></li>
+</ul>
+<p>Another interpretation of <span class="math inline">\(\rho(h)\)</span> is the optimal weight for scaling <span class="math inline">\(\varepsilon_t\)</span> into <span class="math inline">\(\varepsilon_{t+h}\)</span>, i.e., the weight, <span class="math inline">\(a\)</span>, that minimizes <span class="math inline">\(E[(\varepsilon_{t+h} - a\,\varepsilon_{t})^2]\,.\)</span></p>
+</div>
 </div>
 
 
