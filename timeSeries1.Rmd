@@ -144,7 +144,7 @@ dev.off()
 
 
 
-```{r AR1, echo=FALSE, out.width = "80%", fig.cap="Simulated AR(1) processes with positive $\\rho$. (a) $\\rho=0.5$, (b) $\\rho=0.95$. Both use the white noise series in Fig.&nbsp;\\@ref(fig:WN)."}
+```{r AR1, echo=FALSE, out.width = "80%", fig.cap="Simulated AR(1) processes with positive $\\rho$. (a) $\\rho=0.5$, (b) $\\rho=0.95$. Each is generated useing the white noise process $w_t$ displayed in Fig.&nbsp;\\@ref(fig:WN)."}
 include_graphics(f_name)
 ```
 
@@ -190,7 +190,7 @@ dev.off()
 ```
 
 
-```{r AR1-neg, echo=FALSE, out.width = "80%", fig.cap="Simulated AR(1) processes with negtive $\\rho$. (a) $\\rho=-0.5$, (b) $\\rho=-0.95$. Both use the white noise series in Fig.&nbsp;\\@ref(fig:WN)."}
+```{r AR1-neg, echo=FALSE, out.width = "80%", fig.cap="Simulated AR(1) processes with negtive $\\rho$. (a) $\\rho=-0.5$, (b) $\\rho=-0.95$. Each is generated useing the white noise process $w_t$ displayed in Fig.&nbsp;\\@ref(fig:WN)."}
 include_graphics(f_name)
 ```
 

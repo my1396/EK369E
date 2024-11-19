@@ -344,7 +344,7 @@ abline(a=r.f, b=sr.tan, col="green", lwd=2)
 
 ## Exercise
 
-<span style="font-family: Courier, sans-serif; ">Annual estimates of the GWN model parameters for Boeing and Microsoft are given in the table below: </span>
+<span style="font-family: Courier, sans-serif; ">Annual estimates of stock returns parameters for Boeing and Microsoft are given in the table below: </span>
 
 <table border="0" cellspacing="0" cellpadding="0"><colgroup><col width="170px" /><col span="2" width="77" /></colgroup>
 <tbody>
@@ -413,7 +413,8 @@ Use an annual risk-free rate of $3\%$ per year for the T-bill (risk free rate).
 
 ### References
 
-
+Introduction to Computational Finance and Financial Econometrics with R.
+https://bookdown.org/compfinezbook/introFinRbook/Estimation-of-The-GWN-Model.html
 
 
 

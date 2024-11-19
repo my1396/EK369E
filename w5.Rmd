@@ -45,12 +45,7 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
-About the exam, you can bring your own **formula sheets**. 
 
-- There is no requirement regarding how many pages you can bring, what you write on the sheets, etc.
-- Formula sheets will also be provided on Inspera at the exam.
-
-------------------------------------------------------------------------
 
 An event study attempts to measure the valuation effects of a corporate event, such as a merger or earnings announcement, by examining the response of the stock price around the announcement of the event.
 
@@ -383,7 +378,7 @@ $$
 <li> Consider only the day of the event $(t=0)$. When the average abnormal return on day $0$ is 0.02, can you conclude whether the event has an impact on stock prices? Show your calculations to support your answer.</li>
 
 
-<li style="margin-bottom: 10px;"> Consider two-sided test of the null hypothesis of zero cumulative average abnormal returns for $\overline{\text{CAR}}(-11, -1)=0.1$ and $\overline{\text{CAR}}(-11, 30)=0.48$ at the $5\%$ level. What is the distribution of theses cumulative average abnormal returns? Can you reject the null hypothesis? What can you infer about the event?</li>
+<li style="margin-bottom: 10px;"> Consider a two-sided test of the null hypothesis of zero cumulative average abnormal returns for $\overline{\text{CAR}}(-11, -1)=0.1$ and $\overline{\text{CAR}}(-11, 30)=0.48$ at the $5\%$ level. What is the distribution of theses cumulative average abnormal returns? Can you reject the null hypothesis? What can you infer about the event?</li>
 
 
 <li style="margin-bottom: 10px;"> Discuss the trade-offs involved when choosing the length of the event window. </li>
