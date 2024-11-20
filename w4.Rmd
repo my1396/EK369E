@@ -90,6 +90,8 @@ Given the following set up for two assets A and B:
 </tbody>
 </table>
 
+where $\mu$ is the expected return, $\sigma$ is the volatility (standard deviation) of returns, $\rho$ is the correlation coefficient between assets A and B.
+
 &nbsp;
 
 ### Equally weighted
@@ -255,10 +257,11 @@ The shape of the investment possibilities set is very sensitive to the correlati
 - Efficient portfolios are the feasible portfolios that have the highest expected return for a given level of risk as measured by portfolio standard deviation.
 - Inefficient portfolios are the portfolios such that there is another feasible portfolio that has the same risk but with a lower expected return.
 
+___
 
 ## Tangent portfolio
 
-Tangent/optimal portfolio represents the portfolio which maximizes Sharpe ratio. 
+Tangent/optimal portfolio represents the portfolio which <span style='color:#337ab7'>**maximizes Sharpe ratio**</span>. 
 
 <img src="https://drive.google.com/thumbnail?id=1pTKSSwWI5Od5MrSfDqI6axOlPjVfI_zh&sz=w1000" alt="tangency ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" />
 
@@ -282,6 +285,8 @@ x_{A}^{tan} & =\frac{(\mu_{A}-r_{f})\sigma_{B}^{2}-(\mu_{B}-r_{f})\sigma_{AB}}{(
 x_{B}^{tan} & =1-x_{A}^{tan}.\nonumber 
 \end{align}
 $$
+
+___
 
 ## Portfolio optimization with `IntroCompFinR` 
 

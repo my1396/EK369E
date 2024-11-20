@@ -431,6 +431,7 @@ Asset B
 </tr>
 </tbody>
 </table>
+<p>where <span class="math inline">\(\mu\)</span> is the expected return, <span class="math inline">\(\sigma\)</span> is the volatility (standard deviation) of returns, <span class="math inline">\(\rho\)</span> is the correlation coefficient between assets A and B.</p>
 <p> </p>
 <div id="equally-weighted" class="section level3">
 <h3>Equally weighted</h3>
@@ -911,10 +912,11 @@ L(x_{A},x_{B},\lambda)=x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{
 <li>Efficient portfolios are the feasible portfolios that have the highest expected return for a given level of risk as measured by portfolio standard deviation.</li>
 <li>Inefficient portfolios are the portfolios such that there is another feasible portfolio that has the same risk but with a lower expected return.</li>
 </ul>
+<hr />
 </div>
 <div id="tangent-portfolio" class="section level2">
 <h2>Tangent portfolio</h2>
-<p>Tangent/optimal portfolio represents the portfolio which maximizes Sharpe ratio.</p>
+<p>Tangent/optimal portfolio represents the portfolio which <span style="color:#337ab7"><strong>maximizes Sharpe ratio</strong></span>.</p>
 <p><img src="https://drive.google.com/thumbnail?id=1pTKSSwWI5Od5MrSfDqI6axOlPjVfI_zh&sz=w1000" alt="tangency ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /></p>
 <p>We can determine the proportions of each asset in the tangency portfolio by finding the values of <span class="math inline">\(x_A\)</span> and <span class="math inline">\(x_B\)</span> that maximize the Sharpe ratio of a portfolio.</p>
 <p>Formally, we solve the constrained maximization problem:</p>
@@ -933,6 +935,7 @@ x_{A}^{tan} &amp; =\frac{(\mu_{A}-r_{f})\sigma_{B}^{2}-(\mu_{B}-r_{f})\sigma_{AB
 x_{B}^{tan} &amp; =1-x_{A}^{tan}.\nonumber
 \end{align}
 \]</span></p>
+<hr />
 </div>
 <div id="portfolio-optimization-with-introcompfinr" class="section level2">
 <h2>Portfolio optimization with <code>IntroCompFinR</code></h2>
@@ -1047,6 +1050,7 @@ text(tan.port$sd, tan.port$er, labels = &quot;Tangency&quot;, pos = 3)
 sr.tan = (tan.port$er - r.f)/tan.port$sd 
 abline(a=r.f, b=sr.tan, col=&quot;green&quot;, lwd=2)</code></pre>
 <p><img src="w4_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
 </div>
 <div id="exercise" class="section level2">
 <h2>Exercise</h2>
