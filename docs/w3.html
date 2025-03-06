@@ -412,7 +412,7 @@ Note that</p>
 <p><span class="math inline">\(\quad\)</span> <span class="math inline">\(D_0\)</span> is the initial deposit,<br />
 <span class="math inline">\(\quad\)</span> <span class="math inline">\(D_t\)</span> is the value of the deposit at time <span class="math inline">\(t\)</span>,<br />
 <span class="math inline">\(\quad\)</span> <span class="math inline">\(R\)</span> is the annual percentage rate (APR),<br />
-<span class="math inline">\(\quad\)</span> <span class="math inline">\(n\)</span> is the number of compounding periods in one year,<br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(n\)</span> is the <span style="color:red">number of compounding periods in one year</span>,<br />
 <span class="math inline">\(\quad\)</span> <span class="math inline">\(t\)</span> is the number of years from <span class="math inline">\(D_0\)</span> to <span class="math inline">\(D_t\)</span>.</p>
 <p>(For a bank deposit account, the quoted interest rate often refers to as “simple interest” which ignores compounding. For example, an interest rate of <span class="math inline">\(5\%\)</span> payable every six months will be quoted as a simple interest of <span class="math inline">\(10\%\)</span> per annum in the market.)</p>
 <p>Q: What if we compound semi-annually?</p>
@@ -1244,6 +1244,7 @@ Log Ret
 </tbody>
 </table>
 </div>
+<hr />
 </div>
 <div id="cumulative-returns" class="section level3">
 <h3>Cumulative returns</h3>
@@ -1297,11 +1298,12 @@ The simple return of a portfolio is the weighted sum of the simple returns of th
 <li><p>log returns aggregate across time<br />
 The log return for a time period is the sum of the log returns of partitions of the time period. For example, the log return for a year is the sum of the log returns of the days within the year.</p></li>
 </ul>
+<hr />
 </div>
 <div id="multiperiod-returns" class="section level3">
 <h3>Multiperiod returns</h3>
 <p>Multiperiod returns are the generalized case of cumulative return by allowing any holding period <span class="math inline">\(k\le T\)</span>.</p>
-<p>The <span class="math inline">\(k\)</span>-period simple return from time <span class="math inline">\(t-k\)</span> to <span class="math inline">\(t\)</span> is given by</p>
+<p>The <span class="math inline">\(k\)</span>-period (assuming annual frequency for now) simple return from time <span class="math inline">\(t-k\)</span> to <span class="math inline">\(t\)</span> is given by</p>
 <p><span class="math display">\[
 r_{t}(k) = \frac{P_t-P_{t-k}}{P_{t-k}}.
 \]</span></p>
@@ -1312,8 +1314,8 @@ r_t(k) &amp;= \prod_{j=0}^{k-1}(1+r_{t-j}) -1 \\
 &amp;= (1+r_t)(1+r_{t-1})\cdots (1+r_{t-k+1})-1 .
 \end{aligned}
 \]</span></p>
-<p>We always like to talk in terms of annual performance as people like to know how much they can expect to make a year in percentage terms. That is why in most of the fund reports, you will find a standard metric called <strong>annualized returns</strong>. It is also known as the <em>Compound Annual Growth Rate</em> (CAGR) or the <em>Geometric Annual Return</em>.</p>
-<p><em>Annualized return</em> under simple returns <span class="math inline">\(r_t^A\)</span> is given by:</p>
+<p>We always like to talk in terms of annual performance as people like to know how much they can expect to make a year in percentage terms. That is why in most of the fund reports, you will find a standard metric called <strong>annualized returns</strong>. It is also known as the <span style="color:red"><em>Compound Annual Growth Rate</em> (CAGR)</span> or the <em>Geometric Annual Return</em>.</p>
+<p><em>Annualized return</em> under simple returns, <span class="math inline">\(r_t^A\)</span>, is given by:</p>
 <p><span class="math display">\[
 \begin{split}
 (1+r_t^A)^k &amp;= 1+r_t(k) \\
@@ -1328,7 +1330,7 @@ z_t(k) = \ln \frac{P_t}{P_{t-k}}.
 <p><span class="math display">\[
 z_t(k) = \sum_{j=0}^{k-1} z_{t-j} = z_t + z_{t-1} + \cdots + z_{t-k+1}
 \]</span></p>
-<p><em>Annualized return</em> under continuously compounding <span class="math inline">\(z_t^A\)</span> is given by:</p>
+<p><em>Annualized return</em> under continuously compounding, <span class="math inline">\(z_t^A\)</span>, is given by:</p>
 <p><span class="math display">\[
 \begin{aligned}
 k\,z_t^A &amp;= z_t(k) \\
@@ -1373,15 +1375,21 @@ which is the average one-period log returns.</p>
 </tr>
 </tbody>
 </table>
-<p>Note that the annualized return here assumes the single period returns are annual returns.</p>
+<p>Note that the annualized return here assumes <u>the single period returns are annual returns</u>.</p>
+<hr />
 <p>In case of higher frequency data than annual, i.e., daily, weekly and monthly,
 we have to compound by the number of periods in a year.</p>
 <ul>
-<li><p>daily single period: <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
+<li><p>daily single period: <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p>
+<ul>
+<li>Note here we used <span class="math inline">\(n=252\)</span>, i.e., the number of <em>trading days</em> in a year. This is applied when reporting of trading strategy returns on a product with 5 market sessions per week.</li>
+<li>If you are calculating CAGR for FX (which is traded effectively 24/7) strategy returns for instance, it would seem fair to use <span class="math inline">\(n=365\)</span> <em>calendar days</em>.</li>
+</ul></li>
 <li><p>weekly <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
 <li><p>monthly <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
 <li><p>quarterly <span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1\)</span> for simple return, <span class="math inline">\(z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span> for log return.</p></li>
 </ul>
+<hr />
 </div>
 <div id="portfolio-returns" class="section level3">
 <h3>Portfolio Returns</h3>

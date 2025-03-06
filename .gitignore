@@ -1,8 +1,11 @@
+# auto generated system files
+*.Rproj
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 *.DS_Store
-.DS_Store
+~*
+# data files
 data/
 docs/data/

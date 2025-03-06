@@ -101,7 +101,7 @@ Note that
 $\quad$ $D_0$ is the initial deposit, \
 $\quad$ $D_t$ is the value of the deposit at time $t$, \
 $\quad$ $R$ is the annual percentage rate (APR), \
-$\quad$ $n$ is the number of compounding periods in one year, \
+$\quad$ $n$ is the <span style='color:red'>number of compounding periods in one year</span>, \
 $\quad$ $t$ is the number of years from $D_0$ to $D_t$. 
 
 
@@ -273,6 +273,7 @@ merge(Return.calculate(prices_monthly, method = "discrete"),
 
 
 
+--------------------------------------------------------------------------------
 
 ### Cumulative returns 
 
@@ -331,12 +332,13 @@ The simple return of a portfolio is the weighted sum of the simple returns of th
 - log returns aggregate across time \
 The log return for a time period is the sum of the log returns of partitions of the time period.  For example, the log return for a year is the sum of the log returns of the days within the year.
 
+------------------------------------------------------------------------
 
 ### Multiperiod returns
 
 Multiperiod returns are the generalized case of cumulative return by allowing any holding period $k\le T$. 
 
-The $k$-period simple return from time $t-k$ to $t$ is given by
+The $k$-period (assuming annual frequency for now) simple return from time $t-k$ to $t$ is given by
 
 $$
 r_{t}(k) = \frac{P_t-P_{t-k}}{P_{t-k}}.
@@ -351,9 +353,9 @@ r_t(k) &= \prod_{j=0}^{k-1}(1+r_{t-j}) -1 \\
 \end{aligned}
 $$
 
-We always like to talk in terms of annual performance as people like to know how much they can expect to make a year in percentage terms. That is why in most of the fund reports, you will find a standard metric called **annualized returns**. It is also known as the *Compound Annual Growth Rate* (CAGR) or the *Geometric Annual Return*.
+We always like to talk in terms of annual performance as people like to know how much they can expect to make a year in percentage terms. That is why in most of the fund reports, you will find a standard metric called **annualized returns**. It is also known as the <span style='color:red'>*Compound Annual Growth Rate* (CAGR)</span> or the *Geometric Annual Return*.
 
-*Annualized return* under simple returns $r_t^A$ is given by:
+*Annualized return* under simple returns, $r_t^A$, is given by:
 
 $$
 \begin{split}
@@ -375,7 +377,7 @@ $$
 z_t(k) = \sum_{j=0}^{k-1} z_{t-j} = z_t + z_{t-1} + \cdots + z_{t-k+1}
 $$
 
-*Annualized return* under continuously compounding $z_t^A$ is given by:
+*Annualized return* under continuously compounding, $z_t^A$, is given by:
 
 $$
 \begin{aligned}
@@ -396,18 +398,26 @@ To summarize in one table
 | Annualized    | $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1$ | $z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}$ | $r_t^A = \exp(z_t^A)-1$ |
 
 
-Note that the annualized return here assumes the single period returns are annual returns.
+Note that the annualized return here assumes <u>the single period returns are annual returns</u>.
+
+___
 
 In case of higher frequency data than annual, i.e., daily, weekly and monthly,
 we have to compound by the number of periods in a year. 
 
 - daily single period: $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{252}}-1$ for simple return, $z_t^A = \frac{252}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return.
 
+    - Note here we used $n=252$, i.e., the number of *trading days* in a year. This is applied when reporting of trading strategy returns on a product with 5 market sessions per week. 
+    - If you are calculating CAGR for FX (which is traded effectively 24/7) strategy returns for instance, it would seem fair to use $n=365$ *calendar days*.
+
 - weekly $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{52}}-1$ for simple return, $z_t^A = \frac{52}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return.
 
 - monthly $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{12}}-1$ for simple return, $z_t^A = \frac{12}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return. 
 
 - quarterly $r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}\cdot \color{red}{4}}-1$ for simple return, $z_t^A = \frac{4}{k} \sum_{j=0}^{k-1} z_{t-j}$ for log return. 
+
+
+--------------------------------------------------------------------------------
 
 ### Portfolio Returns
 
