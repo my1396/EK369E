@@ -620,13 +620,26 @@ ptf_rebal <- Return.portfolio(R = return_xts, weights = wts, rebalance_on="month
 ```
 
 
-Plot the portfolio return time series.
+Plot the portfolio monthly returns.
 
 ```{r, out.width="100%"}
 plot_data <- ptf_bh$returns %>% 
     merge(ptf_rebal$returns) %>% 
     setNames(c("buy-and-hold", "rebalance"))
 plot(plot_data, multi.panel=TRUE, main="Portfolio monthly return")
+```
+
+
+Plot the portfolio cumulative returns.
+
+```{r}
+plot_data <- ptf_bh$returns %>% 
+    merge(ptf_rebal$returns) %>% 
+    as_tibble() %>% 
+    mutate_all(~cumprod(1+.)) %>% 
+    xts(order.by = index(ptf_bh$returns)) %>% 
+    setNames(c("buy-and-hold", "rebalance"))
+plot(plot_data, multi.panel=TRUE, main="Portfolio cumulative return", yaxis.same=FALSE)
 ```
 
 
@@ -646,6 +659,8 @@ plot.xts(eop_weight_rebal$KIT)
 We see that the weight of `KIT` basically skyrockets and dominates the portfolio, taking up more than $99\%$ of the portfolio.
 This is due to its strong performance.
 
+--------------------------------------------------------------------------------
+
 Now we check the relative performance of the two assets.
 
 ```{r, out.width="100%"}
@@ -657,16 +672,140 @@ colnames(equity_curve_xts) <- colnames(return_xts)
 plot(equity_curve_xts, multi.panel=TRUE, yaxis.same=FALSE)
 ```
 
-Q: what does the begin of period weight look like? 
+--------------------------------------------------------------------------------
 
-A: a horizontal line at $y=50\%$.
+
+Portfolio performance attribution aggregated by year
+
+```{r}
+ptf_bh$contribution %>% 
+    to.period.contributions(period = "years") %>% 
+    data.frame() %>% 
+    knitr::kable(digits = 4, caption = "portfolio performance attribution") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down")
+```
+
+
+--------------------------------------------------------------------------------
+
+Q: What does the begin of period weight look like? 
+
+A: A horizontal line at $y=50\%$.
 
 ```{r}
 bop_weight_rebal <- ptf_rebal$BOP.Weight
 plot(bop_weight_rebal$KIT)
 ```
 
+--------------------------------------------------------------------------------
 
+Now we build an equal-weighted portfolio consisting of 10 stocks per period, rebalanced annually. Then compute and plot portfolio returns using `PerformanceAnalytics`.
+
+
+```{r}
+# Define list of selected ISINs for each year (2015 to 2022, 8 yrs)
+selected_symbol_by_year <- list(
+  c("AURG", "RISH", "SADG", "HBC", "AKVA", "NONG", "ENTRA", "YAR", "PGS", "BMA"),
+  c("YAR", "AKER", "APP", "XXL", "MSEIS", "ABL", "PSI", "RISH", "SALM", "WWI"),
+  c("ATEA", "MELG", "AMSC", "KOG", "BLO", "SBVG", "ODFB", "NKR", "JAEREN", "ZAL"),
+  c("ODL", "KOA", "DLTX", "NHY", "ENTRA", "KOG", "PROT", "AFG", "NAVA", "SOR"),
+  c("EQNR", "DNO", "SOAG", "VVL", "KIT", "BAKKA", "WAWI", "DLTX", "AXA", "ROM"),
+  c("FRO", "PHO", "DNO", "ZAL", "APP", "NHY", "MGN", "IOX", "KOA", "GJF"),
+  c("RING", "GSF", "PCIB", "ABG", "VEI", "ABT", "AKPS", "SUBC", "PGS", "SAGA"),
+  c("SBX", "ODF", "OPERA", "PEN", "SKUE", "SAGA", "HELG", "NOM", "MHG", "NONG")
+  )
+returns_xts <- data_return %>% 
+    select(Date, Symbol, Return_monthly) %>%
+    mutate(Date = as.Date(as.yearmon(Date), frac=1)) %>%  # standardize end of month date
+    spread(key=Symbol, value=Return_monthly)
+returns_xts <- returns_xts %>% xts(x=.[,-1], order.by=.[[1]])
+
+# Construct weights xts object
+dates <- index(returns_xts)
+weights_list <- list()
+
+for (i in 1:8) {
+  year_start <- as.Date(paste0(2014 + i, "-01-01"))
+  year_end <- as.Date(paste0(2014 + i, "-12-31"))
+  period_dates <- dates[dates >= year_start & dates <= year_end]
+  
+  weights <- matrix(0, nrow = length(period_dates), ncol = ncol(returns_xts))
+  colnames(weights) <- colnames(returns_xts)
+  
+  valid_symbols <- colnames(returns_xts) %in% selected_symbol_by_year[[i]]
+  weights[, valid_symbols] <- 1 / 10
+  
+  weights_xts <- xts(weights, order.by = period_dates)
+  weights_list[[i]] <- weights_xts
+}
+
+# Combine weights into one xts object
+final_weights_xts <- do.call(rbind, weights_list)
+
+# Align weights and returns
+aligned_weights <- final_weights_xts[index(returns_xts)]
+
+# Calculate portfolio return
+portfolio_return <- Return.portfolio(R = returns_xts, 
+                                     weights = aligned_weights, 
+                                     verbose = TRUE)
+```
+
+Plot portfolio returns.
+
+```{r fig.width=10, fig.height=9.72, fig.cap="Portfolio performance."}
+charts.PerformanceSummary(portfolio_return$returns)
+```
+
+**Overall performance**
+
+```{r}
+# summary statistics
+table.AnnualizedReturns(portfolio_return$returns) %>% 
+    knitr::kable(digits = 4, caption = "Overall performance") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down")
+```
+
+
+**Performance by year**
+
+```{r}
+# Split portfolio return by year
+portfolio_by_year <- split.xts(portfolio_return$returns, f = "years")
+
+# Calculate annualized returns by year
+library(moments)  # for skewness and kurtosis
+performance_metrics <- function(x) {
+  ann_ret <- table.AnnualizedReturns(x)
+  skew <- skewness(na.omit(x))
+  kurt <- kurtosis(na.omit(x))
+  max_dd <- maxDrawdown(x)  # Maximum Drawdown
+  var_95 <- VaR(x, p = 0.95, method = "historical")  # Value at Risk (VaR)
+  # Conditional VaR (CVaR) / Expected Shortfall
+  cvar_95 <- CVaR(x, p = 0.95, method = "historical") 
+  sortino <- SortinoRatio(x)
+  
+  # Combine metrics
+  out <- rbind(ann_ret,
+               Skewness = skew,
+               Kurtosis = kurt,
+               MaxDrawdown = max_dd,
+               VaR_95 = var_95,
+               CVaR_95 = cvar_95,
+               SortinoRatio = sortino)
+  return(out)
+}
+metrics_by_year <- lapply(portfolio_by_year, performance_metrics)
+metrics_by_year$all <- performance_metrics(portfolio_return$returns)
+# Combine results into a single table
+annualized_table <- do.call(cbind, metrics_by_year)
+colnames(annualized_table) <- names(metrics_by_year)
+
+# Print the table
+annualized_table %>% 
+    knitr::kable(digits = 4, caption = "Performance by year") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down")
+```
 
 
 ------------------------------------------------------------------------
@@ -803,6 +942,9 @@ Histogram of portfolio returns.
 # histogram to check normality
 chart.Histogram(ptf_xts$port_ret, methods = c("add.density", "add.normal"))
 ```
+
+
+
 
 #### Skewness and Kurtosis
 

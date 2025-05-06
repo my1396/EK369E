@@ -526,13 +526,56 @@ groups[[id_vec[i]]]</code></pre>
 ##  8 2020-02-28         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
 ##  9 2020-03-02         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
 ## 10 2020-03-03         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##    BestBidPrice BestAskPrice   Open   High    Low  Close OfficialNumberOfTrades
+##           &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                  &lt;dbl&gt;
+##  1       24.05        24.15  24.4   25     24     24.15                 5661960
+##  2       24.025       24.525 24.46  24.525 23.905 24.525                1669860
+##  3       24.37        24.38  24.395 24.575 24.15  24.37                 1088940
+##  4       21.6         21.95  24.17  24.17  21     21.8                  1493900
+##  5       20.355       20.5   22.05  22.325 20.2   20.355                 975605
+##  6       19.648       19.742 20.2   20.335 18.702 19.742                1280330
+##  7       17.35        17.6   19.468 19.468 16.728 17.35                 1416090
+##  8       17.028       17.3   17     19.29  16.22  17.028                1454460
+##  9       17.2         17.294 18.1   18.5   17.2   17.294                1230160
+## 10       19.2         19.55  17.75  19.9   16.976 19.55                 1200440
+##    OfficialVolume  Price AdjustedPrice Dividends LDividends CorpAdj DividendAdj
+##             &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1      138013000 24.15         24.15          0         NA       1           1
+##  2       40391300 24.525        24.525         0          0       1           1
+##  3       26567400 24.37         24.37          0          0       1           1
+##  4       33336100 21.8          21.8           0          0       1           1
+##  5       20524300 20.355        20.355         0          0       1           1
+##  6       24942900 19.742        19.742         0          0       1           1
+##  7       25110000 17.35         17.35          0          0       1           1
+##  8       25091000 17.028        17.028         0          0       1           1
+##  9       21635600 17.294        17.294         0          0       1           1
+## 10       21580600 19.55         19.55          0          0       1           1
+##    Currency NumberOfShares Exchange NOKPerForex     mktcap
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+##  1 NOK           234304000 OB                 1 5658450000
+##  2 NOK           234304000 OB                 1 5746310000
+##  3 NOK           234304000 OB                 1 5710000000
+##  4 NOK           234304000 OB                 1 5107830000
+##  5 NOK           234304000 OB                 1 4769260000
+##  6 NOK           234304000 OB                 1 4625640000
+##  7 NOK           234304000 OB                 1 4065180000
+##  8 NOK           234304000 OB                 1 3989730000
+##  9 NOK           234304000 OB                 1 4052060000
+## 10 NOK           234304000 OB                 1 4580650000
+##    OSEBXmktshare_prevmnth OSEBXAlpha_prevmnth OSEBXBeta_prevmnth          SMB
+##                     &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;
+##  1                     NA                  NA                 NA -0.00499709 
+##  2                     NA                  NA                 NA  0.000888762
+##  3                     NA                  NA                 NA  0.0158051  
+##  4                     NA                  NA                 NA  0.0363824  
+##  5                     NA                  NA                 NA  0.0141937  
+##  6                     NA                  NA                 NA  0.00997761 
+##  7                     NA                  NA                 NA  0.0313494  
+##  8                     NA                  NA                 NA -0.0248113  
+##  9                     NA                  NA                 NA  0.00952404 
+## 10                     NA                  NA                 NA  0.000632531
 ## # ℹ 941 more rows
-## # ℹ 39 more variables: BestBidPrice &lt;dbl&gt;, BestAskPrice &lt;dbl&gt;, Open &lt;dbl&gt;,
-## #   High &lt;dbl&gt;, Low &lt;dbl&gt;, Close &lt;dbl&gt;, OfficialNumberOfTrades &lt;dbl&gt;,
-## #   OfficialVolume &lt;dbl&gt;, Price &lt;dbl&gt;, AdjustedPrice &lt;dbl&gt;, Dividends &lt;dbl&gt;,
-## #   LDividends &lt;dbl&gt;, CorpAdj &lt;dbl&gt;, DividendAdj &lt;dbl&gt;, Currency &lt;chr&gt;,
-## #   NumberOfShares &lt;dbl&gt;, Exchange &lt;chr&gt;, NOKPerForex &lt;dbl&gt;, mktcap &lt;dbl&gt;,
-## #   OSEBXmktshare_prevmnth &lt;dbl&gt;, OSEBXAlpha_prevmnth &lt;dbl&gt;, …</code></pre>
+## # ℹ 16 more variables: HML &lt;dbl&gt;, LIQ &lt;dbl&gt;, MOM &lt;dbl&gt;, lnDeltaP &lt;dbl&gt;, lnDeltaOSEBX &lt;dbl&gt;, lnDeltaOBX &lt;dbl&gt;, NOWA_DayLnrate &lt;dbl&gt;, bills_3month_Lnrate &lt;dbl&gt;, Sector &lt;chr&gt;, IN_OSEBX &lt;dbl&gt;, Equity &lt;dbl&gt;, Debt &lt;dbl&gt;, Earnings &lt;dbl&gt;, debt_ratio &lt;dbl&gt;, PE &lt;dbl&gt;, ID &lt;dbl&gt;</code></pre>
 <pre class="r"><code>groups[[id_vec[i]]] %&gt;% tail()</code></pre>
 <pre><code>## # A tibble: 6 × 46
 ##   Date       `Internal code` SecurityId CompanyId Symbol ISIN         Name      
@@ -543,13 +586,39 @@ groups[[id_vec[i]]]</code></pre>
 ## 4 2023-11-22         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
 ## 5 2023-11-23         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
 ## 6 2023-11-24         2015535    1305295     12748 BWE    BMG0702P1086 BW ENERGY…
-## # ℹ 39 more variables: BestBidPrice &lt;dbl&gt;, BestAskPrice &lt;dbl&gt;, Open &lt;dbl&gt;,
-## #   High &lt;dbl&gt;, Low &lt;dbl&gt;, Close &lt;dbl&gt;, OfficialNumberOfTrades &lt;dbl&gt;,
-## #   OfficialVolume &lt;dbl&gt;, Price &lt;dbl&gt;, AdjustedPrice &lt;dbl&gt;, Dividends &lt;dbl&gt;,
-## #   LDividends &lt;dbl&gt;, CorpAdj &lt;dbl&gt;, DividendAdj &lt;dbl&gt;, Currency &lt;chr&gt;,
-## #   NumberOfShares &lt;dbl&gt;, Exchange &lt;chr&gt;, NOKPerForex &lt;dbl&gt;, mktcap &lt;dbl&gt;,
-## #   OSEBXmktshare_prevmnth &lt;dbl&gt;, OSEBXAlpha_prevmnth &lt;dbl&gt;,
-## #   OSEBXBeta_prevmnth &lt;dbl&gt;, SMB &lt;dbl&gt;, HML &lt;dbl&gt;, LIQ &lt;dbl&gt;, MOM &lt;dbl&gt;, …</code></pre>
+##   BestBidPrice BestAskPrice  Open  High   Low Close OfficialNumberOfTrades
+##          &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;                  &lt;dbl&gt;
+## 1         26.2        25.8  26    26.05 25.05 25.85                    659
+## 2         25.7        25    25.7  26    25.2  25.55                    455
+## 3         25.8        24.05 25.55 25.7  24.5  24.5                     546
+## 4         25.6        23.8  25    25.05 24    24                       559
+## 5         25.6        23.85 24.4  24.75 24.05 24.1                     452
+## 6         25.7        23.8  24.05 24.35 23.9  24.25                    435
+##   OfficialVolume Price AdjustedPrice Dividends LDividends CorpAdj DividendAdj
+##            &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+## 1         593279 25.85         25.85         0          0       1           1
+## 2         333063 25.55         25.55         0          0       1           1
+## 3         454532 24.5          24.5          0          0       1           1
+## 4         426403 24            24            0          0       1           1
+## 5         343107 24.1          24.1          0          0       1           1
+## 6         273388 24.25         24.25         0          0       1           1
+##   Currency NumberOfShares Exchange NOKPerForex     mktcap OSEBXmktshare_prevmnth
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;                  &lt;dbl&gt;
+## 1 NOK           257994000 XOSL               1 6669150000                     NA
+## 2 NOK           257994000 XOSL               1 6591750000                     NA
+## 3 NOK           257994000 XOSL               1 6320860000                     NA
+## 4 NOK           257994000 XOSL               1 6191860000                     NA
+## 5 NOK           257994000 XOSL               1 6217660000                     NA
+## 6 NOK           257994000 XOSL               1 6256360000                     NA
+##   OSEBXAlpha_prevmnth OSEBXBeta_prevmnth          SMB         HML         LIQ
+##                 &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1                  NA                 NA  0.000276874  0.00299032  0.00290608
+## 2                  NA                 NA -0.00214101  -0.00940512  0.00411524
+## 3                  NA                 NA  0.0047226    0.00645476  0.00897665
+## 4                  NA                 NA -0.00025938   0.0183181   0.00466264
+## 5                  NA                 NA  0.00145638  -0.00110734 -0.00304432
+## 6                  NA                 NA  0.0063141    0.00882244 -0.00237105
+## # ℹ 14 more variables: MOM &lt;dbl&gt;, lnDeltaP &lt;dbl&gt;, lnDeltaOSEBX &lt;dbl&gt;, lnDeltaOBX &lt;dbl&gt;, NOWA_DayLnrate &lt;dbl&gt;, bills_3month_Lnrate &lt;dbl&gt;, Sector &lt;chr&gt;, IN_OSEBX &lt;dbl&gt;, Equity &lt;dbl&gt;, Debt &lt;dbl&gt;, Earnings &lt;dbl&gt;, debt_ratio &lt;dbl&gt;, PE &lt;dbl&gt;, ID &lt;dbl&gt;</code></pre>
 <pre class="r"><code>the_group &lt;- groups[[id_vec[i]]] 
 the_group</code></pre>
 <pre><code>## # A tibble: 951 × 46
@@ -565,13 +634,56 @@ the_group</code></pre>
 ##  8 2020-02-28         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
 ##  9 2020-03-02         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
 ## 10 2020-03-03         2015535    1305295     12748 BWE    BMG0702P1086 BW Energ…
+##    BestBidPrice BestAskPrice   Open   High    Low  Close OfficialNumberOfTrades
+##           &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                  &lt;dbl&gt;
+##  1       24.05        24.15  24.4   25     24     24.15                 5661960
+##  2       24.025       24.525 24.46  24.525 23.905 24.525                1669860
+##  3       24.37        24.38  24.395 24.575 24.15  24.37                 1088940
+##  4       21.6         21.95  24.17  24.17  21     21.8                  1493900
+##  5       20.355       20.5   22.05  22.325 20.2   20.355                 975605
+##  6       19.648       19.742 20.2   20.335 18.702 19.742                1280330
+##  7       17.35        17.6   19.468 19.468 16.728 17.35                 1416090
+##  8       17.028       17.3   17     19.29  16.22  17.028                1454460
+##  9       17.2         17.294 18.1   18.5   17.2   17.294                1230160
+## 10       19.2         19.55  17.75  19.9   16.976 19.55                 1200440
+##    OfficialVolume  Price AdjustedPrice Dividends LDividends CorpAdj DividendAdj
+##             &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1      138013000 24.15         24.15          0         NA       1           1
+##  2       40391300 24.525        24.525         0          0       1           1
+##  3       26567400 24.37         24.37          0          0       1           1
+##  4       33336100 21.8          21.8           0          0       1           1
+##  5       20524300 20.355        20.355         0          0       1           1
+##  6       24942900 19.742        19.742         0          0       1           1
+##  7       25110000 17.35         17.35          0          0       1           1
+##  8       25091000 17.028        17.028         0          0       1           1
+##  9       21635600 17.294        17.294         0          0       1           1
+## 10       21580600 19.55         19.55          0          0       1           1
+##    Currency NumberOfShares Exchange NOKPerForex     mktcap
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+##  1 NOK           234304000 OB                 1 5658450000
+##  2 NOK           234304000 OB                 1 5746310000
+##  3 NOK           234304000 OB                 1 5710000000
+##  4 NOK           234304000 OB                 1 5107830000
+##  5 NOK           234304000 OB                 1 4769260000
+##  6 NOK           234304000 OB                 1 4625640000
+##  7 NOK           234304000 OB                 1 4065180000
+##  8 NOK           234304000 OB                 1 3989730000
+##  9 NOK           234304000 OB                 1 4052060000
+## 10 NOK           234304000 OB                 1 4580650000
+##    OSEBXmktshare_prevmnth OSEBXAlpha_prevmnth OSEBXBeta_prevmnth          SMB
+##                     &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;
+##  1                     NA                  NA                 NA -0.00499709 
+##  2                     NA                  NA                 NA  0.000888762
+##  3                     NA                  NA                 NA  0.0158051  
+##  4                     NA                  NA                 NA  0.0363824  
+##  5                     NA                  NA                 NA  0.0141937  
+##  6                     NA                  NA                 NA  0.00997761 
+##  7                     NA                  NA                 NA  0.0313494  
+##  8                     NA                  NA                 NA -0.0248113  
+##  9                     NA                  NA                 NA  0.00952404 
+## 10                     NA                  NA                 NA  0.000632531
 ## # ℹ 941 more rows
-## # ℹ 39 more variables: BestBidPrice &lt;dbl&gt;, BestAskPrice &lt;dbl&gt;, Open &lt;dbl&gt;,
-## #   High &lt;dbl&gt;, Low &lt;dbl&gt;, Close &lt;dbl&gt;, OfficialNumberOfTrades &lt;dbl&gt;,
-## #   OfficialVolume &lt;dbl&gt;, Price &lt;dbl&gt;, AdjustedPrice &lt;dbl&gt;, Dividends &lt;dbl&gt;,
-## #   LDividends &lt;dbl&gt;, CorpAdj &lt;dbl&gt;, DividendAdj &lt;dbl&gt;, Currency &lt;chr&gt;,
-## #   NumberOfShares &lt;dbl&gt;, Exchange &lt;chr&gt;, NOKPerForex &lt;dbl&gt;, mktcap &lt;dbl&gt;,
-## #   OSEBXmktshare_prevmnth &lt;dbl&gt;, OSEBXAlpha_prevmnth &lt;dbl&gt;, …</code></pre>
+## # ℹ 16 more variables: HML &lt;dbl&gt;, LIQ &lt;dbl&gt;, MOM &lt;dbl&gt;, lnDeltaP &lt;dbl&gt;, lnDeltaOSEBX &lt;dbl&gt;, lnDeltaOBX &lt;dbl&gt;, NOWA_DayLnrate &lt;dbl&gt;, bills_3month_Lnrate &lt;dbl&gt;, Sector &lt;chr&gt;, IN_OSEBX &lt;dbl&gt;, Equity &lt;dbl&gt;, Debt &lt;dbl&gt;, Earnings &lt;dbl&gt;, debt_ratio &lt;dbl&gt;, PE &lt;dbl&gt;, ID &lt;dbl&gt;</code></pre>
 <pre class="r"><code>ticker &lt;- the_group$Symbol[1]
 ticker</code></pre>
 <pre><code>## [1] &quot;BWE&quot;</code></pre>
@@ -1347,7 +1459,7 @@ which is the average one-period log returns.</p>
 <col width="26%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th></th>
 <th align="left">Simple returns</th>
 <th align="left">Log returns</th>
@@ -1355,19 +1467,19 @@ which is the average one-period log returns.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Single period</td>
 <td align="left"><span class="math inline">\(r_t=\frac{P_t}{P_{t-1}}-1\)</span></td>
 <td align="left"><span class="math inline">\(z_t=\ln \frac{P_t}{P_{t-1}}\)</span></td>
 <td align="left"><span class="math inline">\(r_t = \exp(z_t)-1\)</span></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Multiperiod</td>
 <td align="left"><span class="math inline">\(r_t(k) = \prod_{j=0}^{k-1}(1+r_{t-j}) -1\)</span></td>
 <td align="left"><span class="math inline">\(z_t(k) = \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
 <td align="left"><span class="math inline">\(r_t(k) = \exp\big(z_t(k)\big)-1\)</span></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Annualized</td>
 <td align="left"><span class="math inline">\(r_t^A = \left[\prod_{j=0}^{k-1}(1+r_{t-j})\right]^{\frac{1}{k}}-1\)</span></td>
 <td align="left"><span class="math inline">\(z_t^A = \frac{1}{k} \sum_{j=0}^{k-1} z_{t-j}\)</span></td>
@@ -1479,16 +1591,16 @@ data_return</code></pre>
 <pre><code>## # A tibble: 30,351 × 3
 ##    ISIN         Date       Return_monthly
 ##    &lt;chr&gt;        &lt;chr&gt;               &lt;dbl&gt;
-##  1 AU000000CSS3 2021-05-31      NA       
-##  2 AU000000CSS3 2021-06-30      -0.0147  
-##  3 AU000000CSS3 2021-07-29       0.0746  
-##  4 AU000000CSS3 2021-08-30       0.208   
-##  5 AU000000CSS3 2021-09-30      -0.195   
-##  6 AU000000CSS3 2021-10-29       0.114   
-##  7 AU000000CSS3 2021-11-29      -0.000128
-##  8 AU000000CSS3 2021-12-29      -0.0640  
-##  9 AU000000CSS3 2022-01-24      -0.0193  
-## 10 AU000000CSS3 2022-02-28       0.00349 
+##  1 AU000000CSS3 2021-05-31  NA           
+##  2 AU000000CSS3 2021-06-30  -0.01470588  
+##  3 AU000000CSS3 2021-07-29   0.07462687  
+##  4 AU000000CSS3 2021-08-30   0.2083333   
+##  5 AU000000CSS3 2021-09-30  -0.1954023   
+##  6 AU000000CSS3 2021-10-29   0.1142857   
+##  7 AU000000CSS3 2021-11-29  -0.0001282051
+##  8 AU000000CSS3 2021-12-29  -0.06398256  
+##  9 AU000000CSS3 2022-01-24  -0.01931507  
+## 10 AU000000CSS3 2022-02-28   0.003492108 
 ## # ℹ 30,341 more rows</code></pre>
 <pre class="r"><code>## equity identifiers, ensure one-to-one mapping
 select &lt;- dplyr::select
@@ -1498,18 +1610,30 @@ unique_id &lt;- titlon_data %&gt;%
                     &quot;Name&quot;, &quot;Sector&quot;)))
 unique_id</code></pre>
 <pre><code>## # A tibble: 501 × 6
-##    SecurityId CompanyId Symbol ISIN         Name               Sector           
-##         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;              &lt;chr&gt;            
-##  1    1304857     12720 2020   BMG9156K1018 2020 Bulkers       Industrials      
-##  2    1301972     12440 FIVEPG DK0060945467 5th Planet Games   Consumer Discret…
-##  3         NA        NA AASB   NO0010672181 Aasen Sparebank    Financials       
-##  4       6085      2017 ABG    NO0003021909 ABG Sundal Collier Financials       
-##  5    1301198     12348 ABL    NO0010715394 ABL GROUP          Industrials      
-##  6    1304655     12701 ADE    NO0010844038 Adevinta           Consumer Discret…
-##  7    1304652     12701 ADEA   NO0010843998 Adevinta ser. A    Consumer Discret…
-##  8         NA        NA ADS    CY0108052115 ADS Crude Carriers Industrials      
-##  9    1251504     11273 AEGA   NO0010626559 Aega               Financials       
-## 10         NA        NA AEGA   NO0012958539 AEGA               Financials       
+##    SecurityId CompanyId Symbol ISIN         Name              
+##         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;             
+##  1    1304857     12720 2020   BMG9156K1018 2020 Bulkers      
+##  2    1301972     12440 FIVEPG DK0060945467 5th Planet Games  
+##  3         NA        NA AASB   NO0010672181 Aasen Sparebank   
+##  4       6085      2017 ABG    NO0003021909 ABG Sundal Collier
+##  5    1301198     12348 ABL    NO0010715394 ABL GROUP         
+##  6    1304655     12701 ADE    NO0010844038 Adevinta          
+##  7    1304652     12701 ADEA   NO0010843998 Adevinta ser. A   
+##  8         NA        NA ADS    CY0108052115 ADS Crude Carriers
+##  9    1251504     11273 AEGA   NO0010626559 Aega              
+## 10         NA        NA AEGA   NO0012958539 AEGA              
+##    Sector                
+##    &lt;chr&gt;                 
+##  1 Industrials           
+##  2 Consumer Discretionary
+##  3 Financials            
+##  4 Financials            
+##  5 Industrials           
+##  6 Consumer Discretionary
+##  7 Consumer Discretionary
+##  8 Industrials           
+##  9 Financials            
+## 10 Financials            
 ## # ℹ 491 more rows</code></pre>
 <pre class="r"><code>## add company info
 data_return &lt;- data_return %&gt;% 
@@ -1535,16 +1659,16 @@ data_return</code></pre>
 <pre><code>## # A tibble: 13,632 × 6
 ##    ISIN         Date       Symbol Name   Sector Return_monthly
 ##    &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;
-##  1 BMG0451H1170 2015-01-30 ARCHER Archer Energy       -0.240  
-##  2 BMG0451H1170 2015-02-27 ARCHER Archer Energy       -0.228  
-##  3 BMG0451H1170 2015-03-31 ARCHER Archer Energy        0.00844
-##  4 BMG0451H1170 2015-04-30 ARCHER Archer Energy        0.167  
-##  5 BMG0451H1170 2015-05-29 ARCHER Archer Energy       -0.0394 
-##  6 BMG0451H1170 2015-06-30 ARCHER Archer Energy        0.00746
-##  7 BMG0451H1170 2015-07-31 ARCHER Archer Energy       -0.215  
-##  8 BMG0451H1170 2015-08-31 ARCHER Archer Energy       -0.401  
-##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy       -0.130  
-## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy       -0.0769 
+##  1 BMG0451H1170 2015-01-30 ARCHER Archer Energy   -0.2400990  
+##  2 BMG0451H1170 2015-02-27 ARCHER Archer Energy   -0.2280130  
+##  3 BMG0451H1170 2015-03-31 ARCHER Archer Energy    0.008438819
+##  4 BMG0451H1170 2015-04-30 ARCHER Archer Energy    0.1673640  
+##  5 BMG0451H1170 2015-05-29 ARCHER Archer Energy   -0.03942652 
+##  6 BMG0451H1170 2015-06-30 ARCHER Archer Energy    0.007462687
+##  7 BMG0451H1170 2015-07-31 ARCHER Archer Energy   -0.2148148  
+##  8 BMG0451H1170 2015-08-31 ARCHER Archer Energy   -0.4009434  
+##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy   -0.1299213  
+## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy   -0.07692308 
 ## # ℹ 13,622 more rows</code></pre>
 <p>Get sample data for two assets and create an equally-weighted portfolio of them.</p>
 <pre class="r"><code>k &lt;- 2 # number of asset
@@ -1554,16 +1678,16 @@ sample_data</code></pre>
 <pre><code>## # A tibble: 192 × 6
 ##    ISIN         Date       Symbol Name   Sector Return_monthly
 ##    &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;
-##  1 BMG0451H1170 2015-01-30 ARCHER Archer Energy       -0.240  
-##  2 BMG0451H1170 2015-02-27 ARCHER Archer Energy       -0.228  
-##  3 BMG0451H1170 2015-03-31 ARCHER Archer Energy        0.00844
-##  4 BMG0451H1170 2015-04-30 ARCHER Archer Energy        0.167  
-##  5 BMG0451H1170 2015-05-29 ARCHER Archer Energy       -0.0394 
-##  6 BMG0451H1170 2015-06-30 ARCHER Archer Energy        0.00746
-##  7 BMG0451H1170 2015-07-31 ARCHER Archer Energy       -0.215  
-##  8 BMG0451H1170 2015-08-31 ARCHER Archer Energy       -0.401  
-##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy       -0.130  
-## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy       -0.0769 
+##  1 BMG0451H1170 2015-01-30 ARCHER Archer Energy   -0.2400990  
+##  2 BMG0451H1170 2015-02-27 ARCHER Archer Energy   -0.2280130  
+##  3 BMG0451H1170 2015-03-31 ARCHER Archer Energy    0.008438819
+##  4 BMG0451H1170 2015-04-30 ARCHER Archer Energy    0.1673640  
+##  5 BMG0451H1170 2015-05-29 ARCHER Archer Energy   -0.03942652 
+##  6 BMG0451H1170 2015-06-30 ARCHER Archer Energy    0.007462687
+##  7 BMG0451H1170 2015-07-31 ARCHER Archer Energy   -0.2148148  
+##  8 BMG0451H1170 2015-08-31 ARCHER Archer Energy   -0.4009434  
+##  9 BMG0451H1170 2015-09-30 ARCHER Archer Energy   -0.1299213  
+## 10 BMG0451H1170 2015-10-30 ARCHER Archer Energy   -0.07692308 
 ## # ℹ 182 more rows</code></pre>
 <pre class="r"><code>ret_mat &lt;- sample_data %&gt;% pull(Return_monthly) %&gt;% 
     matrix(ncol=k)
@@ -2693,12 +2817,21 @@ We do not need to calculate the weight on our own in case of buy-and-hold.</p>
 ptf_bh &lt;- Return.portfolio(R = return_xts, weights = wts, verbose = TRUE)
 # rebalanced ptf
 ptf_rebal &lt;- Return.portfolio(R = return_xts, weights = wts, rebalance_on=&quot;month&quot;, verbose = TRUE)</code></pre>
-<p>Plot the portfolio return time series.</p>
+<p>Plot the portfolio monthly returns.</p>
 <pre class="r"><code>plot_data &lt;- ptf_bh$returns %&gt;% 
     merge(ptf_rebal$returns) %&gt;% 
     setNames(c(&quot;buy-and-hold&quot;, &quot;rebalance&quot;))
 plot(plot_data, multi.panel=TRUE, main=&quot;Portfolio monthly return&quot;)</code></pre>
 <p><img src="w3_files/figure-html/unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Plot the portfolio cumulative returns.</p>
+<pre class="r"><code>plot_data &lt;- ptf_bh$returns %&gt;% 
+    merge(ptf_rebal$returns) %&gt;% 
+    as_tibble() %&gt;% 
+    mutate_all(~cumprod(1+.)) %&gt;% 
+    xts(order.by = index(ptf_bh$returns)) %&gt;% 
+    setNames(c(&quot;buy-and-hold&quot;, &quot;rebalance&quot;))
+plot(plot_data, multi.panel=TRUE, main=&quot;Portfolio cumulative return&quot;, yaxis.same=FALSE)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>By setting <code>verbose = TRUE</code>, it allows us to check intermediary calculations, such as contributions, weight for each asset.</p>
 <p>Here we check the end of period weight.</p>
 <pre class="r"><code># plot end of period weights
@@ -2715,6 +2848,7 @@ Fig. 3: Weight of <code>KIT</code> under buy-and-hold and rebalancing.
 </div>
 <p>We see that the weight of <code>KIT</code> basically skyrockets and dominates the portfolio, taking up more than <span class="math inline">\(99\%\)</span> of the portfolio.
 This is due to its strong performance.</p>
+<hr />
 <p>Now we check the relative performance of the two assets.</p>
 <pre class="r"><code>## check relative performance by calculating the equity curve
 equity_curve_xts &lt;- return_xts %&gt;% 
@@ -2722,12 +2856,619 @@ equity_curve_xts &lt;- return_xts %&gt;%
 equity_curve_xts &lt;- xts(equity_curve_xts, index(return_xts))
 colnames(equity_curve_xts) &lt;- colnames(return_xts)
 plot(equity_curve_xts, multi.panel=TRUE, yaxis.same=FALSE)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Q: what does the begin of period weight look like?</p>
-<p>A: a horizontal line at <span class="math inline">\(y=50\%\)</span>.</p>
+<p><img src="w3_files/figure-html/unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<hr />
+<p>Portfolio performance attribution aggregated by year</p>
+<pre class="r"><code>ptf_bh$contribution %&gt;% 
+    to.period.contributions(period = &quot;years&quot;) %&gt;% 
+    data.frame() %&gt;% 
+    knitr::kable(digits = 4, caption = &quot;portfolio performance attribution&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;)</code></pre>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-12">Table 3: </span>portfolio performance attribution
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+ARCHER
+</th>
+<th style="text-align:right;">
+KIT
+</th>
+<th style="text-align:right;">
+Portfolio.Return
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2015-12-31
+</td>
+<td style="text-align:right;">
+-0.4233
+</td>
+<td style="text-align:right;">
+0.6711
+</td>
+<td style="text-align:right;">
+0.2478
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-12-31
+</td>
+<td style="text-align:right;">
+0.0635
+</td>
+<td style="text-align:right;">
+0.5775
+</td>
+<td style="text-align:right;">
+0.6410
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-12-31
+</td>
+<td style="text-align:right;">
+-0.0154
+</td>
+<td style="text-align:right;">
+0.1870
+</td>
+<td style="text-align:right;">
+0.1716
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018-12-31
+</td>
+<td style="text-align:right;">
+-0.0294
+</td>
+<td style="text-align:right;">
+0.3036
+</td>
+<td style="text-align:right;">
+0.2742
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-12-31
+</td>
+<td style="text-align:right;">
+-0.0047
+</td>
+<td style="text-align:right;">
+0.3138
+</td>
+<td style="text-align:right;">
+0.3091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-12-31
+</td>
+<td style="text-align:right;">
+-0.0003
+</td>
+<td style="text-align:right;">
+0.5881
+</td>
+<td style="text-align:right;">
+0.5878
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2021-12-31
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+0.3493
+</td>
+<td style="text-align:right;">
+0.3507
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-12-31
+</td>
+<td style="text-align:right;">
+-0.0005
+</td>
+<td style="text-align:right;">
+0.2042
+</td>
+<td style="text-align:right;">
+0.2036
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Q: What does the begin of period weight look like?</p>
+<p>A: A horizontal line at <span class="math inline">\(y=50\%\)</span>.</p>
 <pre class="r"><code>bop_weight_rebal &lt;- ptf_rebal$BOP.Weight
 plot(bop_weight_rebal$KIT)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
+<p>Now we build an equal-weighted portfolio consisting of 10 stocks per period, rebalanced annually. Then compute and plot portfolio returns using <code>PerformanceAnalytics</code>.</p>
+<pre class="r"><code># Define list of selected ISINs for each year (2015 to 2022, 8 yrs)
+selected_symbol_by_year &lt;- list(
+  c(&quot;AURG&quot;, &quot;RISH&quot;, &quot;SADG&quot;, &quot;HBC&quot;, &quot;AKVA&quot;, &quot;NONG&quot;, &quot;ENTRA&quot;, &quot;YAR&quot;, &quot;PGS&quot;, &quot;BMA&quot;),
+  c(&quot;YAR&quot;, &quot;AKER&quot;, &quot;APP&quot;, &quot;XXL&quot;, &quot;MSEIS&quot;, &quot;ABL&quot;, &quot;PSI&quot;, &quot;RISH&quot;, &quot;SALM&quot;, &quot;WWI&quot;),
+  c(&quot;ATEA&quot;, &quot;MELG&quot;, &quot;AMSC&quot;, &quot;KOG&quot;, &quot;BLO&quot;, &quot;SBVG&quot;, &quot;ODFB&quot;, &quot;NKR&quot;, &quot;JAEREN&quot;, &quot;ZAL&quot;),
+  c(&quot;ODL&quot;, &quot;KOA&quot;, &quot;DLTX&quot;, &quot;NHY&quot;, &quot;ENTRA&quot;, &quot;KOG&quot;, &quot;PROT&quot;, &quot;AFG&quot;, &quot;NAVA&quot;, &quot;SOR&quot;),
+  c(&quot;EQNR&quot;, &quot;DNO&quot;, &quot;SOAG&quot;, &quot;VVL&quot;, &quot;KIT&quot;, &quot;BAKKA&quot;, &quot;WAWI&quot;, &quot;DLTX&quot;, &quot;AXA&quot;, &quot;ROM&quot;),
+  c(&quot;FRO&quot;, &quot;PHO&quot;, &quot;DNO&quot;, &quot;ZAL&quot;, &quot;APP&quot;, &quot;NHY&quot;, &quot;MGN&quot;, &quot;IOX&quot;, &quot;KOA&quot;, &quot;GJF&quot;),
+  c(&quot;RING&quot;, &quot;GSF&quot;, &quot;PCIB&quot;, &quot;ABG&quot;, &quot;VEI&quot;, &quot;ABT&quot;, &quot;AKPS&quot;, &quot;SUBC&quot;, &quot;PGS&quot;, &quot;SAGA&quot;),
+  c(&quot;SBX&quot;, &quot;ODF&quot;, &quot;OPERA&quot;, &quot;PEN&quot;, &quot;SKUE&quot;, &quot;SAGA&quot;, &quot;HELG&quot;, &quot;NOM&quot;, &quot;MHG&quot;, &quot;NONG&quot;)
+  )
+returns_xts &lt;- data_return %&gt;% 
+    select(Date, Symbol, Return_monthly) %&gt;%
+    mutate(Date = as.Date(as.yearmon(Date), frac=1)) %&gt;%  # standardize end of month date
+    spread(key=Symbol, value=Return_monthly)
+returns_xts &lt;- returns_xts %&gt;% xts(x=.[,-1], order.by=.[[1]])
+
+# Construct weights xts object
+dates &lt;- index(returns_xts)
+weights_list &lt;- list()
+
+for (i in 1:8) {
+  year_start &lt;- as.Date(paste0(2014 + i, &quot;-01-01&quot;))
+  year_end &lt;- as.Date(paste0(2014 + i, &quot;-12-31&quot;))
+  period_dates &lt;- dates[dates &gt;= year_start &amp; dates &lt;= year_end]
+  
+  weights &lt;- matrix(0, nrow = length(period_dates), ncol = ncol(returns_xts))
+  colnames(weights) &lt;- colnames(returns_xts)
+  
+  valid_symbols &lt;- colnames(returns_xts) %in% selected_symbol_by_year[[i]]
+  weights[, valid_symbols] &lt;- 1 / 10
+  
+  weights_xts &lt;- xts(weights, order.by = period_dates)
+  weights_list[[i]] &lt;- weights_xts
+}
+
+# Combine weights into one xts object
+final_weights_xts &lt;- do.call(rbind, weights_list)
+
+# Align weights and returns
+aligned_weights &lt;- final_weights_xts[index(returns_xts)]
+
+# Calculate portfolio return
+portfolio_return &lt;- Return.portfolio(R = returns_xts, 
+                                     weights = aligned_weights, 
+                                     verbose = TRUE)</code></pre>
+<p>Plot portfolio returns.</p>
+<pre class="r"><code>charts.PerformanceSummary(portfolio_return$returns)</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-15"></span>
+<img src="w3_files/figure-html/unnamed-chunk-15-1.png" alt="Portfolio performance." width="960" />
+<p class="caption">
+Fig. 4: Portfolio performance.
+</p>
+</div>
+<p><strong>Overall performance</strong></p>
+<pre class="r"><code># summary statistics
+table.AnnualizedReturns(portfolio_return$returns) %&gt;% 
+    knitr::kable(digits = 4, caption = &quot;Overall performance&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;)</code></pre>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-16">Table 4: </span>Overall performance
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+portfolio.returns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Annualized Return
+</td>
+<td style="text-align:right;">
+0.0503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Annualized Std Dev
+</td>
+<td style="text-align:right;">
+0.2184
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Annualized Sharpe (Rf=0%)
+</td>
+<td style="text-align:right;">
+0.2304
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Performance by year</strong></p>
+<pre class="r"><code># Split portfolio return by year
+portfolio_by_year &lt;- split.xts(portfolio_return$returns, f = &quot;years&quot;)
+
+# Calculate annualized returns by year
+library(moments)  # for skewness and kurtosis
+performance_metrics &lt;- function(x) {
+  ann_ret &lt;- table.AnnualizedReturns(x)
+  skew &lt;- skewness(na.omit(x))
+  kurt &lt;- kurtosis(na.omit(x))
+  max_dd &lt;- maxDrawdown(x)  # Maximum Drawdown
+  var_95 &lt;- VaR(x, p = 0.95, method = &quot;historical&quot;)  # Value at Risk (VaR)
+  # Conditional VaR (CVaR) / Expected Shortfall
+  cvar_95 &lt;- CVaR(x, p = 0.95, method = &quot;historical&quot;) 
+  sortino &lt;- SortinoRatio(x)
+  
+  # Combine metrics
+  out &lt;- rbind(ann_ret,
+               Skewness = skew,
+               Kurtosis = kurt,
+               MaxDrawdown = max_dd,
+               VaR_95 = var_95,
+               CVaR_95 = cvar_95,
+               SortinoRatio = sortino)
+  return(out)
+}
+metrics_by_year &lt;- lapply(portfolio_by_year, performance_metrics)
+metrics_by_year$all &lt;- performance_metrics(portfolio_return$returns)
+# Combine results into a single table
+annualized_table &lt;- do.call(cbind, metrics_by_year)
+colnames(annualized_table) &lt;- names(metrics_by_year)
+
+# Print the table
+annualized_table %&gt;% 
+    knitr::kable(digits = 4, caption = &quot;Performance by year&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;)</code></pre>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-17">Table 5: </span>Performance by year
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+2015
+</th>
+<th style="text-align:right;">
+2016
+</th>
+<th style="text-align:right;">
+2017
+</th>
+<th style="text-align:right;">
+2018
+</th>
+<th style="text-align:right;">
+2019
+</th>
+<th style="text-align:right;">
+2020
+</th>
+<th style="text-align:right;">
+2021
+</th>
+<th style="text-align:right;">
+2022
+</th>
+<th style="text-align:right;">
+all
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Annualized Return
+</td>
+<td style="text-align:right;">
+0.0437
+</td>
+<td style="text-align:right;">
+0.3058
+</td>
+<td style="text-align:right;">
+0.1792
+</td>
+<td style="text-align:right;">
+-0.2782
+</td>
+<td style="text-align:right;">
+0.1997
+</td>
+<td style="text-align:right;">
+0.0727
+</td>
+<td style="text-align:right;">
+0.0539
+</td>
+<td style="text-align:right;">
+-0.0592
+</td>
+<td style="text-align:right;">
+0.0503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Annualized Std Dev
+</td>
+<td style="text-align:right;">
+0.0834
+</td>
+<td style="text-align:right;">
+0.1463
+</td>
+<td style="text-align:right;">
+0.0775
+</td>
+<td style="text-align:right;">
+0.1298
+</td>
+<td style="text-align:right;">
+0.3411
+</td>
+<td style="text-align:right;">
+0.3950
+</td>
+<td style="text-align:right;">
+0.1373
+</td>
+<td style="text-align:right;">
+0.2084
+</td>
+<td style="text-align:right;">
+0.2184
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Annualized Sharpe (Rf=0%)
+</td>
+<td style="text-align:right;">
+0.5236
+</td>
+<td style="text-align:right;">
+2.0903
+</td>
+<td style="text-align:right;">
+2.3116
+</td>
+<td style="text-align:right;">
+-2.1428
+</td>
+<td style="text-align:right;">
+0.5855
+</td>
+<td style="text-align:right;">
+0.1841
+</td>
+<td style="text-align:right;">
+0.3925
+</td>
+<td style="text-align:right;">
+-0.2840
+</td>
+<td style="text-align:right;">
+0.2304
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Skewness
+</td>
+<td style="text-align:right;">
+-0.4463
+</td>
+<td style="text-align:right;">
+0.0641
+</td>
+<td style="text-align:right;">
+-0.1940
+</td>
+<td style="text-align:right;">
+-0.8216
+</td>
+<td style="text-align:right;">
+2.0704
+</td>
+<td style="text-align:right;">
+-0.1066
+</td>
+<td style="text-align:right;">
+0.3603
+</td>
+<td style="text-align:right;">
+-0.0543
+</td>
+<td style="text-align:right;">
+1.0100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Kurtosis
+</td>
+<td style="text-align:right;">
+1.9204
+</td>
+<td style="text-align:right;">
+2.5794
+</td>
+<td style="text-align:right;">
+1.5451
+</td>
+<td style="text-align:right;">
+2.5507
+</td>
+<td style="text-align:right;">
+6.5651
+</td>
+<td style="text-align:right;">
+2.1599
+</td>
+<td style="text-align:right;">
+1.8566
+</td>
+<td style="text-align:right;">
+2.2475
+</td>
+<td style="text-align:right;">
+8.0514
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MaxDrawdown
+</td>
+<td style="text-align:right;">
+0.0865
+</td>
+<td style="text-align:right;">
+0.0550
+</td>
+<td style="text-align:right;">
+0.0216
+</td>
+<td style="text-align:right;">
+0.2787
+</td>
+<td style="text-align:right;">
+0.1459
+</td>
+<td style="text-align:right;">
+0.3019
+</td>
+<td style="text-align:right;">
+0.1214
+</td>
+<td style="text-align:right;">
+0.1282
+</td>
+<td style="text-align:right;">
+0.3959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VaR_95
+</td>
+<td style="text-align:right;">
+-0.0330
+</td>
+<td style="text-align:right;">
+-0.0322
+</td>
+<td style="text-align:right;">
+-0.0167
+</td>
+<td style="text-align:right;">
+-0.0879
+</td>
+<td style="text-align:right;">
+-0.0499
+</td>
+<td style="text-align:right;">
+-0.1421
+</td>
+<td style="text-align:right;">
+-0.0396
+</td>
+<td style="text-align:right;">
+-0.0924
+</td>
+<td style="text-align:right;">
+-0.0793
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CVaR_95
+</td>
+<td style="text-align:right;">
+-0.0333
+</td>
+<td style="text-align:right;">
+-0.0550
+</td>
+<td style="text-align:right;">
+-0.0178
+</td>
+<td style="text-align:right;">
+-0.1036
+</td>
+<td style="text-align:right;">
+-0.0581
+</td>
+<td style="text-align:right;">
+-0.2027
+</td>
+<td style="text-align:right;">
+-0.0413
+</td>
+<td style="text-align:right;">
+-0.0964
+</td>
+<td style="text-align:right;">
+-0.1169
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SortinoRatio
+</td>
+<td style="text-align:right;">
+0.2442
+</td>
+<td style="text-align:right;">
+1.4141
+</td>
+<td style="text-align:right;">
+1.8012
+</td>
+<td style="text-align:right;">
+-0.5943
+</td>
+<td style="text-align:right;">
+0.6569
+</td>
+<td style="text-align:right;">
+0.1717
+</td>
+<td style="text-align:right;">
+0.2316
+</td>
+<td style="text-align:right;">
+-0.0774
+</td>
+<td style="text-align:right;">
+0.1644
+</td>
+</tr>
+</tbody>
+</table>
 <hr />
 </div>
 <div id="risk-adjusted-returns" class="section level3">
@@ -2743,18 +3484,18 @@ ptf_ret3 &lt;- ptf_rebal$returns %&gt;%
     mutate(yrmon=as.yearmon(Date))
 bind_cols(ptf_ret, ptf_ret3) # cross validate hand and computer calculations</code></pre>
 <pre><code>## # A tibble: 96 × 4
-##        ...1 Date       portfolio.returns yrmon    
-##       &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt; &lt;yearmon&gt;
-##  1 -0.123   2015-01-31          -0.123   Jan 2015 
-##  2 -0.0430  2015-02-28          -0.0430  Feb 2015 
-##  3  0.0224  2015-03-31           0.0224  Mar 2015 
-##  4  0.247   2015-04-30           0.247   Apr 2015 
-##  5  0.00336 2015-05-31           0.00336 May 2015 
-##  6 -0.0367  2015-06-30          -0.0367  Jun 2015 
-##  7 -0.00741 2015-07-31          -0.00741 Jul 2015 
-##  8 -0.254   2015-08-31          -0.254   Aug 2015 
-##  9 -0.0612  2015-09-30          -0.0612  Sep 2015 
-## 10  0.0819  2015-10-31           0.0819  Oct 2015 
+##            ...1 Date       portfolio.returns yrmon    
+##           &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt; &lt;yearmon&gt;
+##  1 -0.1229900   2015-01-31      -0.1229900   Jan 2015 
+##  2 -0.04300157  2015-02-28      -0.04300157  Feb 2015 
+##  3  0.02235663  2015-03-31       0.02235663  Mar 2015 
+##  4  0.2472780   2015-04-30       0.2472780   Apr 2015 
+##  5  0.003363661 2015-05-31       0.003363661 May 2015 
+##  6 -0.03670870  2015-06-30      -0.03670870  Jun 2015 
+##  7 -0.007408891 2015-07-31      -0.007408891 Jul 2015 
+##  8 -0.2538050   2015-08-31      -0.2538050   Aug 2015 
+##  9 -0.06122813  2015-09-30      -0.06122813  Sep 2015 
+## 10  0.08190913  2015-10-31       0.08190913  Oct 2015 
 ## # ℹ 86 more rows</code></pre>
 <p>Merge with risk free rate.</p>
 <pre class="r"><code>colnames(ptf_ret3)[2] &lt;- &quot;port_ret&quot;
@@ -2763,18 +3504,30 @@ ptf_ret3 &lt;- ptf_ret3 %&gt;%
     mutate(excess_ret = port_ret-rf_1month)
 ptf_ret3</code></pre>
 <pre><code>## # A tibble: 96 × 7
-##    Date     port_ret yrmon mkt_return_monthly rf_1month rf_annualized excess_ret
-##    &lt;chr&gt;       &lt;dbl&gt; &lt;yea&gt;              &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
-##  1 2015-01… -0.123   Jan …            0.0350    0.0012        0.0145    -0.124  
-##  2 2015-02… -0.0430  Feb …            0.0326    0.00113       0.0136    -0.0441 
-##  3 2015-03…  0.0224  Mar …            0.00578   0.00127       0.0153     0.0211 
-##  4 2015-04…  0.247   Apr …            0.0326    0.00123       0.0149     0.246  
-##  5 2015-05…  0.00336 May …            0.00988   0.00117       0.0141     0.00219
-##  6 2015-06… -0.0367  Jun …           -0.0257    0.00102       0.0123    -0.0377 
-##  7 2015-07… -0.00741 Jul …            0.0156    0.00097       0.0117    -0.00838
-##  8 2015-08… -0.254   Aug …           -0.0702    0.00095       0.0115    -0.255  
-##  9 2015-09… -0.0612  Sep …           -0.0207    0.00083       0.0100    -0.0621 
-## 10 2015-10…  0.0819  Oct …            0.0575    0.0008        0.00964    0.0811 
+##    Date           port_ret yrmon     mkt_return_monthly rf_1month rf_annualized
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;yearmon&gt;              &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+##  1 2015-01-31 -0.1229900   Jan 2015         0.03498025    0.0012    0.01449542 
+##  2 2015-02-28 -0.04300157  Feb 2015         0.03262385    0.00113   0.01364459 
+##  3 2015-03-31  0.02235663  Mar 2015         0.005782596   0.00127   0.01534690 
+##  4 2015-04-30  0.2472780   Apr 2015         0.03255810    0.00123   0.01486026 
+##  5 2015-05-31  0.003363661 May 2015         0.009884897   0.00117   0.01413070 
+##  6 2015-06-30 -0.03670870  Jun 2015        -0.02566288    0.00102   0.0123089  
+##  7 2015-07-31 -0.007408891 Jul 2015         0.01560936    0.00097   0.01170230 
+##  8 2015-08-31 -0.2538050   Aug 2015        -0.07016421    0.00095   0.01145975 
+##  9 2015-09-30 -0.06122813  Sep 2015        -0.02072041    0.00083   0.01000559 
+## 10 2015-10-31  0.08190913  Oct 2015         0.05749500    0.0008    0.009642353
+##      excess_ret
+##           &lt;dbl&gt;
+##  1 -0.1241900  
+##  2 -0.04413157 
+##  3  0.02108663 
+##  4  0.2460480  
+##  5  0.002193661
+##  6 -0.03772870 
+##  7 -0.008378891
+##  8 -0.2547550  
+##  9 -0.06205813 
+## 10  0.08110913 
 ## # ℹ 86 more rows</code></pre>
 <p>Monthly mean and volatility</p>
 <ul>
@@ -2855,7 +3608,7 @@ ptf_xts %&gt;%
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-15">Table 3: </span>Portfolio return in <code>xts</code>
+<span id="tab:unnamed-chunk-21">Table 6: </span>Portfolio return in <code>xts</code>
 </caption>
 <thead>
 <tr>
@@ -4823,7 +5576,7 @@ StdDev.annualized(ptf_xts$port_ret)</code></pre>
 <p>Histogram of portfolio returns.</p>
 <pre class="r"><code># histogram to check normality
 chart.Histogram(ptf_xts$port_ret, methods = c(&quot;add.density&quot;, &quot;add.normal&quot;))</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="skewness-and-kurtosis" class="section level4">
 <h4>Skewness and Kurtosis</h4>
 <p><strong>Skewness</strong> <span class="math inline">\(\mu_3\)</span> is the third (normalized) moment about the mean.<br />
@@ -4835,15 +5588,16 @@ It measures the asymmetry of the distribution, with symmetric distribution havin
 <p><span class="math display">\[
 \mu_3 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^3}{\sigma_p^3}
 \]</span></p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
 <img src="images/Skewness.png" alt="Diagram of Skewness." width="70%" />
 <p class="caption">
-Fig. 4: Diagram of Skewness.
+Fig. 5: Diagram of Skewness.
 </p>
 </div>
 <pre class="r"><code># skewness
 skewness(ptf_xts$port_ret)</code></pre>
-<pre><code>## [1] 0.7779903</code></pre>
+<pre><code>##  port_ret 
+## 0.7779903</code></pre>
 <p><strong>Kurtosis</strong> <span class="math inline">\(K_p\)</span> is the fourth (normalized) moment about the mean.<br />
 It measures the <em>tail behavior</em> in comparison with the normal distribution.</p>
 <p><span class="math display">\[
@@ -4853,14 +5607,14 @@ It measures the <em>tail behavior</em> in comparison with the normal distributio
 <ul>
 <li><span class="math inline">\(\mu_4-3&gt;0\)</span> indicate a heavy-tailed distribution with higher chances of outliers.
 <ul>
-<li>Note that we cannot infer from kurtosis the shape of the peak. <span class="math inline">\(\mu_4-3&gt;0\)</span> can associate with either a falttened (e.g., <span class="math inline">\(t\)</span>-distribution, see Fig. <a href="#fig:fig-t">5</a>) or a pointy peak (Laplace distribution, see Fig. <a href="#fig:fig-Laplace">6</a>).</li>
+<li>Note that we cannot infer from kurtosis the shape of the peak. <span class="math inline">\(\mu_4-3&gt;0\)</span> can associate with either a falttened (e.g., <span class="math inline">\(t\)</span>-distribution, see Fig. <a href="#fig:fig-t">6</a>) or a pointy peak (Laplace distribution, see Fig. <a href="#fig:fig-Laplace">7</a>).</li>
 </ul></li>
 <li><span class="math inline">\(\mu_4-3&lt;0\)</span> indicate a light-tailed distribution with lower chances of outliers.</li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-t"></span>
 <img src="images/t%20distribution.png" alt="Examples of heavy-tailed distributions." width="70%" />
 <p class="caption">
-Fig. 5: Examples of heavy-tailed distributions.
+Fig. 6: Examples of heavy-tailed distributions.
 </p>
 </div>
 <p><span class="math inline">\(t\)</span>-distribution has higher kurtosis than normal distributions.</p>
@@ -4883,7 +5637,7 @@ rnorm(1000) %&gt;% moments::kurtosis()</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-Laplace"></span>
 <img src="images/Laplace%20distribution.webp" alt="**Laplace distribution**. The dotted green curve shows a normal distribution. The blue curve shows a Laplace distribution with kurtosis of 6.54. On the far left and right sides of the distribution—the tails—the space below the Laplace distribution curve (blue) is slightly thicker than the space below the normal distribution curve (green). This is an example of a heavy-tailed distribution yet with a sharper peak." width="70%" />
 <p class="caption">
-Fig. 6: <strong>Laplace distribution</strong>. The dotted green curve shows a normal distribution. The blue curve shows a Laplace distribution with kurtosis of 6.54. On the far left and right sides of the distribution—the tails—the space below the Laplace distribution curve (blue) is slightly thicker than the space below the normal distribution curve (green). This is an example of a heavy-tailed distribution yet with a sharper peak.
+Fig. 7: <strong>Laplace distribution</strong>. The dotted green curve shows a normal distribution. The blue curve shows a Laplace distribution with kurtosis of 6.54. On the far left and right sides of the distribution—the tails—the space below the Laplace distribution curve (blue) is slightly thicker than the space below the normal distribution curve (green). This is an example of a heavy-tailed distribution yet with a sharper peak.
 </p>
 </div>
 <p>Distinguish from standard deviation/variance.</p>
@@ -4899,7 +5653,8 @@ Need to specify <code>method="moment"</code> in order to get the original kurtos
 <p><code>moments::kurtosis(x)</code> returns the original kurtosis. Need to be compared with 3 on your own.</p>
 <pre class="r"><code># kurtosis
 kurtosis(ptf_xts$port_ret)</code></pre>
-<pre><code>## [1] 1.69699</code></pre>
+<pre><code>## port_ret 
+##  4.69699</code></pre>
 <pre class="r"><code># summary statistic
 returns_statistics &lt;- table.Stats(ptf_xts$port_ret)
 returns_statistics</code></pre>
@@ -5355,14 +6110,14 @@ maxDrawdown(ptf_xts$port_ret)</code></pre>
 ## 5 2015-01-31 2015-02-28 2015-04-30 -0.1607      4         2        2</code></pre>
 <pre class="r"><code># Plot of drawdowns
 chart.Drawdown(ptf_xts$port_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>## rolling annualized mean and volatility
 chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;Return.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;StdDev.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-28-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-34-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;SharpeRatio.annualized&quot;, Rf=ptf_xts$excess_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-28-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-34-3.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 </div>
 <div id="references" class="section level3 unnumbered">
