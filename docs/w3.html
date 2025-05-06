@@ -5577,6 +5577,7 @@ StdDev.annualized(ptf_xts$port_ret)</code></pre>
 <pre class="r"><code># histogram to check normality
 chart.Histogram(ptf_xts$port_ret, methods = c(&quot;add.density&quot;, &quot;add.normal&quot;))</code></pre>
 <p><img src="w3_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
 <div id="skewness-and-kurtosis" class="section level4">
 <h4>Skewness and Kurtosis</h4>
 <p><strong>Skewness</strong> <span class="math inline">\(\mu_3\)</span> is the third (normalized) moment about the mean.<br />
@@ -5675,6 +5676,7 @@ returns_statistics</code></pre>
 ## Stdev             0.1279
 ## Skewness          0.7780
 ## Kurtosis          1.6970</code></pre>
+<hr />
 </div>
 <div id="sharpe-ratio" class="section level4">
 <h4>Sharpe ratio</h4>
@@ -5727,6 +5729,7 @@ SharpeRatio.annualized(R=ptf_xts$port_ret, Rf=ptf_xts$rf_1month, geometric=TRUE)
 Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xts$port_ret)</code></pre>
 <pre><code>##                   excess_ret
 ## Annualized Return  0.2361843</code></pre>
+<hr />
 </div>
 <div id="information-ratio" class="section level4">
 <h4>Information ratio</h4>
@@ -5744,6 +5747,7 @@ where</p>
 <li><span class="math inline">\(\bar{r}_m\)</span> is the average return for the benchmark; and</li>
 <li><span class="math inline">\(\sigma_{p-m}\)</span> is the standard deviation for the active return, i.e., return of portfolio in excess of the benchmark return.</li>
 </ul>
+<hr />
 </div>
 <div id="beta-coefficient-adjusted-measures" class="section level4">
 <h4>Beta coefficient-adjusted measures</h4>
@@ -5761,6 +5765,7 @@ where</p>
 <li><span class="math inline">\(R^e_i=r_i-r_f\)</span> stands for the excess return on asset <span class="math inline">\(i\)</span>, and</li>
 <li><span class="math inline">\(R^e_m=r_m-r_f\)</span> stands for the excess return on the market index.</li>
 </ul>
+<hr />
 <p><strong>Treynor ratio</strong> is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.</p>
 <p>The Treynor ratio is computed as</p>
 <p><span class="math display">\[
@@ -5772,6 +5777,7 @@ Note that</p>
 <li><p>Sharpe ratio assumes that the relevant risk is total risk (systematic and unsystematic risk), and it measures excess return per unit of total risk. It is appropriate for the portfolio that is less diversified.</p></li>
 <li><p>Jensen’s alpha also assumes that the relevant risk is systematic risk.</p></li>
 </ul>
+<hr />
 <p><strong>Jensen’s alpha</strong> measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio’s beta and the average market return.</p>
 <p><span class="math display">\[
 \alpha_p =  \bar{r}_p - \left[\bar{r}_f + \beta_p(\bar{r}_m-\bar{r}_f)\right]
@@ -6010,6 +6016,7 @@ T_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p} = \frac{(13-7.6)\%}{1.203} = 0.0449
 \]</span></p>
 </div>
 <p> </p>
+<hr />
 </div>
 <div id="m-squared" class="section level4">
 <h4>M-squared</h4>
@@ -6036,6 +6043,7 @@ By investing two thirds in <span class="math inline">\(p\)</span> and one third 
 <p><span class="math display">\[
 M_p^2 = r_{p^*} - r_m .
 \]</span></p>
+<hr />
 </div>
 </div>
 <div id="downside-risk-measures" class="section level3">

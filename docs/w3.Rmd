@@ -944,7 +944,7 @@ chart.Histogram(ptf_xts$port_ret, methods = c("add.density", "add.normal"))
 ```
 
 
-
+--------------------------------------------------------------------------------
 
 #### Skewness and Kurtosis
 
@@ -1039,6 +1039,8 @@ returns_statistics
 ```
 
 
+--------------------------------------------------------------------------------
+
 #### Sharpe ratio
 
 The Sharpe ratio was first introduced by @Sharpe1966 as the (arithmetic) average portfolio excess return over the sample period divided by the standard deviation of the portfolio return over that period. 
@@ -1094,6 +1096,7 @@ SharpeRatio.annualized(R=ptf_xts$port_ret, Rf=ptf_xts$rf_1month, geometric=TRUE)
 Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xts$port_ret)
 ```
 
+--------------------------------------------------------------------------------
 
 #### Information ratio
 
@@ -1114,6 +1117,7 @@ where
 - $\bar{r}_m$ is the average return for the benchmark; and
 - $\sigma_{p-m}$ is the standard deviation for the active return, i.e., return of portfolio in excess of the benchmark return.
 
+--------------------------------------------------------------------------------
 
 #### Beta coefficient-adjusted measures
 
@@ -1135,6 +1139,9 @@ where
 - $R^e_m=r_m-r_f$ stands for the excess return on the market index.
 
 
+--------------------------------------------------------------------------------
+
+
 **Treynor ratio** is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.
 
 The Treynor ratio is computed as
@@ -1149,6 +1156,8 @@ Note that
 - Sharpe ratio assumes that the relevant risk is total risk (systematic and unsystematic risk), and it measures excess return per unit of total risk. It is appropriate for the portfolio that is less diversified.
 
 - Jensen's alpha also assumes that the relevant risk is systematic risk.
+
+--------------------------------------------------------------------------------
 
 **Jensen's alpha** measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio's beta and the average market return.
 
@@ -1283,6 +1292,7 @@ $$
 
 &nbsp;
 
+--------------------------------------------------------------------------------
 
 #### M-squared 
 
@@ -1316,6 +1326,9 @@ $$
 M_p^2 = r_{p^*} - r_m .
 $$
 
+
+
+--------------------------------------------------------------------------------
 
 
 ### Downside risk measures
