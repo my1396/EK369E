@@ -3576,20 +3576,18 @@ sd(ptf_ret3$port_ret)</code></pre>
 <pre><code>## [1] 0.1278693</code></pre>
 <p>Portfolio return and standard deviation are usually published as annualized.</p>
 <ul>
-<li>annualized arithmetic return assuming <span class="math inline">\(r_{p,t}\)</span> being monthly return</li>
-</ul>
+<li><p>Annualized arithmetic return assuming <span class="math inline">\(r_{p,t}\)</span> being monthly return</p>
 <p><span class="math display">\[
-r_{p}^A = \frac{12}{T}\sum_{t=1}^T r_{p,t} = 12\times \bar{r}_p
-\]</span></p>
-<ul>
-<li>annualized geometric return</li>
-</ul>
+  r_{p}^A = \frac{12}{T}\sum_{t=1}^T r_{p,t} = 12\times \bar{r}_p
+  \]</span></p>
+<p>where <span class="math inline">\(\bar{r}_p\)</span> is the arithmetic mean.</p></li>
+<li><p>Annualized geometric return</p>
 <p><span class="math display">\[
-r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
-\]</span></p>
-<ul>
-<li>annualized standard deviation.<br />
-Note that in Finance, the standard deviation of returns is usually called <em>volatility</em>.</li>
+  r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
+  \]</span></p>
+<p>where <span class="math inline">\(\bar{r}_p\)</span> is the geometric mean.</p></li>
+<li><p>Annualized standard deviation.<br />
+Note that in Finance, the standard deviation of returns is usually called <em>volatility</em>.</p></li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
@@ -5649,33 +5647,181 @@ It looks at how much of the ‘weight’ of the distribution (recall that the to
 <li>Standard deviation is useful for measuring the spread.</li>
 <li>Kurtosis focuses on detecting outliers.</li>
 </ul>
-<p><code>PerformanceAnalytics::kurtosis(x)</code> returns excess kurtosis by default.
-Need to specify <code>method="moment"</code> in order to get the original kurtosis.</p>
+<p><code>PerformanceAnalytics::kurtosis(x, na.rm = FALSE, method = "excess")</code> returns <u>excess kurtosis</u> by default.
+Need to specify <code>method = "moment"</code> in order to get the original kurtosis.</p>
 <p><code>moments::kurtosis(x)</code> returns the original kurtosis. Need to be compared with 3 on your own.</p>
 <pre class="r"><code># kurtosis
-kurtosis(ptf_xts$port_ret)</code></pre>
+moments::kurtosis(ptf_xts$port_ret)</code></pre>
 <pre><code>## port_ret 
 ##  4.69699</code></pre>
+<pre class="r"><code>PerformanceAnalytics::kurtosis(ptf_xts$port_ret) # excess kurtosis</code></pre>
+<pre><code>## [1] 1.69699</code></pre>
+<pre class="r"><code>PerformanceAnalytics::kurtosis(ptf_xts$port_ret, method = &quot;moment&quot;) # original kurtosis</code></pre>
+<pre><code>## [1] 4.69699</code></pre>
+<p><code>PerformanceAnalytics::table.Stats(R, ci = 0.95, digits = 4)</code> returns a full set of summary statistics that match the period of the data passed in (e.g., monthly returns will get monthly statistics, daily will be daily stats, and so on)</p>
 <pre class="r"><code># summary statistic
 returns_statistics &lt;- table.Stats(ptf_xts$port_ret)
-returns_statistics</code></pre>
-<pre><code>##                 port_ret
-## Observations     96.0000
-## NAs               0.0000
-## Minimum          -0.2754
-## Quartile 1       -0.0680
-## Median            0.0014
-## Arithmetic Mean   0.0168
-## Geometric Mean    0.0092
-## Quartile 3        0.1008
-## Maximum           0.4766
-## SE Mean           0.0131
-## LCL Mean (0.95)  -0.0091
-## UCL Mean (0.95)   0.0427
-## Variance          0.0164
-## Stdev             0.1279
-## Skewness          0.7780
-## Kurtosis          1.6970</code></pre>
+returns_statistics %&gt;%
+    knitr::kable() %&gt;% 
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), 
+                  full_width = F, latex_options=&quot;scale_down&quot;) </code></pre>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+port_ret
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Observations
+</td>
+<td style="text-align:right;">
+96.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NAs
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minimum
+</td>
+<td style="text-align:right;">
+-0.2754
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quartile 1
+</td>
+<td style="text-align:right;">
+-0.0680
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Median
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arithmetic Mean
+</td>
+<td style="text-align:right;">
+0.0168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Geometric Mean
+</td>
+<td style="text-align:right;">
+0.0092
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quartile 3
+</td>
+<td style="text-align:right;">
+0.1008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Maximum
+</td>
+<td style="text-align:right;">
+0.4766
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SE Mean
+</td>
+<td style="text-align:right;">
+0.0131
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LCL Mean (0.95)
+</td>
+<td style="text-align:right;">
+-0.0091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCL Mean (0.95)
+</td>
+<td style="text-align:right;">
+0.0427
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Variance
+</td>
+<td style="text-align:right;">
+0.0164
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stdev
+</td>
+<td style="text-align:right;">
+0.1279
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Skewness
+</td>
+<td style="text-align:right;">
+0.7780
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Kurtosis
+</td>
+<td style="text-align:right;">
+1.6970
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><code>SE Mean</code>: Standard Error of the average return.</p>
+<p><span class="math display">\[
+  \text{SE Mean} = \frac{\sigma_p}{\sqrt{T}}
+  \]</span></p></li>
+<li><p><code>LCL Mean</code>: Lower Confidence Level (LCL) of the mean, defaults to 95% confidence level.</p>
+<p><span class="math display">\[
+  \text{LCL Mean} = r_p - \text{SE Mean} \times c_{\alpha/2}
+  \]</span></p>
+<p>where <span class="math inline">\(c_{\alpha/2}\)</span> is the critical value, i.e., <span class="math inline">\(\left(1-\frac{\alpha}{2}\right)\)</span> quantile of the <span class="math inline">\(t\)</span> distribution with <span class="math inline">\((T-1)\)</span> degrees of freedom.</p></li>
+<li><p><code>UCL Mean</code>: Upper Confidence Level (UCL) of the mean, defaults to 95% confidence level.</p>
+<p><span class="math display">\[
+  \text{UCL Mean} = r_p + \text{SE Mean} \times c_{\alpha/2}
+  \]</span></p></li>
+<li><p><code>Kurtosis</code>: Excess Kurtosis.</p></li>
+</ul>
 <hr />
 </div>
 <div id="sharpe-ratio" class="section level4">

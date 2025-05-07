@@ -887,19 +887,23 @@ sd(ptf_ret3$port_ret)
 
 Portfolio return and standard deviation are usually published as annualized.
 
-- annualized arithmetic return assuming $r_{p,t}$ being monthly return
+- Annualized arithmetic return assuming $r_{p,t}$ being monthly return
 
-$$
-r_{p}^A = \frac{12}{T}\sum_{t=1}^T r_{p,t} = 12\times \bar{r}_p
-$$
+    $$
+    r_{p}^A = \frac{12}{T}\sum_{t=1}^T r_{p,t} = 12\times \bar{r}_p
+    $$
+    
+    where $\bar{r}_p$ is the arithmetic mean.
 
-- annualized geometric return 
+- Annualized geometric return 
 
-$$
-r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
-$$
+    $$
+    r_{p}^A = \left[\prod_{t=1}^T (1+r_{p,t}) \right]^{\frac{12}{T}}-1 = (1+\bar{r}_p)^{12}-1
+    $$
+    
+    where $\bar{r}_p$ is the geometric mean.
 
-- annualized standard deviation. \
+- Annualized standard deviation. \
 Note that in Finance, the standard deviation of returns is usually called *volatility*.
 
 $$
@@ -1021,22 +1025,50 @@ It looks at how much of the ‘weight’ of the distribution (recall that the to
 - Standard deviation is useful for measuring the spread.
 - Kurtosis focuses on detecting outliers. 
 
-`PerformanceAnalytics::kurtosis(x)` returns excess kurtosis by default. 
-Need to specify `method="moment"` in order to get the original kurtosis.
+`PerformanceAnalytics::kurtosis(x, na.rm = FALSE, method = "excess")` returns <u>excess kurtosis</u> by default. 
+Need to specify `method = "moment"` in order to get the original kurtosis.
 
 `moments::kurtosis(x)` returns the original kurtosis. Need to be compared with 3 on your own.
 
 ```{r}
 # kurtosis
-kurtosis(ptf_xts$port_ret)
+moments::kurtosis(ptf_xts$port_ret)
+PerformanceAnalytics::kurtosis(ptf_xts$port_ret) # excess kurtosis
+PerformanceAnalytics::kurtosis(ptf_xts$port_ret, method = "moment") # original kurtosis
 ```
 
+`PerformanceAnalytics::table.Stats(R, ci = 0.95, digits = 4)` returns a full set of summary statistics that match the period of the data passed in (e.g., monthly returns will get monthly statistics, daily will be daily stats, and so on)
 
 ```{r}
 # summary statistic
 returns_statistics <- table.Stats(ptf_xts$port_ret)
-returns_statistics
+returns_statistics %>%
+    knitr::kable() %>% 
+    kable_styling(bootstrap_options = c("striped", "hover"), 
+                  full_width = F, latex_options="scale_down") 
 ```
+
+- `SE Mean`: Standard Error of the average return. 
+
+    $$
+    \text{SE Mean} = \frac{\sigma_p}{\sqrt{T}}
+    $$
+
+- `LCL Mean`: Lower Confidence Level (LCL) of the mean, defaults to 95% confidence level.
+
+    $$
+    \text{LCL Mean} = r_p - \text{SE Mean} \times c_{\alpha/2}
+    $$
+    
+    where $c_{\alpha/2}$ is the critical value, i.e., $\left(1-\frac{\alpha}{2}\right)$ quantile of the $t$ distribution with $(T-1)$ degrees of freedom.
+
+- `UCL Mean`: Upper Confidence Level (UCL) of the mean, defaults to 95% confidence level.
+
+    $$
+    \text{UCL Mean} = r_p + \text{SE Mean} \times c_{\alpha/2}
+    $$
+
+- `Kurtosis`: Excess Kurtosis.
 
 
 --------------------------------------------------------------------------------
