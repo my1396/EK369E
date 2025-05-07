@@ -3474,7 +3474,7 @@ SortinoRatio
 <div id="risk-adjusted-returns" class="section level3">
 <h3>Risk-adjusted returns</h3>
 <p>Excess return and Sharpe ratio.</p>
-<pre class="r"><code>## excess return
+<pre class="r"><code>## load risk free and market rates
 f_name &lt;- &quot;data/NO_Rf-OSEBX_2015-2023_monthly.csv&quot;
 rfr &lt;- read_csv(f_name)
 rfr &lt;- rfr %&gt;% mutate(yrmon=as.yearmon(Date))
@@ -3529,6 +3529,13 @@ ptf_ret3</code></pre>
 ##  9 -0.06205813 
 ## 10  0.08110913 
 ## # ℹ 86 more rows</code></pre>
+<pre class="r"><code># Portfolio performance relative to benchmark
+ptf_ret3[, c(&quot;Date&quot;, &quot;port_ret&quot;, &quot;mkt_return_monthly&quot;)] %&gt;%
+    mutate(Date = ymd(Date)) %&gt;% 
+    xts(x=.[,-1], order.by=.[[1]]) %&gt;% 
+    charts.PerformanceSummary(main = &quot;Portfolio performance relative to benchmark&quot;)</code></pre>
+<p><img src="w3_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
 <p>Monthly mean and volatility</p>
 <ul>
 <li>arithmetic mean (AM) portfolio return <span class="math inline">\(\bar{r}_{p, 0:T}\)</span></li>
@@ -3606,7 +3613,7 @@ ptf_xts %&gt;%
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-21">Table 6: </span>Portfolio return in <code>xts</code>
+<span id="tab:unnamed-chunk-22">Table 6: </span>Portfolio return in <code>xts</code>
 </caption>
 <thead>
 <tr>
@@ -5574,7 +5581,7 @@ StdDev.annualized(ptf_xts$port_ret)</code></pre>
 <p>Histogram of portfolio returns.</p>
 <pre class="r"><code># histogram to check normality
 chart.Histogram(ptf_xts$port_ret, methods = c(&quot;add.density&quot;, &quot;add.normal&quot;))</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 <div id="skewness-and-kurtosis" class="section level4">
 <h4>Skewness and Kurtosis</h4>
@@ -5587,7 +5594,7 @@ It measures the asymmetry of the distribution, with symmetric distribution havin
 <p><span class="math display">\[
 \mu_3 = \frac{1}{T} \frac{\sum_{t=1}^T (r_{p,t}-\bar{r}_p)^3}{\sigma_p^3}
 \]</span></p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-24"></span>
 <img src="images/Skewness.png" alt="Diagram of Skewness." width="70%" />
 <p class="caption">
 Fig. 5: Diagram of Skewness.
@@ -5658,7 +5665,7 @@ moments::kurtosis(ptf_xts$port_ret)</code></pre>
 <pre><code>## [1] 1.69699</code></pre>
 <pre class="r"><code>PerformanceAnalytics::kurtosis(ptf_xts$port_ret, method = &quot;moment&quot;) # original kurtosis</code></pre>
 <pre><code>## [1] 4.69699</code></pre>
-<p><code>PerformanceAnalytics::table.Stats(R, ci = 0.95, digits = 4)</code> returns a full set of summary statistics that match the period of the data passed in (e.g., monthly returns will get monthly statistics, daily will be daily stats, and so on)</p>
+<p><code>PerformanceAnalytics::table.Stats(R, ci = 0.95, digits = 4)</code> returns a full set of <strong>summary statistics</strong> that match the period of the data passed in (e.g., monthly returns will get monthly statistics, daily will be daily stats, and so on)</p>
 <pre class="r"><code># summary statistic
 returns_statistics &lt;- table.Stats(ptf_xts$port_ret)
 returns_statistics %&gt;%
@@ -5879,9 +5886,8 @@ Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xt
 </div>
 <div id="information-ratio" class="section level4">
 <h4>Information ratio</h4>
-<p>While the Sharpe ratio measures the excess return as the difference between the return of the portfolio and the risk-free rate, the <strong>information ratio</strong>, on the other hand, measures the portfolio performance against a comparable benchmark rather than the risk-free rate.</p>
-<p>The portfolio return in excess of the return of the benchmark is known as the <em>active return</em>, and the variability of the active return is known as the <em>active risk</em> or <em>tracking error</em> of the portfolio.</p>
-<p>The information ratio is the active return per unit of active risk.</p>
+<p>While the Sharpe ratio measures the excess return as the difference between the return of the portfolio and the risk-free rate, the <strong>information ratio</strong>, on the other hand, measures the portfolio performance <u>against a comparable benchmark</u> rather than the risk-free rate.</p>
+<p>The information ratio is the active return per unit of active risk. This relates <em>the degree</em> to which an investment has beaten the benchmark to <em>the consistency</em> with which the investment has beaten the benchmark.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \text{Information Ratio} &amp;= \text{IR}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \\
@@ -5890,8 +5896,9 @@ Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xt
 \]</span>
 where</p>
 <ul>
-<li><span class="math inline">\(\bar{r}_m\)</span> is the average return for the benchmark; and</li>
-<li><span class="math inline">\(\sigma_{p-m}\)</span> is the standard deviation for the active return, i.e., return of portfolio in excess of the benchmark return.</li>
+<li><span class="math inline">\(\bar{r}_p\)</span> and <span class="math inline">\(\bar{r}_m\)</span> is the average return for the portfolio and the benchmark, respectively;</li>
+<li><span class="math inline">\(\bar{r}_p-\bar{r}_m\)</span> is the <em>active return</em> (or <em>active premium</em>) of the portfolio, i.e., return of portfolio in excess of the benchmark return;</li>
+<li><span class="math inline">\(\sigma_{p-m}\)</span> is the <em>active risk</em> (or <em>tracking error</em>) of the portfolio, i.e., the standard deviation (volatility) of the active return.</li>
 </ul>
 <hr />
 </div>
@@ -6264,15 +6271,199 @@ maxDrawdown(ptf_xts$port_ret)</code></pre>
 ## 5 2015-01-31 2015-02-28 2015-04-30 -0.1607      4         2        2</code></pre>
 <pre class="r"><code># Plot of drawdowns
 chart.Drawdown(ptf_xts$port_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>## rolling annualized mean and volatility
 chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;Return.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;StdDev.annualized&quot;)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-34-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-35-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;SharpeRatio.annualized&quot;, Rf=ptf_xts$excess_ret)</code></pre>
-<p><img src="w3_files/figure-html/unnamed-chunk-34-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w3_files/figure-html/unnamed-chunk-35-3.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
+</div>
+<div id="capm-related-metrics" class="section level3">
+<h3>CAPM-related metrics</h3>
+<p><code>table.SFM</code> creates a table of <strong>CAPM-Related Measures</strong>. SFM stands for Single Factor Model.</p>
+<pre class="r"><code>with(ptf_ret3[, c(&quot;Date&quot;, &quot;port_ret&quot;, &quot;mkt_return_monthly&quot;, &quot;rf_1month&quot;)] %&gt;%
+    mutate(Date = ymd(Date)) %&gt;% 
+    xts(x=.[,-1], order.by=.[[1]]),
+    table.SFM(
+        Ra = port_ret,
+        Rb = mkt_return_monthly, 
+        Rf = rf_1month,
+        digits = 4)
+    ) %&gt;% 
+    knitr::kable(caption = &quot;Table of CAPM-related statistics&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;) </code></pre>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-36">Table 7: </span>Table of CAPM-related statistics
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+port_ret to mkt_return_monthly
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Alpha
+</td>
+<td style="text-align:right;">
+0.0037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta
+</td>
+<td style="text-align:right;">
+1.6043
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta+
+</td>
+<td style="text-align:right;">
+1.8336
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta-
+</td>
+<td style="text-align:right;">
+1.4833
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R-squared
+</td>
+<td style="text-align:right;">
+0.2814
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Annualized Alpha
+</td>
+<td style="text-align:right;">
+0.0455
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Correlation
+</td>
+<td style="text-align:right;">
+0.5305
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Correlation p-value
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tracking Error
+</td>
+<td style="text-align:right;">
+0.3859
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Active Premium
+</td>
+<td style="text-align:right;">
+0.0208
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Information Ratio
+</td>
+<td style="text-align:right;">
+0.0538
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Treynor Ratio
+</td>
+<td style="text-align:right;">
+0.0652
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>Beta</code>: beta coefficient of CAPM</li>
+<li><code>Beta +</code>: <code>CAPM.beta.bull</code> is a regression for only positive market returns, which can be used to understand the behavior of the asset or portfolio in positive or ‘bull’ markets.</li>
+<li><code>Beta -</code>: <code>CAPM.beta.bear</code> provides the calculation on negative market returns.</li>
+<li><code>Active Premium</code>: performance premium provided by an investment over a passive strategy (the benchmark), which is the investment’s annualized return minus the benchmark’s annualized return. Also called “Active Return.”</li>
+</ul>
+<p><span class="math display">\[
+\text{Active Premium} = \bar{r}_p-\bar{r}_m
+\]</span></p>
+<ul>
+<li><code>Tracking Error</code>: the unexplained portion of the investment’s performance relative to a benchmark, defined as the standard</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Tracking Error} &amp;= \sigma_{p-m} \\
+&amp;= \sqrt{\frac{\sum(r_{p}-r_{m})^{2}}{T-1}} \times \sqrt{\text{scale}}
+\end{aligned}
+\]</span>
+<span class="math inline">\(\text{scale}\)</span> is the number of periods in a year (daily scale = 252, weekly scale = 52, monthly scale = 12, quarterly scale = 4, annually sacle = 1).</p>
+<ul>
+<li><code>Information Ratio</code> is defined as the <code>Active Premium</code> divided by the <code>Tracking Error</code>.</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{IR}_p &amp;= \frac{\text{Active Premium}}{\text{Tracking Error}} \\
+&amp;= \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\end{aligned}
+\]</span></p>
+<hr />
+<p><strong>Specific risk</strong> of the return distribution.</p>
+<ul>
+<li><p>Specific risk is the annualized standard deviation of the error term in the CAPM regression equation.</p></li>
+<li><p>Systematic risk, as defined by Bacon (2008), is the product of beta by market risk.</p></li>
+</ul>
+<p><span class="math display">\[
+\sigma_s = \beta * \sigma_m
+\]</span>
+Market risk, <span class="math inline">\(\sigma_m\)</span>, is the annualized standard deviation of the benchmark. <span class="math inline">\(\beta\)</span> is the regression beta.</p>
+<ul>
+<li>Total risk is defined as</li>
+</ul>
+<p><span class="math display">\[
+\text{Total Risk} = \sqrt{\text{Systematic Risk}^2 + \text{Specific Risk}^2}
+\]</span></p>
+<pre class="r"><code>with(ptf_ret3[, c(&quot;Date&quot;, &quot;port_ret&quot;, &quot;mkt_return_monthly&quot;, &quot;rf_1month&quot;)] %&gt;%
+    mutate(Date = ymd(Date)) %&gt;% 
+    xts(x=.[,-1], order.by=.[[1]]),
+    table.SpecificRisk(
+        Ra = port_ret,
+        Rb = mkt_return_monthly, 
+        Rf = rf_1month,
+        digits = 4)
+    )</code></pre>
+<pre><code>##                 port_ret
+## Specific Risk     0.3736
+## Systematic Risk   0.2351
+## Total Risk        0.4440</code></pre>
 </div>
 <div id="references" class="section level3 unnumbered">
 <h3>References</h3>

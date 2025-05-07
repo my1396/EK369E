@@ -12,6 +12,8 @@ output:
 bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=F, echo=F}
@@ -816,7 +818,7 @@ annualized_table %>%
 Excess return and Sharpe ratio.
 
 ```{r}
-## excess return
+## load risk free and market rates
 f_name <- "data/NO_Rf-OSEBX_2015-2023_monthly.csv"
 rfr <- read_csv(f_name)
 rfr <- rfr %>% mutate(yrmon=as.yearmon(Date))
@@ -837,6 +839,17 @@ ptf_ret3 <- ptf_ret3 %>%
 ptf_ret3
 ```
 
+
+```{r}
+# Portfolio performance relative to benchmark
+ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly")] %>%
+    mutate(Date = ymd(Date)) %>% 
+    xts(x=.[,-1], order.by=.[[1]]) %>% 
+    charts.PerformanceSummary(main = "Portfolio performance relative to benchmark")
+```
+
+
+--------------------------------------------------------------------------------
 
 Monthly mean and volatility
 
@@ -1037,7 +1050,7 @@ PerformanceAnalytics::kurtosis(ptf_xts$port_ret) # excess kurtosis
 PerformanceAnalytics::kurtosis(ptf_xts$port_ret, method = "moment") # original kurtosis
 ```
 
-`PerformanceAnalytics::table.Stats(R, ci = 0.95, digits = 4)` returns a full set of summary statistics that match the period of the data passed in (e.g., monthly returns will get monthly statistics, daily will be daily stats, and so on)
+`PerformanceAnalytics::table.Stats(R, ci = 0.95, digits = 4)` returns a full set of **summary statistics** that match the period of the data passed in (e.g., monthly returns will get monthly statistics, daily will be daily stats, and so on)
 
 ```{r}
 # summary statistic
@@ -1132,11 +1145,9 @@ Return.annualized(ptf_xts$excess_ret, geometric = TRUE)/StdDev.annualized(ptf_xt
 
 #### Information ratio
 
-While the Sharpe ratio measures the excess return as the difference between the return of the portfolio and the risk-free rate, the **information ratio**, on the other hand, measures the portfolio performance against a comparable benchmark rather than the risk-free rate. 
+While the Sharpe ratio measures the excess return as the difference between the return of the portfolio and the risk-free rate, the **information ratio**, on the other hand, measures the portfolio performance <u>against a comparable benchmark</u> rather than the risk-free rate. 
 
-The portfolio return in excess of the return of the benchmark is known as the *active return*, and the variability of the active return is known as the *active risk* or *tracking error* of the portfolio.
-
-The information ratio is the active return per unit of active risk.
+The information ratio is the active return per unit of active risk. This relates *the degree* to which an investment has beaten the benchmark to *the consistency* with which the investment has beaten the benchmark.
 
 $$
 \begin{aligned}
@@ -1146,8 +1157,9 @@ $$
 $$
 where 
 
-- $\bar{r}_m$ is the average return for the benchmark; and
-- $\sigma_{p-m}$ is the standard deviation for the active return, i.e., return of portfolio in excess of the benchmark return.
+- $\bar{r}_p$ and $\bar{r}_m$ is the average return for the portfolio and the benchmark, respectively; 
+- $\bar{r}_p-\bar{r}_m$ is the *active return* (or *active premium*) of the portfolio, i.e., return of portfolio in excess of the benchmark return;
+- $\sigma_{p-m}$ is the *active risk* (or *tracking error*) of the portfolio, i.e., the standard deviation (volatility) of the active return.
 
 --------------------------------------------------------------------------------
 
@@ -1448,11 +1460,94 @@ chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = "SharpeRatio.an
 ```
 
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+### CAPM-related metrics
+
+`table.SFM` creates a table of **CAPM-Related Measures**. SFM stands for Single Factor Model.
+
+```{r}
+with(ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly", "rf_1month")] %>%
+    mutate(Date = ymd(Date)) %>% 
+    xts(x=.[,-1], order.by=.[[1]]),
+    table.SFM(
+        Ra = port_ret,
+        Rb = mkt_return_monthly, 
+        Rf = rf_1month,
+        digits = 4)
+    ) %>% 
+    knitr::kable(caption = "Table of CAPM-related statistics") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down") 
+```
+
+- `Beta`: beta coefficient of CAPM
+- `Beta +`: `CAPM.beta.bull` is a regression for only positive market returns, which can be used to understand the behavior of the asset or portfolio in positive or 'bull' markets.
+- `Beta -`: `CAPM.beta.bear` provides the calculation on negative market returns.
+- `Active Premium`: performance premium provided by an investment over a passive strategy (the benchmark), which is the investment's annualized return minus the benchmark's annualized return. Also called "Active Return."
+
+$$
+\text{Active Premium} = \bar{r}_p-\bar{r}_m
+$$
+
+- `Tracking Error`: the unexplained portion of the investment's performance relative to a benchmark, defined as the standard 
+
+$$
+\begin{aligned}
+\text{Tracking Error} &= \sigma_{p-m} \\
+&= \sqrt{\frac{\sum(r_{p}-r_{m})^{2}}{T-1}} \times \sqrt{\text{scale}}
+\end{aligned}
+$$
+$\text{scale}$ is the number of periods in a year (daily scale = 252, weekly scale = 52, monthly scale = 12, quarterly scale = 4, annually sacle = 1).
+
+- `Information Ratio` is defined as the `Active Premium` divided by the `Tracking Error`.
+
+$$
+\begin{aligned}
+\text{IR}_p &= \frac{\text{Active Premium}}{\text{Tracking Error}} \\
+&= \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}}
+\end{aligned}
+$$
+
+--------------------------------------------------------------------------------
+
+**Specific risk** of the return distribution. 
+
+- Specific risk is the annualized standard deviation of the error term in the CAPM regression equation.
+
+- Systematic risk, as defined by Bacon (2008), is the product of beta by market risk.
+
+$$
+\sigma_s = \beta * \sigma_m
+$$
+Market risk, $\sigma_m$, is the annualized standard deviation of the benchmark. $\beta$ is the regression beta.
+
+- Total risk is defined as
+
+$$
+\text{Total Risk} = \sqrt{\text{Systematic Risk}^2 + \text{Specific Risk}^2}
+$$
+
+
+```{r}
+with(ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly", "rf_1month")] %>%
+    mutate(Date = ymd(Date)) %>% 
+    xts(x=.[,-1], order.by=.[[1]]),
+    table.SpecificRisk(
+        Ra = port_ret,
+        Rb = mkt_return_monthly, 
+        Rf = rf_1month,
+        digits = 4)
+    )
+```
+
+
+
+--------------------------------------------------------------------------------
+
 
 ### References
 
-
+--------------------------------------------------------------------------------
 
 [heavy-tailed]: https://stats.stackexchange.com/a/172532
 
