@@ -1057,7 +1057,7 @@ returns_statistics %>%
 - `LCL Mean`: Lower Confidence Level (LCL) of the mean, defaults to 95% confidence level.
 
     $$
-    \text{LCL Mean} = r_p - \text{SE Mean} \times c_{\alpha/2}
+    \text{LCL Mean} = \bar{r}_p - \text{SE Mean} \times c_{\alpha/2}
     $$
     
     where $c_{\alpha/2}$ is the critical value, i.e., $\left(1-\frac{\alpha}{2}\right)$ quantile of the $t$ distribution with $(T-1)$ degrees of freedom.
@@ -1065,7 +1065,7 @@ returns_statistics %>%
 - `UCL Mean`: Upper Confidence Level (UCL) of the mean, defaults to 95% confidence level.
 
     $$
-    \text{UCL Mean} = r_p + \text{SE Mean} \times c_{\alpha/2}
+    \text{UCL Mean} = \bar{r}_p + \text{SE Mean} \times c_{\alpha/2}
     $$
 
 - `Kurtosis`: Excess Kurtosis.
