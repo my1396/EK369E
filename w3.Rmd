@@ -701,11 +701,12 @@ plot(bop_weight_rebal$KIT)
 
 --------------------------------------------------------------------------------
 
-Now we build an equal-weighted portfolio consisting of 10 stocks per period, rebalanced annually. Then compute and plot portfolio returns using `PerformanceAnalytics`.
+Now we build an equal-weighted portfolio consisting of 10 stocks per period, rebalanced annually. Then compute and plot portfolio returns using `PerformanceAnalytics`. This is useful when you backtest a trading strategy.
 
 
 ```{r}
-# Define list of selected ISINs for each year (2015 to 2022, 8 yrs)
+# Backtest a hypothetical trading strategy
+# Define list of selected symbols for each year (2015 to 2022, 8 yrs)
 selected_symbol_by_year <- list(
   c("AURG", "RISH", "SADG", "HBC", "AKVA", "NONG", "ENTRA", "YAR", "PGS", "BMA"),
   c("YAR", "AKER", "APP", "XXL", "MSEIS", "ABL", "PSI", "RISH", "SALM", "WWI"),
@@ -840,7 +841,7 @@ ptf_ret3
 ```
 
 
-```{r}
+```{r fig.width=10, fig.height=9.72}
 # Portfolio performance relative to benchmark
 ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly")] %>%
     mutate(Date = ymd(Date)) %>% 
@@ -851,20 +852,21 @@ ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly")] %>%
 
 --------------------------------------------------------------------------------
 
-Monthly mean and volatility
+**Monthly mean and volatility**
 
-- arithmetic mean (AM) portfolio return $\bar{r}_{p, 0:T}$
+- <span style='color:#0099FF'>**Arithmetic mean**</span> (AM) portfolio return $\bar{r}_{p, 0:T}$
 
 $$
 \text{Arithmetic } \bar{r}_{p, 0:T} = \frac{\sum_{t=1}^T r_{p,t}}{T}
 $$
 
-- geometric mean (GM) portfolio return
+- <span style='color:#0099FF'>**Geometric mean**</span> (GM) portfolio return
 
-$$
-\text{Geometric } \bar{r}_{p, 0:T} = \left[\prod_{t=1}^T (1+r_{p,t}) \right] ^{\frac{1}{T}}-1
-$$
-Written as $\bar{r}_p$ in short, representing the arithmetic/geometric mean return of the portfolio from time $0$ to time $T$. 
+    $$
+    \text{Geometric } \bar{r}_{p, 0:T} = \left[\prod_{t=1}^T (1+r_{p,t}) \right] ^{\frac{1}{T}}-1
+    $$
+
+    Written as $\bar{r}_p$ in short, representing the arithmetic/geometric mean return of the portfolio from time $0$ to time $T$. 
 
 - Arithmetic average sometimes cannot precisely reflect historical gains and losses. Suppose the original capital of $\$100$ is invested over a two-month period with 10% return in the first month and $10\%$ loss in the second month.
 
@@ -874,9 +876,10 @@ Written as $\bar{r}_p$ in short, representing the arithmetic/geometric mean retu
 
 - Geometric mean is **smaller than or equal to** arithmetic mean and the equality holds if and only if $r_{p,1}=r_{p,2}=\cdots=r_{p,T}$. This can be proven by using **Jensen's inequality** that says, for any concave function $g(x)$, 
 
-$$
-E[g(x)] \le g(E[x]).
-$$
+    $$
+    E[g(x)] \le g(E[x]).
+    $$
+
     And $\ln(x)$ is a concave function.
 
 - Common practice is to report geometric mean portfolio return.
@@ -930,7 +933,7 @@ $$
 It is possible to use `Return.annualized`, `StdDev.annualized` from the `PerformanceAnalytics` package to get the annualized statistics, but we need to convert the portfolio return as an `xts` object. 
 
 ```{r}
-# convert to xts
+# convert portfolio return to xts object
 ptf_xts <- xts(ptf_ret3[,-c(1,3)], order.by=ymd(ptf_ret3$Date))
 ptf_xts %>% 
     data.frame %>% 
@@ -957,7 +960,15 @@ Histogram of portfolio returns.
 
 ```{r}
 # histogram to check normality
-chart.Histogram(ptf_xts$port_ret, methods = c("add.density", "add.normal"))
+chart.Histogram(
+    ptf_xts$port_ret, 
+    methods = c("add.density", "add.normal"),
+    main = "Histogram of Returns, relative to Normal distribution"
+    )
+legend("topright", 
+       legend = c("Portfolio", "Normal"), 
+       col = c("#00008F", "#005AFF"), 
+       lwd = 2, bty = "n")
 ```
 
 
@@ -966,7 +977,9 @@ chart.Histogram(ptf_xts$port_ret, methods = c("add.density", "add.normal"))
 #### Skewness and Kurtosis
 
 
-**Skewness** $\mu_3$ is the third (normalized) moment about the mean. \
+**Skewness** 
+
+$\mu_3$ is the third (normalized) moment about the mean. \
 It measures the asymmetry of the distribution, with symmetric distribution having $\mu_3=0$.
 
 - $\mu_3>0$ means positively skewed, i.e., long right tail.
@@ -987,7 +1000,9 @@ skewness(ptf_xts$port_ret)
 
 
 
-**Kurtosis** $K_p$ is the fourth (normalized) moment about the mean. \
+**Kurtosis** 
+
+$K_p$ is the fourth (normalized) moment about the mean. \
 It measures the *tail behavior* in comparison with the normal distribution.
 
 
@@ -1410,7 +1425,8 @@ where $n$ is either the number of observations of the entire series or the numbe
 $$
 \text{ES}(\alpha) = E[r_p \vert r_p \leq F^{-1}(\alpha)]
 $$
-    -  VaR is the most optimistic measure of worst-case scenarios as it takes the smallest loss of all these cases, while ES informs the magnitudes of potential losses given that the loss is greater than the VaR.
+
+- VaR is the most optimistic measure of worst-case scenarios as it takes the smallest loss of all these cases, while ES informs the magnitudes of potential losses given that the loss is greater than the VaR.
 
 
 ```{r}
@@ -1452,30 +1468,74 @@ chart.Drawdown(ptf_xts$port_ret)
 ```
 
 
+--------------------------------------------------------------------------------
+
+### Rolling performance
+
+Rolling performance is typically used as a way to assess stability of a return stream.
+
+
+A rolling window of 12 months is **NOT** the same as annually. 
+
+- Rolling window of 12 mons: The window "rolls" forward one month at a time. The data frequency is monthly. 
+
+    For example, it computes return from Jan–Dec 2015, then Feb 2015–Jan 2016, then Mar 2015–Feb 2016, and so on. This gives you a smoother, more continuous view of how performance evolves over time.
+
+- Annual performance calculates returns or metrics strictly once per calendar year (e.g., Jan–Dec 2015, Jan–Dec 2016). The data frequency is annually. 
+
+    Each year is treated as a discrete block. There's no overlap between years.
+
+
+**Key differences**:
+
+| Aspect               | Rolling 12-Month Window           | Annual (Calendar Year)            |
+|:---------------------|:----------------------------------|:----------------------------------|
+| Frequency            | Monthly                           | Yearly                            |
+| Overlapping Periods  | Yes                               | No                                |
+| Smoothness           | Smoother trends                   | Step-wise, discrete jumps         |
+| Use Case             | Trend analysis, risk over time    | Year-by-year comparison           |
+| Number of Observations | Higher                          | Lower                             |
+
+
+`PerformanceAnalytics::chart.RollingPerformance(R, width = 12, FUN = "Return.annualized")` provides a way to display different metrics, e.g., returns, standard deviation, Sharpe ratio, over rolling time periods.
+
+- `width`: number of periods to apply rolling function window over.
+- `FUN`: any function that can be evaluated using a single set of returns.
+
 ```{r}
-## rolling annualized mean and volatility
+## rolling annualized mean
 chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = "Return.annualized")
+## rolling annualized volatility
 chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = "StdDev.annualized")
-chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = "SharpeRatio.annualized", Rf=ptf_xts$excess_ret)
+## rolling annualized Sharpe ratio
+chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = "SharpeRatio.annualized", Rf=ptf_xts$rf_1month)
 ```
+
+
+Three-in-one rolling performance charts can be created using `charts.RollingPerformance`.
+
+```{r}
+charts.RollingPerformance(R = ptf_xts$port_ret, width = 12, Rf=ptf_xts$rf_1month)
+```
+
+
 
 
 --------------------------------------------------------------------------------
 
 ### CAPM-related metrics
 
-`table.SFM` creates a table of **CAPM-Related Measures**. SFM stands for Single Factor Model.
+`table.SFM` (or `table.CAPM`) creates a table of **CAPM-Related Measures**. SFM stands for Single Factor Model.
 
 ```{r}
-with(ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly", "rf_1month")] %>%
-    mutate(Date = ymd(Date)) %>% 
-    xts(x=.[,-1], order.by=.[[1]]),
+with(ptf_xts,
     table.SFM(
         Ra = port_ret,
         Rb = mkt_return_monthly, 
         Rf = rf_1month,
         digits = 4)
     ) %>% 
+    setNames("Portfolio performance") %>% 
     knitr::kable(caption = "Table of CAPM-related statistics") %>%
     kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, latex_options="scale_down") 
 ```
@@ -1489,15 +1549,16 @@ $$
 \text{Active Premium} = \bar{r}_p-\bar{r}_m
 $$
 
-- `Tracking Error`: the unexplained portion of the investment's performance relative to a benchmark, defined as the standard 
+- `Tracking Error`: the unexplained portion of the investment's performance relative to a benchmark, defined as the standard deviation of the active return.
 
-$$
-\begin{aligned}
-\text{Tracking Error} &= \sigma_{p-m} \\
-&= \sqrt{\frac{\sum(r_{p}-r_{m})^{2}}{T-1}} \times \sqrt{\text{scale}}
-\end{aligned}
-$$
-$\text{scale}$ is the number of periods in a year (daily scale = 252, weekly scale = 52, monthly scale = 12, quarterly scale = 4, annually sacle = 1).
+    $$
+    \begin{aligned}
+    \text{Tracking Error} &= \sigma_{p-m} \\
+    &= \sqrt{\frac{\sum(r_{p}-r_{m})^{2}}{T-1}} \times \sqrt{\text{scale}}
+    \end{aligned}
+    $$
+    
+    $\text{scale}$ is the number of periods in a year (daily scale = 252, weekly scale = 52, monthly scale = 12, quarterly scale = 4, annually sacle = 1).
 
 - `Information Ratio` is defined as the `Active Premium` divided by the `Tracking Error`.
 
@@ -1510,16 +1571,17 @@ $$
 
 --------------------------------------------------------------------------------
 
-**Specific risk** of the return distribution. 
+**Risk decomposition** of the return distribution. 
 
 - Specific risk is the annualized standard deviation of the error term in the CAPM regression equation.
 
 - Systematic risk, as defined by Bacon (2008), is the product of beta by market risk.
 
-$$
-\sigma_s = \beta * \sigma_m
-$$
-Market risk, $\sigma_m$, is the annualized standard deviation of the benchmark. $\beta$ is the regression beta.
+    $$
+    \sigma_s = \beta * \sigma_m
+    $$
+
+    Market risk, $\sigma_m$, is the annualized standard deviation of the benchmark. $\beta$ is the regression beta.
 
 - Total risk is defined as
 
@@ -1528,16 +1590,17 @@ $$
 $$
 
 
+`table.SpecificRisk` provide a table of specific risk, systematic risk and total risk.
+
 ```{r}
-with(ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly", "rf_1month")] %>%
-    mutate(Date = ymd(Date)) %>% 
-    xts(x=.[,-1], order.by=.[[1]]),
-    table.SpecificRisk(
+# Risk decomposition
+with(ptf_xts,
+     table.SpecificRisk(
         Ra = port_ret,
         Rb = mkt_return_monthly, 
         Rf = rf_1month,
         digits = 4)
-    )
+     )
 ```
 
 
@@ -1547,7 +1610,6 @@ with(ptf_ret3[, c("Date", "port_ret", "mkt_return_monthly", "rf_1month")] %>%
 
 ### References
 
---------------------------------------------------------------------------------
 
 [heavy-tailed]: https://stats.stackexchange.com/a/172532
 
