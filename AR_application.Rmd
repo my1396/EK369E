@@ -1,0 +1,136 @@
+---
+title: "Autocorrelated Series -- Application"
+author: "Menghan Yuan"
+date: "May 10, 2025"
+output: 
+    bookdown::html_document2:
+        toc: true
+        toc_float: true
+        toc_depth: 4
+        number_sections: false
+        css: "style.css"
+bibliography: bibli.bib
+link-citations: yes
+biblio-style: apalike
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=F, echo=F}
+library(knitr) # load packages
+library(broom)
+library(kableExtra)
+library(tidyverse)
+library(latex2exp)
+library(stargazer)
+library(xts)
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts <- options(knitr.kable.NA = "")
+
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
+```
+
+
+This script provides an example of autocorrelated residuals.
+
+**Dataset description**
+
+Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations \
+Source: Department of Commerce, BEA website and <www.economagic.com>
+
+
+| Feild Name | Definition                                                   |
+| :--------- | :----------------------------------------------------------- |
+| year       | Year                                                         |
+| qtr        | Quarter                                                      |
+| realgdp    | Real GDP (\$bil)                                             |
+| realcons   | Real consumption expenditures                                |
+| realinvs   | Real investment by private sector                            |
+| realgovt   | Real government expenditures                                 |
+| realdpi    | Real disposable personal income                              |
+| cpi_u      | Consumer price index                                         |
+| M1         | Nominal money stock                                          |
+| tbilrate   | Quarterly average of month end 90 day t bill rate            |
+| unemp      | Unemployment rate                                            |
+| pop        | Population, mil. interpolate of year end figures using constant growth rate per quarter |
+| infl       | Rate of inflation (First observation is missing)             |
+| realint    | Ex post real interest rate = Tbilrate - Infl. (First observation missing) |
+
+```{r}
+data <- read.table("https://raw.githubusercontent.com/my1396/course_dataset/refs/heads/main/TableF5-2.txt", header = TRUE)
+data <- data %>% 
+    mutate(delta_infl = infl-lag(infl))
+data %>% head() %>% 
+    knitr::kable(digits = 5) %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, latex_options="scale_down") %>% 
+    scroll_box(width = "100%")
+```
+
+
+```{r results="asis"}
+lm_phillips <- lm(delta_infl ~ unemp, data = data)
+stargazer(lm_phillips, 
+          type = "html", 
+          title = "Phillips Curve Regression",
+          notes = "<span>&#42;</span>: p<0.1; <span>&#42;&#42;</span>: <strong>p<0.05</strong>; <span>&#42;&#42;&#42;</span>: p<0.01 <br> Standard errors in parentheses.",
+          notes.append = F)
+```
+
+```{r}
+# variance-covariance matrix
+vcov(lm_phillips)
+```
+
+```{r ar-res, fig.cap="Phillips Curve Deviations from Expected Inflation"}
+plot(lm_phillips$residuals, type="l")
+```
+
+Fig. \@ref(fig:ar-res) shows striking negative autocorrelation.
+
+
+```{r}
+res <- tibble(res_t=lm_phillips$residuals,
+       res_t1=lag(lm_phillips$residuals))
+lm_res <- lm(res_t~res_t1, data=res)
+summary(lm_res)
+```
+
+
+The regression of the least squares residuals on their past values gives a slope of `r sprintf("%.4f", lm_res$coefficients[2])` with a highly significant $t$ ratio of `r sprintf("%.4f", summary(lm_res)$coef[2,3])`.
+We thus conclude that the residuals in this models are highly negatively autocorrelated. 
+
+
+
+--------------------------------------------------------------------------------
+
+Reference:
+
+- Ex. 12.3, Chap 12 Serial Correlation, *Econometric Analysis*, Greene 5th Edition, pp 251.
+
+
+
+
+
+
+
+
+
+

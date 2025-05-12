@@ -344,6 +344,9 @@ div.tocify {
 </div>
 
 
+<p>Time series data often display autocorrelation, or serial correlation of the disturbances across periods.</p>
+<p>If you plot the residuals and observe that the effect of a given disturbance is carried, at least in part, across periods, then it is a strong signal of serial correlation. It’s like the disturbances exhibiting a sort of “memory” over time.</p>
+<hr />
 <div id="ar1-visualization" class="section level1">
 <h1>AR(1) Visualization</h1>
 <p>The first-order autoregressive process, denoted AR(1), is
@@ -381,6 +384,8 @@ Fig. <a href="#fig:AR1-neg">3</a>(a) shows an AR(1) process with <span class="ma
 Fig. 3: Simulated AR(1) processes with negtive <span class="math inline">\(\rho\)</span>. (a) <span class="math inline">\(\rho=-0.5\)</span>, (b) <span class="math inline">\(\rho=-0.95\)</span>. Each is generated useing the white noise process <span class="math inline">\(w_t\)</span> displayed in Fig. <a href="#fig:WN">1</a>.
 </p>
 </div>
+<hr />
+<p>Possible causes of serial correlation: Incomplete or flawed model specification. Relevant factors omitted from the time series regression are correlated across periods.</p>
 <hr />
 </div>
 <div id="mathematical-representation" class="section level1">

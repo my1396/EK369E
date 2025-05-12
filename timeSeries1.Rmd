@@ -72,6 +72,12 @@ put.fig.letter <- function(label, location="topleft", x=NULL, y=NULL,
 ```
 
 
+Time series data often display autocorrelation, or serial correlation of the disturbances across periods.
+
+If you plot the residuals and observe that the effect of a given disturbance is carried, at least in part, across periods, then it is a strong signal of serial correlation. It's like the disturbances exhibiting a sort of "memory" over time.
+
+--------------------------------------------------------------------------------
+
 # AR(1) Visualization
 
 The first-order autoregressive process, denoted AR(1), is
@@ -148,7 +154,8 @@ dev.off()
 include_graphics(f_name)
 ```
 
-___
+
+-----------------------------------------------------------------------------
 
 We have seen the cases when $\rho$ is positive, now let's consider when $\rho$ is **negative**.
 Fig. \@ref(fig:AR1-neg)(a) shows an AR(1) process with $\rho=-0.5$, and Fig. \@ref(fig:AR1-neg)(a) shows an AR(1) process with $\rho=-0.95\,.$
@@ -195,7 +202,13 @@ include_graphics(f_name)
 ```
 
 
-___
+--------------------------------------------------------------------------------
+
+Possible causes of serial correlation: Incomplete or flawed model specification. Relevant factors omitted from the time series regression are correlated across periods.
+
+
+
+--------------------------------------------------------------------------------
 
 # Mathematical Representation
 

@@ -977,7 +977,9 @@ legend("topright",
 #### Skewness and Kurtosis
 
 
-**Skewness** $\mu_3$ is the third (normalized) moment about the mean. \
+**Skewness** 
+
+$\mu_3$ is the third (normalized) moment about the mean. \
 It measures the asymmetry of the distribution, with symmetric distribution having $\mu_3=0$.
 
 - $\mu_3>0$ means positively skewed, i.e., long right tail.
@@ -998,7 +1000,9 @@ skewness(ptf_xts$port_ret)
 
 
 
-**Kurtosis** $K_p$ is the fourth (normalized) moment about the mean. \
+**Kurtosis** 
+
+$K_p$ is the fourth (normalized) moment about the mean. \
 It measures the *tail behavior* in comparison with the normal distribution.
 
 
