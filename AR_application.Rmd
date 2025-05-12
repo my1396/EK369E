@@ -54,7 +54,7 @@ This script provides an example of autocorrelated residuals.
 **Dataset description**
 
 Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations \
-Source: Department of Commerce, BEA website and <www.economagic.com>
+Source: Department of Commerce, BEA website and [www.economagic.com](www.economagic.com)
 
 
 | Feild Name | Definition                                                   |
