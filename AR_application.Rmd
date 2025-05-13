@@ -12,6 +12,7 @@ output:
 bibliography: bibli.bib
 link-citations: yes
 biblio-style: apalike
+knit: rmarkdown::render
 editor_options: 
   chunk_output_type: console
 ---

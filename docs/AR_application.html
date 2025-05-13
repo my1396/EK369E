@@ -15,10 +15,9 @@
 
 <title>Autocorrelated Series – Application</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -31,8 +30,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -224,6 +226,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -231,6 +296,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -274,10 +349,8 @@ $(document).ready(function () {
 
 <p>This script provides an example of autocorrelated residuals.</p>
 <p><strong>Dataset description</strong></p>
-<p>US Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly
-Observations<br />
-Source: Department of Commerce, BEA website and <a
-href="www.economagic.com">www.economagic.com</a></p>
+<p>US Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations<br />
+Source: Department of Commerce, BEA website and <a href="www.economagic.com">www.economagic.com</a></p>
 <table>
 <colgroup>
 <col width="14%" />
@@ -336,8 +409,7 @@ href="www.economagic.com">www.economagic.com</a></p>
 </tr>
 <tr class="even">
 <td align="left">pop</td>
-<td align="left">Population, mil. interpolate of year end figures using
-constant growth rate per quarter</td>
+<td align="left">Population, mil. interpolate of year end figures using constant growth rate per quarter</td>
 </tr>
 <tr class="odd">
 <td align="left">infl</td>
@@ -345,8 +417,7 @@ constant growth rate per quarter</td>
 </tr>
 <tr class="even">
 <td align="left">realint</td>
-<td align="left">Ex post real interest rate = Tbilrate - Infl. (First
-observation is missing)</td>
+<td align="left">Ex post real interest rate = Tbilrate - Infl. (First observation is missing)</td>
 </tr>
 </tbody>
 </table>
@@ -359,8 +430,7 @@ data %&gt;%
     knitr::kable(digits = 5) %&gt;%
     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = FALSE, latex_options=&quot;scale_down&quot;) %&gt;% 
     scroll_box(width = &quot;100%&quot;)</code></pre>
-<div
-style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -699,18 +769,14 @@ delta_infl
 <p><strong>Empirical model</strong></p>
 <p><span class="math display">\[
 \Delta I_t =  \beta_1 + \beta_2 u_t + \varepsilon_t
-\]</span> where</p>
+\]</span>
+where</p>
 <ul>
-<li><span class="math inline">\(I_t\)</span> is the inflation rate;
-<span class="math inline">\(\Delta I_t = I_t - I_{t-1}\)</span> is the
-first difference of the inflation rate;</li>
-<li><span class="math inline">\(u_t\)</span> is the unemployment
-rate;</li>
-<li><span class="math inline">\(\varepsilon_t\)</span> is the error
-term.</li>
+<li><span class="math inline">\(I_t\)</span> is the inflation rate; <span class="math inline">\(\Delta I_t = I_t - I_{t-1}\)</span> is the first difference of the inflation rate;</li>
+<li><span class="math inline">\(u_t\)</span> is the unemployment rate;</li>
+<li><span class="math inline">\(\varepsilon_t\)</span> is the error term.</li>
 </ul>
-<p>We remove the first two quarters due to missing value in the first
-observation and the change in the rate of inflation.</p>
+<p>We remove the first two quarters due to missing value in the first observation and the change in the rate of inflation.</p>
 <p>Regression result for OLS.</p>
 <pre class="r"><code>lm_phillips &lt;- lm(delta_infl ~ unemp, data = data %&gt;% tail(-2))
 stargazer(lm_phillips, 
@@ -845,8 +911,7 @@ F Statistic
 <em>Note:</em>
 </td>
 <td style="text-align:right">
-<span>*</span>: p&lt;0.1; <span>**</span>: <strong>p&lt;0.05</strong>;
-<span>***</span>: p&lt;0.01 <br> Standard errors in parentheses.
+<span>*</span>: p&lt;0.1; <span>**</span>: <strong>p&lt;0.05</strong>; <span>***</span>: p&lt;0.01 <br> Standard errors in parentheses.
 </td>
 </tr>
 </table>
@@ -858,15 +923,15 @@ vcov(lm_phillips)</code></pre>
 <p><strong>Autocorrelated residuals</strong></p>
 <p>Plot the residuals.</p>
 <pre class="r"><code>plot(lm_phillips$residuals, type=&quot;l&quot;)</code></pre>
-<div class="figure" style="text-align: center">
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ar-res"></span>
 <img src="AR_application_files/figure-html/ar-res-1.png" alt="Phillips Curve Deviations from Expected Inflation" width="672" />
 <p class="caption">
-Phillips Curve Deviations from Expected Inflation
+Fig. 1: Phillips Curve Deviations from Expected Inflation
 </p>
 </div>
-<p>Fig. @ref(fig:ar-res) shows striking negative autocorrelation.</p>
-<p>Now we test the serial correlation of the residuals. <span
-class="math display">\[
+<p>Fig. <a href="#fig:ar-res">1</a> shows striking negative autocorrelation.</p>
+<p>Now we test the serial correlation of the residuals.
+<span class="math display">\[
 \varepsilon_t = \phi\varepsilon_{t-1} + e_t
 \]</span></p>
 <pre class="r"><code>res &lt;- tibble(
@@ -893,19 +958,18 @@ summary(lm_res)</code></pre>
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.1844, Adjusted R-squared:  0.1803 
 ## F-statistic: 44.99 on 1 and 199 DF,  p-value: 2.002e-10</code></pre>
-<p>The regression of the least squares residuals on their past values
-gives a slope of -0.4263 with a highly significant <span
-class="math inline">\(t\)</span> ratio of -6.7078. We thus conclude that
-the residuals in this models are highly negatively autocorrelated.</p>
+<p>The regression of the least squares residuals on their past values gives a slope of -0.4263 with a highly significant <span class="math inline">\(t\)</span> ratio of -6.7078.
+We thus conclude that the residuals in this models are highly negatively autocorrelated.</p>
 <hr />
 <p>References:</p>
 <ul>
-<li>Ex. 12.3, Chap 12 Serial Correlation, <em>Econometric Analysis</em>,
-Greene 5th Edition, pp 251.</li>
+<li>Ex. 12.3, Chap 12 Serial Correlation, <em>Econometric Analysis</em>, Greene 5th Edition, pp 251.</li>
 </ul>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -938,6 +1002,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
