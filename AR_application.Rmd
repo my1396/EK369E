@@ -126,6 +126,11 @@ plot(lm_phillips$residuals, type="l")
 
 Fig. \@ref(fig:ar-res) shows striking negative autocorrelation.
 
+Now we test the serial correlation of the residuals.
+$$
+\varepsilon_t = \phi\varepsilon_{t-1} + e_t
+$$
+
 ```{r}
 res <- tibble(
             res_t = lm_phillips$residuals,
