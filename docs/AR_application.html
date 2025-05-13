@@ -349,7 +349,7 @@ div.tocify {
 
 <p>This script provides an example of autocorrelated residuals.</p>
 <p><strong>Dataset description</strong></p>
-<p>Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations<br />
+<p>US Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations<br />
 Source: Department of Commerce, BEA website and <a href="www.economagic.com">www.economagic.com</a></p>
 <table>
 <colgroup>
@@ -417,14 +417,16 @@ Source: Department of Commerce, BEA website and <a href="www.economagic.com">www
 </tr>
 <tr class="even">
 <td align="left">realint</td>
-<td align="left">Ex post real interest rate = Tbilrate - Infl. (First observation missing)</td>
+<td align="left">Ex post real interest rate = Tbilrate - Infl. (First observation is missing)</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>data &lt;- read.table(&quot;https://raw.githubusercontent.com/my1396/course_dataset/refs/heads/main/TableF5-2.txt&quot;, header = TRUE)
+<pre class="r"><code># data preview
+data &lt;- read.table(&quot;https://raw.githubusercontent.com/my1396/course_dataset/refs/heads/main/TableF5-2.txt&quot;, header = TRUE)
 data &lt;- data %&gt;% 
     mutate(delta_infl = infl-lag(infl))
-data %&gt;% head() %&gt;% 
+data %&gt;% 
+    head() %&gt;% 
     knitr::kable(digits = 5) %&gt;%
     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = FALSE, latex_options=&quot;scale_down&quot;) %&gt;% 
     scroll_box(width = &quot;100%&quot;)</code></pre>
@@ -764,7 +766,19 @@ delta_infl
 </tbody>
 </table>
 </div>
-<pre class="r"><code>lm_phillips &lt;- lm(delta_infl ~ unemp, data = data)
+<p><strong>Empirical model</strong></p>
+<p><span class="math display">\[
+\Delta I_t =  \beta_1 + \beta_2 u_t + \varepsilon_t
+\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(I_t\)</span> is the inflation rate; <span class="math inline">\(\Delta I_t = I_t - I_{t-1}\)</span> is the first difference of the inflation rate;</li>
+<li><span class="math inline">\(u_t\)</span> is the unemployment rate;</li>
+<li><span class="math inline">\(\varepsilon_t\)</span> is the error term.</li>
+</ul>
+<p>We remove the first two quarters due to missing value in the first observation and the change in the rate of inflation.</p>
+<p>Regression result for OLS.</p>
+<pre class="r"><code>lm_phillips &lt;- lm(delta_infl ~ unemp, data = data %&gt;% tail(-2))
 stargazer(lm_phillips, 
           type = &quot;html&quot;, 
           title = &quot;Phillips Curve Regression&quot;,
@@ -807,7 +821,7 @@ delta_infl
 unemp
 </td>
 <td>
--0.091
+-0.090
 </td>
 </tr>
 <tr>
@@ -828,14 +842,14 @@ unemp
 Constant
 </td>
 <td>
-0.518
+0.492
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.743)
+(0.740)
 </td>
 </tr>
 <tr>
@@ -853,7 +867,7 @@ Constant
 Observations
 </td>
 <td>
-203
+202
 </td>
 </tr>
 <tr>
@@ -877,7 +891,7 @@ Adjusted R<sup>2</sup>
 Residual Std. Error
 </td>
 <td>
-2.833 (df = 201)
+2.822 (df = 200)
 </td>
 </tr>
 <tr>
@@ -885,7 +899,7 @@ Residual Std. Error
 F Statistic
 </td>
 <td>
-0.517 (df = 1; 201)
+0.513 (df = 1; 200)
 </td>
 </tr>
 <tr>
@@ -904,8 +918,10 @@ F Statistic
 <pre class="r"><code># variance-covariance matrix
 vcov(lm_phillips)</code></pre>
 <pre><code>##             (Intercept)       unemp
-## (Intercept)  0.55228148 -0.09041872
-## unemp       -0.09041872  0.01594423</code></pre>
+## (Intercept)  0.54830829 -0.08973175
+## unemp       -0.08973175  0.01582211</code></pre>
+<p><strong>Autocorrelated residuals</strong></p>
+<p>Plot the residuals.</p>
 <pre class="r"><code>plot(lm_phillips$residuals, type=&quot;l&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ar-res"></span>
 <img src="AR_application_files/figure-html/ar-res-1.png" alt="Phillips Curve Deviations from Expected Inflation" width="672" />
@@ -914,33 +930,34 @@ Fig. 1: Phillips Curve Deviations from Expected Inflation
 </p>
 </div>
 <p>Fig. <a href="#fig:ar-res">1</a> shows striking negative autocorrelation.</p>
-<pre class="r"><code>res &lt;- tibble(res_t=lm_phillips$residuals,
-       res_t1=lag(lm_phillips$residuals))
-lm_res &lt;- lm(res_t~res_t1, data=res)
+<pre class="r"><code>res &lt;- tibble(
+            res_t = lm_phillips$residuals,
+            res_t1 = lag(lm_phillips$residuals))
+lm_res &lt;- lm(res_t ~ res_t1, data = res)
 summary(lm_res)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = res_t ~ res_t1, data = res)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -9.974 -1.474  0.053  1.464  8.305 
+##     Min      1Q  Median      3Q     Max 
+## -9.8694 -1.4800  0.0718  1.4990  8.3258 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -0.01730    0.18129  -0.095    0.924    
-## res_t1      -0.40586    0.06428  -6.314 1.73e-09 ***
+## (Intercept) -0.02155    0.17854  -0.121    0.904    
+## res_t1      -0.42630    0.06355  -6.708    2e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.577 on 200 degrees of freedom
+## Residual standard error: 2.531 on 199 degrees of freedom
 ##   (1 observation deleted due to missingness)
-## Multiple R-squared:  0.1662, Adjusted R-squared:  0.162 
-## F-statistic: 39.86 on 1 and 200 DF,  p-value: 1.727e-09</code></pre>
-<p>The regression of the least squares residuals on their past values gives a slope of -0.4059 with a highly significant <span class="math inline">\(t\)</span> ratio of -6.3136.
+## Multiple R-squared:  0.1844, Adjusted R-squared:  0.1803 
+## F-statistic: 44.99 on 1 and 199 DF,  p-value: 2.002e-10</code></pre>
+<p>The regression of the least squares residuals on their past values gives a slope of -0.4263 with a highly significant <span class="math inline">\(t\)</span> ratio of -6.7078.
 We thus conclude that the residuals in this models are highly negatively autocorrelated.</p>
 <hr />
-<p>Reference:</p>
+<p>References:</p>
 <ul>
 <li>Ex. 12.3, Chap 12 Serial Correlation, <em>Econometric Analysis</em>, Greene 5th Edition, pp 251.</li>
 </ul>

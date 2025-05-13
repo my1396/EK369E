@@ -53,7 +53,7 @@ This script provides an example of autocorrelated residuals.
 
 **Dataset description**
 
-Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations \
+US Macroeconomics Data Set, Quarterly, 1950I to 2000IV, 204 Quarterly Observations \
 Source: Department of Commerce, BEA website and [www.economagic.com](www.economagic.com)
 
 
@@ -72,21 +72,39 @@ Source: Department of Commerce, BEA website and [www.economagic.com](www.economa
 | unemp      | Unemployment rate                                            |
 | pop        | Population, mil. interpolate of year end figures using constant growth rate per quarter |
 | infl       | Rate of inflation (First observation is missing)             |
-| realint    | Ex post real interest rate = Tbilrate - Infl. (First observation missing) |
+| realint    | Ex post real interest rate = Tbilrate - Infl. (First observation is missing) |
 
 ```{r}
+# data preview
 data <- read.table("https://raw.githubusercontent.com/my1396/course_dataset/refs/heads/main/TableF5-2.txt", header = TRUE)
 data <- data %>% 
     mutate(delta_infl = infl-lag(infl))
-data %>% head() %>% 
+data %>% 
+    head() %>% 
     knitr::kable(digits = 5) %>%
     kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, latex_options="scale_down") %>% 
     scroll_box(width = "100%")
 ```
 
 
+**Empirical model**
+
+$$
+\Delta I_t =  \beta_1 + \beta_2 u_t + \varepsilon_t
+$$
+where 
+
+- $I_t$ is the inflation rate; $\Delta I_t = I_t - I_{t-1}$ is the first difference of the inflation rate;
+- $u_t$ is the unemployment rate;
+- $\varepsilon_t$ is the error term.
+
+We remove the first two quarters due to missing value in the first observation and the change in the rate of inflation.
+
+
+Regression result for OLS.
+
 ```{r results="asis"}
-lm_phillips <- lm(delta_infl ~ unemp, data = data)
+lm_phillips <- lm(delta_infl ~ unemp, data = data %>% tail(-2))
 stargazer(lm_phillips, 
           type = "html", 
           title = "Phillips Curve Regression",
@@ -99,20 +117,22 @@ stargazer(lm_phillips,
 vcov(lm_phillips)
 ```
 
+**Autocorrelated residuals**
+
+Plot the residuals.
 ```{r ar-res, fig.cap="Phillips Curve Deviations from Expected Inflation"}
 plot(lm_phillips$residuals, type="l")
 ```
 
 Fig. \@ref(fig:ar-res) shows striking negative autocorrelation.
 
-
 ```{r}
-res <- tibble(res_t=lm_phillips$residuals,
-       res_t1=lag(lm_phillips$residuals))
-lm_res <- lm(res_t~res_t1, data=res)
+res <- tibble(
+            res_t = lm_phillips$residuals,
+            res_t1 = lag(lm_phillips$residuals))
+lm_res <- lm(res_t ~ res_t1, data = res)
 summary(lm_res)
 ```
-
 
 The regression of the least squares residuals on their past values gives a slope of `r sprintf("%.4f", lm_res$coefficients[2])` with a highly significant $t$ ratio of `r sprintf("%.4f", summary(lm_res)$coef[2,3])`.
 We thus conclude that the residuals in this models are highly negatively autocorrelated. 
@@ -121,7 +141,7 @@ We thus conclude that the residuals in this models are highly negatively autocor
 
 --------------------------------------------------------------------------------
 
-Reference:
+References:
 
 - Ex. 12.3, Chap 12 Serial Correlation, *Econometric Analysis*, Greene 5th Edition, pp 251.
 
