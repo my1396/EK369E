@@ -22,14 +22,14 @@ biblio-style: apalike
 </style>
 
 
-```{r setup, include=F, echo=F}
+```{r setup, include=F}
 library(knitr)
 library(kableExtra)
 library(bookdown)
 library(tidyverse)
 ```
 
-```{r, child="_chunk-opt.Rmd", echo=FALSE, include=FALSE}
+```{r, child="_chunk-opt.Rmd", include=FALSE}
 ```
 
 

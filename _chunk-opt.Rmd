@@ -1,12 +1,13 @@
 <!-- Chunk option settings --> 
 
-```{r chunk-opt, include=F, echo=F}
+```{r chunk-opt, include=F}
 # set default chunk options
 opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
 opts <- options(knitr.kable.NA = "")
 ```
 
-
+<!-- Define chunk option `max.lines` --> 
+<!-- controls max lines printed --> 
 ```{r}
 ## Control long outputs via a custom chunk option
 ## eg `max.lines = 10`

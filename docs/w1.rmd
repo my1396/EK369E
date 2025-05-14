@@ -14,7 +14,7 @@ link-citations: yes
 biblio-style: apalike
 ---
 
-```{r setup, include=F, echo=F}
+```{r setup, include=F}
 library(knitr) # load packages
 library(kableExtra)
 library(tidyverse)
@@ -23,7 +23,7 @@ library(stargazer)
 library(xts)
 ```
 
-```{r, child="_chunk-opt.Rmd", echo=FALSE, include=FALSE}
+```{r, child="_chunk-opt.Rmd", include=FALSE}
 ```
 
 

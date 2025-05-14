@@ -16,7 +16,7 @@ nocite: |
     @MacKinlay1997, @Campbell1996Chap4
 ---
 
-```{r setup, include=F, echo=F}
+```{r setup, include=F}
 library(knitr) # load packages
 library(kableExtra)
 library(tidyverse)

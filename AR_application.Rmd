@@ -17,7 +17,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=F, echo=F}
+```{r setup, include=F}
 library(knitr) # load packages
 library(broom)
 library(kableExtra)
@@ -27,7 +27,7 @@ library(stargazer)
 library(xts)
 ```
 
-```{r, child="_chunk-opt.Rmd", echo=FALSE, include=FALSE}
+```{r, child="_chunk-opt.Rmd", include=FALSE}
 ```
 
 This script provides an example of autocorrelated residuals.
