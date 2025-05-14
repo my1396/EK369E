@@ -17,7 +17,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=F}
+```{r load-packages, include=F}
 library(knitr) # load packages
 library(broom)
 library(kableExtra)

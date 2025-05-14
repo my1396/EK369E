@@ -14,7 +14,7 @@ link-citations: yes
 biblio-style: apalike
 ---
 
-```{r setup, include=F, echo=F}
+```{r load-packages, include=F, echo=F}
 library(knitr) # load packages
 library(kableExtra)
 library(tidyverse)

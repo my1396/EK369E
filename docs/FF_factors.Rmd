@@ -22,7 +22,7 @@ biblio-style: apalike
 </style>
 
 
-```{r setup, include=F}
+```{r load-packages, include=F}
 library(knitr)
 library(kableExtra)
 library(bookdown)
