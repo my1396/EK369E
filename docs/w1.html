@@ -370,6 +370,7 @@ div.tocify {
 </div>
 
 
+<!-- Chunk option settings -->
 <p><br/> This script estimates CAPM for individual stocks and shows an example of 2-pass CAPM.</p>
 <div id="time-series-capm" class="section level2">
 <h2>Time Series CAPM</h2>
@@ -2989,7 +2990,7 @@ addLegend(&quot;topright&quot;,
           col = col_vec,
           bg = &quot;white&quot;,
           box.col = &quot;white&quot;)</code></pre>
-<p><img src="w1_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w1_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>capm_ml &lt;- lm(eRi~rmrf, data=reg_data)
 summary(capm_ml)</code></pre>
 <pre><code>## 
@@ -3011,7 +3012,10 @@ summary(capm_ml)</code></pre>
 ## Multiple R-squared:  0.1781, Adjusted R-squared:  0.1693 
 ## F-statistic: 20.36 on 1 and 94 DF,  p-value: 1.853e-05</code></pre>
 <p><code>stargazer</code> tabulates regression results neatly.</p>
-<pre class="r"><code>stargazer(capm_ml, type=&quot;html&quot;, title=&quot;Regression Results for Archer&quot;)</code></pre>
+<pre class="r"><code>stargazer(capm_ml, type=&quot;html&quot;, 
+          title=&quot;Regression Results for Archer&quot;,
+          notes = &quot;&lt;span&gt;&amp;#42;&lt;/span&gt;: p&lt;0.1; &lt;span&gt;&amp;#42;&amp;#42;&lt;/span&gt;: &lt;strong&gt;p&lt;0.05&lt;/strong&gt;; &lt;span&gt;&amp;#42;&amp;#42;&amp;#42;&lt;/span&gt;: p&lt;0.01 &lt;br&gt; Standard errors in parentheses.&quot;,
+          notes.append = F)</code></pre>
 <table style="text-align:center">
 <caption>
 <strong>Regression Results for Archer</strong>
@@ -3139,7 +3143,7 @@ F Statistic
 <em>Note:</em>
 </td>
 <td style="text-align:right">
-<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+<span>*</span>: p&lt;0.1; <span>**</span>: <strong>p&lt;0.05</strong>; <span>***</span>: p&lt;0.01 <br> Standard errors in parentheses.
 </td>
 </tr>
 </table>
@@ -46346,7 +46350,7 @@ sml_data %&gt;% str()</code></pre>
     geom_smooth(method = &quot;lm&quot;, se=FALSE) +
     labs(x=TeX(&quot;$\\beta_i$&quot;), y=TeX(&quot;$E[r_i-r_f]$&quot;))
 p_sml</code></pre>
-<p><img src="w1_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="w1_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><strong>Home practice</strong>:</p>
 <ul>
 <li><p>Construct equal-weighted decile portfolios based on the ranking of <span class="math inline">\(\beta_i\)</span>, do the same analysis based on portfolio <span class="math inline">\(\beta_p\)</span> and see if there exists an SML.</p></li>

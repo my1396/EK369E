@@ -352,6 +352,7 @@ div.tocify {
   margin: auto;
 }
 </style>
+<!-- Chunk option settings -->
 <div id="descriptive-analysis" class="section level2">
 <h2>Descriptive analysis</h2>
 <p>We have Fama-French pricing factor data from 2000-01 to 2024-06.
@@ -387,7 +388,7 @@ get_stat &lt;- function(x, q_list=c(0.025, 0.5, 0.975)){
                    binwidth = 2, 
                    boundary=0) +
     labs(x=&quot;Small minus big, SMB&quot;)</code></pre>
-<p><img src="FF_factors_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FF_factors_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="histogram-of-hml" class="section level3">
 <h3>Histogram of HML</h3>
@@ -398,7 +399,7 @@ get_stat &lt;- function(x, q_list=c(0.025, 0.5, 0.975)){
                    binwidth = 2, 
                    boundary=0) +
     labs(x=&quot;High minus low, HML&quot;)</code></pre>
-<p><img src="FF_factors_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FF_factors_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 </div>
 </div>
@@ -429,7 +430,7 @@ aapl</code></pre>
 ## 2014-08-01   23.7250   24.1550  23.7025    24.0325   194044000      21.15864
 ## 2014-08-04   24.0925   24.1450  23.7925    23.8975   159832000      21.03978
 ## 2014-08-05   23.8400   23.9200  23.5900    23.7800   223732000      20.93634
-## 2014-08-06   23.6875   23.8700  23.6775    23.7400   154232000      20.90112
+## 2014-08-06   23.6875   23.8700  23.6775    23.7400   154232000      20.90111
 ## 2014-08-07   23.7325   23.9875  23.5250    23.6200   186844000      20.89891
 ## 2014-08-08   23.5650   23.7050  23.3200    23.6850   167460000      20.95642
 ## 2014-08-11   23.8175   24.0200  23.7100    23.9975   146340000      21.23291
@@ -438,7 +439,7 @@ aapl</code></pre>
 ## 2014-08-14   24.3325   24.3925  24.2000    24.3750   112464000      21.56693
 ##        ...                                                                  
 ## 2024-09-03  228.5500  229.0000 221.1700   222.7700    50190600     221.98967
-## 2024-09-04  221.6600  221.7800 217.4800   220.8500    43840200     220.07642
+## 2024-09-04  221.6600  221.7800 217.4800   220.8500    43840200     220.07640
 ## 2024-09-05  221.6300  225.4800 221.5200   222.3800    36615400     221.60104
 ## 2024-09-06  223.9500  225.2400 219.7700   220.8200    48423000     220.04651
 ## 2024-09-09  220.8200  221.2700 216.7100   220.9100    67180000     220.13620
@@ -449,7 +450,7 @@ aapl</code></pre>
 ## 2024-09-16  216.5400  217.2200 213.9200   216.3200    59357400     215.56229</code></pre>
 <p>Candlestick Plot</p>
 <pre class="r"><code>chartSeries(aapl, subset=&quot;2024-09&quot;, theme=chartTheme(&#39;white&#39;,up.col=&#39;green&#39;,dn.col=&#39;red&#39;))</code></pre>
-<p><img src="FF_factors_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FF_factors_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Calculate monthly return, <span class="math inline">\(r_t = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1\)</span>.</p>
 <p>You may either use the function <code>quantmod::monthlyReturn()</code> or calculate manually.</p>
 <pre class="r"><code>aapl &lt;- aapl %&gt;% 
@@ -459,72 +460,72 @@ aapl &lt;- head(aapl, -1)
 aapl</code></pre>
 <pre><code>##            AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume AAPL.Adjusted
 ## 2014-08-29   25.7150   25.7250  25.5500    25.6250   178380000      22.67292
-## 2014-09-30   25.2025   25.3850  25.1325    25.1875   221056400      22.28582
+## 2014-09-30   25.2025   25.3850  25.1325    25.1875   221056400      22.28583
 ## 2014-10-31   27.0025   27.0100  26.8025    27.0000   178557200      23.88952
 ## 2014-11-28   29.8175   29.8500  29.5125    29.7325    99257600      26.42130
 ## 2014-12-31   28.2050   28.2825  27.5525    27.5950   165613600      24.52185
 ## 2015-01-30   29.6000   30.0000  29.2125    29.2900   334982000      26.02808
-## 2015-02-27   32.5000   32.6425  32.0600    32.1150   248059200      28.65111
-## 2015-03-31   31.5225   31.6225  31.0900    31.1075   168362400      27.75226
+## 2015-02-27   32.5000   32.6425  32.0600    32.1150   248059200      28.65110
+## 2015-03-31   31.5225   31.6225  31.0900    31.1075   168362400      27.75227
 ## 2015-04-30   32.1600   32.1600  31.1450    31.2875   332781600      27.91286
-## 2015-05-29   32.8075   32.8625  32.4750    32.5700   203538000      29.17840
+## 2015-05-29   32.8075   32.8625  32.4750    32.5700   203538000      29.17841
 ##        ...                                                                  
 ## 2023-11-30  189.8400  190.3200 188.1900   189.9500    48794400     188.56909
-## 2023-12-29  193.9000  194.4000 191.7300   192.5300    42628800     191.13034
-## 2024-01-31  187.0400  187.1000 184.3500   184.4000    55467800     183.05943
-## 2024-02-29  181.2700  182.5700 179.5300   180.7500   136682600     179.66492
-## 2024-03-28  171.7500  172.2300 170.5100   171.4800    65672700     170.45056
-## 2024-04-30  173.3300  174.9900 170.0000   170.3300    65934800     169.30748
+## 2023-12-29  193.9000  194.4000 191.7300   192.5300    42628800     191.13033
+## 2024-01-31  187.0400  187.1000 184.3500   184.4000    55467800     183.05942
+## 2024-02-29  181.2700  182.5700 179.5300   180.7500   136682600     179.66493
+## 2024-03-28  171.7500  172.2300 170.5100   171.4800    65672700     170.45059
+## 2024-04-30  173.3300  174.9900 170.0000   170.3300    65934800     169.30750
 ## 2024-05-31  191.4400  192.5700 189.9100   192.2500    75158300     191.35510
 ## 2024-06-28  215.7700  216.0700 210.3000   210.6200    82542700     209.63957
-## 2024-07-31  221.4400  223.8200 220.6300   222.0800    50036300     221.04623
-## 2024-08-30  230.1900  230.4000 227.4800   229.0000    52990800     228.19786
+## 2024-07-31  221.4400  223.8200 220.6300   222.0800    50036300     221.04622
+## 2024-08-30  230.1900  230.4000 227.4800   229.0000    52990800     228.19785
 ##                  return
 ## 2014-08-29  0.000000000
-## 2014-09-30 -0.017073239
-## 2014-10-31  0.071960407
-## 2014-11-28  0.105978784
+## 2014-09-30 -0.017072903
+## 2014-10-31  0.071959955
+## 2014-11-28  0.105978872
 ## 2014-12-31 -0.071891014
 ## 2015-01-30  0.061423979
-## 2015-02-27  0.100777007
-## 2015-03-31 -0.031372042
-## 2015-04-30  0.005786733
-## 2015-05-29  0.045338930
+## 2015-02-27  0.100776861
+## 2015-03-31 -0.031371580
+## 2015-04-30  0.005786250
+## 2015-05-29  0.045339347
 ##        ...             
-## 2023-11-30  0.113780096
-## 2023-12-29  0.013582548
-## 2024-01-31 -0.042227244
-## 2024-02-29 -0.018543245
-## 2024-03-28 -0.051286337
-## 2024-04-30 -0.006706236
-## 2024-05-31  0.130222378
+## 2023-11-30  0.113780196
+## 2023-12-29  0.013582467
+## 2024-01-31 -0.042227248
+## 2024-02-29 -0.018543080
+## 2024-03-28 -0.051286248
+## 2024-04-30 -0.006706324
+## 2024-05-31  0.130222276
 ## 2024-06-28  0.095552558
-## 2024-07-31  0.054410825
-## 2024-08-30  0.032353533</code></pre>
+## 2024-07-31  0.054410752
+## 2024-08-30  0.032353535</code></pre>
 <pre class="r"><code># calculate manually
 with(aapl, AAPL.Adjusted/lag(AAPL.Adjusted)-1)</code></pre>
 <pre><code>##            AAPL.Adjusted
 ## 2014-08-29            NA
-## 2014-09-30  -0.017073239
-## 2014-10-31   0.071960407
-## 2014-11-28   0.105978784
+## 2014-09-30  -0.017072903
+## 2014-10-31   0.071959955
+## 2014-11-28   0.105978872
 ## 2014-12-31  -0.071891014
 ## 2015-01-30   0.061423979
-## 2015-02-27   0.100777007
-## 2015-03-31  -0.031372042
-## 2015-04-30   0.005786733
-## 2015-05-29   0.045338930
+## 2015-02-27   0.100776861
+## 2015-03-31  -0.031371580
+## 2015-04-30   0.005786250
+## 2015-05-29   0.045339347
 ##        ...              
-## 2023-11-30   0.113780096
-## 2023-12-29   0.013582548
-## 2024-01-31  -0.042227244
-## 2024-02-29  -0.018543245
-## 2024-03-28  -0.051286337
-## 2024-04-30  -0.006706236
-## 2024-05-31   0.130222378
+## 2023-11-30   0.113780196
+## 2023-12-29   0.013582467
+## 2024-01-31  -0.042227248
+## 2024-02-29  -0.018543080
+## 2024-03-28  -0.051286248
+## 2024-04-30  -0.006706324
+## 2024-05-31   0.130222276
 ## 2024-06-28   0.095552558
-## 2024-07-31   0.054410825
-## 2024-08-30   0.032353533</code></pre>
+## 2024-07-31   0.054410752
+## 2024-08-30   0.032353535</code></pre>
 <p>Merge equity data with FF factors.</p>
 <pre class="r"><code>reg_data &lt;- aapl %&gt;% 
     as_tibble() %&gt;% 
@@ -543,27 +544,27 @@ reg_data</code></pre>
 ##    Date       AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume AAPL.Adjusted
 ##    &lt;date&gt;         &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ##  1 2014-08-29  25.71500  25.72500 25.55000   25.625     178380000      22.67292
-##  2 2014-09-30  25.20250  25.38500 25.13250   25.1875    221056400      22.28582
+##  2 2014-09-30  25.20250  25.38500 25.13250   25.1875    221056400      22.28583
 ##  3 2014-10-31  27.00250  27.01000 26.80250   27         178557200      23.88952
 ##  4 2014-11-28  29.81750  29.85000 29.51250   29.73250    99257600      26.42130
 ##  5 2014-12-31  28.20500  28.28250 27.55250   27.59500   165613600      24.52185
 ##  6 2015-01-30  29.60000  30       29.21250   29.29000   334982000      26.02808
-##  7 2015-02-27  32.5      32.64250 32.06000   32.11500   248059200      28.65111
-##  8 2015-03-31  31.52250  31.62250 31.09000   31.10750   168362400      27.75226
+##  7 2015-02-27  32.5      32.64250 32.06000   32.11500   248059200      28.65110
+##  8 2015-03-31  31.52250  31.62250 31.09000   31.10750   168362400      27.75227
 ##  9 2015-04-30  32.16000  32.16000 31.14500   31.28750   332781600      27.91286
-## 10 2015-05-29  32.80750  32.86250 32.47500   32.57000   203538000      29.17840
+## 10 2015-05-29  32.80750  32.86250 32.47500   32.57000   203538000      29.17841
 ##          return  year   mon `Mkt-RF`     SMB     HML    RF
 ##           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1  0            2014     8   0.0424  0.004  -0.0045     0
-##  2 -0.01707324   2014     9  -0.0197 -0.0371 -0.0134     0
-##  3  0.07196041   2014    10   0.0252  0.0421 -0.0181     0
-##  4  0.1059788    2014    11   0.0255 -0.0206 -0.0309     0
+##  2 -0.01707290   2014     9  -0.0197 -0.0371 -0.0134     0
+##  3  0.07195995   2014    10   0.0252  0.0421 -0.0181     0
+##  4  0.1059789    2014    11   0.0255 -0.0206 -0.0309     0
 ##  5 -0.07189101   2014    12  -0.0006  0.0249  0.0227     0
 ##  6  0.06142398   2015     1  -0.0311 -0.0056 -0.0358     0
-##  7  0.1007770    2015     2   0.0613  0.0063 -0.0186     0
-##  8 -0.03137204   2015     3  -0.0112  0.0304 -0.0037     0
-##  9  0.005786733  2015     4   0.0059 -0.0306  0.0182     0
-## 10  0.04533893   2015     5   0.0136  0.0093 -0.0114     0
+##  7  0.1007769    2015     2   0.0613  0.0063 -0.0186     0
+##  8 -0.03137158   2015     3  -0.0112  0.0304 -0.0037     0
+##  9  0.005786250  2015     4   0.0059 -0.0306  0.0182     0
+## 10  0.04533935   2015     5   0.0136  0.0093 -0.0114     0
 ## # ℹ 111 more rows</code></pre>
 <p>Calculate excess return.</p>
 <pre class="r"><code># calculate excess return
@@ -682,7 +683,7 @@ eRi
 221056400
 </td>
 <td style="text-align:right;">
-22.28582
+22.28583
 </td>
 <td style="text-align:right;">
 -0.01707
@@ -887,7 +888,7 @@ eRi
 248059200
 </td>
 <td style="text-align:right;">
-28.65111
+28.65110
 </td>
 <td style="text-align:right;">
 0.10078
@@ -928,7 +929,7 @@ eRi
 168362400
 </td>
 <td style="text-align:right;">
-27.75226
+27.75227
 </td>
 <td style="text-align:right;">
 -0.03137
@@ -1010,7 +1011,7 @@ eRi
 203538000
 </td>
 <td style="text-align:right;">
-29.17840
+29.17841
 </td>
 <td style="text-align:right;">
 0.04534
@@ -1215,7 +1216,7 @@ eRi
 197461200
 </td>
 <td style="text-align:right;">
-26.88518
+26.88519
 </td>
 <td style="text-align:right;">
 0.08341
@@ -1256,7 +1257,7 @@ eRi
 156721200
 </td>
 <td style="text-align:right;">
-26.72914
+26.72913
 </td>
 <td style="text-align:right;">
 -0.00580
@@ -1379,7 +1380,7 @@ eRi
 140865200
 </td>
 <td style="text-align:right;">
-21.96504
+21.96503
 </td>
 <td style="text-align:right;">
 -0.00129
@@ -1420,7 +1421,7 @@ eRi
 103553600
 </td>
 <td style="text-align:right;">
-24.75922
+24.75921
 </td>
 <td style="text-align:right;">
 0.12721
@@ -1461,7 +1462,7 @@ eRi
 274126000
 </td>
 <td style="text-align:right;">
-21.29488
+21.29489
 </td>
 <td style="text-align:right;">
 -0.13992
@@ -1543,7 +1544,7 @@ eRi
 143345600
 </td>
 <td style="text-align:right;">
-21.84964
+21.84965
 </td>
 <td style="text-align:right;">
 -0.04266
@@ -1707,7 +1708,7 @@ eRi
 105677600
 </td>
 <td style="text-align:right;">
-26.09046
+26.09045
 </td>
 <td style="text-align:right;">
 0.00433
@@ -1789,7 +1790,7 @@ eRi
 122345200
 </td>
 <td style="text-align:right;">
-26.75102
+26.75103
 </td>
 <td style="text-align:right;">
 0.04796
@@ -1830,7 +1831,7 @@ eRi
 196804000
 </td>
 <td style="text-align:right;">
-28.02829
+28.02830
 </td>
 <td style="text-align:right;">
 0.04775
@@ -1871,7 +1872,7 @@ eRi
 93931600
 </td>
 <td style="text-align:right;">
-31.77787
+31.77786
 </td>
 <td style="text-align:right;">
 0.13378
@@ -1912,7 +1913,7 @@ eRi
 78646800
 </td>
 <td style="text-align:right;">
-33.32510
+33.32511
 </td>
 <td style="text-align:right;">
 0.04869
@@ -1994,7 +1995,7 @@ eRi
 97804800
 </td>
 <td style="text-align:right;">
-35.58232
+35.58234
 </td>
 <td style="text-align:right;">
 0.06781
@@ -2281,7 +2282,7 @@ eRi
 103999600
 </td>
 <td style="text-align:right;">
-39.71572
+39.71574
 </td>
 <td style="text-align:right;">
 -0.01525
@@ -2404,7 +2405,7 @@ eRi
 153594000
 </td>
 <td style="text-align:right;">
-39.53597
+39.53598
 </td>
 <td style="text-align:right;">
 -0.05805
@@ -2445,7 +2446,7 @@ eRi
 169709600
 </td>
 <td style="text-align:right;">
-38.94217
+38.94215
 </td>
 <td style="text-align:right;">
 -0.01502
@@ -2486,7 +2487,7 @@ eRi
 109931200
 </td>
 <td style="text-align:right;">
-44.20418
+44.20419
 </td>
 <td style="text-align:right;">
 0.13512
@@ -2527,7 +2528,7 @@ eRi
 90950800
 </td>
 <td style="text-align:right;">
-43.78783
+43.78786
 </td>
 <td style="text-align:right;">
 -0.00942
@@ -2732,7 +2733,7 @@ eRi
 158126000
 </td>
 <td style="text-align:right;">
-42.53925
+42.53923
 </td>
 <td style="text-align:right;">
 -0.18120
@@ -2855,7 +2856,7 @@ eRi
 112861600
 </td>
 <td style="text-align:right;">
-41.42265
+41.42266
 </td>
 <td style="text-align:right;">
 0.04478
@@ -2896,7 +2897,7 @@ eRi
 94256000
 </td>
 <td style="text-align:right;">
-45.44172
+45.44173
 </td>
 <td style="text-align:right;">
 0.09703
@@ -2937,7 +2938,7 @@ eRi
 186139600
 </td>
 <td style="text-align:right;">
-48.00627
+48.00626
 </td>
 <td style="text-align:right;">
 0.05644
@@ -2978,7 +2979,7 @@ eRi
 108174400
 </td>
 <td style="text-align:right;">
-42.04327
+42.04328
 </td>
 <td style="text-align:right;">
 -0.12421
@@ -3060,7 +3061,7 @@ eRi
 277125600
 </td>
 <td style="text-align:right;">
-51.16181
+51.16180
 </td>
 <td style="text-align:right;">
 0.07639
@@ -3183,7 +3184,7 @@ eRi
 139162000
 </td>
 <td style="text-align:right;">
-59.96699
+59.96698
 </td>
 <td style="text-align:right;">
 0.11068
@@ -3224,7 +3225,7 @@ eRi
 46617600
 </td>
 <td style="text-align:right;">
-64.61769
+64.61768
 </td>
 <td style="text-align:right;">
 0.07755
@@ -3306,7 +3307,7 @@ eRi
 199588400
 </td>
 <td style="text-align:right;">
-74.83562
+74.83561
 </td>
 <td style="text-align:right;">
 0.05401
@@ -3429,7 +3430,7 @@ eRi
 183064000
 </td>
 <td style="text-align:right;">
-71.20571
+71.20570
 </td>
 <td style="text-align:right;">
 0.15537
@@ -3470,7 +3471,7 @@ eRi
 153532400
 </td>
 <td style="text-align:right;">
-77.26492
+77.26490
 </td>
 <td style="text-align:right;">
 0.08509
@@ -3552,7 +3553,7 @@ eRi
 374336800
 </td>
 <td style="text-align:right;">
-103.29205
+103.29206
 </td>
 <td style="text-align:right;">
 0.16513
@@ -3593,7 +3594,7 @@ eRi
 225702700
 </td>
 <td style="text-align:right;">
-125.66195
+125.66196
 </td>
 <td style="text-align:right;">
 0.21657
@@ -3634,7 +3635,7 @@ eRi
 142675200
 </td>
 <td style="text-align:right;">
-112.77831
+112.77829
 </td>
 <td style="text-align:right;">
 -0.10253
@@ -3675,7 +3676,7 @@ eRi
 190272600
 </td>
 <td style="text-align:right;">
-106.01025
+106.01022
 </td>
 <td style="text-align:right;">
 -0.06001
@@ -3716,7 +3717,7 @@ eRi
 169410200
 </td>
 <td style="text-align:right;">
-116.13350
+116.13351
 </td>
 <td style="text-align:right;">
 0.09549
@@ -3798,7 +3799,7 @@ eRi
 177523800
 </td>
 <td style="text-align:right;">
-128.72723
+128.72722
 </td>
 <td style="text-align:right;">
 -0.00550
@@ -3839,7 +3840,7 @@ eRi
 164560400
 </td>
 <td style="text-align:right;">
-118.46613
+118.46612
 </td>
 <td style="text-align:right;">
 -0.07971
@@ -3880,7 +3881,7 @@ eRi
 118323800
 </td>
 <td style="text-align:right;">
-119.33560
+119.33561
 </td>
 <td style="text-align:right;">
 0.00734
@@ -3921,7 +3922,7 @@ eRi
 109839500
 </td>
 <td style="text-align:right;">
-128.43111
+128.43112
 </td>
 <td style="text-align:right;">
 0.07622
@@ -3962,7 +3963,7 @@ eRi
 71311100
 </td>
 <td style="text-align:right;">
-121.94570
+121.94571
 </td>
 <td style="text-align:right;">
 -0.05050
@@ -4003,7 +4004,7 @@ eRi
 63261400
 </td>
 <td style="text-align:right;">
-134.03166
+134.03168
 </td>
 <td style="text-align:right;">
 0.09911
@@ -4085,7 +4086,7 @@ eRi
 86453100
 </td>
 <td style="text-align:right;">
-148.80635
+148.80632
 </td>
 <td style="text-align:right;">
 0.04249
@@ -4126,7 +4127,7 @@ eRi
 89056700
 </td>
 <td style="text-align:right;">
-138.68210
+138.68207
 </td>
 <td style="text-align:right;">
 -0.06804
@@ -4167,7 +4168,7 @@ eRi
 124953200
 </td>
 <td style="text-align:right;">
-146.81677
+146.81676
 </td>
 <td style="text-align:right;">
 0.05866
@@ -4208,7 +4209,7 @@ eRi
 174048100
 </td>
 <td style="text-align:right;">
-162.24452
+162.24449
 </td>
 <td style="text-align:right;">
 0.10508
@@ -4249,7 +4250,7 @@ eRi
 64062300
 </td>
 <td style="text-align:right;">
-174.28772
+174.28775
 </td>
 <td style="text-align:right;">
 0.07423
@@ -4290,7 +4291,7 @@ eRi
 115541600
 </td>
 <td style="text-align:right;">
-171.54929
+171.54930
 </td>
 <td style="text-align:right;">
 -0.01571
@@ -4331,7 +4332,7 @@ eRi
 95056600
 </td>
 <td style="text-align:right;">
-162.27434
+162.27432
 </td>
 <td style="text-align:right;">
 -0.05407
@@ -4413,7 +4414,7 @@ eRi
 131747600
 </td>
 <td style="text-align:right;">
-154.93304
+154.93306
 </td>
 <td style="text-align:right;">
 -0.09713
@@ -4454,7 +4455,7 @@ eRi
 103718400
 </td>
 <td style="text-align:right;">
-146.48981
+146.48984
 </td>
 <td style="text-align:right;">
 -0.05450
@@ -4495,7 +4496,7 @@ eRi
 98964500
 </td>
 <td style="text-align:right;">
-134.56122
+134.56120
 </td>
 <td style="text-align:right;">
 -0.08143
@@ -4618,7 +4619,7 @@ eRi
 124925300
 </td>
 <td style="text-align:right;">
-136.20676
+136.20677
 </td>
 <td style="text-align:right;">
 -0.12098
@@ -4659,7 +4660,7 @@ eRi
 97943200
 </td>
 <td style="text-align:right;">
-151.12842
+151.12840
 </td>
 <td style="text-align:right;">
 0.10955
@@ -4700,7 +4701,7 @@ eRi
 111380900
 </td>
 <td style="text-align:right;">
-146.13701
+146.13699
 </td>
 <td style="text-align:right;">
 -0.03303
@@ -4782,7 +4783,7 @@ eRi
 65874500
 </td>
 <td style="text-align:right;">
-142.44482
+142.44481
 </td>
 <td style="text-align:right;">
 0.11052
@@ -4823,7 +4824,7 @@ eRi
 50547000
 </td>
 <td style="text-align:right;">
-145.74713
+145.74712
 </td>
 <td style="text-align:right;">
 0.02318
@@ -4905,7 +4906,7 @@ eRi
 55209200
 </td>
 <td style="text-align:right;">
-167.76590
+167.76591
 </td>
 <td style="text-align:right;">
 0.02899
@@ -4987,7 +4988,7 @@ eRi
 85069600
 </td>
 <td style="text-align:right;">
-192.04716
+192.04718
 </td>
 <td style="text-align:right;">
 0.09433
@@ -5028,7 +5029,7 @@ eRi
 38824100
 </td>
 <td style="text-align:right;">
-194.50261
+194.50259
 </td>
 <td style="text-align:right;">
 0.01279
@@ -5069,7 +5070,7 @@ eRi
 60794500
 </td>
 <td style="text-align:right;">
-186.25879
+186.25882
 </td>
 <td style="text-align:right;">
 -0.04238
@@ -5110,7 +5111,7 @@ eRi
 51814200
 </td>
 <td style="text-align:right;">
-169.74168
+169.74171
 </td>
 <td style="text-align:right;">
 -0.08868
@@ -5151,7 +5152,7 @@ eRi
 44846000
 </td>
 <td style="text-align:right;">
-169.30550
+169.30548
 </td>
 <td style="text-align:right;">
 -0.00257
@@ -5233,7 +5234,7 @@ eRi
 42628800
 </td>
 <td style="text-align:right;">
-191.13034
+191.13033
 </td>
 <td style="text-align:right;">
 0.01358
@@ -5274,7 +5275,7 @@ eRi
 55467800
 </td>
 <td style="text-align:right;">
-183.05943
+183.05942
 </td>
 <td style="text-align:right;">
 -0.04223
@@ -5315,7 +5316,7 @@ eRi
 136682600
 </td>
 <td style="text-align:right;">
-179.66492
+179.66493
 </td>
 <td style="text-align:right;">
 -0.01854
@@ -5356,7 +5357,7 @@ eRi
 65672700
 </td>
 <td style="text-align:right;">
-170.45056
+170.45059
 </td>
 <td style="text-align:right;">
 -0.05129
@@ -5397,7 +5398,7 @@ eRi
 65934800
 </td>
 <td style="text-align:right;">
-169.30748
+169.30750
 </td>
 <td style="text-align:right;">
 -0.00671
@@ -5520,7 +5521,7 @@ eRi
 50036300
 </td>
 <td style="text-align:right;">
-221.04623
+221.04622
 </td>
 <td style="text-align:right;">
 0.05441
@@ -5556,7 +5557,7 @@ eRi
 52990800
 </td>
 <td style="text-align:right;">
-228.19786
+228.19785
 </td>
 <td style="text-align:right;">
 0.03235
@@ -5593,23 +5594,23 @@ plot_data &lt;- xts(reg_data[,c(&quot;eRi&quot;,&quot;rmrf&quot;)], order.by = r
 plot_data</code></pre>
 <pre><code>##                     eRi    rmrf
 ## 2014-08-29  0.000000000  0.0424
-## 2014-09-30 -0.017073239 -0.0197
-## 2014-10-31  0.071960407  0.0252
-## 2014-11-28  0.105978784  0.0255
+## 2014-09-30 -0.017072903 -0.0197
+## 2014-10-31  0.071959955  0.0252
+## 2014-11-28  0.105978872  0.0255
 ## 2014-12-31 -0.071891014 -0.0006
 ## 2015-01-30  0.061423979 -0.0311
-## 2015-02-27  0.100777007  0.0613
-## 2015-03-31 -0.031372042 -0.0112
-## 2015-04-30  0.005786733  0.0059
-## 2015-05-29  0.045338930  0.0136
+## 2015-02-27  0.100776861  0.0613
+## 2015-03-31 -0.031371580 -0.0112
+## 2015-04-30  0.005786250  0.0059
+## 2015-05-29  0.045339347  0.0136
 ##        ...                     
-## 2023-11-30  0.109380096  0.0884
-## 2023-12-29  0.009282548  0.0487
-## 2024-01-31 -0.046927244  0.0070
-## 2024-02-29 -0.022743245  0.0506
-## 2024-03-28 -0.055586337  0.0283
-## 2024-04-30 -0.011406236 -0.0467
-## 2024-05-31  0.125822378  0.0434
+## 2023-11-30  0.109380196  0.0884
+## 2023-12-29  0.009282467  0.0487
+## 2024-01-31 -0.046927248  0.0070
+## 2024-02-29 -0.022743080  0.0506
+## 2024-03-28 -0.055586248  0.0283
+## 2024-04-30 -0.011406324 -0.0467
+## 2024-05-31  0.125822276  0.0434
 ## 2024-06-28  0.091452558  0.0278
 ## 2024-07-31           NA      NA
 ## 2024-08-30           NA      NA</code></pre>
@@ -5622,7 +5623,7 @@ addLegend(&quot;topright&quot;,
           col = col_vec,
           bg = &quot;white&quot;,
           box.col = &quot;white&quot;)</code></pre>
-<p><img src="FF_factors_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FF_factors_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 <div id="capm" class="section level3">
 <h3>CAPM</h3>
@@ -5647,7 +5648,7 @@ summary(capm_ml)</code></pre>
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.212235 -0.036970  0.002496  0.041311  0.148802 
+## -0.212236 -0.036970  0.002496  0.041311  0.148802 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -5675,14 +5676,14 @@ summary(FF_ml)</code></pre>
 ## lm(formula = eRi ~ rmrf + SMB + HML, data = reg_data)
 ## 
 ## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.210858 -0.028634 -0.001951  0.034289  0.128891 
+##      Min       1Q   Median       3Q      Max 
+## -0.21086 -0.02863 -0.00195  0.03429  0.12889 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept)  0.007119   0.005292   1.345    0.181    
 ## rmrf         1.235424   0.117441  10.520  &lt; 2e-16 ***
-## SMB         -0.214322   0.196916  -1.088    0.279    
+## SMB         -0.214321   0.196916  -1.088    0.279    
 ## HML         -0.569461   0.137374  -4.145 6.52e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
@@ -5695,7 +5696,9 @@ summary(FF_ml)</code></pre>
 <pre class="r"><code>library(stargazer)
 stargazer(capm_ml, FF_ml, type=&quot;html&quot;, 
           title=&quot;Regression Results for AAPL&quot;, 
-          align = TRUE)</code></pre>
+          align = TRUE,
+          notes = &quot;&lt;span&gt;&amp;#42;&lt;/span&gt;: p&lt;0.1; &lt;span&gt;&amp;#42;&amp;#42;&lt;/span&gt;: &lt;strong&gt;p&lt;0.05&lt;/strong&gt;; &lt;span&gt;&amp;#42;&amp;#42;&amp;#42;&lt;/span&gt;: p&lt;0.01 &lt;br&gt; Standard errors in parentheses.&quot;,
+          notes.append = F)</code></pre>
 <table style="text-align:center">
 <caption>
 <strong>Regression Results for AAPL</strong>
@@ -5903,7 +5906,7 @@ Residual Std. Error
 F Statistic
 </td>
 <td>
-97.614<sup>***</sup> (df = 1; 117)
+97.613<sup>***</sup> (df = 1; 117)
 </td>
 <td>
 43.737<sup>***</sup> (df = 3; 115)
@@ -5918,7 +5921,7 @@ F Statistic
 <em>Note:</em>
 </td>
 <td colspan="2" style="text-align:right">
-<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+<span>*</span>: p&lt;0.1; <span>**</span>: <strong>p&lt;0.05</strong>; <span>***</span>: p&lt;0.01 <br> Standard errors in parentheses.
 </td>
 </tr>
 </table>
