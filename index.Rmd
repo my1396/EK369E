@@ -18,7 +18,7 @@ title: "Lab Scripts for Course Example Demonstration"
 
 [AR(1)](timeSeries1.html)
 
-[AR--Application](AR_application.html)
+[AR--Example](AR_example.html)
 
 
 <hr>

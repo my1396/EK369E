@@ -314,7 +314,7 @@ Hint: use the probability mass function of $Y_t$ in Proof. \@ref(exr:proof1).
 The asymptotic distribution of $\widehat{\text{CJ}}$ is given by
 
 $$
-\widehat{\text{CJ}} \overset{a}{\sim} N \left(\frac{\pi_s}{1-\pi_s}, \frac{\pi_s(1-\pi_s) + 2\big[\pi^3+(1-\pi)^3-\pi_s^3\big]}{n-(1-\pi_s)^4} \right)
+\widehat{\text{CJ}} \overset{a}{\sim} N \left(\frac{\pi_s}{1-\pi_s}, \frac{\pi_s(1-\pi_s) + 2\big[\pi^3+(1-\pi)^3-\pi_s^3\big]}{n(1-\pi_s)^4} \right)
 $$ where $\overset{a}{\sim}$ indicates that the distributional relation is asymptotic.
 
 Refer to @Campbell1996 chapter 2 for proof.

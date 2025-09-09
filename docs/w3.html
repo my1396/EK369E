@@ -833,7 +833,7 @@ merge(Return.calculate(prices_monthly, method = &quot;discrete&quot;),
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-5">Table 1: </span>Using <code>PerformanceAnalytics::Return.calculate</code>
+<span id="tab:unnamed-chunk-5">Table 1: </span><span id="tab:unnamed-chunk-5">Table 2: </span>Using <code>PerformanceAnalytics::Return.calculate</code>
 </caption>
 <thead>
 <tr>
@@ -1737,7 +1737,7 @@ return_xts %&gt;% str()</code></pre>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-7">Table 2: </span>Component asset monthly returns
+<span id="tab:unnamed-chunk-7">Table 3: </span><span id="tab:unnamed-chunk-7">Table 4: </span>Component asset monthly returns
 </caption>
 <thead>
 <tr>
@@ -2866,7 +2866,7 @@ plot(equity_curve_xts, multi.panel=TRUE, yaxis.same=FALSE)</code></pre>
     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;)</code></pre>
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-12">Table 3: </span>portfolio performance attribution
+<span id="tab:unnamed-chunk-12">Table 5: </span><span id="tab:unnamed-chunk-12">Table 6: </span>portfolio performance attribution
 </caption>
 <thead>
 <tr>
@@ -3068,7 +3068,7 @@ table.AnnualizedReturns(portfolio_return$returns) %&gt;%
     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;)</code></pre>
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-16">Table 4: </span>Overall performance
+<span id="tab:unnamed-chunk-16">Table 7: </span><span id="tab:unnamed-chunk-16">Table 8: </span>Overall performance
 </caption>
 <thead>
 <tr>
@@ -3144,7 +3144,7 @@ annualized_table %&gt;%
     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;)</code></pre>
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-17">Table 5: </span>Performance by year
+<span id="tab:unnamed-chunk-17">Table 9: </span><span id="tab:unnamed-chunk-17">Table 10: </span>Performance by year
 </caption>
 <thead>
 <tr>
@@ -3610,7 +3610,7 @@ ptf_xts %&gt;%
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-22">Table 6: </span>Portfolio return in <code>xts</code>
+<span id="tab:unnamed-chunk-22">Table 11: </span><span id="tab:unnamed-chunk-22">Table 12: </span>Portfolio return in <code>xts</code>
 </caption>
 <thead>
 <tr>
@@ -5869,7 +5869,8 @@ SharpeRatio(R=ptf_xts$port_ret, Rf=ptf_xts$rf_1month)</code></pre>
 <pre><code>##                                   port_ret
 ## StdDev Sharpe (Rf=0.1%, p=95%): 0.12510917
 ## VaR Sharpe (Rf=0.1%, p=95%):    0.10094484
-## ES Sharpe (Rf=0.1%, p=95%):     0.08362338</code></pre>
+## ES Sharpe (Rf=0.1%, p=95%):     0.08362338
+## SemiSD Sharpe (Rf=0.1%, p=95%): 0.13935712</code></pre>
 <pre class="r"><code># Compute the annualized Sharpe ratio
 with(ptf_ret3, mean(excess_ret)/sd(port_ret))*sqrt(12)</code></pre>
 <pre><code>## [1] 0.4333909</code></pre>
@@ -6369,7 +6370,7 @@ chart.RollingPerformance(R = ptf_xts$port_ret, width = 12, FUN = &quot;SharpeRat
     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;), full_width = F, latex_options=&quot;scale_down&quot;) </code></pre>
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-37">Table 7: </span>Table of CAPM-related statistics
+<span id="tab:unnamed-chunk-37">Table 13: </span><span id="tab:unnamed-chunk-37">Table 14: </span>Table of CAPM-related statistics
 </caption>
 <thead>
 <tr>
@@ -6399,6 +6400,22 @@ Beta
 </tr>
 <tr>
 <td style="text-align:left;">
+Alpha Robust
+</td>
+<td style="text-align:right;">
+-0.0041
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta Robust
+</td>
+<td style="text-align:right;">
+1.5227
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Beta+
 </td>
 <td style="text-align:right;">
@@ -6415,10 +6432,34 @@ Beta-
 </tr>
 <tr>
 <td style="text-align:left;">
+Beta+ Robust
+</td>
+<td style="text-align:right;">
+1.9538
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta- Robust
+</td>
+<td style="text-align:right;">
+1.4803
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 R-squared
 </td>
 <td style="text-align:right;">
 0.2814
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R-squared Robust
+</td>
+<td style="text-align:right;">
+0.3199
 </td>
 </tr>
 <tr>
