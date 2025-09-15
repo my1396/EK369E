@@ -10,7 +10,7 @@ title: "Lab Scripts for Course Example Demonstration"
 
 [Mar 22, 2024, EMH and RW](w2.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w2.rmd); 
 
-[Apr 4, 2024, Performance Evaluation](w3.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w3.Rmd); [Download Data](https://drive.google.com/file/d/1Xop4n2ZjP4IytKI_Xyqp0NHxwK-GpZPk/view?usp=share_link);
+[Apr 4, 2024, Performance Evaluation](w3.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w3.Rmd); [Download Data](https://drive.google.com/file/d/10NJb6yGyDe6I1G9oTgKbQLvP7zNU9u4m/view?usp=drive_link);
 
 [Apr 5, 2024, Portfolio Optimization](w4.html) &nbsp;&nbsp;&nbsp;  [Download `Rmd` File](w4.Rmd); 
 
