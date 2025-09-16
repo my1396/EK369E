@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Market Efficiency Hypothesis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Instructor: Menghan Yuan" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/mark.js/mark.min.js"></script>
+    <link href="libs/xaringanExtra-search/search.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-search/search.js"></script>
+    <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":true,"autoSearch":true}) })</script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <!-- MathJax V2 Configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        extensions: ["color.js"], // load the color extension, support color names, RGB, and grey-scale color spaces
+        equationNumbers: { autoNumber: "AMS" }, // use ams rules to number equations
+        Macros: {
+          water: "{H_2O}",
+          bold: ["{\\boldsymbol #1}", 1],  // use \bold as a shorthand
+          indep: "{\\perp \\!\\!\\! \\perp}",
+          vect: ["\\mathbf{#1}", 1],
+          mat: ["\\mathbf{#1}", 1],
+
+          bA: "\\boldsymbol{A}",
+          bB: "\\boldsymbol{B}",
+          bC: "\\boldsymbol{C}",
+          bD: "\\boldsymbol{D}",
+          bE: "\\boldsymbol{E}",
+          bF: "\\boldsymbol{F}",
+          bG: "\\boldsymbol{G}",
+          bH: "\\boldsymbol{H}",
+          bI: "\\boldsymbol{I}",
+          bJ: "\\boldsymbol{J}",
+          bK: "\\boldsymbol{K}",
+          bL: "\\boldsymbol{L}",
+          bM: "\\boldsymbol{M}",
+          bN: "\\boldsymbol{N}",
+          bP: "\\boldsymbol{P}",
+          bQ: "\\boldsymbol{Q}",
+          bR: "\\boldsymbol{R}",
+          bS: "\\boldsymbol{S}",
+          bT: "\\boldsymbol{T}",
+          bU: "\\boldsymbol{U}",
+          bV: "\\boldsymbol{V}",
+          bW: "\\boldsymbol{W}",
+          bX: "\\boldsymbol{X}",
+          bY: "\\boldsymbol{Y}",
+          bZ: "\\boldsymbol{Z}",
+          ba: "\\boldsymbol{a}",
+          bb: "\\boldsymbol{b}",
+          bc: "\\boldsymbol{c}",
+          bd: "\\boldsymbol{d}",
+          be: "\\boldsymbol{e}",
+          bg: "\\boldsymbol{g}",
+          bh: "\\boldsymbol{h}",
+          bi: "\\boldsymbol{i}",
+          bm: "\\boldsymbol{m}",
+          bp: "\\boldsymbol{p}",
+          bq: "\\boldsymbol{q}",
+          br: "\\boldsymbol{r}",
+          bs: "\\boldsymbol{s}",
+          bt: "\\boldsymbol{t}",
+          bu: "\\boldsymbol{u}",
+          bv: "\\boldsymbol{v}",
+          bw: "\\boldsymbol{w}",
+          bx: "\\boldsymbol{x}",
+          by: "\\boldsymbol{y}",
+          bz: "\\boldsymbol{z}",
+
+          Acal: "\\mathcal{A}",
+          Bcal: "\\mathcal{B}",
+          Ccal: "\\mathcal{C}",
+          Dcal: "\\mathcal{D}",
+          Ecal: "\\mathcal{E}",
+          Fcal: "\\mathcal{F}",
+          Gcal: "\\mathcal{G}",
+          Hcal: "\\mathcal{H}",
+          Ical: "\\mathcal{I}",
+          Jcal: "\\mathcal{J}",
+          Kcal: "\\mathcal{K}",
+          Lcal: "\\mathcal{L}",
+          Mcal: "\\mathcal{M}",
+          Ncal: "\\mathcal{N}",
+          Ocal: "\\mathcal{O}",
+          Pcal: "\\mathcal{P}",
+          Qcal: "\\mathcal{Q}",
+          Rcal: "\\mathcal{R}",
+          Scal: "\\mathcal{S}",
+          Tcal: "\\mathcal{T}",
+          Ucal: "\\mathcal{U}",
+          Vcal: "\\mathcal{V}",
+          Wcal: "\\mathcal{W}",
+          Xcal: "\\mathcal{X}",
+          Ycal: "\\mathcal{Y}",
+          Zcal: "\\mathcal{Z}",
+
+          A: "\\mathbb{A}",
+          B: "\\mathbb{B}",
+          C: "\\mathbb{C}",
+          D: "\\mathbb{D}",
+          E: "\\mathbb{E}",
+          F: "\\mathbb{F}",
+          G: "\\mathbb{G}",
+          H: "\\mathbb{H}",
+          I: "\\mathbb{I}",
+          J: "\\mathbb{J}",
+          K: "\\mathbb{K}",
+          L: "\\mathbb{L}",
+          M: "\\mathbb{M}",
+          N: "\\mathbb{N}",
+          O: "\\mathbb{O}",
+          P: "\\mathbb{P}",
+          Q: "\\mathbb{Q}",
+          R: "\\mathbb{R}",
+          S: "\\mathbb{S}",
+          T: "\\mathbb{T}",
+          U: "\\mathbb{U}",
+          V: "\\mathbb{V}",
+          W: "\\mathbb{W}",
+          X: "\\mathbb{X}",
+          Y: "\\mathbb{Y}",
+          Z: "\\mathbb{Z}",
+
+          bAlpha: "\\boldsymbol{\\Alpha}",
+          bBeta: "\\boldsymbol{\\beta}",
+          bDelta: "\\boldsymbol{\\delta}",
+          bEta: "\\boldsymbol{\\eta}",
+          bGamma: "\\boldsymbol{\\Gamma}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+          bOmega: "\\boldsymbol{\\Omega}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bSigma: "\\boldsymbol{\\Sigma}",
+          bTau: "\\boldsymbol{\\tau}",
+          bXi: "\\boldsymbol{\\Xi}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+
+          balpha: "\\boldsymbol{\\alpha}",
+          bbeta: "\\boldsymbol{\\beta}",
+          bepsilon: "\\boldsymbol{\\epsilon}",
+          bvarepsilon: "\\boldsymbol{\\varepsilon}",
+          bdelta: "\\boldsymbol{\\delta}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+          btau: "\\boldsymbol{\\tau}",
+          bxi: "\\boldsymbol{\\xi}",
+          bEta: "\\boldsymbol{\\eta}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bXi: "\\boldsymbol{\\Xi}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+
+          curl: ["\\left\\lbrace#1\\right\\rbrace", 1],
+          floor: ["\\left\\lfloor#1\\right\\rfloor", 1],
+          ceil: ["\\left\\lceil#1\\right\\rceil", 1],
+          abs: ["\\left\\lvert#1\\right\\rvert", 1],
+          norm: ["\\left\\lVert#1\\right\\rVert", 1],
+
+          independent: "\\mathrel{\\perp\\!\\!\\perp}",
+
+          var: "\\mathrm{Var}",
+          cov: "\\mathrm{Cov}",
+          cor: "\\mathrm{Corr}",
+          diag: "\\mathrm{diag}",
+          rank: "\\mathrm{rank}",
+          vecc: "\\mathrm{vec}",
+          
+          // define colors
+          red: ["{\\color[RGB]{185,64,71}{#1}}", 1],
+        }
+      }
+    });
+    </script>
+    <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Market Efficiency Hypothesis
+]
+.author[
+### Instructor: Menghan Yuan
+]
+.date[
+### Fall 2025
+]
+
+---
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Introduction to Market Efficiency
+
+---
+
+## What is Market Efficiency?
+
+.large[
+A market in which prices always **"fully reflect"** available information is called .highlight[**efficient**].
+
+Formally, the market is said to be efficient with respect to some .highlight[**information set**].
+]
+
+--
+
+### Key Implication:
+
+.large[
+Efficiency with respect to an information set implies that it is .highlight[**impossible to make economic profits**] by trading on the basis of that information set.
+]
+
+.footnote[
+**Economic profits** = "abnormal/superior" returns after adjustment for risk and costs
+]
+
+---
+.tight-bottom[
+## Three Forms of Market Efficiency
+]
+
+.pull-left.tight-top.tight-bottom[
+### 1. Weak-Form EMH
+- Historical market trading data
+- E.g., Prices, volumes, past returns
+
+
+### 2. Semistrong-Form EMH
+- Weak-form information **+**  
+  &amp;ensp;&amp;ensp; All publicly available information
+- E.g., Earnings, dividends, accounting data
+
+### 3. Strong-Form EMH
+- Semistrong-form information **+**  
+  &amp;nbsp;&amp;nbsp; Insider information
+- E.g., Mergers, acquisitions, private info
+]
+
+--
+
+.pull-right[
+### Direction of Implication:
+
+`$$\text{Strong-form EMH} \Longrightarrow$$`
+`$$\text{Semistrong-form EMH} \Longrightarrow$$`
+`$$\text{Weak-form EMH}$$`
+
+.center[
+**Stronger form ⟹ Weaker form**
+
+**Violation of weaker ⟹ Violation of stronger**
+]
+]
+
+---
+
+## Violations of Market Efficiency
+
+.center[
+&lt;table class="table table-striped table-hover" style="font-size: 16px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Form of EMH &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Violation Indicates &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Information Set &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white !important;background-color: rgba(44, 62, 80, 255) !important;"&gt; Weak-Form &lt;/td&gt;
+   &lt;td style="text-align:left;width: 40%; "&gt; Technical analysis or charting can earn superior profits &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30%; "&gt; Historical prices &amp;amp; volumes &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white !important;background-color: rgba(44, 62, 80, 255) !important;"&gt; Semistrong-Form &lt;/td&gt;
+   &lt;td style="text-align:left;width: 40%; "&gt; Fundamental analysis can achieve superior returns &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30%; "&gt; All public information &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white !important;background-color: rgba(44, 62, 80, 255) !important;"&gt; Strong-Form &lt;/td&gt;
+   &lt;td style="text-align:left;width: 40%; "&gt; Corporate insiders can make profitable trades &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30%; "&gt; All information (including private) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+### Key Insight
+
+.large[
+Perfect efficiency exists only in the **idealized frictionless world**. 
+
+Abnormal returns will exist if there are **costs of gathering and processing information**.
+
+⟹ We measure .highlight[**relative efficiency**]
+]
+
+
+---
+
+class: inverse, center, middle
+
+# Are Market Efficient?
+
+---
+
+##  Overview of EMH Tests
+
+The **Efficient Market Hypothesis (EMH)** posits that asset prices fully reflect available information. 
+
+Tests of market efficiency examine whether investors can systematically earn abnormal returns using available information.
+
+**If prices do not move when the information is revealed**, then the market is efficient with respec to that info.
+
+Test for three forms of EMH:
+* **Weak-form efficiency:** Prices reflect all past trading information (historical prices and volumes).
+* **Semi-strong form efficiency:** Prices reflect all publicly available information (financial statements, news, etc.).
+* **Strong-form efficiency:** Prices reflect all information, including private or insider information.
+
+
+---
+
+## Weak-Form Tests: Patterns in Stock Returns
+
+**Objective:** Can past price patterns predict future returns?
+
+- **Random Walk Hypothesis:** Stock prices follow a random walk, meaning future price changes are independent of past changes.
+  - Cowles and Jones Test for random walk
+
+- **Serial correlation** measures the relationship between current and past returns:
+  - Autocorrelation tests (Box-Pierce, Ljung-Box)
+
+- **Indicators of violations of weak-form efficiency:**
+    * **Positive serial correlation (momentum):** positive returns tend to follow positive returns.
+    * **Negative serial correlation (reversal):** positive returns tend to be followed by negative returns.
+
+---
+
+### Empirical Findings
+
+* Weekly returns on NYSE stocks show **small positive serial correlation** (short-term trends exist but not strong enough for profitable trading).
+
+  * **Interpretation:** weak trends exist, but opportunities for abnormal profits are limited.
+
+* Certain variables predict market returns:
+
+  * Dividend-price ratio (Dividend yield)
+  * Earnings-price ratio (Earnings yield)
+  * Bond yield spreads (high vs low grade)
+
+  **Interpretation:**
+
+  * Predictability may reflect **time-varying market risk premiums**, not mispricing.
+  * Using these variables does **not necessarily violate EMH**.
+
+
+---
+.tight-bottom[
+## Semi-Strong Form Tests: Market Anomalies
+]
+- **Objective:** Can publicly available information beyond past prices generate abnormal returns?
+- **Test:** Whether financial ratios or firm characteristics predict excess returns.
+- Examples of anomalies:
+  1. **P/E ratio effect:** low P/E stocks historically earn higher returns than high P/E stocks.
+     
+     * Interpretation: may reflect **risk not captured by CAPM**, not true mispricing.
+  2. **Size effect:** small-cap stocks earn higher returns than large-cap stocks, even after risk adjustment.
+     
+     * Possible explanation: **higher risk**, less coverage, or **neglected-firm effect**.
+  3. **Book-to-market effect:** high book-to-market stocks (value stocks) earn higher average returns than low book-to-market (growth) stocks.
+
+- **Risk adjustment is critical:** using CAPM or other risk models (e.g., FF 3-factor) may change whether an apparent anomaly violates EMH.
+
+---
+
+### Example: Small-Firm Effect
+
+&lt;img src="mkt_efficiency_files/figure-html/small-firm-effect-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+.tight-bottom[
+### The Small-Firm Premium
+]
+- **7.32%** annual return difference: Small firms vs. Large firms
+- Premium persists even after CAPM risk adjustment
+- Simple rule: "invest in small-cap stocks" → excess returns
+
+--
+
+.tight-bottom[
+### The Puzzle
+]
+- Any investor can measure firm size at **minimal cost**
+- Why should such simple strategy yield **large rewards**?
+
+--
+
+.tight-bottom[
+### Main Takeaway:
+]
+- **Alternative explanations**:
+  - **CAPM limitations**: May not capture all risk factors for small firms
+
+     Higher true risk (not captured by mkt beta) → indicate necessity of FF size factor
+  - Less analyst coverage  
+  - Neglected-firm effect
+- **Not necessarily** market inefficiency
+
+---
+
+## Testing Market Efficiency: The Challenge
+
+### **The Joint Test Problem**
+
+Any test of efficiency must assume an equilibrium model that defines normal security returns.  
+`\(\Rightarrow\)` Our null hypothesis is a .highlight[**joint test**] of:
+
+- Market efficiency **AND** 
+- Correct equilibrium model
+
+When we reject the null, this could be because:
+- The market is truly inefficient, **OR**
+- An incorrect equilibrium model has been assumed
+
+---
+
+### Joint Test Problem: Consequences
+
+- The result of this is that when we reject the null, this could be because the market is truly inefficient or because an incorrect equilibrium model has been assumed.
+
+- With the wrong asset pricing model, we can wind up rejecting efficiency. It would be easy to find abnormal returns to be forecastable if we had the wrong equilibrium.
+
+- Asset pricing models give the equilibrium return; abnormal returns are deviations of real prices from equilibriums.
+
+- **Key takeaway:** Semi-strong tests examine **public information** but interpretation depends heavily on **risk adjustment methodology**.
+
+---
+
+## Strong-Form Tests
+
+* **Objective:** Do prices reflect all information, including insider knowledge?
+* **Tests:** Examine returns of insiders or corporate insiders who have non-public information.
+  * If markets are strong-form efficient, insiders should not earn abnormal returns.
+* **Findings:**
+
+  * Insiders often earn abnormal profits, indicating **markets are not perfectly strong-form efficient**. 
+    
+     → Strong form is generally **rejected in practice**.
+  * Can outsiders exploit this by mimicking insider trades?
+    
+     **No, after costs.** Insider trades must be reported to the SEC and become public information. Abnormal returns are small and disappear once transaction costs are considered.
+
+---
+### Implications for EMH
+
+&lt;div style="margin-top: 5rem;"&gt;
+
+- **Markets are not strong-form efficient** (insiders have private information advantage).
+
+- But markets are **close to semi-strong efficient**: once information is public, it is quickly incorporated, leaving no free profit opportunities for ordinary investors.
+
+
+---
+
+class: inverse, center, middle
+
+# Random Walk as a Test of EMH
+
+---
+
+## Random Walk and Efficient Markets
+
+- EMH says: stock prices already reflect all available information.
+  - Weak-form: past prices
+  - Semi-strong: all public info
+  - Strong-form: all info (private and public)
+
+- If prices are predictable → some information is *not* yet reflected → EMH violated.
+
+- Therefore:
+
+    - **Evidence of predictability** = evidence of inefficiency.
+
+    - **Evidence of randomness** = consistent with market efficiency.
+
+- How Random Walk Tests Relate to Market Efficiency
+  - Cannot reject Random Walk ⟺ Weak-form EMH holds
+  - Reject Random Walk ⟺ Weak-form EMH fails
+
+---
+## Random Walk Process
+
+.large[
+A process `\(\{p_t\}\)` is called a .highlight[**Random Walk**] (RW) if:
+
+`$$p_t = \mu + p_{t-1} + e_t$$`
+
+where `\(E(e_t)=0\)` and `\(\text{Var}(e_t)=\sigma^2\)`.
+]
+
+
+### Components:
+- `\(\red{p_t}\)`: natural logarithm of asset price at time `\(t\)`, `\(p_t = \log P_t.\)`
+  
+  Note that `\(r_t = p_t - p_{t-1}\)` is the **log return**, and can be expressed as:
+  `$$r_t = \mu + e_t .$$`
+- `\(\red{\mu}\)`: Expected price change or **drift**
+- `\(\red{e_t}\)`: Innovations, disturbances, or **increments**
+
+---
+.tight-bottom[
+## Three Forms of Random Walk
+]
+
+.pull-left.tight-top.tight-bottom[
+.small-text.red[
+### RW1: IID Increments
+]
+
+`$$e_t\sim \text{IID } (0, \sigma^2)$$`
+
+- Independently and Identically Distributed
+- **Strongest** form
+
+.small-text[
+### RW2: INID Increments
+]
+
+`$$e_t\sim \text{INID } (0, \sigma^2)$$`
+
+- Independent but Not necessarily Identical
+- Allows for **heteroskedasticity**
+- Weaker than RW1
+]
+
+.pull-right[
+
+.small-text[
+### RW3: Uncorrelated
+]
+`$$\text{Cov}[e_t, e_{t-k}]=0  \text{ for all } k \neq 0$$`
+- **Weakest** form
+- Allows for dependence in higher moments
+]
+
+---
+## Cowles and Jones Test (1937)
+
+.large[
+Tests RW1 using the frequency of .highlight[**sequences**] and .highlight[**reversals**] in historical stock returns.
+]
+
+--
+.tight-top.tight-bottom[
+### Definitions:
+]
+
+- **Sequences**: Consecutive returns with **same sign**
+  
+  `$$(+,+) \text{ or } (-,-)$$`
+
+- **Reversals**: Consecutive returns with **opposite signs**
+  
+  `$$(+,-) \text{ or } (-,+)$$`
+
+- Indicator Variable:
+
+`$$I_t = \begin{cases}
+1 &amp; \text{if } r_t&gt;0 \\
+0 &amp; \text{if } r_t\leq0
+\end{cases}$$`
+
+
+---
+
+## Sequences and Reversals: Formal Definition
+
+### Number of Sequences and Reversals:
+
+.pull-left[
+**Number of Sequences:**
+`$$N_s \equiv \sum_{t=1}^n Y_t$$`
+
+**Sequence indicator:**
+`$$\red{Y_t} \equiv I_tI_{t-1} + (1-I_t)(1-I_{t-1})$$`
+
+**Number of Reversals:**
+`$$N_r \equiv n-N_s$$`
+
+Note that `\(N_s + N_r = n,\)` total number of observations.
+]
+
+.pull-right[
+**Truth Table for `\(Y_t\)`:**
+
+| `\(I_{t-1}\)` | `\(I_t\)` | `\(Y_t\)` |
+|:---------:|:-----:|:-----:|
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+That is,
+`$$Y_t = \begin{cases}
+1 &amp; \text{if sequence} \\
+0 &amp; \text{if reversal}
+\end{cases}$$`
+]
+
+---
+.tight-bottom[
+## Random Walk without Drift
+]
+We first consider a driftless RW, where `\(\mu=0\)`: `\(r_t=p_t-p_{t-1}=e_t\)`
+
+--
+.tight-top.tight-bottom.small-text[
+### Under Driftless RW:
+]
+- `\(P(r_t&gt;0)=\frac{1}{2},\)` that is, it is equally likely to have a positive or negative return on any given day.
+- For any pair of consecutive returns, a **sequence** and a **reversal** are .highlight[**equally probable**].  
+  ⟹ We expect `\(N_s \approx N_r\)`
+
+
+--
+.tight-top.tight-bottom.small-text[
+### Cowles-Jones Test Statistic:
+]
+`$$\widehat{\text{CJ}} \equiv \frac{N_s}{N_r} = \frac{N_s/n}{N_r/n} = \frac{\hat{\pi}_s}{1-\hat{\pi}_s}$$`
+where `\(\red{\pi_s}\)` is the **probability of a sequence**; and `\(1-\pi_s\)` is the probability of a reversal.
+
+--
+.tight-top.tight-bottom.small-text[
+### Under RW Null:
+]
+`$$\widehat{\text{CJ}} \xrightarrow{p} \frac{\pi_s}{1-\pi_s} = \frac{1/2}{1-1/2} = 1$$`
+
+---
+.tight-bottom.tight-top[
+## Random Walk with Drift
+]
+
+Suppose log prices follow a RW with drift:
+`$$p_t=\mu+p_{t-1}+e_t, \quad e_t\sim N(0, \sigma^2)$$`
+`\(r_t=\mu+e_t\)` where `\(p_t=\mu+p_{t-1}+e_t\)` and `\(e_t\sim N(0, \sigma^2)\)`
+
+
+Such a drift makes **sequences more likely than reversals**.
+The indicator variables `\(I_t\)` is like a biased coin-toss:
+
+`$$I_t = \begin{cases}
+1 &amp; \text{with prob. } p= \color{#b94047}{\pi} \\
+0 &amp; \text{with prob. } 1-p= 1-\pi
+\end{cases}$$`
+
+where `\(\pi\)` is the probability of a positive return.
+`$$\pi \equiv P(r_t&gt;0) = \Phi \left(\frac{\mu}{\sigma}\right)$$`
+
+
+--
+.small-text.tight-top.tight-bottom[
+### Drift Effects:
+]
+- If `\(\mu=0\)`: `\(\pi = \frac{1}{2}\)` (fair coin)
+- If `\(\mu&gt;0\)`: `\(\pi &gt; \frac{1}{2}\)` (upward bias)  
+- If `\(\mu&lt;0\)`: `\(\pi &lt; \frac{1}{2}\)` (downward bias)
+
+---
+
+## CJ Test with Drift
+
+- Cowles-Jones ratio:
+    `$$\text{CJ} = \frac{\pi_s}{1-\pi_s} = \frac{\pi^2+(1-\pi)^2}{2\pi(1-\pi)}$$`
+
+    It is normally distributed:
+
+    `$$\widehat{\text{CJ}} \overset{a}{\sim} N \left(\frac{\pi_s}{1-\pi_s}, \frac{\pi_s(1-\pi_s) + 2\big[\pi^3+(1-\pi)^3-\pi_s^3\big]}{n(1-\pi_s)^4} \right)$$`
+
+--
+- Test Hypothesis:
+  - `\(H_0\)`: `\(\widehat{\text{CJ}}=1\)` (Random Walk)
+  - `\(H_1\)`: `\(\widehat{\text{CJ}} \neq 1\)` (Not Random Walk)
+
+--
+- Rejection rule
+  - Reject `\(H_0\)` if `\(|\frac{\widehat{\text{CJ}}-1}{\sqrt{\text{Var}(\widehat{\text{CJ}})}}| &gt; z_{\alpha/2}\)`
+
+---
+.tight-bottom[
+## CJ Test: Example
+]
+&lt;img src="images/RW.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## CJ Test: Exercise
+
+
+**Background Story:**
+
+Elena Martinez, a quantitative analyst at Nordic Capital, has been tasked with evaluating the efficiency of TechStart Index, a new technology stock index launched 100 trading days ago. Her supervisor believes that this young market segment might not follow a random walk due to:
+
+- High volatility from speculative trading
+- Limited analyst coverage of small tech companies
+- Momentum trading by retail investors
+
+Elena decides to use the classic Cowles-Jones test to determine if the daily returns show any predictable patterns that could be exploited for trading profits.
+
+---
+
+**The Data:**
+
+Elena collected 100 daily log returns from the TechStart Index. After analyzing the sign patterns of consecutive returns, she found:
+
+- **48 sequences** (consecutive days with returns of the same sign: `\((+,+)\)` or `\((-,-)\)`)
+- **51 reversals** (consecutive days with opposite signs: `\((+,-)\)` or `\((-,+)\)`)
+- **56 positive return days** out of 100 total days
+
+
+**Your Task:**
+
+As Elena's junior analyst, help her complete the Cowles-Jones test analysis:
+
+### **Questions:**
+
+**Q1.** What is the Cowles-Jones test statistic `\(\widehat{CJ}\)` for this data?
+
+**Q2.** Under the random walk hypothesis (no drift), what should the expected value of `\(\widehat{CJ}\)` be? Explain why.
+
+**Q3.** Calculate the proportion of positive returns (`\(\pi\)`) and the proportion of sequences (`\(\pi_s\)`). What do these values suggest about the market?
+
+---
+
+**Q4.** Calculate the standard deviation `\(\sigma\)` for the Cowles-Jones test statistic using the formula:
+`$$\sigma^2 = \frac{\pi_s (1-\pi_s) + 2(\pi^3 + (1-\pi)^3 - \pi_s^2)}{n (1-\pi_s)^4}$$`
+Show all your work step by step.
+
+**Q5.** Using your calculated standard deviation from Q4, compute the t-statistic for testing `\(H_0: CJ = 1\)`.
+
+**Q6.** With the t-statistic obtained in Q5, what is the two-sided p-value? (Use standard normal table)
+
+**Q7.** At the 5% significance level, what should Elena conclude about market efficiency in the TechStart Index? Should Nordic Capital develop a trading strategy based on this pattern?
+
+**Q8.** **Business Decision:** Elena's supervisor asks: "Should we allocate $10 million to a momentum-based trading strategy for TechStart stocks?" Provide a recommendation based on your statistical analysis.
+
+
+---
+
+## Serial Correlation and Random Walk
+
+### Under Random Walk Hypothesis:
+
+Increments `\(e_t\)` are .highlight[**uncorrelated**]:
+
+`$$\gamma(k) \equiv \text{Cov}(e_t, e_{t-k}) = 0 \quad \text{for all } k\neq 0$$`
+
+Or equivalently:
+
+`$$\rho(k) \equiv \frac{\text{Cov}(e_t, e_{t-k})}{\sqrt{\text{Var}(e_t)\text{Var}(e_{t-k})}} = 0 \quad \text{for all } k\neq 0$$`
+
+
+--
+
+### Key Insight:
+.large[
+`$$\text{Cov}(e_t, e_{t-k}) = 0 \quad \Leftrightarrow \quad \text{Cov}(r_t, r_{t-k}) = 0$$`
+
+The covariance of **first-differences** equals the covariance of **increments**.
+]
+
+---
+
+## Sample Autocorrelations
+
+### Sample Estimates:
+For a given sample `\(\{r_t\}_{t=1}^T\)`:
+
+`$$\begin{aligned}
+\hat{\gamma}(k) &amp; =  \frac{1}{T} \sum_{t=1}^{T-k} (r_t-\bar{r}_T) (r_{t+k}-\bar{r}_T), \quad 0\leq k &lt;T \\
+\hat{\rho}(k) &amp;= \frac{\hat{\gamma}(k)}{\hat{\gamma}(0)}
+\end{aligned}$$`
+
+where `\(\bar{r}_T \equiv \frac{1}{T} \sum_{t=1}^{T} r_t\)`
+
+--
+
+Sample autocorrelation coefficients are asymptotically independent and normally distributed:
+
+`$$\sqrt{T} \hat{\rho} (k) \overset{a}{\sim} N(0,1)$$`
+
+The sampling distribution yields a variety of autocorrelation-based tests.
+
+---
+
+## Box-Pierce Q-Statistic
+
+.tight-top.tight-bottom[
+### Joint Hypothesis Test:
+]
+
+Tests whether the first `\(m\)` autocorrelations are **jointly zero**:
+
+`$$H_0: \rho_1 = \rho_2 = \cdots = \rho_m = 0.$$`
+
+--
+
+.tight-bottom[
+### Box-Pierce Q-Statistic (1970):
+]
+
+`$$Q_m \equiv T\sum_{k=1}^m \hat{\rho}^2(k) \sim \chi_m^2$$`
+
+.tight-top.tight-bottom[
+### Ljung-Box Correction (1979):
+]
+
+`$$Q_m' \equiv T(T+2)\sum_{k=1}^m \frac{\hat{\rho}^2(k)}{T-k} \sim \chi_m^2$$`
+
+.footnote[
+The Ljung-Box version provides better fit to `\(\chi_m^2\)` distribution for small samples
+]
+
+---
+.tight-bottom[
+## Box-Pierce Test: Application
+]
+
+
+
+``` r
+returns &lt;- diff(pt)  # First differences = returns
+# Box-Pierce test  
+Box.test(returns, lag=1, type="Box-Pierce")
+```
+
+```
+## 
+## 	Box-Pierce test
+## 
+## data:  returns
+## X-squared = 0.065517, df = 1, p-value = 0.798
+```
+
+
+``` r
+# Ljung-Box test
+Box.test(returns, lag=1, type="Ljung-Box")
+```
+
+```
+## 
+## 	Box-Ljung test
+## 
+## data:  returns
+## X-squared = 0.067503, df = 1, p-value = 0.795
+```
+
+**Interpretation**: High p-values suggest we cannot reject the null hypothesis of zero autocorrelation, consistent with random walk.
+
+---
+## Variance Ratio Test
+
+- The VR(q) Statistic:
+    `$$\text{VR(q)} \equiv \frac{\text{Var}[r_t(q)]}{q\cdot \text{Var}[r_t]}$$`
+    where `\(r_t(q)\equiv \sum_{k=0}^{q-1} r_{t-k}\)` is the **q-period return**
+--
+
+- Under Zero Autocorrelation:
+    `$$\text{Var}[r_t(q)] = q\cdot \text{Var}[r_t]$$`
+    Therefore: `$$\text{VR(q)}=1$$`
+
+--
+
+- When Serial Correlation Exists:
+    `\(\text{VR(q)}\)` moves away from `\(1\)`:
+
+  - **Positive serial correlation** ⟹ `\(\text{VR(q)} &gt; 1\)`
+  - **Negative serial correlation** ⟹ `\(\text{VR(q)} &lt; 1\)`
+
+
+---
+
+## Summary: Testing Market Efficiency
+
+.tight-top.tight-bottom.small-text[
+### Three Main Approaches:
+]
+
+.pull-left.tight-top.tight-bottom.small-text[
+#### 1. **Cowles-Jones Test**
+.tight-top.tight-bottom[
+- Tests using sequences/reversals
+- Simple intuitive approach
+- Works for basic RW testing
+]
+
+
+#### 2. **Autocorrelation Tests**
+.tight-top.tight-bottom[
+- Direct test of serial correlation
+- Box-Pierce/Ljung-Box Q-statistics
+- Tests joint hypothesis of zero autocorrelations
+]
+
+#### 3. **Variance Ratio Tests**
+.tight-top.tight-bottom[
+- Compare variance of multi-period vs single-period returns
+- Powerful against various forms of dependence
+]
+]
+
+--
+
+.pull-right.tight-top.tight-bottom[
+### .highlight[**Key Insights**]:
+
+- **Joint test problem**: Always testing efficiency AND asset pricing model simultaneously
+- **Most tests suggest**: If security returns cannot be forecasted, then market efficiency cannot be rejected
+- **Perfect efficiency** exists only in idealized frictionless world
+- Focus on **relative efficiency** in practice
+]
+
+---
+
+
+## References
+
+.small[
+Box, G. E. P., &amp; Pierce, D. A. (1970). Distribution of residual autocorrelations in autoregressive-integrated moving average time series models. *Journal of the American Statistical Association*, 65(332), 1509-1526.
+
+Campbell, J. Y., Lo, A. W., &amp; MacKinlay, A. C. (1997). *The econometrics of financial markets*. Princeton University Press.
+
+Cowles, A., &amp; Jones, H. E. (1937). Some a posteriori probabilities in stock market action. *Econometrica*, 5(3), 280-294.
+
+Ljung, G. M., &amp; Box, G. E. P. (1978). On a measure of lack of fit in time series models. *Biometrika*, 65(2), 297-303.
+
+Lo, A. W., &amp; MacKinlay, A. C. (1988). Stock market prices do not follow random walks: Evidence from a simple specification test. *The Review of Financial Studies*, 1(1), 41-66.
+
+Lo, A. W. (1989). The size and power of the variance ratio test in finite samples: A Monte Carlo investigation. *Journal of Econometrics*, 40(2), 203-238.
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false,
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

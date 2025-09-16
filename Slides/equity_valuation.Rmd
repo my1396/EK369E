@@ -1,0 +1,962 @@
+---
+title: "Equity Valuation"
+author: "Instructor: Menghan Yuan"
+date: "Fall 2025"
+output: 
+  xaringan::moon_reader:
+    css: ["theme/xaringan-themer.css", "theme/custom.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: yes
+      countIncrementalSlides: no
+      ratio: '16:9'
+    includes:
+      in_header: libs/mathjax.html
+---
+
+```{r setup, include=F}
+# Side-by-side comparison using stargazer
+library(tidyverse)
+library(knitr)
+library(quantmod)
+library(stargazer)
+library(data.table)
+opts_chunk$set(
+  echo = FALSE, message = FALSE, fig.align = "center", fig.pos = "H",
+  dpi = 300, fig.retina = 2, dev = "svg"
+)
+```
+
+
+```{r fun}
+quick_summary <- function(x, full = FALSE) {
+  # Function to compute basic descriptive statistics
+  if (!full) {
+    # Basic summary
+    data.frame(
+      n = length(x),
+      min = min(x),
+      mean = mean(x),
+      median = median(x),
+      max = max(x),
+      sd = sd(x),
+      skewness = moments::skewness(x),
+      kurtosis = moments::kurtosis(x),
+      row.names = NULL
+    )
+  } else {
+    # Full summary with quartiles and IQR
+    data.frame(
+      n = length(x),
+      min = min(x),
+      Q1 = quantile(x, 0.25),
+      mean = mean(x),
+      median = median(x),
+      Q3 = quantile(x, 0.75),
+      max = max(x),
+      IQR = IQR(x),
+      sd = sd(x),
+      skewness = moments::skewness(x),
+      kurtosis = moments::kurtosis(x),
+      row.names = NULL
+    )
+  }
+}
+```
+
+class: title-slide-section, center, middle
+
+# Agenda
+
+---
+class: center-v
+**Portfolio Theory**
+
+- Portfolio Diversification Benefits
+<!-- - Construction of Efficient Frontier -->
+
+**Factor Models**
+
+- Descriptive Analysis of Pricing Factors
+- Interpretation of Factor Models Results
+- Security Market Line
+
+
+
+---
+class: title-slide-section, center, middle
+# Portfolio Diversification Benefits
+
+---
+
+### Exercise: Portfolio Analysis
+
+**Scenario:** Two assets with 5 periods of historical returns
+
+| Period | Asset A (%) | Asset B (%) |
+|--------|-------------|-------------|
+| 1      | 10          | 12          |
+| 2      | 6           | 16           |
+| 3      | 14          | 8          |
+| 4      | 2           | 4           |
+| 5      | 18          | 20          |
+
+
+---
+
+### Step 1: Calculate Means and Standard Deviations
+
+**Your Task:** Calculate mean and standard deviation for each asset
+
+**Asset A:**
+- Mean return = ?
+- Standard deviation = ?
+
+**Asset B:**
+- Mean return = ?
+- Standard deviation = ?
+
+**Formulas:**
+- Mean: $\bar{r} = \frac{1}{n}\sum_{i=1}^{n} r_i$
+- Std Dev: $\sigma = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n} (r_i - \bar{r})^2}$
+
+---
+
+### Step 2: Calculate Correlation Coefficient
+
+**Your Task:** Calculate the correlation coefficient between Asset A and Asset B.
+
+**Formulas:**
+- Covariance: $\cov(r_A, r_B) = \frac{1}{n-1}\sum_{i=1}^{n} (r_{A,i} - \bar{r}_A)(r_{B,i} - \bar{r}_B)$
+- Correlation: $\rho_{AB} = \frac{\cov(r_A, r_B)}{\sigma_A \sigma_B}$
+
+---
+
+### Step 3: Construct Equal-Weight Portfolio
+
+**Portfolio Weights:**
+- Asset A: 50%
+- Asset B: 50%
+
+**Your Task:** Calculate portfolio returns for each period
+
+Portfolio Return = 0.5 × Asset A Return + 0.5 × Asset B Return
+
+| Period | Asset A (%) | Asset B (%) | Portfolio (%) |
+|--------|-------------|-------------|---------------|
+| 1      | 10          | 12          | ?             |
+| 2      | 6           | 8           | ?             |
+| 3      | 14          | 16          | ?             |
+| 4      | 2           | 4           | ?             |
+| 5      | 18          | 20          | ?             |
+
+---
+
+### Step 4: Portfolio Risk Analysis
+
+**Your Task:** Calculate portfolio standard deviation
+
+Using the portfolio returns from Step 3, calculate:
+- Portfolio mean return = ?
+- Portfolio standard deviation = ?
+
+Alternatively, the portfolio standard deviation can be calculated using the following formula:
+
+$$\sigma_p^2 = w_A^2\sigma_A^2 + w_B^2\sigma_B^2 + 2w_Aw_B\rho_{AB}\sigma_A\sigma_B$$
+
+**Compare:**
+- Average volatility of individual assets = ?
+- Portfolio volatility = ?
+- Diversification benefit = ?
+
+---
+
+### Step 5: Reflection on Diversification
+
+**Discussion Questions:**
+
+1. How does the portfolio volatility compare to individual asset volatilities?
+2. Keeping the mean return and volatility of Assets A and B unchanged:
+   1. What would happen if correlation was 0.0 instead of 0.6?
+   2. What would happen if correlation was 1.0?
+   3. What would happen if correlation was $-1.0$?
+3. **Investment Decision:** For a risk-averse investor, would you recommend:
+   - Investing 100% in one asset, or
+   - The equally-weighted portfolio?
+   Explain your reasoning (3-4 sentences).
+
+
+---
+class: title-slide-section, center, middle
+# Descriptive Analysis of Risk-free Rate and Pricing Factors
+
+---
+
+## Risk Free Rate (RFR)
+
+Data sources for Norwegian risk-free rate (RFR):
+
+- Before 2013 NIBOR: [Norges Bank](https://www.norges-bank.no/en/topics/Statistics/Historical-monetary-statistics/)
+
+- After 2013 Norwegian Overnight Weighted Average rate: [Norske Finansielle Referenser AS (NoRe)](https://nore-benchmarks.com)
+
+- [Titlon](https://titlon.uit.no/tabledefs.php): 3 months Norwegian Government Bills, from the `bondindex` table, `CloseYield field`.
+
+
+Financial service companies publish surveys about financial data. For instance, PwC Norge.
+
+- Here is their annual report about RFR: <https://www.pwc.no/no/publikasjoner/risikopremien.html>
+
+---
+
+**Data sources for pricing factors:**
+
+- Fama-French factors can be obtained from [Ken French's website](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html).
+
+- You can get the data for different regions, e.g., US, Europe, Japan, etc.
+
+Preview of Fama-French 3 factors for US market:
+
+```{r}
+f_name <- "https://raw.githubusercontent.com/my1396/course_dataset/refs/heads/main/FF_3Factors_US_monthly.csv"
+data <- read_csv(f_name)
+data %>% as.data.table()
+```
+
+---
+
+## Summary Statistics of Pricing Factors
+
+```{r}
+# Descriptive statistics
+data_summary <- apply(data[, -1], 2, quick_summary) %>%
+  bind_rows(.id = "Variable")
+data_summary %>%
+  slice(1:3) %>%
+  kable(digits = 2, format = "html")
+```
+
+
+.small-text[
+**Key Observations:**
+
+- **Market Risk Premium (Mkt-RF)**: Mean 0.60%, moderate volatility (4.57%), negative skewness suggests occasional large negative returns
+- **Size Factor (SMB)**: Small positive mean (0.10%), high volatility (3.19%), positive skewness indicates frequent extreme positive returns for small-cap stocks
+- **Value Factor (HML)**: Positive mean (0.18%), moderate characteristics, value stocks outperform growth stocks on average
+- **Kurtosis**: All risk factors indicate fat tails (Kurtosis $>3$), suggesting higher likelihood of extreme returns compared to a normal distribution.
+]
+
+---
+## Summary Statistics of Risk-Free Rate
+
+```{r}
+data_summary %>%
+  slice(4) %>%
+  kable(digits = 2, format = "html")
+```
+
+**Key Observations:**
+
+- **Risk-Free Rate (RF)**: Low mean (0.15%) and volatility (0.16%), reflects varying interest rate environments
+- **Kurtosis** $=2.2$: Suggests that risk-free rate has lighter tails than the normal distribution, suggesting lower likelihood of extreme returns. 
+
+---
+
+## Visualization of Risk-Free Rate
+
+```{r fig.width=12, fig.asp=0.5}
+# Visualize RF
+data %>%
+  ggplot(aes(x = Date, y = RF)) +
+  geom_line() +
+  theme_minimal(base_size = 14) +
+  scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
+  labs(title = "Risk-Free Rate Over Time", y = "Risk-Free Rate (%)", x = "Date")
+```
+
+---
+
+# Interpretation of Factor Models Results
+
+The interpretation follows the principle of Multiple Linear Regression. 
+
+Here we focus on 
+
+- stocks' risk profile, measured by factor loadings (betas),
+- the interpretation of implied stock characteristics,
+- valuation: under- or over-valuation (alphas)
+
+---
+
+## Case Study: AAPL, SLAB, and KO
+
+Company profiles:
+
+- **Apple Inc. (AAPL)**: Mega-cap (~$3.5 trillion) technology leader company
+- **Silicon Labs (SLAB)**: Small-cap (~$5–8 billion) technology growth company
+- **Coca-Cola Co. (KO)**: Large-cap (~$270 billion) consumer staples company; defensive stock
+
+```{r}
+data_dir <- "/Users/menghan/Library/CloudStorage/OneDrive-Norduniversitet/EK369E 2025Fall/Slides/data/"
+f_name <- paste0(data_dir, "FF_3Factors_case_study.csv")
+reg_data <- read_csv(f_name)
+# Split data for individual regressions
+aapl_reg_data <- reg_data %>% filter(symbol == "AAPL")
+slab_reg_data <- reg_data %>% filter(symbol == "SLAB")
+ko_reg_data <- reg_data %>% filter(symbol == "KO")
+# Run CAPM regressions
+capm_aapl <- lm(eRi ~ rmrf, data = aapl_reg_data)
+capm_slab <- lm(eRi ~ rmrf, data = slab_reg_data)
+capm_ko <- lm(eRi ~ rmrf, data = ko_reg_data)
+```
+
+---
+
+## Data Preview of aapl
+
+```{r preview-aapl}
+aapl_reg_data %>%
+  select(-c("year", "mon")) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 4))) %>%
+  as.data.table()
+```
+
+```{r include=FALSE}
+# Helper to post-process stargazer HTML tables: add first column class & escape stars
+process_stargazer_html <- function(html_vec, firstcol_class = "firstcol", star_class = "coef-stars") {
+  # Add class to first column cells
+  html_vec <- gsub("<tr>\\s*<td>", sprintf("<tr><td class=\"%s\">", firstcol_class), html_vec, perl = TRUE)
+  # Escape significance stars so xaringan doesn't treat them as markdown
+  html_vec <- gsub("<sup>\\*\\*\\*</sup>", sprintf("<span class='%s'>&ast;&ast;&ast;</span>", star_class), html_vec)
+  html_vec <- gsub("<sup>\\*\\*</sup>", sprintf("<span class='%s'>&ast;&ast;</span>", star_class), html_vec)
+  html_vec <- gsub("<sup>\\*</sup>", sprintf("<span class='%s'>&ast;</span>", star_class), html_vec)
+  html_vec
+}
+```
+
+---
+
+## CAPM Review
+
+CAPM as a regression can be expressed as
+
+$$r_{t} - r_{f,t} = \alpha + \beta (r_{m,t}-r_{f,t}) + \varepsilon_{t}$$ 
+where $\alpha$ (intercept) and $\beta$ (slope) are the parameters to estimate.
+
+We use the following data to estimate the parameters.
+
+-   $r_t$ is the return on the asset at time $t$;
+-   $r_{m,t}$ is the return on the market portfolio;
+-   $r_{f,t}$ is the risk free rate of interest; 
+-   $r_t-r_{f,t}$ is the excess return on the asset;
+-   $r_m-r_{f,t}$ is the Equity Risk Premium.
+
+---
+
+## CAPM Results: Risk Profile Comparison
+
+```{r echo=FALSE, results='asis'}
+capm_html <- capture.output(
+  stargazer(capm_aapl, capm_slab, capm_ko,
+    type = "html",
+    title = "CAPM Results: Risk Profile Comparison",
+    dep.var.labels = "Excess Return",
+    column.labels = c("AAPL (High Beta)", "SLAB (High Beta)", "KO (Low Beta)"),
+    covariate.labels = c("Market Risk Premium", "Alpha"),
+    digits = 3,
+    digit.separator = "",
+    no.space = TRUE,
+    star.cutoffs = c(0.05, 0.01, 0.001)
+  )
+)
+# First-col alignment
+capm_html <- process_stargazer_html(capm_html, star_class = "capm-stars")
+cat('<div class="capm-wrap">', paste(capm_html, collapse = "\n"), "</div>")
+```
+
+---
+
+## Interpretation of CAPM Results
+<!-- Using raw HTML to ensure class applies since markdown attribute was rendered literally -->
+<h3 class="tight-top tight-bottom">Beta - Market Risk Exposure</h3>
+
+* **Definition**: Beta measures the sensitivity of stock returns to overall market excess return. (systematic risk).
+  * $\beta > 1$: Stock is more volatile than the market (high market risk).
+  * $\beta < 1$: Stock is less volatile (defensive).
+* **Results**:
+  * **AAPL (β = 1.316\*\*\*):** Apple’s excess returns move about **1.3× the market**. This high beta suggests it is riskier than the market. Given Apple’s mega-cap size, the result reflects tech-sector cyclicality, despite its scale.
+  * **SLAB (β = 1.477\*\*\*):** Even riskier, with **1.5× the market**. As a small-cap growth stock, SLAB is highly sensitive to market swings and investor sentiment.
+  * **KO (β = 0.407\*\*\*):** Very defensive, with less than half the market’s volatility. KO’s beta reflects its consumer staples nature – demand is stable, making it less sensitive to market cycles.
+* **Implication:** SLAB > AAPL > KO in terms of risk exposure to the market.
+
+---
+
+### Alpha (Intercept)
+
+* **Definition**: Alpha represents abnormal return, i.e., the return not explained by market exposure. A positive and significant alpha suggests potential **undervaluation** or consistent outperformance; a negative alpha indicates **overvaluation** or underperformance.
+
+* **Results**:
+
+  * **AAPL (α = 0.015\*\*\*):** Positive and significant → Apple earned about **1.5% per period (monthly)** above what CAPM predicts. Suggests the market may **undervalue Apple**, or Apple consistently outperformed.
+  * **SLAB (α = –0.00000):** Essentially zero and not significant → no abnormal return. SLAB’s performance is fully explained by its market exposure. Neither undervalued nor overvalued by CAPM.
+  * **KO (α = 0.003):** Small, positive, but **not statistically significant**. Suggests KO’s returns are in line with its low-risk profile; no evidence of consistent outperformance.
+---
+
+### Other Statistics
+
+* $R^2$ **(explanatory power):**
+
+  * AAPL (0.300) and SLAB (0.253): Market explains about 25–30% of return variation – decent but leaves substantial idiosyncratic risk (typical for individual stocks).
+  * KO (0.140): Only 14% explained → KO’s returns are less driven by market swings, more by firm-specific or industry factors.
+
+* **Residual Std. Error:**
+
+  * AAPL (0.092) and SLAB (0.116): Higher noise in returns, reflecting growth/tech volatility.
+  * KO (0.046): Lower error → more stable, predictable returns.
+
+* **F-statistic (all highly significant):** Confirms that the market factor (beta) is a strong predictor of returns for all three firms, despite differing R² levels.
+
+---
+
+### Summary
+
+* **Apple (AAPL):** High beta, significant positive alpha → cyclical but delivering abnormal outperformance.
+* **Silicon Labs (SLAB):** Very high beta, no alpha → highly risky, returns fully explained by market risk.
+* **Coca-Cola (KO):** Low beta, stable defensive profile, no alpha → safer, predictable, but no abnormal return.
+
+---
+
+## FF 3-Factor Review
+
+The Fama-French three-factor model as a regression can be expressed as
+
+$$r_{t} - r_{f,t} = \alpha + \beta^{RMRF} (r_{m,t}-r_{f,t}) + \beta^{SMB}SMB_t + \beta^{HML}HML_t + \varepsilon_{t}$$ 
+where $\alpha$ (intercept) and $\beta^{RMRF}$, $\beta^{SMB}$, $\beta^{HML}$ are the parameters to estimate.
+
+
+---
+
+## FF 3-Factor Results: Risk Profile Comparison
+
+```{r echo=FALSE, results='asis'}
+ff3_aapl <- lm(eRi ~ rmrf + SMB + HML, data = aapl_reg_data)
+ff3_slab <- lm(eRi ~ rmrf + SMB + HML, data = slab_reg_data)
+ff3_ko <- lm(eRi ~ rmrf + SMB + HML, data = ko_reg_data)
+
+# Generate HTML table
+ff3_tbl <- capture.output(
+  stargazer(ff3_aapl, ff3_slab, ff3_ko,
+    type = "html",
+    title = "Fama-French 3-Factor Model Results: Risk Profile Comparison",
+    dep.var.labels = "Excess Return",
+    column.labels = c("AAPL (High Beta)", "SLAB (High Beta)", "KO (Low Beta)"),
+    covariate.labels = c("Market Risk Premium", "SMB", "HML", "Alpha"),
+    align = TRUE,
+    digits = 3,
+    digit.separator = "",
+    omit.stat = c("LL"), # keep n, R2, Adj R2, F
+    no.space = TRUE,
+    single.row = FALSE,
+    star.cutoffs = c(0.05, 0.01, 0.001)
+  )
+)
+
+# Post-process: center numeric columns by adding a class to first column cells
+ff3_tbl <- process_stargazer_html(ff3_tbl, star_class = "coef-stars")
+
+cat('<div class="ff3-wrap">', paste(ff3_tbl, collapse = "\n"), "</div>")
+```
+
+
+---
+
+## Interpretation of FF 3-Factor Results
+
+<h3 class="tight-top tight-bottom">Market Risk Premium (Beta)</h3>
+
+* **Results vs. CAPM:**
+
+  * **AAPL (β = 1.273\*\*\*):** Still >1, confirming high exposure to market swings, but slightly lower than under CAPM (1.316). Including SMB and HML absorbs some of the variation that was previously attributed to the market.
+  * **SLAB (β = 1.185\*\*\*):** Lower than CAPM (1.477). Suggests that part of SLAB’s return pattern is better explained by size (SMB).
+  * **KO (β = 0.486\*\*\*):** Higher than CAPM (0.407), but still well below 1. KO’s risk is understated under CAPM; some risk is actually market-related once size and value are controlled.
+
+* **Implication:** CAPM tends to overstate the market risk of growth-oriented small caps (like SLAB) and understate market risk of defensive firms (like KO).
+
+---
+
+### SMB (Small Minus Big) — Size Factor
+
+* **Meaning:** Measures sensitivity to small-cap vs. large-cap performance.
+
+  * Positive SMB → behaves more like a **small-cap**.
+  * Negative SMB → behaves more like a **large-cap**.
+
+* **Results:**
+
+  * **AAPL (0.132, n.s.):** Insignificant, meaning Apple’s returns do not systematically align with small- or large-cap premiums. As a mega-cap, this makes sense.
+  * **SLAB (1.489\*\*\*):** Strong positive loading → SLAB behaves like a **small-cap stock**. Consistent with its ~$5–8 billion size. Explains why its CAPM beta looked so high; part of its risk is actually **size exposure**.
+  * **KO (–0.402\*\*\*):** Significant negative loading → KO behaves like a **large-cap stock**, benefiting from the “big stock premium.” Fits with KO’s ~$270 billion market cap and stable business.
+
+---
+
+### HML (High Minus Low) — Value Factor
+
+* **Meaning:** Sensitivity to value (high book-to-market) vs. growth (low book-to-market) stocks.
+
+  * Negative HML → behaves like a **growth stock**.
+  * Positive HML → behaves like a **value stock**.
+
+* **Results:**
+
+  * **AAPL (–0.735\*\*\*):** Strongly negative → Apple loads as a **growth stock**. This matches its tech-sector profile and high valuation multiples.
+  * **SLAB (–0.454\*):** Also negative → SLAB is a **growth-oriented** small-cap, consistent with being a tech innovator.
+  * **KO (+0.142, n.s.):** Positive and significant → KO has characteristics of a **value stock**. Fits with consumer staples: stable earnings, lower growth, and value orientation.
+
+---
+
+### Alpha (Intercept)
+
+* **Results:**
+
+  * **AAPL (α = 0.017\*\*\*):** Still positive and significant → Apple delivers abnormal returns beyond market, size, and value factors. Suggests **persistent undervaluation or outperformance**.
+  * **SLAB (α = 0.002, n.s.):** No abnormal return → fully explained by market + size + value exposures.
+  * **KO (α = 0.002, n.s.):** No abnormal return → KO’s performance is consistent with its defensive, large-cap, value profile.
+
+---
+
+### Model Fit vs. CAPM
+
+* **R² improves noticeably:**
+  * AAPL: 0.30 → 0.36
+  * SLAB: 0.25 → 0.37
+  * KO: 0.14 → 0.22
+* This shows the FF3 model explains more variation in returns, especially for SLAB and KO where size and value matter strongly.
+* Residual standard errors fall slightly, meaning the model captures risk better than CAPM.
+
+```{r echo=FALSE, results='asis'}
+fit_comp <- tibble(
+  Metric = c("Residual Std. Error: CAPM", "Residual Std. Error: FF-3"),
+  AAPL = c("0.092", "0.089"),
+  SLAB = c("0.116", "0.107"),
+  KO = c("0.046", "0.044")
+)
+tbl_html <- fit_comp %>%
+  knitr::kable(format = "html", align = c("l", "c", "c", "c")) %>%
+  as.character()
+tbl_html <- sub("<table", '<table class="fit-comp-table"', tbl_html)
+cat('<div class="fit-comp-wrap">', tbl_html, "</div>")
+```
+
+---
+
+### Summary
+
+* **AAPL:** High beta, neutral size, strong growth profile, positive alpha. Apple is a **large-cap growth leader** with consistent outperformance.
+* **SLAB:** High beta, small-cap, strong growth tilt, no alpha. SLAB is a **risky small-cap growth stock**, fully explained by FF factors.
+* **KO:** Low beta, large-cap, value stock, no alpha. KO is a **defensive large-cap value stock**, with stable, predictable returns but no excess performance.
+
+---
+
+# Security Market Line
+
+The Security Market Line (SML) is a graphical representation of the expected return of an asset vs. its risk, as measured by beta ($\beta$). 
+
+Today, we focus on 
+
+- construction of the SML using CAPM as an example
+- determination of assets' valuation (under- or over-valuation) based on their position relative to the SML
+ - determination of assets' valuation (under- or over-valuation) based on their position relative to the SML
+
+---
+
+## Security Market Line (Recap)
+
+CAPM (in excess return form):  
+$$E[r_i - r_f] = \alpha_i + \beta_i \; E[r_M - r_f]$$
+
+SML equation (in raw return form):
+$$E[r_i] = r_f + \beta_i \; E[r_M - r_f]$$
+
+
+**Interpretation:**
+- Point ABOVE the SML: offers a higher return than required for its beta → undervalued (underpriced)
+- Point BELOW the SML: offers a lower return than required → overvalued (overpriced)
+
+Example Setup (monthly returns):
+- Risk‑free rate $r_f = 0.15\%$
+- Expected market excess return (market risk premium) $E[r_M - r_f] = 0.60\%$
+
+---
+
+## Illustrative Example: Five Assets
+
+```{r echo=FALSE, results='asis'}
+rf <- 0.0015 # 0.15% monthly
+mrp <- 0.0060 # 0.60% monthly expected excess market return
+
+assets <- tibble(
+  Ticker = c("KO", "DEF", "AAPL", "SLAB", "GROW"),
+  Name = c("Coca-Cola Co.", "Defensive Fund", "Apple Inc.", "Silicon Labs", "Growth ETF"),
+  Beta = c(0.40, 0.80, 1.30, 1.60, 1.00),
+  Observed_Raw = c(0.0045, 0.0055, 0.0100, 0.0105, 0.0120) # observed average raw returns
+)
+
+assets <- assets %>%
+  mutate(
+    Expected_Raw = rf + Beta * mrp,
+    Position = case_when(
+      Observed_Raw > Expected_Raw + 1e-6 ~ "Above SML (Undervalued)",
+      Observed_Raw < Expected_Raw - 1e-6 ~ "Below SML (Overvalued)",
+      TRUE ~ "On SML (Fairly Valued)"
+    )
+  )
+
+tbl <- assets %>%
+  mutate(
+    Beta = sprintf("%.2f", Beta),
+    `Observed Raw %` = sprintf("%.2f", Observed_Raw * 100),
+    `Expected Raw %` = sprintf("%.2f", Expected_Raw * 100)
+  ) %>%
+  select(Ticker, Name, Beta, `Observed Raw %`, `Expected Raw %`, Position)
+
+tbl %>%
+  kable(format = "html", align = c("l", "l", "c", "c", "c", "l"), caption = "Illustrative SML Comparison (Monthly Raw Returns)")
+```
+
+- Expected Raw = $r_f + \beta \times E[r_M - r_f] = (0.15+\beta \times 0.6)%$
+- Observed Raw: historical average monthly raw return; what you actually observed
+
+---
+
+## Plot: SML vs. Assets
+
+```{r echo=FALSE, fig.width=10, fig.asp=0.5}
+beta_range <- c(0, 1.7)
+sml_df <- tibble(Beta = beta_range, Raw_Return = rf + Beta * mrp)
+
+# Calculate alpha for GROW
+grow_data <- assets %>% filter(Ticker == "GROW")
+grow_alpha <- grow_data$Observed_Raw - grow_data$Expected_Raw
+
+assets <- tibble(
+    Ticker = c("KO", "DEF", "AAPL", "SLAB", "GROW"),
+    Name = c("Coca-Cola Co.", "Defensive Fund", "Apple Inc.", "Silicon Labs", "Growth ETF"),
+    Beta = c(0.40, 0.80, 1.30, 1.60, 1.00),
+    Observed_Raw = c(0.0045, 0.0055, 0.0100, 0.0105, 0.0120) # observed average raw returns
+)
+
+assets <- assets %>%
+    mutate(
+        Expected_Raw = rf + Beta * mrp,
+        Position = case_when(
+            Observed_Raw > Expected_Raw + 1e-6 ~ "Above SML (Undervalued)",
+            Observed_Raw < Expected_Raw - 1e-6 ~ "Below SML (Overvalued)",
+            TRUE ~ "On SML (Fairly Valued)"
+        )
+    )
+beta_range <- c(0, 1.7)
+sml_df <- tibble(Beta = beta_range, Raw_Return = rf + Beta * mrp)
+
+# Calculate alpha for GROW
+grow_data <- assets %>% filter(Ticker == "GROW")
+grow_alpha <- grow_data$Observed_Raw - grow_data$Expected_Raw
+
+# Calculate market return at beta = 1
+market_return <- rf + 1 * mrp
+
+p_SML <- ggplot() +
+    # Add SML line
+    geom_line(data = sml_df, aes(Beta, Raw_Return * 100), color = "#43418A", linewidth = 1) +
+    # Observed returns
+    geom_point(data = assets, aes(Beta, Observed_Raw * 100, color = Position), size = 3.2) +
+    # Expected returns
+    geom_point(data = assets, aes(Beta, Expected_Raw * 100), shape = 4, color = "grey40", size = 3) +
+    geom_text(
+        data = assets, aes(Beta, Observed_Raw * 100, label = Ticker, color = Position),
+        nudge_y = 0.18,
+        size = 5.5,
+        show.legend = FALSE
+    ) +
+    # Add dashed line at beta = 1 to show market return
+    geom_segment(
+        aes(x = 0, xend = 1, 
+        y = market_return * 100, 
+        yend = market_return * 100), 
+        linetype = "dashed", 
+        color = "grey60", 
+        alpha = 0.8) +
+    # Add annotations
+    annotate("text", x = -0.15, y = rf * 100 + 0.05, 
+             label = sprintf("r[f] == %.2f*'%%'", rf * 100),
+             hjust = 0.5, vjust = 1.4, size = 5.5, color = "#43418A", parse = TRUE) +
+    annotate("text", x = -0.15, y = market_return * 100 + 0.05, 
+             label = sprintf("r[M] == %.2f*'%%'", market_return * 100),
+             hjust = 0.5, vjust = 1.4, size = 5.5, color = "#43418A", parse = TRUE) +
+    # Add point at market return (beta = 1)
+    geom_point(aes(x = 1, y = market_return * 100), color = "#43418A", size = 2.5, shape = 16) +
+    # Add point at risk free return (beta = 0)
+    geom_point(aes(x = 0, y = rf * 100), color = "#43418A", size = 2.5, shape = 16) +
+    # Add alpha annotation for GROW
+    geom_segment(
+        data = grow_data, 
+        aes(x = Beta, xend = Beta, y = Expected_Raw * 100, yend = Observed_Raw * 100),
+        color = "#1b7837", linetype = "dashed", linewidth = 0.8
+    ) +
+    annotate("text", 
+           x = grow_data$Beta + 0.12, 
+           y = (grow_data$Expected_Raw + grow_data$Observed_Raw) * 50, 
+           label = paste("α =", sprintf("%.2f%%", grow_alpha * 100)), 
+           color = "#1b7837", 
+           size = 5.5, 
+           hjust = 1.5,
+           fontface = "italic") +
+    scale_color_manual(
+        values = c(
+            "Above SML (Undervalued)" = "#1b7837", 
+            "Below SML (Overvalued)" = "#b2182b", 
+            "On SML (Fairly Valued)" = "grey40"
+            )) +
+    scale_x_continuous(expand = expansion(mult = c(0.1, 0.02))) + # Add padding to prevent cropping
+    labs(
+        title = "Security Market Line (Monthly Raw Returns)",
+        y = latex2exp::TeX("Expected Raw Return $\\,E[r_i]\\,$ (%)"), x = "Beta (Systematic Risk)",
+        color = "Position"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "bottom")
+p_SML
+```
+
+
+---
+## Plot: Interpretation
+
+Notes:
+
+- Hollow crosses (×) mark the CAPM expected raw return for each beta. Solid circles show observed average raw returns.
+- Green points (above line) indicate the asset offers more return than required → potential buy signal.
+- Red points (below line) indicate less return than required → potential sell / avoid.
+- The distance between points and the SML represents alpha ($\alpha_i$), shown for GROW as an example.
+
+---
+
+## Interpreting the Example
+
+- KO: Slightly above SML → modest undervaluation; offers return premium for low beta.
+- DEF: Below SML → overvalued vs. its risk, return insufficient.
+- AAPL: Above SML → delivers more than required for its high beta.
+- SLAB: Slightly below SML → compensation lower than required for very high beta.
+- GROW: Clearly above SML → strongest undervaluation signal.
+
+**Discussion:**
+
+1. Which asset you'd invest in and which asset you'd allocate away from 
+2. How changes in $r_f$ or $E[r_M-r_f]$ pivot or rotate the SML
+
+---
+.tight-top[
+## Impact of Increases in ERP
+]
+
+.tight-top.tight-bottom[
+Now we increase equity risk premium ($E[r_M - r_f]$), while holding $r_f$ constant.
+]
+
+
+```{r}
+# Demonstrate effect of increasing market risk premium while keeping rf constant
+mrp_high <- 0.0080 # Increase to 0.8% monthly
+
+# Create SML data for both scenarios
+beta_range <- c(0, 1.7)
+sml_original <- tibble(Beta = beta_range, Raw_Return = rf + Beta * mrp, Scenario = "Original (ERP = 0.6%)")
+sml_high_mrp <- tibble(Beta = beta_range, Raw_Return = rf + Beta * mrp_high, Scenario = "Higher ERP (0.8%)")
+sml_mrp_comparison <- bind_rows(sml_original, sml_high_mrp)
+# Calculate market returns for both scenarios
+market_return_original <- rf + 1 * mrp
+market_return_high <- rf + 1 * mrp_high
+```
+
+```{r echo=FALSE, fig.width=10, fig.asp=0.5, warning=FALSE, message=FALSE}
+# Create comparison plot
+p_SML_mrp_comparison <- ggplot() +
+    geom_line(data = sml_mrp_comparison, 
+        aes(Beta, Raw_Return * 100, color = Scenario, linetype = Scenario), 
+        linewidth = 1.2) +
+    # Add points for original assets (only on original SML)
+    geom_point(data = assets, aes(Beta, Observed_Raw * 100), color = "grey30", size = 2.5, alpha = 0.7) +
+    geom_text(data = assets, 
+        aes(Beta, Observed_Raw * 100, label = Ticker), 
+        nudge_y = 0.15, size = 4, color = "grey30") +
+    # Add market return points for both scenarios
+    geom_point(aes(x = 1, y = market_return_original * 100), color = "#43418A", size = 3, shape = 16) +
+    geom_point(aes(x = 1, y = market_return_high * 100), color = "#d73027", size = 3, shape = 16) +
+    # Add risk-free rate point (same for both)
+    geom_point(aes(x = 0, y = rf * 100), color = "black", size = 3, shape = 16) +
+    annotate("text", x = 0.05, y = rf * 100 + 0.05, 
+             label = sprintf("r[f] == %.2f*'%%'", rf * 100),
+             hjust = 1, vjust = 0, size = 5.5, color = "black", parse = TRUE) +
+    # Add dashed line at beta = 1 to show market returns
+    annotate("text", x = 0.05, y = market_return_original * 100, 
+             label = sprintf("r[M-Low] == %.2f*'%%'", market_return_original * 100),
+             hjust = 0.7, vjust = 0, 
+             size = 5.5, color = "#43418A", 
+             parse = TRUE) +
+    geom_segment(
+        aes(x = 0, xend = 1, 
+        y = market_return_original * 100, 
+        yend = market_return_original * 100), 
+        linetype = "dashed", 
+        color = "#43418A", 
+        alpha = 0.8) +
+    annotate("text", x = 0.05, y = market_return_high * 100, 
+             label = sprintf("r[M-High] == %.2f*'%%'", market_return_high * 100),
+             hjust = 0.7, vjust = 0, 
+             size = 5.5, color = "#d73027",
+             parse = TRUE) +
+    geom_segment(
+        aes(x = 0, xend = 1, 
+        y = market_return_high * 100, 
+        yend = market_return_high * 100), 
+        linetype = "dashed", 
+        color = "#d73027", 
+        alpha = 0.8) +
+    scale_color_manual(values = c("Original (ERP = 0.6%)" = "#43418A", "Higher ERP (0.8%)" = "#d73027")) +
+    scale_linetype_manual(values = c("Original (ERP = 0.6%)" = "solid", "Higher ERP (0.8%)" = "dashed")) +
+    scale_x_continuous(expand = expansion(mult = c(0.15, 0.1))) +
+    labs(
+        title = "Effect of Increasing Equity Risk Premium on SML",
+        subtitle = "Risk-free rate held constant at 0.15%",
+        y = latex2exp::TeX("Expected Raw Return $\\,E[r_i]\\,$ (%)"), 
+        x = "Beta (Systematic Risk)",
+        color = "Scenario",
+        linetype = "Scenario"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.position = c(0.22, 0.95),
+      legend.title = element_blank()
+    ) +
+    guides(color = guide_legend(nrow = 1))
+f_name <- "images/sml_mrp_comparison.png"
+ggsave(f_name, p_SML_mrp_comparison, width = 10, height = 5, units = "in", dpi = 300)
+```
+
+```{r out.width="90%"}
+include_graphics(f_name)
+```
+
+---
+
+### Impact Insights
+
+- **Increase in equity risk premium ($E[r_M - r_f]$), holding $r_f$ constant:** 
+  
+  Slope steepens (rotation upward around intercept at beta = 0). High-beta assets now require more return; marginal undervaluation of high-beta names can vanish; low-beta assets may appear more undervalued.
+
+---
+.tight-top[
+## Impact of Increases in Risk-Free Rate
+]
+.tight-top.tight-bottom[
+Now we increase $r_f$, while holding $E[r_M-r_f]$ fixed.
+]
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+### keeping equity risk premium constant -------------------------------------
+# Demonstrate effect of increasing risk-free rate while keeping equity risk premium constant
+rf_high <- 0.0025 # Increase risk-free rate to 0.25%
+# Keep market risk premium (equity risk premium) constant at 0.6%
+mrp_constant <- 0.0060
+
+# Create SML data for both scenarios
+beta_range <- c(0, 1.7)
+sml_original_rf <- tibble(Beta = beta_range, Raw_Return = rf + Beta * mrp_constant, Scenario = "Original (rf = 0.15%)")
+sml_high_rf <- tibble(Beta = beta_range, Raw_Return = rf_high + Beta * mrp_constant, Scenario = "Higher rf (0.25%)")
+sml_rf_comparison <- bind_rows(sml_original_rf, sml_high_rf)
+
+# Calculate market returns for both scenarios
+market_return_original_rf <- rf + 1 * mrp_constant
+market_return_high_rf <- rf_high + 1 * mrp_constant
+
+# Create comparison plot for risk-free rate change
+p_SML_rf_comparison <- ggplot() +
+  geom_line(
+    data = sml_rf_comparison, aes(Beta, Raw_Return * 100, color = Scenario, linetype = Scenario),
+    linewidth = 1.2
+  ) +
+  # Add points for original assets (only on original SML)
+  geom_point(data = assets, aes(Beta, Observed_Raw * 100), color = "grey30", size = 2.5, alpha = 0.7) +
+  geom_text(
+    data = assets, aes(Beta, Observed_Raw * 100, label = Ticker),
+    nudge_y = 0.15, size = 4, color = "grey30"
+  ) +
+  # Add market return points for both scenarios
+  geom_point(aes(x = 1, y = market_return_original_rf * 100), color = "#43418A", size = 3, shape = 16) +
+  geom_point(aes(x = 1, y = market_return_high_rf * 100), color = "#d73027", size = 3, shape = 16) +
+  # Add risk-free rate points (different for each scenario)
+  geom_point(aes(x = 0, y = rf * 100), color = "#43418A", size = 3, shape = 16) +
+  geom_point(aes(x = 0, y = rf_high * 100), color = "#d73027", size = 3, shape = 16) +
+  # Add parallel shift indication with arrow
+  annotate("segment",
+    x = 0.85, xend = 0.85,
+    y = (rf + 0.85 * mrp_constant) * 100,
+    yend = (rf_high + 0.85 * mrp_constant) * 100,
+    arrow = arrow(length = unit(0.3, "cm"), type = "closed"),
+    color = "grey50", size = 0.8
+  ) +
+  annotate("text",
+    x = 0.9, y = ((rf + rf_high) / 2 + 0.85 * mrp_constant) * 100,
+    label = "Parallel\nshift", hjust = 0, size = 3.5, color = "grey50"
+  ) +
+  # Add annotations for risk-free rates
+  annotate("text",
+    x = 0.05, y = rf * 100 - 0.05,
+    label = sprintf("r[f] == %.2f*'%%'", rf * 100),
+    hjust = 0, vjust = 1, size = 4, color = "#43418A", parse = TRUE
+  ) +
+  annotate("text",
+    x = 0.05, y = rf_high * 100 + 0.05,
+    label = sprintf("r[f] == %.2f*'%%'", rf_high * 100),
+    hjust = 0, vjust = 0, size = 4, color = "#d73027", parse = TRUE
+  ) +
+  scale_color_manual(values = c("Original (rf = 0.15%)" = "#43418A", "Higher rf (0.25%)" = "#d73027")) +
+  scale_linetype_manual(values = c("Original (rf = 0.15%)" = "solid", "Higher rf (0.25%)" = "dashed")) +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  labs(
+    title = "Effect of Increasing Risk-Free Rate on SML",
+    subtitle = "Equity risk premium held constant at 0.6%",
+    y = latex2exp::TeX("Expected Raw Return $\\,E[r_i]\\,$ (%)"),
+    x = "Beta (Systematic Risk)",
+    color = "Scenario",
+    linetype = "Scenario"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = c(0.22, 0.95),
+    legend.title = element_blank()
+  ) +
+  guides(color = guide_legend(nrow = 1))
+f_name <- "images/sml_rf_comparison.png"
+ggsave(f_name, p_SML_rf_comparison, width = 10, height = 5, units = "in", dpi = 300)
+```
+
+```{r out.width='90%', fig.align='center'}
+include_graphics(f_name)
+```
+
+---
+### Impact Insights
+- **Increase in $r_f$, holding $E[r_M-r_f]$ fixed:**
+  
+  The SML shifts up in parallel; slope stays the same. All points on the line move vertically upward by $\Delta r_f.$ No rotation occurs because the market risk premium is constant.
+
+
+
+
+<!-- 
+- **Increase in $r_f$, holding $E[r_M]$ fixed:**
+  
+  SML pivots around beta = 1 (point at $(1, E[r_M])$). Required return rises for low-beta assets (beta < 1) and falls for high-beta assets (beta > 1). Some low-beta “undervalued” points can drop closer to (or below) SML; some high-beta overvalued points may move to fairly valued. 
+-->

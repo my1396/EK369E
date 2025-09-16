@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Portfolio Optimization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Instructor: Menghan Yuan" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <script src="libs/mark.js-8.11.1/mark.min.js"></script>
+    <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
+    <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":true,"autoSearch":true}) })</script>
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <!-- MathJax V2 Configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        extensions: ["color.js"], // load the color extension, support color names, RGB, and grey-scale color spaces
+        equationNumbers: { autoNumber: "AMS" }, // use ams rules to number equations
+        Macros: {
+          water: "{H_2O}",
+          bold: ["{\\boldsymbol #1}", 1],  // use \bold as a shorthand
+          indep: "{\\perp \\!\\!\\! \\perp}",
+          vect: ["\\mathbf{#1}", 1],
+          mat: ["\\mathbf{#1}", 1],
+
+          bA: "\\boldsymbol{A}",
+          bB: "\\boldsymbol{B}",
+          bC: "\\boldsymbol{C}",
+          bD: "\\boldsymbol{D}",
+          bE: "\\boldsymbol{E}",
+          bF: "\\boldsymbol{F}",
+          bG: "\\boldsymbol{G}",
+          bH: "\\boldsymbol{H}",
+          bI: "\\boldsymbol{I}",
+          bJ: "\\boldsymbol{J}",
+          bK: "\\boldsymbol{K}",
+          bL: "\\boldsymbol{L}",
+          bM: "\\boldsymbol{M}",
+          bN: "\\boldsymbol{N}",
+          bP: "\\boldsymbol{P}",
+          bQ: "\\boldsymbol{Q}",
+          bR: "\\boldsymbol{R}",
+          bS: "\\boldsymbol{S}",
+          bT: "\\boldsymbol{T}",
+          bU: "\\boldsymbol{U}",
+          bV: "\\boldsymbol{V}",
+          bW: "\\boldsymbol{W}",
+          bX: "\\boldsymbol{X}",
+          bY: "\\boldsymbol{Y}",
+          bZ: "\\boldsymbol{Z}",
+          ba: "\\boldsymbol{a}",
+          bb: "\\boldsymbol{b}",
+          bc: "\\boldsymbol{c}",
+          bd: "\\boldsymbol{d}",
+          be: "\\boldsymbol{e}",
+          bg: "\\boldsymbol{g}",
+          bh: "\\boldsymbol{h}",
+          bi: "\\boldsymbol{i}",
+          bm: "\\boldsymbol{m}",
+          bp: "\\boldsymbol{p}",
+          bq: "\\boldsymbol{q}",
+          br: "\\boldsymbol{r}",
+          bs: "\\boldsymbol{s}",
+          bt: "\\boldsymbol{t}",
+          bu: "\\boldsymbol{u}",
+          bv: "\\boldsymbol{v}",
+          bw: "\\boldsymbol{w}",
+          bx: "\\boldsymbol{x}",
+          by: "\\boldsymbol{y}",
+          bz: "\\boldsymbol{z}",
+
+          Acal: "\\mathcal{A}",
+          Bcal: "\\mathcal{B}",
+          Ccal: "\\mathcal{C}",
+          Dcal: "\\mathcal{D}",
+          Ecal: "\\mathcal{E}",
+          Fcal: "\\mathcal{F}",
+          Gcal: "\\mathcal{G}",
+          Hcal: "\\mathcal{H}",
+          Ical: "\\mathcal{I}",
+          Jcal: "\\mathcal{J}",
+          Kcal: "\\mathcal{K}",
+          Lcal: "\\mathcal{L}",
+          Mcal: "\\mathcal{M}",
+          Ncal: "\\mathcal{N}",
+          Ocal: "\\mathcal{O}",
+          Pcal: "\\mathcal{P}",
+          Qcal: "\\mathcal{Q}",
+          Rcal: "\\mathcal{R}",
+          Scal: "\\mathcal{S}",
+          Tcal: "\\mathcal{T}",
+          Ucal: "\\mathcal{U}",
+          Vcal: "\\mathcal{V}",
+          Wcal: "\\mathcal{W}",
+          Xcal: "\\mathcal{X}",
+          Ycal: "\\mathcal{Y}",
+          Zcal: "\\mathcal{Z}",
+
+          A: "\\mathbb{A}",
+          B: "\\mathbb{B}",
+          C: "\\mathbb{C}",
+          D: "\\mathbb{D}",
+          E: "\\mathbb{E}",
+          F: "\\mathbb{F}",
+          G: "\\mathbb{G}",
+          H: "\\mathbb{H}",
+          I: "\\mathbb{I}",
+          J: "\\mathbb{J}",
+          K: "\\mathbb{K}",
+          L: "\\mathbb{L}",
+          M: "\\mathbb{M}",
+          N: "\\mathbb{N}",
+          O: "\\mathbb{O}",
+          P: "\\mathbb{P}",
+          Q: "\\mathbb{Q}",
+          R: "\\mathbb{R}",
+          S: "\\mathbb{S}",
+          T: "\\mathbb{T}",
+          U: "\\mathbb{U}",
+          V: "\\mathbb{V}",
+          W: "\\mathbb{W}",
+          X: "\\mathbb{X}",
+          Y: "\\mathbb{Y}",
+          Z: "\\mathbb{Z}",
+
+          bAlpha: "\\boldsymbol{\\Alpha}",
+          bBeta: "\\boldsymbol{\\beta}",
+          bDelta: "\\boldsymbol{\\delta}",
+          bEta: "\\boldsymbol{\\eta}",
+          bGamma: "\\boldsymbol{\\Gamma}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+          bOmega: "\\boldsymbol{\\Omega}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bSigma: "\\boldsymbol{\\Sigma}",
+          bTau: "\\boldsymbol{\\tau}",
+          bXi: "\\boldsymbol{\\Xi}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+
+          balpha: "\\boldsymbol{\\alpha}",
+          bbeta: "\\boldsymbol{\\beta}",
+          bepsilon: "\\boldsymbol{\\epsilon}",
+          bvarepsilon: "\\boldsymbol{\\varepsilon}",
+          bdelta: "\\boldsymbol{\\delta}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+          btau: "\\boldsymbol{\\tau}",
+          bxi: "\\boldsymbol{\\xi}",
+          bEta: "\\boldsymbol{\\eta}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bXi: "\\boldsymbol{\\Xi}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+
+          curl: ["\\left\\lbrace#1\\right\\rbrace", 1],
+          floor: ["\\left\\lfloor#1\\right\\rfloor", 1],
+          ceil: ["\\left\\lceil#1\\right\\rceil", 1],
+          abs: ["\\left\\lvert#1\\right\\rvert", 1],
+          norm: ["\\left\\lVert#1\\right\\rVert", 1],
+
+          independent: "\\mathrel{\\perp\\!\\!\\perp}",
+
+          var: "\\mathrm{Var}",
+          cov: "\\mathrm{Cov}",
+          cor: "\\mathrm{Corr}",
+          diag: "\\mathrm{diag}",
+          rank: "\\mathrm{rank}",
+          vecc: "\\mathrm{vec}",
+          
+          // define colors
+          red: ["{\\color[RGB]{185,64,71}{#1}}", 1],
+        }
+      }
+    });
+    </script>
+    <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Portfolio Optimization
+]
+.author[
+### Instructor: Menghan Yuan
+]
+.date[
+### Fall 2025
+]
+
+---
+
+
+
+
+
+
+
+# Portfolio opportunity set
+
+The collection of all feasible investment possibilities set, or *portfolio opportunity set*, in the case of two assets is simply all possible portfolios that can be formed by varying the portfolio weights such that the weights sum to one.
+
+We summarize the expected return-risk (mean-volatility) properties of the feasible portfolios in a plot with portfolio expected return, `\(\mu_p\)`, on the vertical axis and portfolio standard deviation, `\(\sigma_p\)`, on the horizontal axis. 
+
+Recall we have the expected return and variance of the portfolio return as follows:
+
+`$$\begin{aligned}
+E[r_{p,t}] &amp;= \sum_{i=1}^k w_{i,t} E[r_{i,t}] \\
+\text{Var}[r_{p,t}] &amp;= \sum_{i=1}^k\sum_{j=1}^k w_{i,t}\,w_{j,t}\,\text{Cov}(r_{i,t}, r_{j,t})
+\end{aligned}$$`
+
+---
+
+# Given setup for two assets A and B
+
+&lt;style&gt;
+.huxtable {
+  border-collapse: collapse;
+  border: 0px;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+.huxtable-cell {
+  vertical-align: top;
+  text-align: left;
+  white-space: normal;
+  border-style: solid;
+  border-width: 0pt;
+  padding: 6pt;
+  font-weight: normal;
+}
+.huxtable-header {
+  font-weight: bold;
+}
+&lt;/style&gt;
+ &lt;table class="huxtable" data-quarto-disable-processing="true"  style="width: 60%; margin-left: auto; margin-right: auto;"&gt;
+&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Parameter&lt;/th&gt;&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Asset.A&lt;/th&gt;&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Asset.B&lt;/th&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;μ&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.175&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.055&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;σ²&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.258&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.115&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;ρ(Asset A, Asset B)&lt;/td&gt;&lt;td class="huxtable-cell" colspan="2" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;-0.164&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+where `\(\mu\)` is the expected return, `\(\sigma\)` is the volatility (standard deviation) of returns, `\(\rho\)` is the correlation coefficient between assets A and B.
+
+---
+
+## Equally weighted portfolio
+
+First we consider an equally weighted portfolio `\(p_1\)`.
+
+
+
+
+``` r
+# construct equally weighted ptf
+x.A = 0.5
+x.B = 0.5
+mu.p1 = x.A*mu.A + x.B*mu.B
+sig2.p1 = x.A^2 * sig2.A + x.B^2 * sig2.B + 2*x.A*x.B*sig.AB
+sig.p1 = sqrt(sig2.p1)
+data.tbl = t(c(mu.p1=mu.p1, sig.p1=sig.p1, sig.avg=0.5*sig.A+0.5*sig.B))
+data.tbl
+```
+
+```
+##      mu.p1    sig.p1 sig.avg
+## [1,] 0.115 0.1323416  0.1865
+```
+
+|          | Asset A | Asset B | Weight | Avg of A and B | EW ptf |
+| :------: | :-----: | :-----: | ------ | -------------- | ------ |
+|  `\(\mu\)`   |  0.175  |  0.055  | 0.5    | 0.115          | 0.115  |
+| `\(\sigma\)` |  0.258  |  0.115  | 0.5    | 0.187          | 0.132  |
+
+---
+
+## Equally weighted portfolio interpretation
+
+This portfolio has expected return half-way between the expected returns on assets A and B, but the portfolio standard deviation is less than half-way between the asset standard deviations. This reflects risk reduction via diversification.
+
+The equally weighted portfolio has expected return half way between the expected returns on assets A and B, but has standard deviation (volatility) that is less than half way between the standard deviations of the two assets.
+
+For long-only portfolios, we can show that this is a general result as long as the correlation between the two assets is not perfectly positive.
+
+---
+
+## Long-short portfolio
+
+Now we consider a second portfolio which allows for short selling.
+
+&gt; To short an asset one borrows the asset, usually from a broker, and then sells it. The proceeds from the short sale are usually kept on account with a broker and there may be restrictions on the use of these funds for the purchase of other assets. The short position is closed out when the asset is repurchased and then returned to original owner. If the asset drops in value then a gain is made on the short sale and if the asset increases in value a loss is made. 
+
+
+
+---
+
+## Long-short portfolio Example
+
+|          | Asset A | Asset B | Weight | Weighted Avg of A and B | Long-short ptf |
+| :------: | :-----: | :-----: | ------ | ----------------------- | -------------- |
+|  `\(\mu\)`   |  0.175  |  0.055  | 1.5    | 0.235                   | 0.235          |
+| `\(\sigma\)` |  0.258  |  0.115  | –0.5   | 0.3295                  | 0.400          |
+
+
+- This portfolio has both a higher expected return and standard deviation than asset A. 
+The high standard deviation is due to the short sale, which is a type of leverage, and the negative correlation between assets A and B.
+
+- Leverage refers to an investment that is financed through borrowing. Here, the short sale of asset B produces borrowed funds used to purchase more of asset A. This increases the risk (portfolio standard deviation) of the investment.
+
+---
+.tight-top.tight-bottom[
+## Portfolio opportunity set
+]
+
+.tight-top[
+Now we calculate the portfolio opportunity set.
+Here the portfolio weight on asset A, `\(x_A\)`, is varied from `\(-0.4\)` to `\(1.4\)` at a step of 0.1 and, since `\(x_B=1−x_A\)`, the weight on asset B then varies from `\(1.4\)` to `\(-0.4\)`. 
+]
+
+
+
+.pull-left.small-text[
+
+|             | `\(x_{A}\)`| `\(x_{B}\)`| `\(\mu_{p}\)`| `\(\sigma_{p}\)`|
+|:------------|-------:|-------:|---------:|------------:|
+|portfolio 1  |    -0.4|     1.4|     0.007|        0.205|
+|portfolio 2  |    -0.3|     1.3|     0.019|        0.179|
+|portfolio 3  |    -0.2|     1.2|     0.031|        0.155|
+|portfolio 4  |    -0.1|     1.1|     0.043|        0.133|
+|portfolio 5  |     0.0|     1.0|     0.055|        0.115|
+|portfolio 6  |     0.1|     0.9|     0.067|        0.102|
+|portfolio 7  |     0.2|     0.8|     0.079|        0.098|
+|portfolio 8  |     0.3|     0.7|     0.091|        0.102|
+|portfolio 9  |     0.4|     0.6|     0.103|        0.114|
+|portfolio 10 |     0.5|     0.5|     0.115|        0.132|
+]
+
+.pull-right.small-text[
+
+|             | `\(x_{A}\)`| `\(x_{B}\)`| `\(\mu_{p}\)`| `\(\sigma_{p}\)`|
+|:------------|-------:|-------:|---------:|------------:|
+|portfolio 11 |     0.6|     0.4|     0.127|        0.154|
+|portfolio 12 |     0.7|     0.3|     0.139|        0.178|
+|portfolio 13 |     0.8|     0.2|     0.151|        0.204|
+|portfolio 14 |     0.9|     0.1|     0.163|        0.231|
+|portfolio 15 |     1.0|     0.0|     0.175|        0.258|
+|portfolio 16 |     1.1|    -0.1|     0.187|        0.286|
+|portfolio 17 |     1.2|    -0.2|     0.199|        0.314|
+|portfolio 18 |     1.3|    -0.3|     0.211|        0.343|
+|portfolio 19 |     1.4|    -0.4|     0.223|        0.372|
+]
+
+???
+Portfolios 1-4 and 16-19 are the long-short portfolios and portfolios 5-15 are the long-only portfolios. 
+
+
+---
+
+## Visualizing the opportunity set
+
+The risk-return properties of this set of feasible portfolios can be visualized using:
+
+.pull-left[
+&lt;img src="ptf_opt_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+- The green dot represents the *global minimum variance portfolio* (GMV). This portfolio has the property that it has the smallest variance/volatility among all feasible portfolios.
+]
+
+.pull-right[
+- The black dots plus the green dot represent the long-only portfolios;
+    - The black dot labeled "Asset A" is the portfolio which invests `\(100\%\)` in asset A, i.e., (`\(x_A=1, x_B=0\)`);
+    - The black dot labeled "Asset B" is the portfolio which invests `\(100\%\)` in asset B, i.e.,  (`\(x_A=0, x_B=1\)`);
+- The blue dots represent long-short portfolios.
+]
+
+---
+
+# Global minimum variance portfolio
+
+Computing the global minimum variance portfolio is a constrained optimization problem:
+
+`$$\begin{align*}
+\underset{x_{A},x_{B}}{\min}\sigma_{p}^{2} &amp; =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}\\
+~s.t.~x_{A}+x_{B} &amp; =1.
+\end{align*}$$`
+
+This constrained optimization problem can be solved using two methods analytically. 
+
+---
+
+## Method 1: Substitution
+
+The first method, called the *method of substitution*, uses the constraint to substitute out one of the variables to transform the constrained optimization problem in two variables into an unconstrained optimization problem in one variable. 
+
+`$$\min_{x_{A}}\sigma_{p}^{2}=x_{A}^{2}\sigma_{A}^{2}+(1-x_{A})^{2}\sigma_{B}^{2}+2x_{A}(1-x_{A})\sigma_{AB}.$$`
+
+Apply the first order condition to solve the unconstrained optimization problem.
+
+`$$0=\frac{d\sigma_{p}^{2}}{dx_{A}}=2x_{A}^{\min}\sigma_{A}^{2}-2(1-x_{A}^{\min})\sigma_{B}^{2}+2\sigma_{AB}(1-2x_{A}^{\min}).$$`
+
+We have the asset allocation for GMV portfolio:
+
+`$$\begin{equation}\begin{split}
+x_{A}^{\min} &amp;= \frac{\sigma_{B}^{2}-\sigma_{AB}}{\sigma_{A}^{2}+\sigma_{B}^{2}-2\sigma_{AB}}  \\
+x_{B}^{\min} &amp;= 1-x_{A}^{\min}.
+\end{split}\end{equation}$$`
+
+---
+
+## Method 2: Lagrange multipliers
+
+The second method, called the method of *Lagrange multipliers*, introduces an auxiliary variable called the Lagrange multiplier and transforms the constrained optimization problem in two variables into an unconstrained optimization problem in three variables.
+
+The Lagrangian function is formed by adding to  `\(\sigma_p^2\)` the homogenous constraint multiplied by an auxiliary variable `\(\lambda\)` (the Lagrange multiplier) giving:
+
+`$$L(x_{A},x_{B},\lambda)=x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB}+\lambda(x_{A}+x_{B}-1).$$`
+
+---
+
+## Correlation sensitivity
+
+The shape of the investment possibilities set is very sensitive to the correlation between assets `\(A\)` and `\(B\)` given the other parameters. The following figure shows the portfolio frontiers for `\(\rho_{AB}=-0.9, -0.5, 0, 0.5, 0.9\)`.
+
+.pull-left[
+&lt;img src="https://drive.google.com/thumbnail?id=1N7wP5IfQOjSeB3omZtagmT5tzHqrOUcO&amp;sz=w1000" alt="different rho values" style="display: block; margin-right: auto; margin-left: auto; zoom:70%; margin-top: -2em" /&gt;
+]
+
+.pull-right[
+&lt;div style="height:2em;"&gt;&lt;br&gt;&lt;/div&gt;
+- The closer `\(\rho_{AB}\)` is to `\(-1\)` the more curved is the frontier toward the y-axis and the higher is the possible diversification benefit. 
+- There is noticeable curvature even for positive values of  `\(\rho_{AB}\)`.
+]
+
+---
+
+## Extreme correlation cases
+
+&lt;img src="https://drive.google.com/thumbnail?id=1GljEacgeeGjGl5NY_fwLptWPHPODACv4&amp;sz=w1000" alt="perfect correlation" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /&gt;
+
+- If  `\(\rho_{AB}=1\)`, then the portfolio frontier approaches a straight line connecting assets A and B.
+- If  `\(\rho_{AB}=-1\)`, there exists a portfolio of A and B that has positive expected return and zero variance. Meaning arbitrage opportunity.
+
+---
+
+## Efficient vs inefficient portfolios
+
+.pull-left[
+&lt;img src="https://drive.google.com/thumbnail?id=1HF1Mj3sApukpi4dQ5ERbs89zqlBm3ftw&amp;sz=w1000" alt="effiient ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /&gt;
+]
+
+.pull-right[
+&lt;div style="height:2em;"&gt;&lt;br&gt;&lt;/div&gt;
+- Efficient portfolios are the feasible portfolios that have the highest expected return for a given level of risk as measured by portfolio standard deviation.
+- Inefficient portfolios are the portfolios such that there is another feasible portfolio that has the same risk but with a lower expected return.
+]
+
+---
+
+# Tangent portfolio
+
+Tangent/optimal portfolio represents the portfolio which **maximizes Sharpe ratio**. 
+
+.pull-left[
+&lt;img src="https://drive.google.com/thumbnail?id=1pTKSSwWI5Od5MrSfDqI6axOlPjVfI_zh&amp;sz=w1000" alt="tangency ptf" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /&gt;
+]
+.pull-right[
+We can determine the proportions of each asset in the tangency portfolio by finding the values of  `\(x_A\)` and `\(x_B\)` that maximize the Sharpe ratio of a portfolio.
+]
+
+---
+
+## Tangency optimization problem
+
+Formally, we solve the constrained maximization problem:
+
+`$$\begin{align*}
+\underset{x_{A},x_{B}}{\max}~\mathrm{SR}_{p} &amp;= \frac{\mu_{p}-r_{f}}{\sigma_{p}}~s.t.\\
+\mu_{p} &amp; =x_{A}\mu_{A}+x_{B}\mu_{B},\\
+\sigma_{p}^{2} &amp; =x_{A}^{2}\sigma_{A}^{2}+x_{B}^{2}\sigma_{B}^{2}+2x_{A}x_{B}\sigma_{AB},\\
+1 &amp; =x_{A}+x_{B}.
+\end{align*}$$`
+
+The solution to this optimization problem is given by:
+
+`$$\begin{equation}\begin{split}
+x_{A}^{tan} &amp;= \frac{(\mu_{A}-r_{f})\sigma_{B}^{2}-(\mu_{B}-r_{f})\sigma_{AB}}{(\mu_{A}-r_{f})\sigma_{B}^{2}+(\mu_{B}-r_{f})\sigma_{A}^{2}-(\mu_{A}-r_{f}+\mu_{B}-r_{f})\sigma_{AB}} \\
+x_{B}^{tan} &amp;=1-x_{A}^{tan}.
+\end{split}\end{equation}$$`
+
+---
+
+class: inverse, center, middle
+# Portfolio optimization with IntroCompFinR
+
+---
+
+.tight-top.tight-bottom.small-text[
+## Equally weighted portfolio
+]
+
+.tight-top[
+- Using the same assets setup
+]
+
+.small-text[
+&lt;style&gt;
+.huxtable {
+  border-collapse: collapse;
+  border: 0px;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+.huxtable-cell {
+  vertical-align: top;
+  text-align: left;
+  white-space: normal;
+  border-style: solid;
+  border-width: 0pt;
+  padding: 6pt;
+  font-weight: normal;
+}
+.huxtable-header {
+  font-weight: bold;
+}
+&lt;/style&gt;
+ &lt;table class="huxtable" data-quarto-disable-processing="true"  style="width: 50%; margin-left: auto; margin-right: auto;"&gt;
+&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Parameter&lt;/th&gt;&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Asset.A&lt;/th&gt;&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Asset.B&lt;/th&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;μ&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.175&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.055&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;σ²&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.258&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.115&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;ρ(Asset A, Asset B)&lt;/td&gt;&lt;td class="huxtable-cell" colspan="2" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;-0.164&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+
+- To create an equally weighted portfolio:
+
+  .small-text[
+  
+  ``` r
+  k &lt;- 2 # number of assets
+  ew &lt;- rep(1,k)/k
+  equalWeight.portfolio &lt;- getPortfolio(er=mu.vec, cov.mat=sigma2.mat, weights=ew)
+  equalWeight.portfolio
+  ```
+  
+  ```
+  ## Call:
+  ## getPortfolio(er = mu.vec, cov.mat = sigma2.mat, weights = ew)
+  ## 
+  ## Portfolio expected return:     0.115 
+  ## Portfolio standard deviation:  0.1412766 
+  ## Portfolio weights:
+  ## Asset A Asset B 
+  ##     0.5     0.5
+  ```
+  ]
+
+  You can create any custom portfolio using `getPortfolio()` function by specifying the weights, expected return, and covariance matrix of individual assets. 
+
+
+---
+
+## Global minimum variance portfolio
+
+The global minimum variance portfolio (allowing for short sales) is computed using:
+
+
+``` r
+gmv.port &lt;- globalMin.portfolio(mu.vec, sigma2.mat)
+gmv.port
+```
+
+```
+## Call:
+## globalMin.portfolio(er = mu.vec, cov.mat = sigma2.mat)
+## 
+## Portfolio expected return:     0.07486614 
+## Portfolio standard deviation:  0.1050691 
+## Portfolio weights:
+## Asset A Asset B 
+##  0.1656  0.8344
+```
+
+- If short sales are not allowed, then set `shorts = FALSE`.
+
+---
+
+## Efficient portfolio with target return
+
+You can compute the portfolio with a target expected return with `efficient.portfolio`.
+
+
+``` r
+target.return &lt;- mu.vec[1]
+e.port.target &lt;- efficient.portfolio(mu.vec, sigma2.mat, target.return)
+e.port.target
+```
+
+```
+## Call:
+## efficient.portfolio(er = mu.vec, cov.mat = sigma2.mat, target.return = target.return)
+## 
+## Portfolio expected return:     0.175 
+## Portfolio standard deviation:  0.258 
+## Portfolio weights:
+## Asset A Asset B 
+##       1       0
+```
+
+- Note that when the target return is set to the expected return of one of the assets (Asset A here), the efficient portfolio is simply that asset.
+
+---
+
+.tight-top.tight-bottom[
+## Tangency portfolio computation
+]
+
+The tangency portfolio can be computed using `tangency.portfolio`:
+
+.small-text[
+
+``` r
+tan.port &lt;- tangency.portfolio(mu.vec, sigma2.mat, risk.free = rf)
+tan.port
+```
+
+```
+## Call:
+## tangency.portfolio(er = mu.vec, cov.mat = sigma2.mat, risk.free = rf)
+## 
+## Portfolio expected return:     0.1034 
+## Portfolio standard deviation:  0.1246921 
+## Portfolio weights:
+## Asset A Asset B 
+##  0.4033  0.5967
+```
+
+
+``` r
+cat("Sharpe ratio of Tangency portfolio:\n")
+((tan.port$er - rf) / tan.port$sd) %&gt;% round(4)
+```
+
+```
+## Sharpe ratio of Tangency portfolio:
+## [1] 0.7891
+```
+]
+
+Compare with Sharpe ratios of individual assets:
+
+.small-text[
+
+``` r
+round((mu.vec - rf)/sigma.vec, 4)
+```
+
+```
+## Asset A Asset B 
+##  0.6589  0.4348
+```
+]
+
+---
+
+## Efficient frontier
+
+The function `efficient.frontier()` constructs the set of efficient portfolios.
+
+
+``` r
+ef &lt;- efficient.frontier(mu.vec, sigma2.mat, alpha.min=-0.5, alpha.max=2, nport=20)
+ef
+```
+
+```
+## Call:
+## efficient.frontier(er = mu.vec, cov.mat = sigma2.mat, nport = 20, 
+##     alpha.min = -0.5, alpha.max = 2)
+## 
+## Frontier portfolios' expected returns and standard deviations
+##    port 1 port 2 port 3 port 4 port 5 port 6 port 7 port 8 port 9 port 10 port 11 port 12 port 13 port 14 port 15 port 16 port 17 port 18 port 19 port 20
+## ER 0.2251 0.2119 0.1987 0.1855 0.1724 0.1592 0.1460 0.1328 0.1197  0.1065  0.0933  0.0801  0.0670  0.0538  0.0406  0.0274  0.0143  0.0011 -0.0121 -0.0253
+## SD 0.3687 0.3391 0.3098 0.2808 0.2523 0.2245 0.1977 0.1722 0.1488  0.1288  0.1137  0.1058  0.1067  0.1162  0.1324  0.1533  0.1771  0.2029  0.2300  0.2580
+```
+
+- ER: expected return
+- SD: standard deviation
+- `alpha.min` and `alpha.max` specify the range of portfolio weights on individual assets.
+
+---
+
+## Plotting the efficient frontier
+
+Use the `plot(ef)` function to create a simple plot of the efficient frontier:
+
+&lt;img src="ptf_opt_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+# Exercise
+
+Annual estimates of stock returns parameters for Boeing and Microsoft are given in the table below:
+
+
+&lt;style&gt;
+.huxtable {
+  border-collapse: collapse;
+  border: 0px;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+.huxtable-cell {
+  vertical-align: top;
+  text-align: left;
+  white-space: normal;
+  border-style: solid;
+  border-width: 0pt;
+  padding: 6pt;
+  font-weight: normal;
+}
+.huxtable-header {
+  font-weight: bold;
+}
+&lt;/style&gt;
+ &lt;table class="huxtable" data-quarto-disable-processing="true"  style="width: 60%; margin-left: auto; margin-right: auto;"&gt;
+&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Parameter&lt;/th&gt;&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Boeing&lt;/th&gt;&lt;th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;Microsoft&lt;/th&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;μ&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.149&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.331&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;σ²&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.069&lt;/td&gt;&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;0.136&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;ρ(Boeing, Microsoft)&lt;/td&gt;&lt;td class="huxtable-cell" colspan="2" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;"&gt;-0.008&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Use an annual risk-free rate of `\(3\%\)` per year for the T-bill (risk free rate). 
+
+---
+
+## Exercise tasks
+
+1. Create the following portfolios.
+    - Combinations of Boeing and Microsoft (with `\(x_{boeing}= −1, −0.9, \ldots, 2\)` and `\(x_{msft}= 1−x_{boeing}\)`) 
+    - Combinations of Boeing and T-bills (with `\(x_{boeing}=0,0.1,\ldots,2\)`)
+    - Combinations of Microsoft and T-bills (with `\(x_{msft}=0,0.1,\ldots,2\)`). 
+    - For each portfolio, compute `\(E(r_p)\)`, `\(\text{Var}(r_p)\)` and `\(\text{SD}(r_p)\)`
+    - For each portfolio, plot `\(E(r_p)\)` vs. `\(\text{SD}(r_p)\)` 
+    - Compute the Sharpe Ratio for Boeing and Microsoft. Which asset has the highest slope value?
+
+---
+
+&lt;div style="height:2em;"&gt;&lt;br&gt;&lt;/div&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Compute the global minimum variance portfolio (GMV).
+  &lt;ul&gt;
+    &lt;li&gt;Compute the weights of Boeing and Microsoft in the GMV portfolio using the analytical formula (1) and cross validate your results using the &lt;code&gt;globalMin.portfolio&lt;/code&gt; function.&lt;/li&gt;
+    &lt;li&gt;Compute \(E(r_p)\), \(\text{Var}(r_p)\) and \(\text{SD}(r_p)\) for the GMV portfolio.&lt;/li&gt;
+    &lt;li&gt;Compute the Sharpe ratio for the GMV portfolio.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+---
+
+&lt;div style="height:2em;"&gt;&lt;br&gt;&lt;/div&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Compute the tangency portfolio.
+  &lt;ul&gt;
+    &lt;li&gt;Compute the weights of Boeing and Microsoft in the tangency portfolio using the analytical formula (2) and cross validate your results using the &lt;code&gt;tangency.portfolio&lt;/code&gt; function.&lt;/li&gt;
+    &lt;li&gt;Compute \(E(r_p)\), \(\text{Var}(r_p)\) and \(\text{SD}(r_p)\) for the tangency portfolio.&lt;/li&gt;
+    &lt;li&gt;Compute the Sharpe ratio for the tangency portfolio.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+---
+
+# References
+
+Eric Zivot 2021, *Introduction to Computational Finance and Financial Econometrics with R*.
+
+- Chapter 7: Estimation of The GWN Model: https://bookdown.org/compfinezbook/introFinRbook/Estimation-of-The-GWN-Model.html
+
+- Chapter 12.7: Portfolio Analysis Functions in R: https://bookdown.org/compfinezbook/introcompfinr/Portfolio-Analysis-Functions.html#Portfolio-Analysis-Functions
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "slideNumberFormat": "%current%/%total%",
+  "countIncrementalSlides": false,
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "highlightSpans": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

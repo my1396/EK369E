@@ -1,0 +1,124 @@
+/* Custom overrides */
+/* Center vertically */
+.center-v {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+/* Smaller text */
+.small-text,
+.small-text p,
+.small-text code,
+.small-text pre {
+    font-size: 80%;
+    /* Adjust percentage as needed */
+}
+
+.small-text table,
+.small-text th,
+.small-text td {
+    font-size: 90%;
+}
+
+/* Reduce padding inside table cells */
+.small-text th,
+.small-text td {
+    padding: 0.2em 0.4em;
+}
+
+.remark-slide-content .small-text h3 {
+    font-size: 1.5em; /* Adjust as needed */
+}
+
+.red,
+.red h1,
+.red h2,
+.red h3,
+.red h4,
+.red h5,
+.red h6 {
+    color: var(--text-bold-color) !important;
+}
+
+/* Split utilities: tighten top and bottom independently */
+.remark-slide-content .tight-top {
+    margin-top: -0.5em !important;
+}
+
+.remark-slide-content .tight-bottom {
+    margin-bottom: -0.5em !important;
+}
+
+.remark-slide-content .tight-top,
+.remark-slide-content .tight-bottom {
+    line-height: 1.2;
+}
+/* set <h3> margins inside tight-top or tight-bottom */
+.remark-slide-content .tight-top h3,
+.remark-slide-content .tight-bottom h3 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+/* set <ul> margins inside tight-top or tight-bottom */
+.remark-slide-content .tight-top ul, 
+.remark-slide-content .tight-bottom ul {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+}
+ul {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Paragraphs */
+.remark-slide-content p {
+    margin-block-start: 0.5rem !important;
+    margin-block-end: 0.5rem !important;
+}
+
+/* Table typesetting */
+/* Wider column spacing for model fit comparison table */
+.fit-comp-table td,
+.fit-comp-table th {
+    padding: 4px 18px !important;
+}
+
+.fit-comp-table th:first-child,
+.fit-comp-table td:first-child {
+    padding-left: 4px !important;
+}
+
+/* Tighter displaymath top margins */
+.remark-slide-content p>span.mjx-chtml.MJXc-display {
+    display: block;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+}
+.MJXc-display {
+    margin: 0.5em 0 !important;
+}
+/* Set font size for math, default to 121% */
+.mjx-chtml {
+    font-size: 110% !important;
+}
+
+/* Nested ordered lists: show letters with parenthesis (a) b) c) ) */
+.remark-slide-content ol ol {
+    list-style: none; /* remove default marker */
+    counter-reset: nested-alpha;
+
+}
+.remark-slide-content ol ol > li {
+    counter-increment: nested-alpha;
+    position: relative;
+    margin: 0.15em 0;
+}
+.remark-slide-content ol ol > li::before {
+    content: counter(nested-alpha, lower-alpha) ') ';
+    position: relative;
+    left: -1.6em; /* aligns marker */
+    text-align: right;
+    margin-right: -1em; /* space for marker */
+}
+
