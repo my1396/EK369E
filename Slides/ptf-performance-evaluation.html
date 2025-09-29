@@ -230,11 +230,10 @@ class: center-v
 - Risk Measures
   - Volatility
   - Skewness and Kurtosis
+  - Downside Risk Measures
 
 - Portfolio Performance Evaluation
   - Risk-adjusted Return
-  - Downside Risk Measures
-  - Rolling Performance
   - CAPM-related Metrics
 
 ---
@@ -429,10 +428,49 @@ Which of the following distributions has
 ]
 
 
+---
 
+## Downside Risk Measures
+
+When the return distribution is asymmetric (skewed), investors use additional risk measures that focus on describing the potential losses.
+
+- The **Semi-Deviation** is the calculation of the variability of returns below the mean return.
+  `$$\begin{aligned}
+  \text{Semi } \sigma_p &amp;= \sqrt{\frac{1}{n-1}\textstyle \sum_{t=1}^T \big[\min(r_{p,t}-\bar{r}_p, 0)\big]^2 } \\
+  \text{Annualized Semi } \sigma_p^A &amp;= \text{Semi } \sigma_p \times \sqrt{12}
+  \end{aligned}$$`
+  where `\(n\)` is either the number of observations of the entire series or the number of observations in the subset of the series falling below the average.
 
 ---
 
+## Downside Risk Measures
+
+- **Value-at-Risk** (VaR) measures the potential loss in value of a risky asset or portfolio over a defined period for a given confidence interval.
+
+  - A `\(p\)` VaR means that the probability of a loss greater than VaR is (at most) `\((p)\)` while the probability of a loss less than VaR is (at least) `\(1-p\)`.
+  
+  - For example, a one-day `\(5\%\)` VaR of $1 million implies the portfolio has a `\(5\%\)` chance that the value of the asset drops more than $1 million over one day.
+  
+  - In other words, there is a `\(95\%\)` probability that the asset makes a profit or lose less than $1 million over a day.
+
+---
+class: example-block
+## Calculating Downside Risk Measures
+
+Sofia wants to measure the downside risk of her portfolio. She has collected the following monthly returns from her portfolio over ten months:
+`$$[3\%, -2\%, 5\%, -4\%, 1\%, -1\%, 2\%, -3\%, 4\%, -2\%]$$`
+&lt;ol type="a"&gt;
+  &lt;li&gt;First, calculate the &lt;strong&gt;mean return&lt;/strong&gt; of Sofia’s portfolio over the ten months.&lt;/li&gt;
+  &lt;li&gt;Using the formula for &lt;strong&gt;semi-deviation&lt;/strong&gt;, calculate Sofia’s monthly semi-deviation, use \(n=10.\)&lt;/li&gt;
+  &lt;li&gt;Annualize Sofia’s semi-deviation using the formula for &lt;strong&gt;annualized semi-deviation&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Sofia now wants to compute a simple &lt;strong&gt;Value-at-Risk (VaR)&lt;/strong&gt; at the 5% level. Assume her portfolio is worth $10 million and the monthly returns are normally distributed with mean equal to the sample mean and standard deviation equal to the semi-deviation you calculated. 
+  &lt;ul&gt;&lt;li&gt;What is her one-month 5% VaR in dollars?&lt;/li&gt;&lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;If Sofia’s one-month 5% VaR is the value you computed above, what does this mean in words about the probability of losses in her portfolio?&lt;/li&gt;
+&lt;/ol&gt;
+
+
+---
 class: inverse, center, middle
 # Risk-adjusted Returns
 
@@ -470,16 +508,87 @@ Assuming we observe **monthly returns**, `\(r_{p,t},\)` `\(t=1,2,\ldots,n\)`, fo
 ---
 ## Beta Coefficient-adjusted Measures
 
----
-## M-squared
+An alternative risk measure is the beta coefficient based on the CAPM model.
+
+Recall that the beta coefficient can be estimated using the follow regression
+
+`$$r_{i,\color{red}{t}} - r_{f,\color{red}{t}} = \alpha_i + \beta_i (r_{m,\color{red}{t}}-r_{f,\color{red}{t}}) + \varepsilon_{i,\color{red}{t}} .$$`
+The OLS `\(\beta_i\)` estimate can be expressed as
+
+`$$\hat{\beta}_i = \frac{\text{Cov}(R_{m}^e, R_{i}^e)}{\text{Var}(R_{i}^e)}$$`
+where 
+
+- `\(R^e_i=r_i-r_f\)` stands for the excess return on asset `\(i\)`, and
+- `\(R^e_m=r_m-r_f\)` stands for the excess return on the market index.
 
 ---
-## CAPM-related Metrics
+## Beta Coefficient-adjusted Measures
+
+- **Treynor ratio** is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.
+  `$$\text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}$$`
+
+- **Jensen's alpha** measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio's beta and the average market return.
+  `$$\alpha_p = \bar{r}_p - \left[\bar{r}_f + \beta_p(\bar{r}_m-\bar{r}_f)\right]$$`
+
+
+???
+- the only relevant risk in the computation of the Treynor ratio is systematic risk. It assumes that the portfolio is fully diversified. Appropriate for diversified equity funds, the element of unsystematic risk would be negligible.
+
+- Sharpe ratio assumes that the relevant risk is total risk (systematic and unsystematic risk), and it measures excess return per unit of total risk. It is appropriate for the portfolio that is less diversified.
+
+- Jensen's alpha also assumes that the relevant risk is systematic risk.
 
 ---
+class: example-block
+.tight-top.tight-bottom.small-text[
+## Calculate Beta Coefficient-adjusted Measures
+]
+
+Given the following information about the return on a portfolio, the market index and risk free returns.
+
+&lt;div style="height:3px;"&gt;&lt;br&gt;&lt;/div&gt;
+
+.pull-layout[
+.pull-left[
+&lt;table style="border-collapse: collapse; line-height: 1.2; font-size: 16px;"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style="text-align: center; padding: 4px 8px;"&gt;Year&lt;/th&gt;
+      &lt;th style="padding: 4px 8px;"&gt;Portfolio&lt;/th&gt;
+      &lt;th style="padding: 4px 8px;"&gt;Market index&lt;/th&gt;
+      &lt;th style="padding: 4px 8px;"&gt;Risk free rate&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;1&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;14%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;12%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;2&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;10%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7.5%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;3&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;19%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;20%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7.7%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;4&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;-8%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;-2%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7.5%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;5&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;23%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;12%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;8.5%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;6&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;28%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;23%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;8%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;7&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;20%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;17%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7.3%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;8&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;14%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;20%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;9&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;-9%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;-5%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7.5%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;10&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;19%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;16%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;8%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;Average&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;13%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;12%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;7.6%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;Standard deviation&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;12.39%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;9.43%&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;0.47%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td style="text-align: center; padding: 4px 8px;"&gt;Cov(\(r_p\), \(r_m\))&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;0.0107&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding: 4px 8px;"&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+- Calculate the beta.
+- Calculate the Sharpe ratio.
+- Calculate the Treynor ratio.
+- Calculate Jensen’s Alpha.
+]
+]
+
+&lt;!-- ---
 
 class: inverse, center, middle
-# Empirical Case Studies
+# Empirical Case Studies --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
