@@ -1,0 +1,155 @@
+---
+title: "Portfolio Performance Evaluation"
+author: "Instructor: Menghan Yuan"
+date: "Fall 2025"
+output:
+  xaringan::moon_reader:
+    css: ["theme/xaringan-themer.css", "theme/custom.css"]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      slideNumberFormat: '%current%/%total%'
+      countIncrementalSlides: false
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+    includes:
+      in_header: libs/mathjax.html
+      after_body: theme/example-numbering.html
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(huxtable)
+
+# don't show code unless we explicitly set echo = TRUE
+opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts <- options(knitr.kable.NA = "")
+
+## control long outputs by using eg `max.lines = 10`
+hook_output_default <- knitr::knit_hooks$get('output')
+truncate_to_lines <- function(x, n) {
+   if (!is.null(n)) {
+      x = unlist(stringr::str_split(x, '\n'))
+      if (length(x) > n) {
+         # truncate the output
+         x = c(head(x, n), '...\n')
+      }
+      x = paste(x, collapse = '\n') # paste first n lines together
+   }
+   x
+}
+knitr::knit_hooks$set(output = function(x, options) {
+   max.lines <- options$max.lines
+   x <- truncate_to_lines(x, max.lines)
+   hook_output_default(x, options)
+})
+```
+
+```{r xaringanExtra-extension, echo=FALSE}
+# add search box
+xaringanExtra::use_search(show_icon = TRUE, position = "bottom-left")
+# enable tile view
+xaringanExtra::use_tile_view()
+```
+
+
+
+class: inverse, center, middle
+
+# Agenda
+
+---
+
+class: center-v
+- Return Concepts
+  - Review of Single Period Returns
+  - Cumulative Return
+  - Annualized Return
+
+- Portfolio Performance Evaluation
+  - Risk-adjusted Return
+  - Downside Risk Measures
+  - Rolling Performance
+  - CAPM-related Metrics
+
+---
+class: inverse, center, middle
+# Return Concepts 
+
+---
+.tight-top.tight-bottom[
+## Review of Single Period Returns
+]
+
+- **Simple Return**: $r_t$ measures the rate of return from $t-1$ to $t$. 
+  $$r_t = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1$$
+  
+  One commonly used equality is
+  $$P_t = P_{t-1} (1+r_t)$$
+
+  For a bank deposit account, the quoted interest rate often refers to as "simple interest" which ignores compounding.
+
+- **Log Return**: $R_t$ is the continuously compounded return from $t-1$ to $t$. It is the first difference of the natural logarithm of prices.
+  $$z_t = \ln P_t - \ln P_{t-1} = \ln \frac{P_t}{P_{t-1}}$$
+
+- **Relationship**: 
+  For small returns, $r_t \approx z_t$. For larger returns, the difference becomes more significant. The relationship between simple and log returns is given by:
+  $$\red{z_t = \ln (1+r_t)}$$
+
+???
+For example, an interest rate of $5\%$ payable every six months will be quoted as a simple interest of $10\%$ per annum in the market.
+
+---
+
+### APR vs AER
+
+- **Annual Percentage Rate (APR)**: The APR is the simple interest rate that does not account for compounding within the year. It is calculated as:
+  $$\text{APR} = r \times m$$
+  where $r$ is the single period interest rate and $m$ is the number of compounding periods per year.
+
+- **Annual Effective Rate (AER)**: The AER accounts for compounding and represents the actual annual return on an investment. It is calculated as:
+  $$\text{AER} = (1 + r)^m - 1$$
+
+---
+class: example-block
+
+## Lena's APR/AER question
+
+Lena sees an offer: APR = 18% with monthly compounding. She wants to understand what this means in terms of her actual monthly cost and her effective annual cost.
+
+- What is the monthly interest rate?
+- What is the AER?
+
+---
+class: example-block
+
+## Aaron's bank comparison
+
+Two banks try to win over Aaron:
+
+- Bank A advertises APR 12% with monthly compounding.
+- Bank B advertises APR 12% with quarterly compounding.
+
+Aaron asks you: Which bank truly gives him a better annual return?
+
+---
+class: example-block
+
+## Bank Deposit Scenarios
+
+Emma just received $100 as a gift and wants to put it in a bank. The bank advertises an **Annual Percentage Rate (APR) of 10%**. She wonders how much money she will have after one year depending on how interest is calculated.  
+
+Calculate the final amount after one year under each of the following scenarios:
+
+(a) The bank applies a **simple annual return**  
+(b) The bank **compounds interest semi-annually** (twice per year)  
+(c) The bank **compounds interest monthly**  
+(d) The bank **compounds interest daily**  
+(e) The bank **uses continuous compounding**  
+
+Hint: Use the following formula
+$$D_t = D_0 \left(1+\frac{R}{n}\right)^{nt}$$
+where $D_0$ is the initial deposit, $D_t$ is the the value of the deposit at time $t$, $R$ is the APR, $n$ is the number of compounding periods per year, and $t$ is the number of years.

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Portfolio Performance Evaluation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Instructor: Menghan Yuan" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <script src="libs/mark.js-8.11.1/mark.min.js"></script>
+    <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
+    <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":true,"autoSearch":true}) })</script>
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <!-- MathJax V2 Configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        extensions: ["color.js"], // load the color extension, support color names, RGB, and grey-scale color spaces
+        equationNumbers: { autoNumber: "AMS" }, // use ams rules to number equations
+        Macros: {
+          water: "{H_2O}",
+          bold: ["{\\boldsymbol #1}", 1],  // use \bold as a shorthand
+          indep: "{\\perp \\!\\!\\! \\perp}",
+          vect: ["\\mathbf{#1}", 1],
+          mat: ["\\mathbf{#1}", 1],
+
+          bA: "\\boldsymbol{A}",
+          bB: "\\boldsymbol{B}",
+          bC: "\\boldsymbol{C}",
+          bD: "\\boldsymbol{D}",
+          bE: "\\boldsymbol{E}",
+          bF: "\\boldsymbol{F}",
+          bG: "\\boldsymbol{G}",
+          bH: "\\boldsymbol{H}",
+          bI: "\\boldsymbol{I}",
+          bJ: "\\boldsymbol{J}",
+          bK: "\\boldsymbol{K}",
+          bL: "\\boldsymbol{L}",
+          bM: "\\boldsymbol{M}",
+          bN: "\\boldsymbol{N}",
+          bP: "\\boldsymbol{P}",
+          bQ: "\\boldsymbol{Q}",
+          bR: "\\boldsymbol{R}",
+          bS: "\\boldsymbol{S}",
+          bT: "\\boldsymbol{T}",
+          bU: "\\boldsymbol{U}",
+          bV: "\\boldsymbol{V}",
+          bW: "\\boldsymbol{W}",
+          bX: "\\boldsymbol{X}",
+          bY: "\\boldsymbol{Y}",
+          bZ: "\\boldsymbol{Z}",
+          ba: "\\boldsymbol{a}",
+          bb: "\\boldsymbol{b}",
+          bc: "\\boldsymbol{c}",
+          bd: "\\boldsymbol{d}",
+          be: "\\boldsymbol{e}",
+          bg: "\\boldsymbol{g}",
+          bh: "\\boldsymbol{h}",
+          bi: "\\boldsymbol{i}",
+          bm: "\\boldsymbol{m}",
+          bp: "\\boldsymbol{p}",
+          bq: "\\boldsymbol{q}",
+          br: "\\boldsymbol{r}",
+          bs: "\\boldsymbol{s}",
+          bt: "\\boldsymbol{t}",
+          bu: "\\boldsymbol{u}",
+          bv: "\\boldsymbol{v}",
+          bw: "\\boldsymbol{w}",
+          bx: "\\boldsymbol{x}",
+          by: "\\boldsymbol{y}",
+          bz: "\\boldsymbol{z}",
+
+          Acal: "\\mathcal{A}",
+          Bcal: "\\mathcal{B}",
+          Ccal: "\\mathcal{C}",
+          Dcal: "\\mathcal{D}",
+          Ecal: "\\mathcal{E}",
+          Fcal: "\\mathcal{F}",
+          Gcal: "\\mathcal{G}",
+          Hcal: "\\mathcal{H}",
+          Ical: "\\mathcal{I}",
+          Jcal: "\\mathcal{J}",
+          Kcal: "\\mathcal{K}",
+          Lcal: "\\mathcal{L}",
+          Mcal: "\\mathcal{M}",
+          Ncal: "\\mathcal{N}",
+          Ocal: "\\mathcal{O}",
+          Pcal: "\\mathcal{P}",
+          Qcal: "\\mathcal{Q}",
+          Rcal: "\\mathcal{R}",
+          Scal: "\\mathcal{S}",
+          Tcal: "\\mathcal{T}",
+          Ucal: "\\mathcal{U}",
+          Vcal: "\\mathcal{V}",
+          Wcal: "\\mathcal{W}",
+          Xcal: "\\mathcal{X}",
+          Ycal: "\\mathcal{Y}",
+          Zcal: "\\mathcal{Z}",
+
+          A: "\\mathbb{A}",
+          B: "\\mathbb{B}",
+          C: "\\mathbb{C}",
+          D: "\\mathbb{D}",
+          E: "\\mathbb{E}",
+          F: "\\mathbb{F}",
+          G: "\\mathbb{G}",
+          H: "\\mathbb{H}",
+          I: "\\mathbb{I}",
+          J: "\\mathbb{J}",
+          K: "\\mathbb{K}",
+          L: "\\mathbb{L}",
+          M: "\\mathbb{M}",
+          N: "\\mathbb{N}",
+          O: "\\mathbb{O}",
+          P: "\\mathbb{P}",
+          Q: "\\mathbb{Q}",
+          R: "\\mathbb{R}",
+          S: "\\mathbb{S}",
+          T: "\\mathbb{T}",
+          U: "\\mathbb{U}",
+          V: "\\mathbb{V}",
+          W: "\\mathbb{W}",
+          X: "\\mathbb{X}",
+          Y: "\\mathbb{Y}",
+          Z: "\\mathbb{Z}",
+
+          bAlpha: "\\boldsymbol{\\Alpha}",
+          bBeta: "\\boldsymbol{\\beta}",
+          bDelta: "\\boldsymbol{\\delta}",
+          bEta: "\\boldsymbol{\\eta}",
+          bGamma: "\\boldsymbol{\\Gamma}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+          bOmega: "\\boldsymbol{\\Omega}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bSigma: "\\boldsymbol{\\Sigma}",
+          bTau: "\\boldsymbol{\\tau}",
+          bXi: "\\boldsymbol{\\Xi}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+
+          balpha: "\\boldsymbol{\\alpha}",
+          bbeta: "\\boldsymbol{\\beta}",
+          bepsilon: "\\boldsymbol{\\epsilon}",
+          bvarepsilon: "\\boldsymbol{\\varepsilon}",
+          bdelta: "\\boldsymbol{\\delta}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+          btau: "\\boldsymbol{\\tau}",
+          bxi: "\\boldsymbol{\\xi}",
+          bEta: "\\boldsymbol{\\eta}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bXi: "\\boldsymbol{\\Xi}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+
+          curl: ["\\left\\lbrace#1\\right\\rbrace", 1],
+          floor: ["\\left\\lfloor#1\\right\\rfloor", 1],
+          ceil: ["\\left\\lceil#1\\right\\rceil", 1],
+          abs: ["\\left\\lvert#1\\right\\rvert", 1],
+          norm: ["\\left\\lVert#1\\right\\rVert", 1],
+
+          independent: "\\mathrel{\\perp\\!\\!\\perp}",
+
+          var: "\\mathrm{Var}",
+          cov: "\\mathrm{Cov}",
+          cor: "\\mathrm{Corr}",
+          diag: "\\mathrm{diag}",
+          rank: "\\mathrm{rank}",
+          vecc: "\\mathrm{vec}",
+          
+          // define colors
+          red: ["{\\color[RGB]{185,64,71}{#1}}", 1],
+        }
+      }
+    });
+    </script>
+    <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Portfolio Performance Evaluation
+]
+.author[
+### Instructor: Menghan Yuan
+]
+.date[
+### Fall 2025
+]
+
+---
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Agenda
+
+---
+
+class: center-v
+- Return Concepts
+  - Review of Single Period Returns
+  - Cumulative Return
+  - Annualized Return
+
+- Portfolio Performance Evaluation
+  - Risk-adjusted Return
+  - Downside Risk Measures
+  - Rolling Performance
+  - CAPM-related Metrics
+
+---
+class: inverse, center, middle
+# Return Concepts 
+
+---
+.tight-top.tight-bottom[
+## Review of Single Period Returns
+]
+
+- **Simple Return**: `\(r_t\)` measures the rate of return from `\(t-1\)` to `\(t\)`. 
+  `$$r_t = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1$$`
+  
+  One commonly used equality is
+  `$$P_t = P_{t-1} (1+r_t)$$`
+
+  For a bank deposit account, the quoted interest rate often refers to as "simple interest" which ignores compounding.
+
+- **Log Return**: `\(R_t\)` is the continuously compounded return from `\(t-1\)` to `\(t\)`. It is the first difference of the natural logarithm of prices.
+  `$$z_t = \ln P_t - \ln P_{t-1} = \ln \frac{P_t}{P_{t-1}}$$`
+
+- **Relationship**: 
+  For small returns, `\(r_t \approx z_t\)`. For larger returns, the difference becomes more significant. The relationship between simple and log returns is given by:
+  `$$\red{z_t = \ln (1+r_t)}$$`
+
+???
+For example, an interest rate of `\(5\%\)` payable every six months will be quoted as a simple interest of `\(10\%\)` per annum in the market.
+
+---
+
+### APR vs AER
+
+- **Annual Percentage Rate (APR)**: The APR is the simple interest rate that does not account for compounding within the year. It is calculated as:
+  `$$\text{APR} = r \times m$$`
+  where `\(r\)` is the single period interest rate and `\(m\)` is the number of compounding periods per year.
+
+- **Annual Effective Rate (AER)**: The AER accounts for compounding and represents the actual annual return on an investment. It is calculated as:
+  `$$\text{AER} = (1 + r)^m - 1$$`
+
+---
+class: example-block
+
+## Lena's APR/AER question
+
+Lena sees an offer: APR = 18% with monthly compounding. She wants to understand what this means in terms of her actual monthly cost and her effective annual cost.
+
+- What is the monthly interest rate?
+- What is the AER?
+
+---
+class: example-block
+
+## Aaron's bank comparison
+
+Two banks try to win over Aaron:
+
+- Bank A advertises APR 12% with monthly compounding.
+- Bank B advertises APR 12% with quarterly compounding.
+
+Aaron asks you: Which bank truly gives him a better annual return?
+
+---
+class: example-block
+
+## Bank Deposit Scenarios
+
+Emma just received $100 as a gift and wants to put it in a bank. The bank advertises an **Annual Percentage Rate (APR) of 10%**. She wonders how much money she will have after one year depending on how interest is calculated.  
+
+Calculate the final amount after one year under each of the following scenarios:
+
+(a) The bank applies a **simple annual return**  
+(b) The bank **compounds interest semi-annually**(twice per year)  
+(c) The bank **compounds interest monthly**  
+(d) The bank **compounds interest daily**  
+(e) The bank **uses continuous compounding**  
+
+Hint: Use the following formula
+`$$D_t = D_0 \left(1+\frac{R}{n}\right)^{nt}$$`
+where `\(D_0\)` is the initial deposit, `\(D_t\)` is the the value of the deposit at time `\(t\)`, `\(R\)` is the APR, `\(n\)` is the number of compounding periods per year, and `\(t\)` is the number of years.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "slideNumberFormat": "%current%/%total%",
+  "countIncrementalSlides": false,
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "highlightSpans": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script src="theme/example-numbering.js"></script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

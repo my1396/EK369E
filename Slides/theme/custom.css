@@ -122,3 +122,18 @@ ul {
     margin-right: -1em; /* space for marker */
 }
 
+/* Numbered Example blocks -------------------------------------------------- */
+/* Reset example counter only once at the very root */
+
+@media print {
+    html {
+        counter-reset: example-counter;
+    }
+    .remark-slide-content.example-block {
+        counter-increment: example-counter;
+    }
+    /* Removed prefix to avoid double numbering in PDF output */
+}
+
+
+
