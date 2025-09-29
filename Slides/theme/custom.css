@@ -1,4 +1,25 @@
 /* Custom overrides */
+/* Reduce gap between pull-left and pull-right columns */
+.pull-left, .pull-right {
+    width: 48%;
+    vertical-align: top;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+.pull-left {
+    margin-right: 2%;
+}
+.pull-right {
+    margin-left: 0;
+}
+/* Ensure images in pull-left/pull-right respect width attribute */
+.pull-left img, .pull-right img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 /* Center vertically */
 .center-v {
     display: flex;

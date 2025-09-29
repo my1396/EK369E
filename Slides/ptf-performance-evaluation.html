@@ -220,10 +220,16 @@ class: inverse, center, middle
 ---
 
 class: center-v
+
 - Return Concepts
   - Review of Single Period Returns
-  - Cumulative Return
   - Annualized Return
+  - Cumulative Return
+  - Average Return
+
+- Risk Measures
+  - Volatility
+  - Skewness and Kurtosis
 
 - Portfolio Performance Evaluation
   - Risk-adjusted Return
@@ -241,7 +247,7 @@ class: inverse, center, middle
 ]
 
 - **Simple Return**: `\(r_t\)` measures the rate of return from `\(t-1\)` to `\(t\)`. 
-  `$$r_t = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1$$`
+  `$$\red{r_t} = \frac{P_t-P_{t-1}}{P_{t-1}} = \frac{P_t}{P_{t-1}}-1$$`
   
   One commonly used equality is
   `$$P_t = P_{t-1} (1+r_t)$$`
@@ -249,7 +255,7 @@ class: inverse, center, middle
   For a bank deposit account, the quoted interest rate often refers to as "simple interest" which ignores compounding.
 
 - **Log Return**: `\(R_t\)` is the continuously compounded return from `\(t-1\)` to `\(t\)`. It is the first difference of the natural logarithm of prices.
-  `$$z_t = \ln P_t - \ln P_{t-1} = \ln \frac{P_t}{P_{t-1}}$$`
+  `$$\red{z_t} = \ln P_t - \ln P_{t-1} = \ln \frac{P_t}{P_{t-1}}$$`
 
 - **Relationship**: 
   For small returns, `\(r_t \approx z_t\)`. For larger returns, the difference becomes more significant. The relationship between simple and log returns is given by:
@@ -301,7 +307,7 @@ Emma just received $100 as a gift and wants to put it in a bank. The bank advert
 Calculate the final amount after one year under each of the following scenarios:
 
 (a) The bank applies a **simple annual return**  
-(b) The bank **compounds interest semi-annually**(twice per year)  
+(b) The bank **compounds interest semi-annually** (twice per year)  
 (c) The bank **compounds interest monthly**  
 (d) The bank **compounds interest daily**  
 (e) The bank **uses continuous compounding**  
@@ -309,6 +315,171 @@ Calculate the final amount after one year under each of the following scenarios:
 Hint: Use the following formula
 `$$D_t = D_0 \left(1+\frac{R}{n}\right)^{nt}$$`
 where `\(D_0\)` is the initial deposit, `\(D_t\)` is the the value of the deposit at time `\(t\)`, `\(R\)` is the APR, `\(n\)` is the number of compounding periods per year, and `\(t\)` is the number of years.
+
+---
+## Multiperiod Returns
+
+- For simple returns, the cumulative return from time `\(0\)` to time `\(T\)` is given by:
+  `$$r_{0:T} = \Pi_{t=1}^T (1+r_t) -1.$$`
+  where `\(r_t\)` is the simple return at time `\(t\)`.
+
+- For log returns, 
+  `$$z_{0:T} = \sum_{t=1}^T z_t.$$`
+  where `\(z_t\)` is the log return at time `\(t\)`.
+
+- Relationship:
+  `$$1 + r_{0:T} = e^{z_{0:T}}$$`
+
+---
+## Tracking Investment Performance Across Periods
+
+Alex is tracking the performance of his investment over three consecutive periods. The returns for each period are as follows:
+
+- Period 1: 2% simple return  
+- Period 2: `\(-1\)`% simple return  
+- Period 3: 3% simple return  
+
+(a) Calculate the **cumulative simple return** from period 0 to period 3.  
+(b) Calculate the log return for each period.  
+(c) Calculate the **cumulative log return** from period 0 to period 3.  
+(d) Verify the relationship between the cumulative simple return and cumulative log return.
+
+---
+## Average Return
+
+Given a series of portfolio returns `\(r_{p,t}\)`, `\(t=1,2,\ldots,T\)`, the average return can be calculated in two ways:
+
+- **Arithmetic mean** (AM) portfolio return
+  `$$\text{Arithmetic } \bar{r}_{p, 0:T} = \frac{\sum_{t=1}^T r_{p,t}}{T}$$`
+
+- **Geometric mean** (GM) portfolio return
+  `$$\text{Geometric } \bar{r}_{p, 0:T} = \left[\prod_{t=1}^T (1+r_{p,t}) \right] ^{\frac{1}{T}}-1$$`
+
+---
+class: example-block
+## Geometric Mean Better Captures Investment Performance
+
+Sarah invests $100 in a fund for two months. In the **first month**, her investment grows by 10%, but in the **second month**, it loses 10%.
+
+(a) What is the arithmetic average return? What does it suggest about the change in her $100 investment?
+
+(b) What is the actual value of her investment after two months?
+
+(c) What is the geometric return?
+
+(d) Why does the geometric return provide a better measure of Sarah’s investment performance compared to the arithmetic average?
+
+---
+
+class: inverse, center, middle
+# Risk Measures
+
+---
+## Volatility
+
+The standard deviation of returns is usually called volatility.
+
+`$$\begin{aligned}
+\text{Variance}: \sigma_p^2 &amp;= \frac{1}{T-1} \sum_{t=1}^T (r_{p,t}-\bar{r}_p)^2 \\
+\text{Volatility}: \sigma_p &amp;= \sqrt{\sigma_p^2} \\
+\text{Annualized Volatility}: \sigma_{p}^A &amp;= \red{\sqrt{12}} \sigma_p \\
+\end{aligned}$$`
+
+where we assume monthly portfolio returns `\(r_{p,t}\)`, `\(t=1,2,\ldots,T\)`.
+
+---
+class: example-block
+## Calculating Portfolio Risk
+Daniel is tracking his portfolio’s performance over the past 7 months. The monthly returns (in decimals) are:
+`$$[2\%,\; -1\%,\; 3\%,\; 0\%,\; -2\%,\; 1\%,\; 1.5\%]$$`
+He wants to understand how risky his portfolio is by calculating volatility and annualized volatility.
+
+(a) Calculate the average monthly return.  
+(b) Calculate the monthly volatility.  
+(c) Calculate the annualized volatility.  
+
+---
+## Skewness and Kurtosis
+
+- Skewness measures the asymmetry of the return distribution around its mean. It is the third (normalized) moment about the mean.
+  - Positive skewness indicates a distribution with an asymmetric tail extending towards more positive values.
+  - Negative skewness indicates a distribution with an asymmetric tail extending towards more negative values.
+
+- Kurtosis measures the "tailedness" of the return distribution. It is the fourth (normalized) moment about the mean.
+  - Kurtosis greater than 3 indicates a distribution with heavier tails than a normal distribution.
+  - Kurtosis less than 3 indicates a distribution with lighter tails than a normal distribution.
+
+---
+class: example-block
+
+## Recognize the Distribution Shape
+
+.pull-left[
+Which of the following distributions has 
+
+- positive skewness, 
+- negative skewness, 
+- high kurtosis, and
+- low kurtosis?
+]
+
+.pull-right[
+&lt;img src="images/skewness.png" width="600px"&gt;&lt;br&gt;
+&lt;img src="images/kurtosis.png" width="600px"&gt;
+]
+
+
+
+
+---
+
+class: inverse, center, middle
+# Risk-adjusted Returns
+
+---
+## Sharpe Ratio
+
+Sharpe ratio measures the portfolio's excess return per unit of standard deviation.
+
+Assuming we observe **monthly returns**, `\(r_{p,t},\)` `\(t=1,2,\ldots,n\)`, for a portfolio `\(p\)` over `\(n\)` months.
+
+`$$\begin{aligned}
+\text{Sharpe Ratio} &amp;= S_p = \frac{\bar{r}_p-\bar{r}_f}{\sigma_p} \\
+\text{Annualized Sharpe Ratio} &amp;= S_p^A = \frac{\bar{r}_p-\bar{r}_f}{\sigma_p} \times \sqrt{12}
+\end{aligned}$$`
+
+where 
+- `\(\bar{r}_p\)` is the geometric mean return of the portfolio, given by
+  `$$\bar{r}_p = \left(\Pi_{t=1}^n (1+r_{p,t})\right)^{\frac{1}{n}} - 1,$$`
+- `\(\bar{r}_f\)` is the (arithmetic) average return of the risk free rate for the time period under evaluation.
+
+---
+## Information Ratio
+
+The **information ratio**, on the other hand, measures the portfolio performance &lt;u&gt;against a comparable benchmark&lt;/u&gt; rather than the risk-free rate. 
+
+The information ratio is the active return per unit of active risk.
+
+Assuming we observe **monthly returns**, `\(r_{p,t},\)` `\(t=1,2,\ldots,n\)`, for a portfolio `\(p\)` over `\(n\)` months, and the corresponding benchmark returns `\(r_{m,t}\)`. Their geometric mean returns are given by `\(\bar{r}_p\)` and `\(\bar{r}_m,\)` respectively.
+
+`$$\begin{aligned}
+\text{Information Ratio} &amp;= \text{IR}_p = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \\
+\text{Annualized Informatione Ratio} &amp;= \text{IR}_p^A = \frac{\bar{r}_p-\bar{r}_m}{\sigma_{p-m}} \times \sqrt{12}
+\end{aligned}$$`
+
+---
+## Beta Coefficient-adjusted Measures
+
+---
+## M-squared
+
+---
+## CAPM-related Metrics
+
+---
+
+class: inverse, center, middle
+# Empirical Case Studies
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
