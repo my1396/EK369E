@@ -258,10 +258,29 @@ class: inverse, center, middle
 
 - **Relationship**: 
   For small returns, `\(r_t \approx z_t\)`. For larger returns, the difference becomes more significant. The relationship between simple and log returns is given by:
-  `$$\red{z_t = \ln (1+r_t)}$$`
+  `$$\red{z_t = \ln (1+r_t)} \Longleftrightarrow e^{z_t}=1+r_t$$`
 
 ???
 For example, an interest rate of `\(5\%\)` payable every six months will be quoted as a simple interest of `\(10\%\)` per annum in the market.
+
+---
+
+### Relationship between Simple and Log Returns
+
+.pull-left[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="ptf-performance-evaluation_files/figure-html/log-return-plot-1.png" alt="Figure: Relationship between Simple and Continuously Compounded Returns" width="504" /&gt;
+&lt;p class="caption"&gt;Figure: Relationship between Simple and Continuously Compounded Returns&lt;/p&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+**Strength of log returns:**
+- When returns are small, log returns approximate simple returns well.
+- Log returns are time-additive, making them convenient for multi-period analysis.
+- Many financial models assume log-normality of prices, which corresponds to normality of log returns.
+]
 
 ---
 
@@ -312,8 +331,8 @@ Calculate the final amount after one year under each of the following scenarios:
 (e) The bank **uses continuous compounding**  
 
 Hint: Use the following formula
-`$$D_t = D_0 \left(1+\frac{R}{n}\right)^{nt}$$`
-where `\(D_0\)` is the initial deposit, `\(D_t\)` is the the value of the deposit at time `\(t\)`, `\(R\)` is the APR, `\(n\)` is the number of compounding periods per year, and `\(t\)` is the number of years.
+`$$D_t = D_0 \left(1+\frac{R}{m}\right)^{mt}$$`
+where `\(D_0\)` is the initial deposit, `\(D_t\)` is the the value of the deposit at time `\(t\)`, `\(R\)` is the APR, `\(m\)` is the number of compounding periods per year, and `\(t\)` is the number of years.
 
 ---
 ## Multiperiod Returns
@@ -322,7 +341,7 @@ where `\(D_0\)` is the initial deposit, `\(D_t\)` is the the value of the deposi
   `$$r_{0:T} = \Pi_{t=1}^T (1+r_t) -1.$$`
   where `\(r_t\)` is the simple return at time `\(t\)`.
 
-- For log returns, 
+- For log returns, a nice property is that the log return are additive:
   `$$z_{0:T} = \sum_{t=1}^T z_t.$$`
   where `\(z_t\)` is the log return at time `\(t\)`.
 
@@ -330,6 +349,7 @@ where `\(D_0\)` is the initial deposit, `\(D_t\)` is the the value of the deposi
   `$$1 + r_{0:T} = e^{z_{0:T}}$$`
 
 ---
+class: example-block
 ## Tracking Investment Performance Across Periods
 
 Alex is tracking the performance of his investment over three consecutive periods. The returns for each period are as follows:
@@ -381,7 +401,7 @@ The standard deviation of returns is usually called volatility.
 `$$\begin{aligned}
 \text{Variance}: \sigma_p^2 &amp;= \frac{1}{T-1} \sum_{t=1}^T (r_{p,t}-\bar{r}_p)^2 \\
 \text{Volatility}: \sigma_p &amp;= \sqrt{\sigma_p^2} \\
-\text{Annualized Volatility}: \sigma_{p}^A &amp;= \red{\sqrt{12}} \sigma_p \\
+\text{Annualized Volatility}: \sigma_{p}^A &amp;= \red{\sqrt{12}} \times \sigma_p \\
 \end{aligned}$$`
 
 where we assume monthly portfolio returns `\(r_{p,t}\)`, `\(t=1,2,\ldots,T\)`.
@@ -393,7 +413,7 @@ Daniel is tracking his portfolio’s performance over the past 7 months. The mon
 `$$[2\%,\; -1\%,\; 3\%,\; 0\%,\; -2\%,\; 1\%,\; 1.5\%]$$`
 He wants to understand how risky his portfolio is by calculating volatility and annualized volatility.
 
-(a) Calculate the average monthly return.  
+(a) Calculate the arithmetic average monthly return.  
 (b) Calculate the monthly volatility.  
 (c) Calculate the annualized volatility.  
 
@@ -460,7 +480,7 @@ class: example-block
 Sofia wants to measure the downside risk of her portfolio. She has collected the following monthly returns from her portfolio over ten months:
 `$$[3\%, -2\%, 5\%, -4\%, 1\%, -1\%, 2\%, -3\%, 4\%, -2\%]$$`
 &lt;ol type="a"&gt;
-  &lt;li&gt;First, calculate the &lt;strong&gt;mean return&lt;/strong&gt; of Sofia’s portfolio over the ten months.&lt;/li&gt;
+  &lt;li&gt;First, calculate the &lt;strong&gt;arithmetic mean return&lt;/strong&gt; of Sofia’s portfolio over the ten months.&lt;/li&gt;
   &lt;li&gt;Using the formula for &lt;strong&gt;semi-deviation&lt;/strong&gt;, calculate Sofia’s monthly semi-deviation, use \(n=10.\)&lt;/li&gt;
   &lt;li&gt;Annualize Sofia’s semi-deviation using the formula for &lt;strong&gt;annualized semi-deviation&lt;/strong&gt;.&lt;/li&gt;
   &lt;li&gt;Sofia now wants to compute a simple &lt;strong&gt;Value-at-Risk (VaR)&lt;/strong&gt; at the 5% level. Assume her portfolio is worth $10 million and the monthly returns are normally distributed with mean equal to the sample mean and standard deviation equal to the semi-deviation you calculated. 
@@ -512,14 +532,18 @@ An alternative risk measure is the beta coefficient based on the CAPM model.
 
 Recall that the beta coefficient can be estimated using the follow regression
 
-`$$r_{i,\color{red}{t}} - r_{f,\color{red}{t}} = \alpha_i + \beta_i (r_{m,\color{red}{t}}-r_{f,\color{red}{t}}) + \varepsilon_{i,\color{red}{t}} .$$`
+`$$r_{i,t} - r_{f,t} = \alpha_i + \beta_i \,(r_{m,t} - r_{f,t}) + \varepsilon_{i,t} .$$`
 The OLS `\(\beta_i\)` estimate can be expressed as
 
-`$$\hat{\beta}_i = \frac{\text{Cov}(R_{m}^e, R_{i}^e)}{\text{Var}(R_{i}^e)}$$`
+`$$\hat{\beta}_i = \frac{\text{Cov}(R_{i}^e, R_{m}^e)}{\text{Var}(R_{m}^e)}$$`
 where 
 
 - `\(R^e_i=r_i-r_f\)` stands for the excess return on asset `\(i\)`, and
 - `\(R^e_m=r_m-r_f\)` stands for the excess return on the market index.
+
+In practice, beta can be estimated using raw returns rather than excess returns, i.e.,
+`$$\hat{\beta}_i = \frac{\text{Cov}(r_i, r_m)}{\text{Var}(r_m)} .$$`
+
 
 ---
 ## Beta Coefficient-adjusted Measures
@@ -527,7 +551,7 @@ where
 - **Treynor ratio** is a variant of Sharpe ratio. It substitute the standard deviation in Sharpe ratio with the beta coefficient.
   `$$\text{Treynor Ratio}_p = \frac{\bar{r}_p-\bar{r}_f}{\beta_p}$$`
 
-- **Jensen's alpha** measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfilio's beta and the average market return.
+- **Jensen's alpha** measures the average return on the portfolio in excess of what predicted by the CAPM, given the portfolio's beta and the average market return.
   `$$\alpha_p = \bar{r}_p - \left[\bar{r}_f + \beta_p(\bar{r}_m-\bar{r}_f)\right]$$`
 
 

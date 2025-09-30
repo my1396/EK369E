@@ -180,3 +180,19 @@ body.remark-container {
 }
 /* If author already typed 'Example' keep from duplicating (optional heuristic) */
 
+/* pdf output font weight */
+@media print {
+    body {
+        /* force Noto Sans for pdf output */
+        font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, system-ui, Arial, sans-serif !important;
+        font-weight: 400 !important;
+    }
+    strong, b {
+        font-weight: 700 !important;
+    }
+    /* MathJax font for print */
+    .mjx-chtml {
+        font-family: 'Georgia Pro', 'Libertinus Serif', serif !important;
+        font-weight: 600 !important;
+    }
+}
