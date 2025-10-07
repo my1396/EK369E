@@ -102,12 +102,23 @@ ul {
 /* Wider column spacing for model fit comparison table */
 .fit-comp-table td,
 .fit-comp-table th {
-    padding: 4px 18px !important;
+    padding: 4px 18px !important; /* increase horizontal padding */
 }
 
 .fit-comp-table th:first-child,
 .fit-comp-table td:first-child {
-    padding-left: 4px !important;
+    padding-left: 4px !important; /* tight left spacing for 1st column */
+}
+
+/* Compact table styling */
+.compact-table table {
+    line-height: 1.2;
+    font-size: 0.9em;
+}
+
+.compact-table th,
+.compact-table td {
+    padding: 2px 8px !important;
 }
 
 /* Tighter displaymath top margins */
@@ -124,7 +135,23 @@ ul {
     font-size: 110% !important;
 }
 
+/* Lettered lists */
+.remark-slide-content .lower-alpha ol {
+    list-style-type: lower-alpha;
+}
+
 /* Level 1 numbered list with letters in parentheses */
+/* Use example
+   <ol type="a">
+   <li>First</li>
+   <li>Second</li>
+   <li>Third</li>
+   </ol>
+   will be rendered as
+   (a) First
+   (b) Second
+   (c) Third
+*/
 .remark-slide-content ol[type="a"]>li {
     list-style-type: none;
     position: relative;
@@ -137,6 +164,15 @@ ul {
 }
 
 /* Nested ordered lists: show letters with parenthesis (a) (b) (c) */
+/* Use example */
+/* 1. Main point
+      1. Subpoint 1
+      2. Subpoint 2
+   will be rendered as
+   1. Main point
+      (a) Subpoint 1
+      (b) Subpoint 2
+*/
 .remark-slide-content ol ol {
     list-style: none; /* remove default marker */
     counter-reset: nested-alpha;
@@ -156,6 +192,7 @@ ul {
 }
 
 /* Numbered Example blocks -------------------------------------------------- */
+/* This will add "Example #:" before the L2 or L3 heading */
 /* Reset example counter at start (applies globally once) */
 body.remark-container {
     counter-reset: example-counter;

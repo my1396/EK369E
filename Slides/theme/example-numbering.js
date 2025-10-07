@@ -1,4 +1,9 @@
 // Automatically number example blocks in HTML output
+// Use example: 
+//    In the beginning of your sides, write ""class: example-block", 
+//  then write your example with a heading like "## Example: Title",
+//  and this script will number them sequentially.
+
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
     var examples = document.querySelectorAll('.example-block');

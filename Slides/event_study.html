@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Event Study</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Instructor: Menghan Yuan" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <script src="libs/mark.js-8.11.1/mark.min.js"></script>
+    <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
+    <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":true,"autoSearch":true}) })</script>
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <!-- MathJax V2 Configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        extensions: ["color.js"], // load the color extension, support color names, RGB, and grey-scale color spaces
+        equationNumbers: { autoNumber: "AMS" }, // use ams rules to number equations
+        Macros: {
+          water: "{H_2O}",
+          bold: ["{\\boldsymbol #1}", 1],  // use \bold as a shorthand
+          indep: "{\\perp \\!\\!\\! \\perp}",
+          vect: ["\\mathbf{#1}", 1],
+          mat: ["\\mathbf{#1}", 1],
+
+          bA: "\\boldsymbol{A}",
+          bB: "\\boldsymbol{B}",
+          bC: "\\boldsymbol{C}",
+          bD: "\\boldsymbol{D}",
+          bE: "\\boldsymbol{E}",
+          bF: "\\boldsymbol{F}",
+          bG: "\\boldsymbol{G}",
+          bH: "\\boldsymbol{H}",
+          bI: "\\boldsymbol{I}",
+          bJ: "\\boldsymbol{J}",
+          bK: "\\boldsymbol{K}",
+          bL: "\\boldsymbol{L}",
+          bM: "\\boldsymbol{M}",
+          bN: "\\boldsymbol{N}",
+          bP: "\\boldsymbol{P}",
+          bQ: "\\boldsymbol{Q}",
+          bR: "\\boldsymbol{R}",
+          bS: "\\boldsymbol{S}",
+          bT: "\\boldsymbol{T}",
+          bU: "\\boldsymbol{U}",
+          bV: "\\boldsymbol{V}",
+          bW: "\\boldsymbol{W}",
+          bX: "\\boldsymbol{X}",
+          bY: "\\boldsymbol{Y}",
+          bZ: "\\boldsymbol{Z}",
+          ba: "\\boldsymbol{a}",
+          bb: "\\boldsymbol{b}",
+          bc: "\\boldsymbol{c}",
+          bd: "\\boldsymbol{d}",
+          be: "\\boldsymbol{e}",
+          bg: "\\boldsymbol{g}",
+          bh: "\\boldsymbol{h}",
+          bi: "\\boldsymbol{i}",
+          bm: "\\boldsymbol{m}",
+          bp: "\\boldsymbol{p}",
+          bq: "\\boldsymbol{q}",
+          br: "\\boldsymbol{r}",
+          bs: "\\boldsymbol{s}",
+          bt: "\\boldsymbol{t}",
+          bu: "\\boldsymbol{u}",
+          bv: "\\boldsymbol{v}",
+          bw: "\\boldsymbol{w}",
+          bx: "\\boldsymbol{x}",
+          by: "\\boldsymbol{y}",
+          bz: "\\boldsymbol{z}",
+
+          Acal: "\\mathcal{A}",
+          Bcal: "\\mathcal{B}",
+          Ccal: "\\mathcal{C}",
+          Dcal: "\\mathcal{D}",
+          Ecal: "\\mathcal{E}",
+          Fcal: "\\mathcal{F}",
+          Gcal: "\\mathcal{G}",
+          Hcal: "\\mathcal{H}",
+          Ical: "\\mathcal{I}",
+          Jcal: "\\mathcal{J}",
+          Kcal: "\\mathcal{K}",
+          Lcal: "\\mathcal{L}",
+          Mcal: "\\mathcal{M}",
+          Ncal: "\\mathcal{N}",
+          Ocal: "\\mathcal{O}",
+          Pcal: "\\mathcal{P}",
+          Qcal: "\\mathcal{Q}",
+          Rcal: "\\mathcal{R}",
+          Scal: "\\mathcal{S}",
+          Tcal: "\\mathcal{T}",
+          Ucal: "\\mathcal{U}",
+          Vcal: "\\mathcal{V}",
+          Wcal: "\\mathcal{W}",
+          Xcal: "\\mathcal{X}",
+          Ycal: "\\mathcal{Y}",
+          Zcal: "\\mathcal{Z}",
+
+          A: "\\mathbb{A}",
+          B: "\\mathbb{B}",
+          C: "\\mathbb{C}",
+          D: "\\mathbb{D}",
+          E: "\\mathbb{E}",
+          F: "\\mathbb{F}",
+          G: "\\mathbb{G}",
+          H: "\\mathbb{H}",
+          I: "\\mathbb{I}",
+          J: "\\mathbb{J}",
+          K: "\\mathbb{K}",
+          L: "\\mathbb{L}",
+          M: "\\mathbb{M}",
+          N: "\\mathbb{N}",
+          O: "\\mathbb{O}",
+          P: "\\mathbb{P}",
+          Q: "\\mathbb{Q}",
+          R: "\\mathbb{R}",
+          S: "\\mathbb{S}",
+          T: "\\mathbb{T}",
+          U: "\\mathbb{U}",
+          V: "\\mathbb{V}",
+          W: "\\mathbb{W}",
+          X: "\\mathbb{X}",
+          Y: "\\mathbb{Y}",
+          Z: "\\mathbb{Z}",
+
+          bAlpha: "\\boldsymbol{\\Alpha}",
+          bBeta: "\\boldsymbol{\\beta}",
+          bDelta: "\\boldsymbol{\\delta}",
+          bEta: "\\boldsymbol{\\eta}",
+          bGamma: "\\boldsymbol{\\Gamma}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+          bOmega: "\\boldsymbol{\\Omega}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bSigma: "\\boldsymbol{\\Sigma}",
+          bTau: "\\boldsymbol{\\tau}",
+          bXi: "\\boldsymbol{\\Xi}",
+          bLambda: "\\boldsymbol{\\Lambda}",
+
+          balpha: "\\boldsymbol{\\alpha}",
+          bbeta: "\\boldsymbol{\\beta}",
+          bepsilon: "\\boldsymbol{\\epsilon}",
+          bvarepsilon: "\\boldsymbol{\\varepsilon}",
+          bdelta: "\\boldsymbol{\\delta}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+          btau: "\\boldsymbol{\\tau}",
+          bxi: "\\boldsymbol{\\xi}",
+          bEta: "\\boldsymbol{\\eta}",
+          bPhi: "\\boldsymbol{\\Phi}",
+          bPi: "\\boldsymbol{\\Pi}",
+          bPsi: "\\boldsymbol{\\Psi}",
+          bXi: "\\boldsymbol{\\Xi}",
+          blambda: "\\boldsymbol{\\lambda}",
+          bmu: "\\boldsymbol{\\mu}",
+          bphi: "\\boldsymbol{\\phi}",
+          bpi: "\\boldsymbol{\\pi}",
+          bpsi: "\\boldsymbol{\\psi}",
+          brho: "\\boldsymbol{\\rho}",
+          bsigma: "\\boldsymbol{\\sigma}",
+
+          curl: ["\\left\\lbrace#1\\right\\rbrace", 1],
+          floor: ["\\left\\lfloor#1\\right\\rfloor", 1],
+          ceil: ["\\left\\lceil#1\\right\\rceil", 1],
+          abs: ["\\left\\lvert#1\\right\\rvert", 1],
+          norm: ["\\left\\lVert#1\\right\\rVert", 1],
+
+          independent: "\\mathrel{\\perp\\!\\!\\perp}",
+
+          var: "\\mathrm{Var}",
+          cov: "\\mathrm{Cov}",
+          cor: "\\mathrm{Corr}",
+          diag: "\\mathrm{diag}",
+          rank: "\\mathrm{rank}",
+          vecc: "\\mathrm{vec}",
+          
+          // define colors
+          red: ["{\\color[RGB]{185,64,71}{#1}}", 1],
+        }
+      }
+    });
+    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/fnaufel/xaringan-smartify/smartify.min.js"></script>
+    <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Event Study
+]
+.author[
+### Instructor: Menghan Yuan
+]
+.date[
+### Fall 2025
+]
+
+---
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Agenda
+
+---
+
+class: center-v
+
+- Event Study Overview
+- Measuring Abnormal Returns
+- Hypothesis Testing with Abnormal Returns
+  - Single Abnormal Return
+  - Cumulative Abnormal Return
+  - Portfolio Abnormal Return (Cumulative Average Abnormal Return)
+
+---
+class: inverse, center, middle
+# Introduction
+---
+
+## What is an Event Study?
+
+An event study attempts to measure the valuation effects of a corporate event, such as a merger or earnings announcement, by examining the response of the stock price around the announcement of the event.
+
+One underlying assumption is that the market processes information about the event in an efficient and unbiased manner.
+
+Thus, we should be able to see the effect of the event on prices.
+
+The event that affects a firm's valuation may be:
+
+1) within the firm's control, such as the event of the announcement of a stock split.
+
+2) outside the firm's control, such as a macroeconomic announcement that will affect the firm's future operations in some way.
+
+---
+
+## Examples of Events Studied
+
+Various events have been examined:
+
+- mergers and acquisitions
+- earnings announcements
+- issues of new debt and equity 
+- announcements of macroeconomic variables 
+- IPO’s
+- dividend announcements. 
+- etc.
+
+---
+
+## Steps in an Event Study
+
+The steps for an event study are as follows:
+
+- Event Definition
+- Selection Criteria
+- Normal and Abnormal Return Measurement 
+- Estimation Procedure
+- Testing Procedure 
+- Empirical Results 
+- Interpretation
+
+---
+
+## Event Definition
+
+Definition of an event: We have to define what an event is. It must be unexpected. Also, we must know the exact date of the event.
+
+Frequency/Interval of the event study: We have to decide how fast the information is incorporated into prices. We cannot look at yearly returns. We can’t look at 10-seconds returns. People usually look at daily, weekly or monthly returns.
+
+Sample Selection: We have to decide what is the universe of companies in the sample.
+
+---
+.tight-bottom[
+### Horizon of the Event Study
+]
+
+If markets are efficient, we should consider short horizons –i.e., a few days. However, people have looked at long-horizons. Event studies can be categorized by horizon:
+
+- Short horizon (from 1-month before to 1-month after the event) 
+- Long horizon (up to 5 years after the event).
+
+&lt;img src="https://drive.google.com/thumbnail?id=1VgBn7h15rvdwgZgS_iNXDfSTv9FF-j0J&amp;sz=w1000" alt="event study" style="display: block; margin-right: auto; margin-left: auto; zoom:70%;" /&gt;
+.tight-top[
+Notations:
+]
+- Let `\(t=T_0\)` to `\(T_1\)` be the estimation window, `\(L_1=T_1-T_0+1\)` be the length of the estimation window;
+- `\(t=T_1+1\)` to `\(T_2\)` be the event window; `\(\red{T_1+1}\)` is the first event date; `\(N=T_2-T_1\)` is the length of the event window;
+- `\(t=T_2+1\)` to `\(T_3\)` be the post-event window
+
+---
+
+## Event Window and Cumulative Abnormal Return
+
+-   Event window is usually set longer than a single day
+    -   Accounts for imprecision in actual event timing
+    -   Captures possible **information leakage** (news reaching some investors earlier)
+
+-   Price reactions may occur **days or weeks before** official announcement
+    -   Abnormal return on the announcement date alone may understate impact
+
+-   **Cumulative Abnormal Return (CAR):**
+    -   Sum of abnormal returns over the event window
+    -   Reflects total market response to new information
+    -   Better indicator of the event's impact than single-day abnormal return
+
+???
+- Note that even if the event being considered is an announcement on given date, it is typical to set the event window length to be larger than one. This allows for some imprecision in the event date. Sometimes, *leakage* occurs when information regarding a relevant event is released to a small group of investors before official public release. In this case the stock price might start to increase (in the case of a “good news” announcement) &lt;u&gt;days or weeks before the official announcement date&lt;/u&gt;. Any abnormal return on the *exact* announcement date is then a poor indicator of the total impact of the information release.
+
+- A better indicator would be the **cumulative abnormal return** (CAR), which is simply the sum of all abnormal returns over the time period of interest. The cumulative abnormal return thus captures the total firm-specific stock movement for the entire period that the market might be responding to new information.
+
+---
+class: inverse, center, middle
+# Measuring Abnormal Returns
+
+---
+
+## Decomposing Returns
+
+Any asset return can be written as:
+
+`$$r_{i,t} = E[r_{i,t}\vert X_{i,t}] + \varepsilon_{i,t},$$`
+
+Components:
+- `\(r_{i,t}\)`: return on asset `\(i\)` at time `\(t\)`
+- `\(E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}\)`: expected return (normal return)
+- `\(\varepsilon_{i,t}\)`: disturbance term
+  - `\(E[\varepsilon_{i,t}]=0\)`
+  - `\(\text{Var}[\varepsilon_{i,t}] = \sigma^2_{\varepsilon_i}\)`
+
+???
+Explain this as “signal + noise.” Returns can be split into what we would normally expect given market conditions (systematic part) and an idiosyncratic shock (disturbance). The disturbance will later capture abnormal returns during events.
+
+---
+
+## Models for Expected Return
+
+`\(E[r_{i,t}\vert X_{i,t}] = \mu_{i,t}\)` is the expected return for asset `\(i\)`. 
+
+Options for the normal return models:
+
+- Constant mean model
+  `$$\mu_{i,t} = \mu_i$$`
+- Market model (CAPM)
+  `$$\mu_{i,t} = \alpha_i + \beta_i r_{m,t}$$`  
+- Factor models (Fama-French, Carhart, etc.)
+  `$$\mu_{i,t} = \alpha_i + \beta_{i,1} f_{1,t} + \beta_{i,2} f_{2,t} + ... + \beta_{i,K} f_{K,t}$$`
+
+Returns = expected part + noise. The noise will later capture abnormal returns during events.
+
+---
+
+## Estimating the Normal Return Model
+
+- Estimate parameters of the normal return model using data from the **estimation window** `\([T_0, T_1]\)`.
+- Estimation windows are typically 120 to 500 trading days long.
+- For example, for the market model, estimate `\(\alpha_i\)` and `\(\beta_i\)` using OLS regression of `\(r_{i,t}\)` on `\(r_{m,t}\)` over the estimation window.
+- Use the estimated parameters to compute **expected returns** during the **event window** `\([T_1+1, T_2]\)`.
+  `$$E[r_{i,t}\vert X_{i,t}] = \hat{\mu}_{i,t} = \hat{\alpha}_i + \hat{\beta}_i r_{m,t}$$`
+
+---
+
+## Calculating Abnormal Returns
+
+- **Abnormal Return (AR)** for asset `\(i\)` at time `\(t = T_1+1, \ldots, T_2\)` during the event window:
+  `$$\begin{aligned}
+  AR_{i,t} 
+  &amp;= r_{i,t} - \hat{\mu}_{i,t} \\
+  &amp;= r_{i,t} - (\hat{\alpha}_i + \hat{\beta}_i r_{m,t})
+  \end{aligned}$$`
+  AR is essentially the out-of-sample residual → reflects firm-specific news.
+- **Interpretation:**
+  - AR is the difference between actual observed return (`\(r_{i,t}\)`) and expected return (`\(\hat{\mu}_{i,t}\)`) based on the normal return model.
+  - AR captures the portion of the return not explained by normal market movements, 
+  - Captures unexpected price movement due to the event
+
+???
+Make clear that abnormal return is simply the model’s residual, but calculated on an out-of-sample basis. Stress that ARs measure the effect of new information arriving during the event window.
+
+---
+class: inverse, center, middle
+# Hypothesis testing with abnormal returns
+
+---
+## Single-Event Hypothesis Testing
+
+Goal of testing is to determine whether observed abnormal returns are statistically different from zero.
+
+- Two sided null hypothesis for a single asset and time point
+  - Null hypothesis: no abnormal return
+  - Alternative hypothesis: abnormal return exists
+  
+  Formally:
+  `$$H_0: AR_{i,t} = 0 \text{ vs. } H_1: AR_{i,t} \neq 0$$`
+
+- Test statistic compares AR to its standard error  
+  `$$t = \frac{AR_{i,t}}{\text{SE}(AR_{i,t})}$$`
+  A common choice of the standard error of a single AR is 
+  `$$\text{SE}(AR_{i,t}) \approx \hat{\sigma}_{\varepsilon_i}$$`
+  where `\(\hat{\sigma}_{\varepsilon_i}\)` is the standard deviation of residuals from the estimation window.
+
+---
+## Single-Event Hypothesis Testing: Decision Rule
+
+- Under `\(H_0\)`, conditional on the event window market returns, the abnormal returns will be jointly normally distributed: 
+  `$$AR_{i,t} \sim N(0,\,\sigma^2(AR_{i,t}))$$`
+- Formally, the test statistic follows a `\(t\)`-distribution with estimation window degrees of freedom, but in practice with long estimation windows we use the standard normal approximation.
+- Decision rule: Reject `\(H_0\)` if 
+  `$$|t| &gt; z_{\alpha/2}$$`
+  where `\(z_{\alpha/2}\)` is the critical value from the standard normal distribution for significance level `\(\alpha\)`.
+
+  We use `\(\pm 1.96\)` and `\(\pm 2.58\)` for 5% and 1% significance levels, respectively.
+
+---
+class: example-block
+
+## Single day AR After Earnings Announcement
+
+Suppose you are analyzing a company’s stock reaction to an earnings announcement.
+
+From the estimation window you find that the residual standard deviation is 2% (`\(\hat{\sigma}_{\varepsilon_i}=0.02\)`).
+
+On the event day the stock shows an abnormal return of 1.5% (`\(AR_{i,t}=0.015\)`).
+
+Compute the test statistic. Is the abnormal return statistically significant? What does that mean for the impact of the announcement?
+
+---
+class: example-block
+
+## AR after Takeover Announcement
+
+Imagine you are studying how the market reacts to major corporate announcements.
+On **June 10**, the technology company **Nordic Tech ASA** publicly announced its plan to acquire a smaller software firm specializing in AI analytics.
+Investors expected the acquisition to strengthen Nordic Tech's product portfolio and future earnings.
+
+From the estimation window of past daily returns, you have already estimated the residual standard deviation to be **2%** (`\(\hat{\sigma}_{\varepsilon_i}=0.02\)`).
+On the announcement day, the stock price jumped, producing an **abnormal return of 5%** (`\(AR_{i,t}=0.05\)`).
+
+Is the abnormal return statistically significant? What does that imply about the market's reaction to the acquisition news?
+
+---
+## Testing cumulative abnormal returns (CAR)
+
+- Cumulative abnormal return over event window `\([T_1+1, T_2]\)`
+  `$$CAR_{i}(T_1+1,T_2) = \sum_{t=T_1+1}^{T_2} AR_{i,t}$$`
+- Under assumption of independent daily ARs the variance of CAR is the sum of variances
+  `$$\text{Var}(CAR) = \sum_{t=T_1+1}^{T_2}\text{Var}(AR_{i,t}) \approx N\hat{\sigma}_{\varepsilon_i}^2$$`
+  where `\(N=T_2-T_1\)` is the length of the event window.
+- Test statistic for CAR:
+  `$$t = \frac{CAR}{\text{SE}(CAR)}$$`
+  where `\(\text{SE}(CAR) = \sqrt{N}\,\hat{\sigma}_{\varepsilon_i}.\)`
+
+???
+Explain that independence is a strong assumption. If ARs are autocorrelated or if parameters are estimated with error the variance formula changes. But this independent assumption is easy to compute and useful for demonstration.
+
+---
+class: example-block
+.small-text[
+## Multi-Day Market Reaction to a Product Launch
+]
+
+You are analyzing how investors responded to a series of news releases from **Scandia Motors ASA**, a leading electric vehicle manufacturer.
+On **March 5**, the company unveiled its new long-range battery model. The following two days, news outlets and analysts continued to publish reviews and forecasts about the innovation.
+
+To evaluate the total market reaction, you collect abnormal returns for the **three-day event window** (March 5–7).
+From the estimation window, the residual standard deviation is estimated as 2% (`\(\hat{\sigma}_{\varepsilon_i}=0.02\)`).
+The observed abnormal returns are:
+
+| Date  | Event Description                     | Abnormal Return |
+| ----- | ------------------------------------- | --------------- |
+| Mar 5 | Product launch announcement           | 3.0%            |
+| Mar 6 | Analyst coverage and media discussion | 2.5%            |
+| Mar 7 | Continued investor reaction           | 2.0%            |
+
+Calculate the cumulative abnormal return (CAR) over the three-day event window. Is this CAR statistically significant? What does that suggest about the market's overall reaction to the product launch?
+
+---
+class: example-block
+.tight-bottom[
+## Mixed Abnormal Returns
+]
+
+You are examining investor reactions to **Aurora Pharma ASA**, a pharmaceutical company that recently submitted a new drug application to regulators.
+News coverage around the submission was mixed: some analysts were optimistic, while others raised concerns about approval timing and competition.
+
+You collect abnormal returns for the **three-day event window** (April 10–12).
+From the estimation window, the residual standard deviation is **2%** (`\(\hat{\sigma}_{\varepsilon_i}=0.02\)`).
+The observed abnormal returns are:
+
+.compact-table[
+| Date   | Event Description                | Abnormal Return |
+| ------ | -------------------------------- | --------------- |
+| Apr 10 | Initial news on drug submission  | 1.0%            |
+| Apr 11 | Analyst commentary (mixed)       | 2.0%            |
+| Apr 12 | Market reacts to competitor news | –0.5%           |
+]
+
+Calculate the cumulative abnormal return (CAR) over the three-day event window. Is this CAR statistically significant? What does that imply about the market's overall reaction to the drug submission news?
+
+---
+
+## Testing Cumulative Average Abnormal Returns (CAAR)
+
+- When studying multiple firms or repeated events, we aggregate abnormal returns:
+  -  First, compute abnormal returns for each firm and day: `\(AR_{i,t} = r_{i,t} - \hat{r}_{i,t}\)`  
+  - Then, compute **average abnormal return (AAR)** for each day across firms:  
+    `$$\text{AAR}_t = \frac{1}{M} \sum_{i=1}^{M} AR_{i,t}$$`
+    where `\(M\)` is the number of firms/events.
+- Finally, **cumulative average abnormal return (CAAR)** over an event window `\([T_1+1, T_2]\)`:  
+  `$$\text{CAAR}(T_1+1,T_2) = \sum_{t=T_1+1}^{T_2} \text{AAR}_t$$`
+
+---
+## Standard Error for AAR and CAAR
+
+- **Standard error of daily AAR:**
+  `$$\text{SE}(\text{AAR}_t) = \frac{\hat{\sigma}_{\varepsilon_i}}{\sqrt{M}}$$`
+  - `\(s_{AR,t}\)` = cross-sectional standard deviation of ARs at day `\(t\)`
+- **Standard error of CAAR (assuming independence and equal varaince across days):**
+  `$$\text{SE}(\text{CAAR}) = \sqrt{\sum_{t=T_1+1}^{T_2} \text{SE}(\text{AAR}_t)^2}=\sqrt{N}\cdot\text{SE}(\text{AAR}_t)$$`
+- Test statistic for CAAR:
+  `$$t = \frac{\text{CAAR}}{\text{SE}(\text{CAAR})}$$`
+
+---
+class: example-block
+
+## Multi-Firm CAAR
+
+You study **five tech companies** announcing a joint initiative on AI adoption.
+The announcement attracted strong media attention, as investors expected it to reshape the enterprise software market.
+
+You decide to study whether the **market reaction** to this joint announcement was **statistically significant**.
+
+The event window spans **3 trading days (Day 1–Day 3)** around the announcement.
+You have collected each firm’s **abnormal returns** during these three days:
+
+.compact-table[
+| Firm | Day 1 | Day 2 | Day 3 |
+| ---- | ----- | ----- | ----- |
+| A    | 3.0 % | 2.5 % | 2.0 % |
+| B    | 1.5 % | 1.0 % | 0.5 % |
+| C    | 2.0 % | 3.0 % | 2.5 % |
+| D    | 1.0 % | 1.5 % | 2.0 % |
+| E    | 2.5 % | 2.0 % | 1.5 % |
+]
+
+- Residual standard deviation for all firms: `\(\hat{\sigma}_{\varepsilon_i}=2\%\)`
+
+---
+## Multi-Firm CAAR
+
+**Did the market respond positively and significantly to the joint AI announcement?**
+
+Use the following steps to answer:
+
+.lower-alpha[
+1. Compute the **Average Abnormal Return (AAR)** for each day.
+2. Compute the **Cumulative Average Abnormal Return (CAAR)** over the 3-day window.
+3. Calculate the **Standard Error of the CAAR** assuming independence across days.
+   `$$\text{SE}(\text{CAAR}) = \sqrt{N} \, \text{SE}(\text{AAR}_t), \quad N = 3$$`
+   where `\(\text{SE}(\text{AAR}_t) = \dfrac{\hat{\sigma}_{\varepsilon_i}}{\sqrt{M}}, \quad M = 5.\)`
+4. Compute the **t-statistic** and interpret the result using a 5% significance level.
+]
+
+---
+class: inverse, center, middle
+# Empirical Example
+---
+
+## MacKinlay (1997): Earnings Announcements and Stock Prices
+
+**Goal:**
+
+Examine how earnings announcements affect firm value.
+
+**Intuition:**
+
+- Higher-than-expected earnings → stock price increases
+- Lower-than-expected earnings → stock price decreases
+
+**Reference:**
+
+MacKinlay, A. C. (1997). [*Event Studies in Economics and Finance.*](https://www.jstor.org/stable/2729691?seq=1) Journal of Economic Literature, 35(1), pp. 13--39.
+
+---
+
+## Classifying Earnings Announcements
+
+MacKinlay grouped firms by the deviation between **actual** and **expected** earnings:
+
+- **Good news:** actual exceeds expected by **&gt; 2.5%**
+- **Bad news:** actual is **&gt; 2.5% below expected**
+- **No news:** within **±2.5%** of expected earnings
+
+**Interpretation idea:**  
+The grouping helps isolate how strongly the market reacts to different types of surprises.
+
+---
+
+## Empirical Design
+
+**Parameters of MacKinlay’s study:**
+
+- **Event window:** Day –20 to Day +20 → **41 trading days**
+- **Estimation window:** 250 trading days **before** event window
+- **Observation interval:** **Daily returns**
+
+**Measures:**
+
+- **AAR:** average abnormal return  
+- **CAAR:** cumulative average abnormal return (sum over event window)
+
+---
+
+## Results: CAAR by News Type
+
+.pull-left[
+&lt;img src="https://drive.google.com/thumbnail?id=1kYR6P6s-Jd00H8_-6QQ3VnY4XkoTs3IZ&amp;sz=w1000" 
+style="display:block; margin:auto; zoom:60%;" /&gt;
+]
+.pull-right[
+**Visual interpretation:**
+- **Good news:** CAAR increases sharply around day 0  
+- **Bad news:** CAAR drops significantly  
+- **No news:** nearly flat
+]
+
+---
+## Statistical Results: AR on Event Day
+
+
+| Group     | AAR (%) | SE (%) | t-statistic | Interpretation         |
+| --------- | ------- | ------ | ----------- | ---------------------- |
+| Good news | 0.965   | 0.104  | 9.28        | Strong positive effect |
+| Bad news  | -0.679  | 0.098  | -6.93       | Strong negative effect |
+
+**Inference:**
+- Both t-values are large in magnitude → **reject `\(H_0\)`**
+- Market reacts **significantly** to unexpected earnings news
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "slideNumberFormat": "%current%/%total%",
+  "countIncrementalSlides": false,
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "highlightSpans": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script src="theme/example-numbering.js"></script>
+<script type="text/javascript">smartify();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

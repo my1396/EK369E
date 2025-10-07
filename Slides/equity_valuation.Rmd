@@ -28,6 +28,12 @@ opts_chunk$set(
 )
 ```
 
+```{r xaringanExtra-extension, echo=FALSE}
+# add search box
+xaringanExtra::use_search(show_icon = TRUE, position = "bottom-left")
+# enable tile view
+xaringanExtra::use_tile_view()
+```
 
 ```{r fun}
 quick_summary <- function(x, full = FALSE) {
@@ -302,6 +308,7 @@ data_dir <- "/Users/menghan/Library/CloudStorage/OneDrive-Norduniversitet/EK369E
 f_name <- paste0(data_dir, "FF_3Factors_case_study.csv")
 reg_data <- read_csv(f_name)
 # Split data for individual regressions
+filter <- dplyr::filter
 aapl_reg_data <- reg_data %>% filter(symbol == "AAPL")
 slab_reg_data <- reg_data %>% filter(symbol == "SLAB")
 ko_reg_data <- reg_data %>% filter(symbol == "KO")
@@ -545,7 +552,7 @@ tbl_html <- fit_comp %>%
   knitr::kable(format = "html", align = c("l", "c", "c", "c")) %>%
   as.character()
 tbl_html <- sub("<table", '<table class="fit-comp-table"', tbl_html)
-cat('<div class="fit-comp-wrap">', tbl_html, "</div>")
+cat(tbl_html)
 ```
 
 ---
