@@ -378,6 +378,7 @@ ht %>% set_width(0.5) %>% print_html()
 ]
 
 ```{r echo=FALSE}
+# initialize parameters
 library(IntroCompFinR)
 mu.vec <- c(mu.A, mu.B)
 names(mu.vec) <- c("Asset A", "Asset B")
@@ -385,7 +386,7 @@ names(mu.vec) <- c("Asset A", "Asset B")
 sigma.vec <- c(sig.A, sig.B)
 names(sigma.vec) <- c("Asset A", "Asset B")
 
-sigma2.mat <- matrix(c(sig2.A, sig.AB^2, sig.AB^2, sig2.B), ncol=2)
+sigma2.mat <- matrix(c(sig2.A, sig.AB, sig.AB, sig2.B), ncol=2)
 colnames(sigma2.mat) <- rownames(sigma2.mat) <- c("Asset A", "Asset B")
 ```
 

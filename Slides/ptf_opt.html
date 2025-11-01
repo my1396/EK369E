@@ -4,7 +4,7 @@
     <title>Portfolio Optimization</title>
     <meta charset="utf-8" />
     <meta name="author" content="Instructor: Menghan Yuan" />
-    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.30/header-attrs.js"></script>
     <script src="libs/mark.js-8.11.1/mark.min.js"></script>
     <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
@@ -581,7 +581,7 @@ class: inverse, center, middle
   ## getPortfolio(er = mu.vec, cov.mat = sigma2.mat, weights = ew)
   ## 
   ## Portfolio expected return:     0.115 
-  ## Portfolio standard deviation:  0.1412766 
+  ## Portfolio standard deviation:  0.1323416 
   ## Portfolio weights:
   ## Asset A Asset B 
   ##     0.5     0.5
@@ -607,11 +607,11 @@ gmv.port
 ## Call:
 ## globalMin.portfolio(er = mu.vec, cov.mat = sigma2.mat)
 ## 
-## Portfolio expected return:     0.07486614 
-## Portfolio standard deviation:  0.1050691 
+## Portfolio expected return:     0.0792503 
+## Portfolio standard deviation:  0.09782172 
 ## Portfolio weights:
 ## Asset A Asset B 
-##  0.1656  0.8344
+##  0.2021  0.7979
 ```
 
 - If short sales are not allowed, then set `shorts = FALSE`.
@@ -661,11 +661,11 @@ tan.port
 ## Call:
 ## tangency.portfolio(er = mu.vec, cov.mat = sigma2.mat, risk.free = rf)
 ## 
-## Portfolio expected return:     0.1034 
-## Portfolio standard deviation:  0.1246921 
+## Portfolio expected return:     0.09998087 
+## Portfolio standard deviation:  0.110638 
 ## Portfolio weights:
 ## Asset A Asset B 
-##  0.4033  0.5967
+##  0.3748  0.6252
 ```
 
 
@@ -676,7 +676,7 @@ cat("Sharpe ratio of Tangency portfolio:\n")
 
 ```
 ## Sharpe ratio of Tangency portfolio:
-## [1] 0.7891
+## [1] 0.8585
 ```
 ]
 
@@ -712,9 +712,12 @@ ef
 ##     alpha.min = -0.5, alpha.max = 2)
 ## 
 ## Frontier portfolios' expected returns and standard deviations
-##    port 1 port 2 port 3 port 4 port 5 port 6 port 7 port 8 port 9 port 10 port 11 port 12 port 13 port 14 port 15 port 16 port 17 port 18 port 19 port 20
-## ER 0.2251 0.2119 0.1987 0.1855 0.1724 0.1592 0.1460 0.1328 0.1197  0.1065  0.0933  0.0801  0.0670  0.0538  0.0406  0.0274  0.0143  0.0011 -0.0121 -0.0253
-## SD 0.3687 0.3391 0.3098 0.2808 0.2523 0.2245 0.1977 0.1722 0.1488  0.1288  0.1137  0.1058  0.1067  0.1162  0.1324  0.1533  0.1771  0.2029  0.2300  0.2580
+##    port 1 port 2 port 3 port 4 port 5 port 6 port 7 port 8 port 9 port 10 port 11 port 12 port 13 port 14 port 15
+## ER 0.2229 0.2103 0.1977 0.1851 0.1725 0.1599 0.1473 0.1347 0.1221  0.1095  0.0969  0.0843  0.0717  0.0591  0.0465
+## SD 0.3712 0.3410 0.3111 0.2814 0.2522 0.2236 0.1958 0.1693 0.1448  0.1235  0.1073  0.0986  0.0996  0.1100  0.1274
+##    port 16 port 17 port 18 port 19 port 20
+## ER  0.0339  0.0213  0.0087 -0.0039 -0.0165
+## SD  0.1495  0.1745  0.2013  0.2292  0.2580
 ```
 
 - ER: expected return
