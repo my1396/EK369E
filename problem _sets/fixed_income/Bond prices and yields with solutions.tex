@@ -1,0 +1,657 @@
+
+\documentclass[12]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ulem}
+%\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{dirtytalk}
+\usepackage{xcolor}
+\usepackage[affil-it]{authblk}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=black]{hyperref}
+\usepackage{bookmark}
+
+
+
+
+\title{EK369E: Financial Markets\\ Bond Prices and Yields\\ Problem Set (with solutions)}
+\author{Nord University Business School}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\color{black}
+\section*{Problem 1}
+Consider a 6\% coupon bond selling for NOK 93.3 with three years to maturity making annual coupon payments. This bond is redeemable at maturity at par value.
+\begin{enumerate}
+    \item[a)] Calculate the bond’s yield to maturity (YTM).  
+\end{enumerate}
+
+\color{blue}
+%\subsection*{Solution to Problem 1}
+\subsubsection*{Solution 1a.}
+Redemption/par value of the bond: NOK 100\\
+Coupon payments on this bond: 6\% of 100 = NOK 6\\
+Therefore, the YTM can be solved using the equation:\\
+93.3 ={\Large $ \frac{6}{(1+YTM)^1} + \frac{6}{(1+YTM)^2} + \frac{100 +6}{(1+YTM)^3}$}\\
+
+
+\noindent
+\\
+\textbf{Using the trial and error method}\\
+%\subsubsection*{Using the trial and error method}
+The YTM of this bond must be higher than 6\% since the bond is trading at a discount.
+Given the difference between the bond's price and the par value, we can begin with a YTM of 7.5\% and increase incrementally until we get the price that equates the present value of inflows to the present value of out flows.\\
+We can also speed up the process by using the annuity formula to discount the coupon payments of the bond. Annuity formula = $\frac{1 - (1+ YTM)^{-T}}{YTM}$\\
+@YTM = 7.5\%\\
+$P_0 = $ {\Large $= 6[\frac{1 - (1.075)^{-3}}{0.075}] + \frac{100}{(1.075)^3}$}\\
+$P_0 = (6 \times 2.6005) + 80.4961 = 96.099$\\
+This price is higher than 93.3, so we increase the YTM by 1\%\\
+\\
+YTM = 8.5\%\\
+$P_0 = $ {\Large $= 6[\frac{1 - (1.085)^{-3}}{0.085}] + \frac{100}{(1.085)^3}$}\\
+$P_0 = (6\times 2.5540) + 78.291 = 93.61$\\
+This price is slightly higher than 93.3, so we increase the YTM by 0.05\%\\
+\\
+@YTM = 8.55\%\\
+$P_0 = $ {\Large $= 6[\frac{1 - (1.0855)^{-3}}{0.0855}] + \frac{100}{(1.0855)^3}$}\\
+$P_0 = (6\times 2.5517) + 78.1826 = 93.49$\\
+This price is approximately the same as 93.3, we can conclude that the 
+\uuline{YTM is approximately 8.55\%}
+
+\noindent
+\\
+\textbf{Solving as a polynomial equation to the degree 3}\\
+%\subsubsection*{Solving as a polynomial equation to the degree 3}
+We set $(1 + YTM) = x$\\
+{93.3 = \Large $\frac{6}{x^1} + \frac{6}{x^2} + \frac{106}{x^3}$}  \\
+\\
+{93.3 = \Large $\frac{6x^2 + 6x + 106}{x^3}$}  \hspace{4mm}  {\small(\textit{by finding the Least common multiple on the right side of the equation above})}\\
+\\
+{$93.3x^3 - 6x^2 -6x -106$} \hspace{4mm}  {\small(\textit{by cross multiplying (or multiply both sides of the the equation above by $x^3$) and equate to zero})}\\
+Solving for x using equation mode on your calculator yields:\\
+$ x = 1.086 \therefore \uuline{YTM = 0.086 \text{ or } 8.6\%}$
+
+\noindent
+\\
+\textbf{Solving for YTM using a financial calculator}\\
+%\subsubsection*{Solving Using a financial calculator}
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 3\\
+        Par value & FV & 100\\
+        Current price  & PV & -93.3\\
+        Coupon payment & PMT & 6\\
+        YTM & CPT + I/Y & \uuline{8.63}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+The financial calculator can solve for any other missing information about the bond by simply inputting the available bond information and pressing \say{CPT + missing information}. For example to solve for the current price of the bond, I input the information for N, FV, I/Y, PMT and press \say{CPT + PV}\\
+
+
+\color{black}
+\begin{enumerate}
+    \item[b)] If interest rates over the next three years will be, with certainty, $r_1 = 6\%$, $r_2 = 8\%$ and $r_3 = 10\%$, calculate the realised compound average return on this bond.
+\end{enumerate}
+
+
+\color{blue}
+\subsubsection*{Solution 1b}
+\noindent
+The compound rate or return takes into consideration income from reinvested coupon payments over three years plus capital gain and satisfies the relationship $V_0(1+r)^3 = V_3$\\
+where $V_0$ is the invested amount, $V_3$ is the settlement amount at the end of year 3 and $r$ is the Geometric/Time Weighted/ Compound Return. 
+
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.8\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{cll}
+    \toprule
+         & Description & Cash flow \\\midrule
+         & Ist coupon received at t = 1 and reinvested   & $6\times 1.08 \times1.1$ = 7.13\\
+         & 2nd coupon received at t = 2 and reinvested & $6\times1.1$ = 6.6\\
+         &3rd coupon received  & 6\\
+         & Bond redemption  & 100 \\\bottomrule
+         & Settlement amount  & 119.73 \\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+Invested amount ($V_0$) is NOK 93.3\\
+Settlement amount ($V_3$) is NOK 119.73\\
+Geometric/Time Weighted/ Compound Return =  {\Large $\sqrt[3]{\frac{119.73}{93.3}} - 1$} = \uuline{8.7\%}\\
+Note that the compound rate of return is not equal to the YTM ($8.7 \neq 8.6$) since coupon was not re-invested at the YTM.\\
+\\
+If the coupon received was reinvested at the YTM of 8.6\%
+\begin{table}[H]
+    \centering
+    \resizebox{0.8\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{cll}
+    \toprule
+         & Description & Cashflow \\\midrule
+        & Ist coupon received at t = 1and reinvested   & $6\times 1.086 \times1.086$ = 7.07\\
+         & 2nd coupon received at t = 2 and reinvested & $6\times1.086$ = 6.52\\
+         &3rd coupon received at t = 3  & 6\\
+         & Bond redemption  & 100 \\\bottomrule
+         & Settlement amount  &  119.59\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+Invested amount ($V_0$) is NOK 93.3\\
+Settlement amount ($V_3$) is NOK 119.59\\
+Geometric/Time Weighted/ Compound Return =  {\Large $\sqrt[3]{\frac{119.59}{93.3}} - 1$} = \uuline{8.6\%}\\
+
+
+
+
+
+
+
+\color{black}
+\section*{Problem 2}
+A 20 Year maturity bond with par value of NOK 100 makes annual coupon payments at 8\%. Find the yield to maturity of the bond if the bond's price is
+\begin{enumerate}
+    \item[a)] NOK 95
+    \item[b)] NOK 100
+    \item[c)] NOK 105
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution to Problem 2}
+\subsubsection*{Solution 2a.}
+Before making computations, we know that a bond trading at a discount must have its YTM greater than its coupon rate. We can verify this by computing YTM using the financial calculator.
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 20\\
+        Par value & FV & 100\\
+        Current price  & PV & -95\\
+        Coupon payment & PMT & 8\\
+        YTM & CPT + I/Y & \uuline{8.53\%}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+
+\subsubsection*{Solution 2b.}
+Without computations, we know that a bond trading at par has its YTM equal to its coupon rate. We can verify this by computing YTM using the financial calculator.
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 20\\
+        Par value & FV & 100\\
+        Current price  & PV & -100\\
+        Coupon payment & PMT & 8\\
+        YTM & CPT + I/Y & \uuline{8.00\%}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+
+\subsubsection*{Solution 2c.}
+Before making computations, we know that a bond trading at a premium must have its YTM less than its coupon rate. We can verify this by computing YTM using the financial calculator.
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 20\\
+        Par value & FV & 100\\
+        Current price  & PV & -105\\
+        Coupon payment & PMT & 8\\
+        YTM & CPT + I/Y & \uuline{7.51\%}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+
+\color{black}
+\section*{Problem 3}
+Fill in the table below for the following zero-coupon bonds with par values of NOK 100.
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    \begin{tabular}{lcc}
+    \toprule
+        Price & Years to Maturity & Yield To Maturity (YTM)\\\midrule
+        NOK 40 & 20 & a) \\
+        NOK 50 & 20 & b)\\
+        NOK 50 & 10 & c)\\
+        d) & 10 & 10\%\\
+        e) & 10 & 8\%\\
+        NOK 40 & f) & 8\%\\\bottomrule
+    \end{tabular}
+    }
+    \label{tab:my_label}
+\end{table}
+
+
+\color{blue}
+\subsection*{Solution to Problem 3}
+\subsubsection*{Solution 3a.}
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 20\\
+        Par value & FV & 100\\
+        Current price  & PV & -40\\
+        Coupon payment & PMT & 0\\
+        YTM & CPT + I/Y & \uuline{4.69\%}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+\subsubsection*{Solution 3b.}
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 20\\
+        Par value & FV & 100\\
+        Current price  & PV & -50\\
+        Coupon payment & PMT & 0\\
+        YTM & CPT + I/Y & \uuline{3.53\%}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+
+\subsubsection*{Solution 3c.}
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 10\\
+        Par value & FV & 100\\
+        Current price  & PV & -50\\
+        Coupon payment & PMT & 0\\
+        YTM & CPT + I/Y & \uuline{7.18\%}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+
+
+\subsubsection*{Solution 3d.}
+The price of the bond is $P_0 = ${\Large $ \frac{100}{(1.1)^{10}}$} =   \uuline{NOK 38.55}
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 10\\
+        Par value & FV & 100\\
+        Coupon payment & PMT & 0\\
+        YTM & I/Y & 10\%\\
+        Current price  & CPT + PV & \uuline{-38.55}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+\noindent
+%Or \\
+
+
+\subsubsection*{Solution 3e.}
+The price of the bond is $P_0 = ${\Large $ \frac{100}{(1.08)^{10}}$} = \uuline{NOK 46.32}
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Time to Maturity & N  & 10\\
+        Par value & FV & 100\\
+        Coupon payment & PMT & 0\\
+        YTM & I/Y & 8\%\\
+        Current price  & CPT + PV & \uuline{-46.32}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+%\noindent
+%Or\\
+%\noindent
+
+
+
+\subsubsection*{Solution 3f.}
+$40 = $ {\Large $\frac{100}{1.08^T}$}\\
+$1.08^T =${\Large $\frac{100}{40}$}\\
+$\log(1.08^T) = \log(2.5)$\\
+$T\cdot \log(1.08) = \log(2.5)$\\
+$T = \frac{\log(2.5)}{\log(1.08)} = \frac{0.3979}{0.0334} \approx 11.9 $\\
+\noindent
+The time to maturity of the bond is approximately \uuline{11.9 years}
+
+\noindent
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{lcl}
+    \toprule
+        Bond Information & Financial Calculator Input & Value\\\midrule
+        Par value & FV & 100\\
+        Coupon payment & PMT & 0\\
+        YTM & I/Y & 8\%\\
+        Current price  & PV & - 40\\
+        Time to Maturity & CPT + N  & \uuline{11.9}\\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+
+
+
+
+
+\color{black}
+\section*{Problem 4}
+Bond Alfa has a current yield of 9\% and a yield to maturity of 10\%. 
+\begin{enumerate}
+    \item[a)] Is Bond Alfa selling above or below par value?   
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 4a}
+A bond selling above par value i.e. a premium bond has a yield to maturity less than its current yield, which is also less than its coupon rate\\
+A bond selling below par value i.e. a discount bond has a yield to maturity greater than its current yield, which is also greater than its coupon rate\\
+Bond Alfa has a yield to maturity greater than its current yield therefore, Bond Alfa is trading at a discount (below par value).\\
+
+
+\color{black}
+\begin{enumerate}
+    \item[b)] Is the coupon rate on Bond Alfa more or less than 9\%?
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 4b}
+Since Bond Alfa is trading at a discount, its coupon rate is less than 9\% (i.e. its coupon rate is less than its current yield and its yield to maturity).
+
+
+
+\color{black}
+\section*{Problem 5}
+A newly issued bond pays its coupons once annually. Its coupon rate is 5\%, its maturity is 20 years and its yield to maturity is 8\%.
+\begin{enumerate}
+    \item[a)] Find the holding period return for a 1-year investment period if the bond is selling at a yield to maturity of 7\% by the end of the first year.
+\end{enumerate}
+\color{blue}
+\subsubsection*{Solution 5a.}
+Price at the beginning of the year ($P_0$):\\
+$P_0 = $ {\Large $= 5[\frac{1 - (1.08)^{-20}}{0.08}] + \frac{100}{(1.08)^{20}}$} = 70.55\\
+\\
+$P_1 = $ {\Large $= 5[\frac{1 - (1.07)^{-19}}{0.07}] + \frac{100}{(1.07)^{19}}$} = 79.33\\
+\\
+$HPR_1$ = {\Large $\frac{79.33 - 70.55 + 5}{70.55}$ }= \uuline{0.1953 / 19.53\%}\\
+
+
+\color{black}
+\begin{enumerate}
+    \item[b)] Continuing from a), find the realised compound yield for a two-year holding period, assuming that you sell the bond after two years, the bond's yield is 7\% at the end of the second year and coupons can be reinvested for one year at 3\% interest rate.
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 5b.}
+
+$HPR_1 = 19.53\%$\\
+\\
+$P_2 = $ {\Large $= 5[\frac{1 - (1.07)^{-18}}{0.07}] + \frac{100}{(1.07)^{18}}$} = 79.88\\
+\\
+$HPR_2$ = {\Large $\frac{79.88 - 79.33 + 5}{79.33}$ }= \uuline{6.996\% or 7\%}\\
+\\
+Realised Compound Yield = $(\sqrt[2]{1.1953 \times 1.07}) - 1$ = \uuline{13.09\% $\approx$ 13\%}
+
+\noindent
+or 
+
+\noindent
+
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.8\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{cll}
+    \toprule
+         & Description  & Cashflow\\\midrule
+         & 1st coupon received at t = 1 and reinvested at 3\% & $5\times1.03$ = 5.15\\
+         & 2nd  coupon received at t = 2  & 5\\
+         & Proceeds from the sale of the bond & 79.88  \\\bottomrule
+         & Settlement amount  & 90.03 \\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+\noindent
+Invested amount ($V_0$) is NOK 70.55\\
+Settlement amount ($V_2$) is NOK 90.03\\
+Realised Compound Yield =  {\Large $\sqrt[2]{\frac{90.03}{70.55}} - 1$} =  \uuline{12.965\% $\approx$ 13\%}\\
+
+
+
+
+\color{black}
+\section*{Problem 6}
+The table below summarises some information from the fixed-income market:
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.4\textwidth}{!}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Bond & \begin{tabular}[c]{@{}l@{}}Maturity\\ (years)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coupon rate\\ (\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Yield\\ (\%)\end{tabular} \\ \midrule
+A    & 5.5                                                        & 0                                                          & 2.5                                                  \\
+B    & 2.5                                                        & 4.0                                                        & 2.0                                                  \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] Calculate the invoice price and the flat price for the two bonds.
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 6a.}
+Invoice price = Clean Price + Accrued interest (since last coupon payment)\\
+\textbf{Bond A}\\
+Bond A does not pay coupon , therefore its flat price is the same as its invoice price.\\
+$P_{0, Clean}^A = P_{0, Invoice }^A = $ {\Large $\frac{100}{(1.025)^{5.5}}$} = \uuline{87.30}\\
+
+\noindent
+\textbf{Bond B}\\
+There are two methods of computing the  invoice price.\\
+\textit{Method 1}: compute the clean price based on T = 2.5 and add accrued coupon for 0.5 years to get invoice price\\
+$P_{0, clean}^B = $ {\Large $= 4[\frac{1 - (1.020)^{-2.5}}{0.020}] + \frac{100}{(1.020)^{2.5}}$ }\\
+$P_{0, clean}^B = $ {\large $= (4\times 2.42) + 95.17$} = \uuline{104.85}\\
+Accrued interest on Bond B: $0.5\times 4$ = 2\\
+$P_{0, invoice}^B$ =  104.85 + 2 = \uuline{106.85}\\
+
+\noindent
+\textit{Method 2}:
+Compute the invoice price using the formula and setting T = 3\\
+$P_{0, invoice}^B $ = {\huge $\frac{\frac{4}{0.02} \times [1.02^3 -1] + 100 }{(1.02)^{3-1+0.5}}$}\\
+\\
+$P_{0, invoice}^B $ = {\Large $\frac{112.24}{1.0508}$}  = \uuline{106.81}\\
+\\
+Accrued interest on Bond B: $0.5\times 4$ = 2\\
+$P_{0, clean}^B =$ 106.81 - 2 = \uuline{104.81}
+
+
+
+\noindent
+\color{black}
+\begin{enumerate}
+    \item[b)] How can a zero-coupon bond be traded above its face value?
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 6b.}
+A bond trades above its par value when its yield to maturity is less than its coupon rate. For a zero-coupon bond to trade at a premium, its yield to maturity must be less than zero i.e market interest rates must be negative.
+
+
+
+
+
+
+
+
+\color{black}
+\section*{Problem 7}
+Treasury bonds paying an 8\% coupon rate with semiannual payments currently sell at par value. what coupon rate would they have to pay in order to sell at par if they paid their coupons annually.
+
+\color{blue}
+\subsubsection*{Solution 7}
+A semi-annual coupon bond selling at par has semi-annual coupon rate = semi-annual YTM = 8\%\\
+This represents an effective annual yield of $0.08^2 = 0.1664$ or $16.64\%$\\
+Therefore,to continue to sell at par, when paying coupons annually, the bond's coupon rate must be equal to its YTM of \uuline{16.64\%}.
+
+
+
+
+
+\color{black}
+\section*{Problem 8}
+Assume that you have a 1-year investment horizon and are trying to choose among three bonds with the same degree of default risk and the same time to maturity of 10 years. Bond 1 is a zero coupon bond, Bond 2 has a coupon rate of 8\%, and Bond 3 has a coupon rate of 10\%
+\begin{enumerate}
+    \item[a)] If all bonds are currently priced to yield 8\% at maturity, what are the prices of Bond 1, Bond 2 and Bond 3
+\end{enumerate}
+
+
+\color{blue}
+\subsubsection*{Solution 8a.}
+$P_0^{Bond 1} =$ {\Large $\frac{100}{1.08^{10}}$} = \uuline{ 46.32 }\\
+\\
+$P_0^{Bond 2} =$ \uuline{100}\\
+\\
+$P_0^{Bond 3} =$ {\Large $= 10[\frac{1 - (1.08)^{-10}}{0.08}] + \frac{100}{(1.08)^{10}}$} = \uuline{113.42} \\
+
+
+\noindent
+\color{black}
+\begin{enumerate}
+    \item[b)] If at the beginning of next year, all bonds are priced to yield 8\% , what will the prices of these bonds be?
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 8b.}
+$P_1^{Bond 1} =$ {\Large $\frac{100}{1.08^{9}}$} = \uuline{50.02}\\
+\\
+$P_1^{Bond 2} =$ \uuline{100}\\
+\\
+$P_1^{Bond 3} =$ {\Large $= 10[\frac{1 - (1.08)^{-9}}{0.08}] + \frac{100}{(1.08)^{9}}$} = \uuline{112.49} \\
+
+\noindent
+Comments: \\
+Holding all else equal and assuming stable interest rates, discount bonds increase in value (approach the par-value) as they approach maturity. \\
+Holding all else equal and assuming stable interest rates, premium bonds reduce in value (approach the par-value) as they approach maturity. This is because the number of high coupon payments, the reason why they were priced above par, reduces as maturity approaches.\\
+In summary, bonds(with similar attributes) are priced such that all investors earn comparable total return (otherwise there would be arbitrage in the bond market). 
+
+
+
+\noindent
+\color{black}
+\begin{enumerate}
+    \item[c)] Based on your answer in a) and b) compute the holding period return over the 1 year horizon for each bond. 
+\end{enumerate}
+
+
+\color{blue}
+\subsubsection*{Solution 8c.}
+$HPR_1^{Bond 1}$ = {\Large $\frac{50.02 - 46.32 }{46.32}$ }= \uuline{7.99\% $\approx$ 8.0\%}\\
+\\
+$HPR_1^{Bond 2}$ = {\Large $\frac{100 - 100 + 8 }{100}$ }= \uuline{8.0\%}\\
+\\
+$HPR_1^{Bond 3}$ = {\Large $\frac{112.49 - 113.42 + 10 }{113.42}$ }= \uuline{7.997\% $\approx$ 8.0\%}\\
+
+\noindent
+Comments: 
+With stable interest rates, these bonds are interchangeable as the investor earns the same return regardless.
+
+
+
+
+\noindent
+\color{black}
+\begin{enumerate}
+    \item[d)] Recalculate b) and c) if at the beginning of next year, all bonds are priced to yield 7\%
+\end{enumerate}
+
+\color{blue}
+\subsubsection*{Solution 8d.}
+$P_1^{Bond 1} =$ {\Large $\frac{100}{1.07^{9}}$} = \uuline{54.39}\\
+\\
+$P_1^{Bond 2} =${\Large $= 8[\frac{1 - (1.07)^{-9}}{0.08}] + \frac{100}{(1.07)^{9}}$} =  \uuline{106.52}\\
+\\
+$P_1^{Bond 3} =$ {\Large $= 10[\frac{1 - (1.07)^{-9}}{0.08}] + \frac{100}{(1.07)^{9}}$} = \uuline{119.55} \\
+\\
+\\
+$HPR_1^{Bond 1}$ = {\Large $\frac{54.39 - 46.32 }{46.32}$ }= \uuline{17.42\% }\\
+\\
+$HPR_1^{Bond 2}$ = {\Large $\frac{106.52 - 100 + 8 }{100}$ }= \uuline{14.52\%}\\
+\\
+$HPR_1^{Bond 3}$ = {\Large $\frac{119.55 - 113.42 + 10 }{113.42}$ }= \uuline{14.22\%}\\
+
+\noindent
+Comment: 
+When interest rates decline, the HPR of a bond increases (due to the capital appreciation in price). This appreciation is more for zero-coupon bonds (they more quickly approach par-value). In this example, the zero-coupon bond performs better than the coupon-paying bonds since majority of the holding period return comes from capital appreciation when interest rates reduce.
+\end{document}
+
+

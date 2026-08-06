@@ -1,0 +1,198 @@
+---
+title: "Portfolio Optimization Exercises"
+solution: false
+format: 
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    fontsize: 12pt
+    number-sections: true
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+```{r chunk-opt, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 4)
+```
+
+# Data and parameters {-}
+
+Annual estimates of stock return parameters
+
+|                             | Boeing | Microsoft |
+| :-------------------------: | :----: | :-------: |
+|           $\mu$           | 0.149  |   0.331   |
+|       $\sigma^{2}$        | 0.069  |   0.136   |
+| $\rho$(Boeing, Microsoft) | -0.008 |           |
+
+Risk free rate (annual) $r_f = 0.03$.
+
+```{r libs}
+# Load libraries
+library(tidyverse)
+library(ggplot2)
+library(data.table)
+library(IntroCompFinR)
+library(latex2exp)
+library(knitr)
+library(kableExtra)
+```
+
+```{r params-init}
+# Given parameters
+mu.vec <- c(0.149, 0.331)               # mu_A, mu_B
+names(mu.vec) <- c("Boeing", "Microsoft")
+
+var <- c(0.069, 0.136)              # variances
+sigma <- sqrt(var)                  # standard deviations
+names(sigma) <- c("Boeing", "Microsoft")
+
+rho_AB <- -0.008
+cov_AB  <- rho_AB * sigma[1] * sigma[2]
+
+# covariance matrix
+sigma2.mat <- matrix(
+    c(var[1], cov_AB,
+      cov_AB, var[2]),
+    nrow = 2, byrow = TRUE)
+colnames(sigma2.mat) <- rownames(sigma2.mat) <- c("Boeing", "Microsoft")
+
+rf <- 0.03
+```
+
+
+# Create portfolios and plot $E(r_p)$ vs $\mathrm{SD}(r_p)$
+
+We create three sets of portfolios
+
+- Boeing and Microsoft with $x_{boeing} = -1, -0.9,\ldots, 2$ and $x_{msft} = 1 - x_{boeing}$.
+
+- Boeing and T-bills with $x_{boeing} = 0, 0.1, \ldots, 2$ and $x_{tbill} = 1 - x_{boeing}$.
+
+- Microsoft and T-bills with $x_{msft} = 0, 0.1, \ldots, 2$ and $x_{tbill} = 1 - x_{msft}$.
+
+We compute portfolio expected return, variance and standard deviation for each portfolio.
+
+
+```{r results='hold'}
+# Helper function for portfolio stats
+port_stats_two_assets <- function(
+  w_a, mu_a, mu_b,
+  sigma_a, sigma_b, cov_ab) {
+    w_b <- 1 - w_a
+    mu_p <- w_a * mu_a + w_b * mu_b
+    var_p <- w_a^2 * sigma_a^2 + w_b^2 * sigma_b^2 + 2 * w_a * w_b * cov_ab
+    sd_p <- sqrt(var_p)
+    tibble(w_a = w_a, w_b = w_b, mu_p = mu_p, var_p = var_p, sd_p = sd_p)
+}
+
+# Boeing vs Microsoft
+wA_seq <- seq(-1, 2, by = 0.1)
+bm_df <- port_stats_two_assets(
+    wA_seq,
+    mu_a = mu.vec["Boeing"], mu_b = mu.vec["Microsoft"],
+    sigma_a = sigma["Boeing"], sigma_b = sigma["Microsoft"],
+    cov_ab = cov_AB
+) %>%
+    mutate(portfolio = "Boeing-Microsoft")
+
+cat("Boeing-Microsoft portfolios:\n\n")
+bm_df %>%
+    as.data.table() %>%
+    print(topn = 4)
+```
+
+```{r results='hold'}
+# Boeing vs T-bills (treat tbill as mu=rf and sd=0, cov=0)
+wA_seq2 <- seq(0, 2, by = 0.1)
+bt_df <- tibble(
+    w_a = wA_seq2,
+    w_b = 1 - w_a,
+    mu_p = w_a * mu.vec["Boeing"] + (1 - w_a) * rf,
+    var_p = w_a^2 * var[1],
+    sd_p = sqrt(var_p),
+    portfolio = "Boeing-Tbill"
+)
+
+cat("Boeing-Tbill portfolios:\n\n")
+bt_df %>%
+    as.data.table() %>%
+    print(topn = 4)
+```
+
+```{r results='hold'}
+# Microsoft vs T-bills
+wM_seq2 <- seq(0, 2, by = 0.1)
+mt_df <- tibble(
+    w_a = wM_seq2,
+    w_b = 1 - w_a,
+    mu_p = w_a * mu.vec["Microsoft"] + (1 - w_a) * rf,
+    var_p = w_a^2 * var[2],
+    sd_p = sqrt(var_p),
+    portfolio = "Microsoft-Tbill"
+)
+cat("Microsoft-Tbill portfolios:\n\n")
+mt_df %>%
+    as.data.table() %>%
+    print(topn = 4)
+```
+
+
+## Plot the mean-standard deviation frontier {-}
+
+```{r}
+# combine and prepare for plotting
+all_df <- bind_rows(bm_df, bt_df, mt_df)
+
+# Plot frontier
+ggplot(all_df, aes(x = sd_p, y = mu_p, color = portfolio)) +
+    geom_line() +
+    geom_point(size = 1) +
+    labs(
+        x = TeX("SD($r_p$)"), y = TeX("E($r_p$)"),
+        title = "Mean-Standard Deviation Frontier"
+    ) +
+    scale_color_manual(values = c("Boeing-Microsoft" = "#EE0000FF", "Boeing-Tbill" = "#3B4992FF", "Microsoft-Tbill" = "#008B45FF")) +
+    theme_minimal() +
+    theme(legend.position = "bottom")
+```
+
+## Sharpe Ratios of Individual Assets {-}
+```{r}
+# Sharpe ratios of individual assets
+sharpe_assets <- (mu.vec - rf) / sigma
+```
+
+```{r echo=FALSE}
+sharpe_assets %>%
+    enframe(name = "Asset", value = "Sharpe") %>%
+    knitr::kable(digits = 4) %>%
+    column_spec(c(1, 2), width = "3cm") 
+```
+
+# Global Minimum Variance Portfolio (GMV)
+
+```{r}
+# GMV portfolio using IntroCompFinR
+gmv.port <- globalMin.portfolio(er = mu.vec, cov.mat = sigma2.mat)
+gmv.port
+```
+
+```{r results='hold'}
+cat("Sharpe ratio of GMV portfolio:\n")
+((gmv.port$er - rf) / gmv.port$sd) %>% round(4)
+```
+
+# Tangency Portfolio
+
+```{r}
+# GMV portfolio using IntroCompFinR
+tan.port <- tangency.portfolio(er = mu.vec, cov.mat = sigma2.mat, risk.free = rf)
+tan.port
+```
+
+```{r results='hold'}
+cat("Sharpe ratio of Tangency portfolio:\n")
+((tan.port$er - rf) / tan.port$sd) %>% round(4)
+```

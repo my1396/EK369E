@@ -1,0 +1,67 @@
+---
+title: "Portfolio Performance Evaluation Quiz"
+params:
+  solution: false
+#   solution: true
+filters:
+  - ../libs/color-text.lua
+format: 
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    fontsize: 12pt
+    number-sections: true
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+
+1. Maria is considering a savings account that pays 1% interest per month. The bank’s brochure highlights the APR, but she wants to understand her true annual return.
+
+   - What APR does the bank advertise?
+   - What is the AER that Maria will actually earn?
+  
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution**
+
+   Monthly interest rate $r = 1\%$ and monthly compounding $m = 12$.
+
+   APR $= r \times m = 0.01 \times 12 = 0.12 = 12\%$.
+ 
+   AER $= (1+r)^m - 1 = (1.01)^{12} - 1 \approx 12.68\%$.
+   :::
+   :::
+
+2. James is comparing credit cards. One card charges 4% interest every quarter. The bank lists an APR, but James knows compounding matters.
+
+   - What is the APR?
+   - What is the AER James should consider when comparing cards?
+   
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   Quarterly interest rate $r = 4\%$ and quarterly compounding $m = 4$.
+
+   APR $= 0.04 \times 4 = 0.16 = 16\%$.
+
+   AER $= (1.04)^4 - 1 \approx 16.99\%$.
+   :::
+   :::
+
+3. Sophia hears her professor say: “The APR will always be less than or equal to the AER, except when compounding is annual.”
+
+   Is this statement true or false? Explain briefly why.
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   **True.** APR equals $r \times m$ while AER equals $(1+r)^m - 1$. Because compounding makes interest grow on previously earned interest, $(1+r)^m - 1 \ge r m$ for ordinary positive rates and equality holds when $m=1$ so the compounding frequency is annual.
+   :::
+   :::
+
+
+

@@ -1,0 +1,221 @@
+---
+title: "Event Study Class Examples"
+params:
+#   solution: false
+  solution: true
+filters:
+  - ../libs/color-text.lua
+format: 
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    fontsize: 12pt
+    number-sections: true
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+## Single day AR After Earnings Announcement
+
+Suppose you are analyzing a company’s stock reaction to an earnings announcement.
+
+From the estimation window you find that the residual standard deviation is 2% ($\hat{\sigma}_{\varepsilon_i}=0.02$).
+
+On the event day the stock shows an abnormal return of 1.5% ($AR_{i,t}=0.015$).
+
+Compute the test statistic. Is the abnormal return statistically significant? What does that mean for the impact of the announcement?
+
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
+Test statistic:
+$$
+t = \frac{AR_{i,t}}{\text{SE}(AR_{i,t})} \approx \frac{0.015}{0.02} = 0.75
+$$
+At 5% significance level, the critical value is $z_{\alpha/2} = 1.96$. Since $|t| = 0.75 < 1.96$, we fail to reject the null hypothesis. 
+
+**Interpretation:** This suggests that the abnormal return is not statistically significant, indicating that the earnings announcement did not have a significant impact on the stock price.
+:::
+:::
+
+## AR after Takeover Announcement
+
+Imagine you are studying how the market reacts to major corporate announcements.
+On **June 10**, the technology company **Nordic Tech ASA** publicly announced its plan to acquire a smaller software firm specializing in AI analytics.
+Investors expected the acquisition to strengthen Nordic Tech's product portfolio and future earnings.
+
+From the estimation window of past daily returns, you have already estimated the residual standard deviation to be **2%** ($\hat{\sigma}_{\varepsilon_i}=0.02$).
+On the announcement day, the stock price jumped, producing an **abnormal return of 5%** ($AR_{i,t}=0.05$).
+
+Is the abnormal return statistically significant? What does that imply about the market's reaction to the acquisition news?
+
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:** Test statistic:
+$$
+t = \frac{AR_{i,t}}{\text{SE}(AR_{i,t})} \approx \frac{0.05}{0.02} = 2.5
+$$
+At 5% significance level, the critical value is $z_{\alpha/2} = 1.96$. Since $|t| = 2.5 > 1.96$, we reject the null hypothesis. 
+
+**Interpretation:** This indicates that the abnormal return is statistically significant, suggesting that the market reacted positively to the acquisition announcement, viewing it as beneficial for Nordic Tech ASA's future prospects.
+:::
+:::
+
+## Multi-Day Market Reaction to a Product Launch
+
+You are analyzing how investors responded to a series of news releases from **Scandia Motors ASA**, a leading electric vehicle manufacturer.
+On **March 5**, the company unveiled its new long-range battery model. The following two days, news outlets and analysts continued to publish reviews and forecasts about the innovation.
+
+To evaluate the total market reaction, you collect abnormal returns for the **three-day event window** (March 5--7).
+From the estimation window, the residual standard deviation is estimated as 2% ($\hat{\sigma}_{\varepsilon_i}=0.02$).
+The observed abnormal returns are:
+
+| Date  | Event Description                     | Abnormal Return |
+| ----- | ------------------------------------- | --------------- |
+| Mar 5 | Product launch announcement           | 3.0%            |
+| Mar 6 | Analyst coverage and media discussion | 2.5%            |
+| Mar 7 | Continued investor reaction           | 2.0%            |
+
+Calculate the cumulative abnormal return (CAR) over the three-day event window. Is this CAR statistically significant? What does that suggest about the market's overall reaction to the product launch?
+
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
+Accordint to the description, we have the following time line:
+```
+Event Window (market reaction)
+T1+1   T1+2   T1+3
+Mar 5  Mar 6  Mar 7
+```
+Hence we have $N = 3$ days in the event window.
+
+Cumulative Abnormal Return (CAR):
+$$
+CAR = \sum_{t=T_1+1}^{T_1+3} AR_{i,t} = (3.0 + 2.5 + 2.0)\% = 7.5\%
+$$
+Standard Error of CAR:
+$$
+\text{SE}(CAR) = \sqrt{N}\hat{\sigma}_{\varepsilon_i} = \sqrt{3} \times 0.02 \approx 0.03464
+$$
+Test statistic:
+$$
+t = \frac{CAR}{\text{SE}(CAR)} \approx \frac{0.075}{0.03464} \approx 2.165
+$$
+At 5% significance level, the critical value is $z_{\alpha/2} = 1.96$. Since $|t| = 2.165 > 1.96$, we reject the null hypothesis. 
+
+**Interpretation:** This indicates that the cumulative abnormal return is statistically significant, suggesting that the market reacted positively to the product launch, viewing it as a significant innovation for Scandia Motors ASA's future growth.
+:::
+:::
+
+## Mixed Abnormal Returns
+
+You are examining investor reactions to **Aurora Pharma ASA**, a pharmaceutical company that recently submitted a new drug application to regulators.
+News coverage around the submission was mixed: some analysts were optimistic, while others raised concerns about approval timing and competition.
+
+You collect abnormal returns for the **three-day event window** (April 10--12).
+From the estimation window, the residual standard deviation is **2%** ($\hat{\sigma}_{\varepsilon_i}=0.02$).
+The observed abnormal returns are:
+
+| Date   | Event Description                | Abnormal Return |
+| ------ | -------------------------------- | --------------- |
+| Apr 10 | Initial news on drug submission  | 1.0%            |
+| Apr 11 | Analyst commentary (mixed)       | 2.0%            |
+| Apr 12 | Market reacts to competitor news | –0.5%           |
+
+Calculate the cumulative abnormal return (CAR) over the three-day event window. Is this CAR statistically significant? What does that imply about the market's overall reaction to the drug submission news?
+
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
+Cumulative Abnormal Return (CAR):
+$$
+CAR = \sum_{t=T_1+1}^{T_1+3} AR_{i,t} = (1.0 + 2.0 - 0.5)\% = 2.5\%
+$$
+Standard Error of CAR:
+$$
+\text{SE}(CAR) = \sqrt{N}\hat{\sigma}_{\varepsilon_i} = \sqrt{3} \times 0.02 \approx 0.03464
+$$
+Test statistic:
+$$
+t = \frac{CAR}{\text{SE}(CAR)} \approx \frac{0.025}{0.03464} \approx 0.722
+$$
+At 5% significance level, the critical value is $z_{\alpha/2} = 1.96$. Since $|t| = 0.722 < 1.96$, we fail to reject the null hypothesis.
+
+**Interpretation:** This suggests that the cumulative abnormal return is not statistically significant, indicating that the mixed news did not lead to a clear market reaction regarding Aurora Pharma ASA's drug submission.
+:::
+:::
+
+## Multi-Firm CAAR
+
+You study **five tech companies** announcing a joint initiative on AI adoption.
+The announcement attracted strong media attention, as investors expected it to reshape the enterprise software market.
+
+You decide to study whether the **market reaction** to this joint announcement was **statistically significant**.
+
+The event window spans **3 trading days (Day 1–Day 3)** around the announcement.
+You have collected each firm’s **abnormal returns** during these three days:
+
+
+| Firm | Day 1 | Day 2 | Day 3 |
+| ---- | ----- | ----- | ----- |
+| A    | 3.0 % | 2.5 % | 2.0 % |
+| B    | 1.5 % | 1.0 % | 0.5 % |
+| C    | 2.0 % | 3.0 % | 2.5 % |
+| D    | 1.0 % | 1.5 % | 2.0 % |
+| E    | 2.5 % | 2.0 % | 1.5 % |
+
+Assume the residual standard deviation for each firm from the estimation window is $\hat{\sigma}_{\varepsilon_i} = 2\%$.
+
+**Did the market respond positively and significantly to the joint AI announcement?**
+
+Use the following steps to answer:
+
+a. Compute the **Average Abnormal Return (AAR)** for each day.
+b. Compute the **Cumulative Average Abnormal Return (CAAR)** over the 3-day window.
+c. Calculate the **Standard Error of the CAAR** assuming independence across days.
+   $$
+   \text{SE}(\text{CAAR}) = \sqrt{N} \, \text{SE}(\text{AAR}_t), \quad N = 3
+   $$
+   where $\text{SE}(\text{AAR}_t) = \dfrac{\hat{\sigma}_{\varepsilon_i}}{\sqrt{M}}, \quad M = 5.$
+d. Compute the **t-statistic** and interpret the result using a 5% significance level.
+
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
+
+a. Daily Average Abnormal Returns (AAR):
+   - Day 1: 
+     $$
+     \text{AAR}_1 = \frac{3 + 1.5 + 2 + 1 + 2.5}{5}\% = 2\%
+     $$
+   - Day 2: 
+     $$
+     \text{AAR}_2 = \frac{2.5 + 1 + 3 + 1.5 + 2}{5}\% = 2\%
+     $$
+   - Day 3: 
+     $$
+     \text{AAR}_3 = \frac{2 + 0.5 + 2.5 + 2 + 1.5}{5}\% = 1.7\%
+     $$
+b. Cumulative Average Abnormal Return (CAAR):
+   $$
+   \text{CAAR} = \text{AAR}_1 + \text{AAR}_2 + \text{AAR}_3 = 2\% + 2\% + 1.7\% = 5.7\%
+   $$
+c. Standard Error of daily AAR:
+   $$
+   \text{SE}(\text{AAR}_t) = \frac{\hat{\sigma}_{\varepsilon_i}}{\sqrt{M}} = \frac{0.02}{\sqrt{5}} \approx 0.00894
+   $$
+   Standard Error of CAAR:
+   $$
+   \text{SE}(\text{CAAR}) = \sqrt{N} \, \text{SE}(\text{AAR}_t) = \sqrt{3} \times 0.00894 \approx 0.01549
+   $$
+d. t-statistic:
+   $$
+   t = \frac{\text{CAAR}}{\text{SE}(\text{CAAR})} \approx \frac{0.057}{0.01549} \approx 3.68
+   $$
+   At 5\% significance level, the critical value is $z_{\alpha/2} = 1.96$. Since $|t| = 3.68 > 1.96$, we reject the null hypothesis.
+
+    **Interpretation:** This indicates that the cumulative average abnormal return is statistically significant, suggesting that the market responded **positively** to the joint AI announcement by the five tech companies.
+:::
+:::
+

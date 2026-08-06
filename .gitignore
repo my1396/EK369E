@@ -1,0 +1,64 @@
+# Excluded folders
+exam/
+Archive/
+evaluation/
+Ugochi/
+
+# Excluded file types
+*.xlsx
+*.xlsm
+*.docx
+*.rtf
+*.pdf
+*.pptx
+
+# Allow PDFs inside out_dir folders
+!**/out_dir/*.pdf
+
+# Auto generated system files
+.DS_Store
+~*
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+.RDataTmp
+
+# User-specific files
+.Ruserdata
+*.Rproj
+.Rproj.user/
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+# LaTeX build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.xdv
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+
+# OAuth2 token
+.httr-oauth

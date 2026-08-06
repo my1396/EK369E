@@ -1,0 +1,83 @@
+---
+title: "Teaching Notes"
+format: 
+  pdf:
+    include-in-header: latex/preamble.tex
+    fontsize: 12pt
+---
+
+## AI prompt
+
+I am teaching a finance course using textbook Investment by Bodie, Kane, and Marcus. ISBN 9781266085963.
+
+Current topic: Efficient Market Hypothesis (chapter 11 in the 12th edition of textbook.)
+
+Based on the textbook material, please help me write teaching notes for the following topics:
+
+- How to test market efficiency in various forms (weak, semi-strong, strong).
+
+Below are textbook material for reference.
+
+[Copy and paste textbook material here]
+
+
+## **Securitizers**
+
+A **securitizer** is a financial institution (like a bank or a finance company) that **transforms illiquid assets into tradable financial instruments**. Essentially, they take assets that are hard to sell individually — like loans, mortgages, or receivables — and package them into new securities that investors can buy.
+
+**Key points:**
+
+1. **Creates new financial instruments**
+   - The process of securitization converts a pool of assets into securities that can be sold to investors.
+   - These securities generate cash flows for investors (e.g., interest or principal payments from loans).
+2. **Special Purpose Entities (SPEs)**
+   - To securitize assets, the originator (bank or company) usually sets up an **SPE**.
+   - The SPE is legally separate from the originator. This has several benefits:
+     - **Risk isolation**: If the originator goes bankrupt, the assets in the SPE are protected.
+     - **Ease of funding**: The SPE issues securities backed by the pooled assets.
+     - **Investor confidence**: Investors focus on the cash flows from the underlying assets, not the credit risk of the originator.
+3. **Example of securitization**
+   - A bank has 1,000 mortgages. Selling each mortgage individually is hard and inefficient.
+   - The bank transfers the mortgages to an SPE.
+   - The SPE issues **mortgage-backed securities (MBS)** to investors.
+   - Investors receive payments from the mortgage cash flows, while the bank gets immediate liquidity to issue more loans.
+4. **Why it matters**
+   - Securitization provides liquidity to the financial system.
+   - It spreads risk across investors rather than concentrating it on the original lender.
+   - It can lower borrowing costs because investors can buy standardized securities rather than individual loans.
+
+------
+
+\newpage
+
+# Market Efficiency Tests (Sep 9, 2025)
+
+## Certain variables predict market returns:
+
+Several studies have documented the ability of easily observed variables to predict market returns. For example, Fama and French showed that the return on the aggregate stock market tends to be higher when the dividend/price ratio, the dividend yield, is high. Campbell and Shiller found that the earnings yield can predict market returns. Keim and Stambaugh showed that bond market data such as the spread between yields on high- and low-grade corporate bonds also help predict broad market returns.
+
+Again, the interpretation of these results is difficult. On the one hand, they may imply that abnormal stock returns can be predicted, in violation of the efficient market hypothesis. page 349More probably, however, these variables are proxying for variation in the market risk premium. For example, given a forecast of dividends or earnings, stock prices will be lower and dividend and earnings yields will be higher when the risk premium (and therefore the expected market return) is higher. Thus, a high dividend or earnings yield will be associated with higher market returns. But rather than a violation of market efficiency, the predictability of market returns is due to predictability in the risk premium.
+
+Fama and French showed that the yield spread between high- and low-grade bonds has greater predictive power for returns on low-grade bonds than high-grade bonds, and greater predictive power for stock rather than bond returns, suggesting that the predictability in returns is in fact a risk premium rather than evidence of market inefficiency. Similarly, the fact that the dividend yield on stocks helps to predict bond market returns suggests that the yield captures a risk premium common to both markets rather than mispricing in the equity market.
+
+
+## Small firm effect
+
+The Small-Firm Effect The so-called size or small-firm effect, originally documented by Banz,24 is illustrated in Figure 11.3. It shows the historical performance of portfolios formed by dividing the NYSE stocks into 10 portfolios each year according to firm size (i.e., the total value of outstanding equity). Average annual returns between 1926 and 2018 are consistently higher on the small-firm portfolios. The difference in average annual return between portfolio 10 (with the largest firms) and portfolio 1 (with the smallest firms) is 7.32%. Of course, the smaller-firm portfolios tend to be riskier. But even when returns are adjusted for risk using the CAPM, there is still a consistent premium for the smaller-sized portfolios.
+
+Imagine earning a premium of this size on a billion-dollar portfolio. Yet it is remarkable that following a simple (even simplistic) rule such as “invest in low-capitalization stocks” should enable an investor to earn excess returns. After all, any investor can measure firm size at little cost. One would not expect such minimal effort to yield such large rewards.
+
+
+- The difference in average annual return between portfolio 10 (with the largest firms) and portfolio 1 (with the smallest firms) is 7.32%. Of course, the smaller-firm portfolios tend to be riskier. But even when returns are adjusted for risk using the CAPM, there is still a consistent premium for the smaller-sized portfolios.
+
+- Imagine earning a premium of this size on a billion-dollar portfolio. Yet it is remarkable that following a simple (even simplistic) rule such as “invest in low-capitalization stocks” should enable an investor to earn excess returns. After all, any investor can measure firm size at little cost. One would not expect such minimal effort to yield such large rewards.
+
+**Main Takeaway:**
+
+  - The CAPM may not fully capture the risk of small firms. → There are other risk factors at play.
+  - The superior returns to small firms may reflect higher risk, less analyst coverage, or the neglected-firm effect rather than true market inefficiency.
+
+
+
+___
+

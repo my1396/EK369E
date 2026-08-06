@@ -1,0 +1,270 @@
+\documentclass[10]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{dirtytalk}
+\usepackage{xcolor}
+\usepackage[affil-it]{authblk}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+\title{EK369E: Financial Markets\\ Portfolio Theory\\Problem Set (with solutions)}
+\author{Nord University Business School}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Problem 1}
+Shares in Kojo currently trade for NOK 100 and the company's dividend policy is to pay out 8\% of its retained earnings as dividends at the end of each year. In the course of your analysis as an analyst at Kingdom Investments, you determine that the earnings and price of Kojo's shares are dependent on the state of the economy and 
+you produce the following expectations about Kojo's stock price and dividend which is presented in the table below. Based on this expectation, compute the mean and standard deviation of the holding period return (HPR) on this stock.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{lccc}
+\textit{}     & \multicolumn{1}{l}{\textit{Probability}} & \multicolumn{1}{l}{\textit{\begin{tabular}[c]{@{}l@{}}Ending Price per share\\ (NOK)\end{tabular}}} & \multicolumn{1}{l}{\textit{\begin{tabular}[c]{@{}l@{}}Dividend per share\\ (NOK)\end{tabular}}} \\ \hline
+Boom          & 0.35                                     & 140                                                                                                 & 10.4                                                                                            \\
+Normal growth & 0.30                                     & 110                                                                                                 & 8                                                                                               \\
+Recession     & 0.35                                     & 80                                                                                                  & 5.6                                                                                             \\ \hline
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+
+
+
+\color{blue}
+\subsection*{Problem 1's solution}
+HPR in a boom: $\frac{140-100+10.4}{100} = 0.504$\\
+HPR in Normal growth: $\frac{110-100+8}{100} = 0.18$\\
+HPR in a recession: $\frac{80-100+5.6}{100} = -0.144$\\
+\\
+Expected HPR: $(0.35 \times 0.504)+(0.30 \times 0.18)+(0.35 \times -0.144) =$ \uuline{0.18}\\
+\\
+Std.deviation of HPR: $\sqrt{[(0.504 - 0.18)^2\times0.35]+[(0.18-0.18)^2\times0.30]+[(-0.144 - 0.18)^2\times0.35]} = \uuline{0.2711}$ 
+
+
+
+\color{black}
+\section*{Problem 2}
+A share in Fund C has had the following value developments over the last three years:\\
+$t_0$ = NOK 200; $t_1$ = NOK 224; $t_2$ = NOK 280; $t_3$ = NOK 238
+\begin{enumerate}
+    \item[a)] Calculate the arithmetic average return over the three years
+    \item[b)] Calculate the geometric average return over the three years
+    \item[c)] Briefly explain why the two methods in a) and b) provide different answers
+\end{enumerate}
+
+
+
+\color{blue}
+\subsection*{Problem 2's solution}
+Return at t = 1: $\frac{224-200}{200} = 0.12$ \\
+Return at t = 2: $\frac{280 - 224}{224} = 0.25$ \\
+Return at t = 3: $\frac{238 - 280}{280}= -0.15$ \\
+\\
+Arithmetic average return: $\frac{0.12 + 0.25 - 0.15}{3} = \uuline{0.0733}$\\
+\\
+Geometric average return: $[(1.12 \times 1.25 \times 0.85)^{1/3}] -1 = \uuline{0.0597}$\\
+\\
+The arithmetic mean and the geometric mean will only be the same if there is no variation in the rate of return over the years. When there are changes in the rate of return over time, the geometric mean return is less than the arithmetic mean return. 
+
+
+\color{black}
+\section*{Problem 3}
+Your supervisor has just given you a dataset of the annual rates of return on Norwegian stocks all the way back to 2000. Is there any advantage or disadvantage of using this data set to estimate the expected return on Norwegian stocks over the coming year?
+
+\color{blue}
+\subsection*{Problem 3's solution}
+In general, the arithmetic mean of historical returns is the best-unbiased estimate of future returns. However, this is based on the assumption that the distribution of the historical return is the true return distribution for Norwegian stocks.
+you must ensure that there have been no structural breaks in the dataset that would imply that the return distribution of historical returns is different from that of expected returns in the market.
+
+
+
+
+\color{black}
+\section*{Problem 4}
+Damaris Johnson manages a risky portfolio with an expected return of 18\% and a standard deviation of 28\%. The T-bill rate is 8\%
+\begin{enumerate}
+    \item[a)]  Suppose that a new client of Johnson decides to invest a certain portion of their investment in the risky portfolio (y) and the remainder in the T-bill (1-y)  so that the overall portfolio will have an expected rate of return of 16\%
+    \begin{enumerate}
+        \item[i.] what proportion is invested in the risky portfolio
+        \item[ii.] What is the standard deviation of this portfolio
+    \end{enumerate}
+    \item[b)] Suppose that the new client prefers to invest an amount in the risky portfolio that maximizes the expected return of the complete portfolio subject to the constraint that the standard deviation of the complete portfolio cannot be greater than 18\%
+    \begin{enumerate}
+        \item[i.] What proportion is invested in the risky portfolio
+        \item[ii.] What is the expected return of the complete portfolio
+    \end{enumerate}
+    \item[c)] Through an analysis of the client's financial profile, it is determined that their degree of risk aversion is A = 5
+    \begin{enumerate}
+        \item[i.] What proportion (y) should now be invested in the risky portfolio
+        \item[ii.] What is the expected return and standard deviation of the client's optimized portfolio?
+    \end{enumerate}
+\end{enumerate}
+
+
+\color{blue}
+\subsection*{Problem 4's solution}
+a)\\
+Portfolio (C) = $y(\text{risky portfolio (P)}) + (1-y)\text{risk-free asset (F)}$\\
+$r_C = y\times(r_P) + (1-y)\times r_F$\\
+$16\% = y\times(18\%) + (1-y)\times 8\%$\\
+$16 = 18y + 8 - 8y $\\
+$8 = 10y$\\
+$y = 0.8$\\
+The proportion invested in the risky portfolio is \uuline{80\%}\\
+The standard deviation of this portfolio: $0.8\times28\% = \uuline{22.4\%}$\\
+\\
+b)\\
+The standard deviation of the complete portfolio:
+$\sigma_C = y\sigma_P$\\
+$18 = 28y $\\ 
+$y \approx 0.64$\\
+The proportion invested in the risky portfolio is approximately \uuline{64\%}\\
+The expected return of the complete portfolio is now: $0.64(18\%) + 0.36(8\%) = \uuline{14.4\%}$\\
+c)\\
+The weight of the risky portfolio in the optimal complete portfolio is derived as:\\
+{\large $y^* = \frac{0.18 - 0.08}{5\times0.28^2} = \uuline{0.26}$}\\
+The expected return of the optimal portfolio is: $8\% + 0.26(18-8)\% = \uuline{10.6\%}$\\
+The standard deviation of the optimal complete portfolio is: $0.26 \times 28\% = \uuline{7.28\%}$
+
+
+
+\color{black}
+\section*{Problem 5}
+Consider a portfolio that offers an expected rate of return of 12\% and a standard deviation of 18\%. T-bills offer a risk-free 7\% rate of return. What is the maximum level of risk aversion for which the risky portfolio is still preferred to T-bills?\\
+\textit{Note: $U = E(r) - 0.5A\sigma^2$}
+
+\color{blue}
+\subsection*{Problem 5's solution}
+The utility score of investing in T-bills: $0.07 - (0.5 \times A \times 0) = 0.07$\\
+The utility score of investing in the risky portfolio: $0.12 - (0.5 \times A \times 0.18^2) = 0.12 - 0.0162A $\\
+\\
+The level of risk aversion (A) that offers the same utility from investing in either the risky portfolio or the T-bills is:
+$0.07 = 0.12 - 0.0162A \implies A = 3.09$\\
+For an investor to choose the risky portfolio over the T-bills, their level of risk aversion cannot be more than 3.09.
+
+
+\color{black}
+\section*{Problem 6}
+Suppose that there are only two stocks in the market; stock Alfa and Bravo. The expected return on Alfa is 15\% with a standard deviation of 10\%. Bravo has an expected return of 12\% with a standard deviation of 7\%. The covariance between the returns of the stocks is 0.002 (in decimal). Assume that short selling is not allowed.
+\begin{enumerate}
+    \item[a)] What is the minimum standard deviation you can obtain by investing in a combination of Alfa and Bravo?
+\end{enumerate}
+
+
+\color{blue}
+\subsection*{Problem 6's solution}
+a)\\
+The minimum standard deviation you can obtain by investing in a combination of Alfa and Bravo is obtained from constructing the minimum variance portfolio. The weights of the assets in the minimum variance portfolio are given as:\\
+$w^*_{Alfa} = \frac{0.07^2 - 0.002}{0.10^2 + 0.07^2 - (2\times0.002)} = \uuline{0.266 \text{ or }26.6\%} $\\
+$w^*_{Bravo} = 1- w^*_{Alfa} = 0.734$\\
+This gives an expected return of: $E(r_P) = 0.266\times0.15 + 0.734\times0.12 = 0.1280 \text{ or } 12.8\%$\\
+and a standard deviation of: $\sqrt{0.266^2\times0.1^2 + 0.734^2\times0.07^2 + 2\times0.266\times0.734\times0.002} = 0.0643 \text{ or } 6.43\%$\\
+
+
+
+
+\color{black}
+\section*{Problem 7}
+You manage an equity fund with an expected risk premium of 10\% and an expected standard deviation of 14\%. The rate of Treasury bills is 6\%. Your client chooses to invest NOK 60,000 of her portfolio in your equity fund and NOK 40,000 in a T-bill money market fund. What are the expected return and standard deviation of return on your client's portfolio?
+
+\color{blue}
+\subsection*{Problem 7's solution}
+Weight of the equity fund in the complete portfolio: $y = \frac{60000}{60000 + 40000} = 0.6$\\
+\\
+Expected return of the client's portfolio: $6\% + (0.6\times10\%) = \uuline{12\%}$\\
+Standard deviation of the client's portfolio: $0.6\times14\% = \uuline{8.4\%}$
+
+
+
+\color{black}
+\section*{Problem 8}
+Given NOK 100,000 to invest, what is the expected risk premium in NOK of investing in equities versus risk-free T-bills based on the information below?
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\resizebox{0.7\textwidth}{!}{%
+\begin{tabular}{lcc}
+\textit{\textbf{Action}}                       & \multicolumn{1}{l}{\textit{\textbf{Probability}}} & \multicolumn{1}{l}{\textit{\textbf{Expected Return}}} \\ \hline
+Invest in equitiies                            & 0.6                                               & NOK 50,000                                            \\
+\multicolumn{1}{c}{}                           & 0.4                                               & -NOK 20,000                                           \\
+\multicolumn{1}{c}{Invest in risk-free T-bill} & 1.0                                               & NOK 5000                                              \\ \hline
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\color{blue}
+\subsection*{Problem 8's solution}
+Expected return from the risk-free T.bill: $\frac{5000}{100000} = 0.05$\\
+Expected return from equities in Scenario 1: $\frac{50000}{100000} = 0.5$\\
+Expected return from equities in Scenario 2: $\frac{-20000}{100000} = -0.2$\\
+\\
+The expected return obtained from investing in Equities: $0.6\times 0.5 + 0.4\times -0.2 = 0.22$\\
+The expected risk premium obtained from investing in Equities: $0.22 - 0.05 = 0.17$\\
+\textbf{Expected risk premium in NOK:} $0.17 \times 100000 = \uuline{\text{NOK}~17000}$
+
+
+
+\color{black}
+\section*{Problem 9}
+Assume that investor’s preferences can be expressed by the utility function $U = E(r) - 0.005 \cdot A\cdot \sigma^2$, where U is utility, E(r) is expected return, A is the risk aversion coefficient and $\sigma^2$ is variance.
+A risk-averse investor has invested NOK 1 million in Fund A which offers an expected return of 15\% and a standard deviation of 25\%. A financial advisor has offered Fund V, which offers an expected rate of return of 16\% and a standard deviation of 28\%, as an alternative.
+\begin{enumerate}
+    \item[a)] If the investor has a risk aversion coefficient of 3, which fund is the best one of A and V?
+    \item[b)] For which risk aversion coefficient will the two funds be equally good?
+\end{enumerate}
+Assume that there exists a bond investment, Fund B, with an expected return of 8\% and a standard deviation of 20\%. The correlation coefficient between the return on Fund A and Fund B is -0.2. This investor is considering combining the equity and bond funds in a portfolio (P). 
+\begin{enumerate}
+    \item[c)] What share invested in Fund A minimizes the risk of portfolio P?
+    \item[d)] compute the expected return and standard deviation of Portfolio P
+\end{enumerate}
+
+\color{blue}
+\subsection*{Problem 9's solution}
+a)\\
+The utility obtained from Fund A: $U = 15 - 0.005 \times 3 \times 25^2 \approx 5.625$\\
+The utility obtained from Fund V: $U = 16 - 0.005 \times 3 \times 28^2 \approx 4.24$\\
+Fund A has a higher utility score than Fund V, therefore Fund A is preferable for this investor.\\
+\\
+b)\\
+The risk aversion coefficient (A) that equates both funds:\\
+$15 - 3.125A = 16 - 3.92A \implies A = 1.26$ \\
+At a level of risk aversion = 1.26, Fund A and Fund V will be equally attractive to the investor.\\
+\\
+c)\\
+covariance between Fund A and B: $\sigma_{A,B} = -0.2*0.25*0.2 = -0.01$\\
+The investment proportion in Fund A that minimises the risk of Portfolio P is:\\
+$w_A = \frac{0.2^2 - (-0.01)}{0.25^2 + 0.2^2 - (2 \times-0.01)} = 0.408$\\
+\\
+d)\\
+The expected return of portfolio P: $E(r_P) = 0.408\times 15\% + 0.592 \times 8\% \approx \uuline{10.86\%}$\\
+The standard deviation of portfolio P: $\sigma^2_P = (0.408^2\times 0.25^2) + (0.592^2\times0.2^2)  + (2\times0.408\times0.592\times -0.01) \approx \uuline{14\%}$
+
+
+
+\end{document}

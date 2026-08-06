@@ -1,0 +1,921 @@
+
+\documentclass[12]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{dirtytalk}
+\usepackage{xcolor}
+\usepackage[affil-it]{authblk}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+
+
+
+
+
+\title{EK369E: Financial Markets\\ Term Structure and Interest Rate Risk\\ Problem Set (with solutions)}
+\author{Nord University Business School}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section*{Problem 1}
+The table below summarises some information from the fixed-income market:
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.3\textwidth}{!}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Bond & \begin{tabular}[c]{@{}l@{}}Maturity\\ (years)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coupon rate\\ (\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Yield\\ (\%)\end{tabular} \\ \midrule
+A    & 5.5                                                        & 0                                                          & 2.5                                                  \\
+B    & 2.5                                                        & 4.0                                                        & 2.0                                                  \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] Calculate the duration and the modified duration for the two bonds.
+\end{enumerate}
+
+
+\color{blue}
+\subsection*{Solution 1a}
+The duration of Bond A is equal to its time to maturity i.e. 5.5 yrs (because it's a zero-coupon bond)\\
+The modified duration of Bond A: $D^* = ${\Large $\frac{5.5}{1.025}$} = \uuline{5.37}\\
+
+\noindent
+\\
+Duration of Bond B: {\Large $\frac{255.2464}{106.8202}$} = \uuline{2.39}\\
+\\
+Modified Duration of Bond B: {\Large $\frac{2.39}{1.02}$} = \uuline{2.34}\\
+
+\begin{table}[H]
+    \centering
+    {\color{blue}\begin{tabular}{ccccc}
+    \toprule
+        time & Cashflow & Discount factor at 2\%& PV & $PV \times t$\\\midrule
+        0.5 & 4 & 1.0100 & 3.9606 & 1.9803\\
+        1.5 & 4 & 1.0301 & 3.8829 & 5.8244\\
+        2.5 & 104 & 1.0508 & 98.9767 & 247.4417\\\midrule
+            &     &        & 106.8202 &255.2464\\ \bottomrule
+    \end{tabular}}
+    \label{tab:my_label}
+\end{table}
+
+
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[b)] Which of the two bonds will have the smallest price change for a given change in the interest rate? Give a short explanation.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 1b}
+For any 1\% increase in interest rates:\\
+Bond A will experience a 5.4\% reduction in its price:$-5.37 \times 0.01 =  -0.054$\\
+Bond B will experience a 2.3\% reduction in its price:$-2.34 \times 0.01 =  -0.023$\\
+Bond B has a shorter effective maturity (duration) and a higher coupon rate, therefore it is less vulnerable to future fluctuation in interest rates.
+
+
+
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[c)] If a fund manager invests (for face value) NOK 10 million in bond A and (for face value) NOK 16 million in bond B, what will the duration of the portfolio be?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 1c}
+Price of Bond A: {\Large $\frac{100}{(1.025)^{5.5}}$} = 87.3\\
+Market Value of Bond A: NOK 10 million {\Large$ \times \frac{87.3}{100} $} =  NOK 8.73 million\\
+\\
+Market Value of Bond B: NOK 16 million {\Large$ \times \frac{106.82}{100}$} = NOK 17.09 million\\
+\\
+Total Value of the Bond Portfolio: NOK 25.82 million\\
+\\
+Weight of Bond A in the portfolio: {\Large $\frac{8.73 million }{25.82 million}$} = 0.34\\
+\\
+Weight of Bond B in the portfolio: {\Large $\frac{17.09 million }{25.82 million}$} = 0.66\\
+\\
+Duration of the portfolio: $(0.34 \times 5.5) + (0.66 \times 2.39) = $ \uuline{3.44}
+
+
+
+{\Large}
+
+
+
+\noindent
+\\
+\color{black}
+\color{black}
+\begin{enumerate}
+    \item[d)] Calculate the duration of the portfolio one year later, given that the yield is unchanged for both bonds.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 1d}
+One year later\\
+The duration of Bond A = \uuline{4.5yrs}\\
+Duration of Bond B: {\Large $\frac{153.4146}{104.9168}$} = \uuline{1.46}\\
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.4\textwidth}{!}{%
+\color{blue}\begin{tabular}{@{}lllll@{}}
+\toprule
+t   & CF  & DF     & PV       & $PV*t$     \\ \midrule
+0.5 & 4   & 1.0100 & 3.96059  & 1.980295 \\
+1.5 & 104 & 1.0301 & 100.9562 & 151.4343 \\ \midrule
+    &     &        & 104.9168 & 153.4146 \\ \bottomrule
+\end{tabular}%
+}
+
+\label{tab:my-table}
+\end{table}
+
+
+
+
+\noindent
+\\
+\color{black}
+\color{black}
+\begin{enumerate}
+    \item[e)] What is duration drift, and how big is the duration drift for the two bonds?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 1e}
+Duration drift refers to the fact that the change in the duration of a bond is less than the passage of time (or the change in the time to maturity). Furthermore, bonds with higher coupon rates will experience a faster decline in duration than a bond with a lower coupon rate. Zero-coupon bonds do not experience duration drift.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.9\textwidth}{!}{%
+\color{blue}\begin{tabular}{@{}lllllll@{}}
+\toprule
+Bond & Initial duration & New duration & $\Delta$Duration  & Initial Maturity & New Maturity & $\Delta$ Maturity  \\ \midrule
+A    & 5.5              & 4.5          & 1                  & 5.5              & 4.5          & 1                  \\
+B    & 2.39             & 1.46         & 0.93               & 2.5              & 1.5          & 1                  \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+
+
+
+
+
+
+\color{black}
+\section*{Problem 2}
+In the fixed-income market, four different zero-coupon bonds are traded, all with a face value of NOK 100. The table below summarizes the relevant data:
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.25\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+Bond & Price & \begin{tabular}[c]{@{}l@{}}Years to\\  Maturity\end{tabular} \\ \midrule
+A    & 97.75 & 1                                                            \\
+B    & 95.00 & 2                                                            \\
+C    & 92.00 & 3                                                            \\
+D    & 89.00 & 4                                                            \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] Calculate the rates on the spot yield curve i.e.  $s_1, s_2, s_3$ and $s_4$.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 2a}
+The 1-yr spot rate: 97.75 = {\Large $ \frac{100}{1 + r_1}$} \\
+$r_1 =$ {\Large $ \frac{100}{97.75}$} - 1 = \uuline{2.30\%}\\
+\\
+The 2-yr spot rate: 95.00 = {\Large $ \frac{100}{(1 + r_2)^2}$} \\
+$r_2 =$ {\Large $ \sqrt[2]{\frac{100}{95.0}}$} - 1 = \uuline{2.60\%}\\
+\\
+The 3-yr spot rate: 92.00 = {\Large $ \frac{100}{(1 + r_3)^3}$} \\
+$r_3 =$ {\Large $ \sqrt[3]{\frac{100}{92.0}}$} - 1 = \uuline{2.82\%}\\
+\\
+The 4-yr spot rate: 89.00 = {\Large $ \frac{100}{(1 + r_4)^4}$} \\
+$r_4 =$ {\Large $ \sqrt[4]{\frac{100}{89.0}}$} - 1 = \uuline{2.96\%}\\
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[c)] A three-year coupon bond has a face value of NOK 100 and an annual coupon rate of 3\%.
+    \begin{enumerate}
+        \item[i] Based on the yield structure above, what is the market price of the coupon bond?
+        \item[ii] Find the yield to maturity for the coupon bond.
+        \item[iv] Find the duration of the coupon bond.
+    \end{enumerate}
+\end{enumerate}
+
+
+\color{blue}
+\subsection*{Solution 2b}
+i.\\
+Current market price of the 3\% coupon bond with three years to maturity:\\
+$P_0 =$ {\Large $\frac{3}{1.0230} + \frac{3}{1.0260^2} + \frac{103}{1.0282^3}$} = \uuline{100.54}\\
+\\
+ii.\\
+100.54 = {\Large $\frac{3}{1+YTM} + \frac{3}{(1+YTM)^2} + \frac{103}{(1+YTM)^3}$}\\
+YTM $\approx$ \uuline{2.81\%}\\
+\\
+iii.\\
+Duration of the bond: {\Large $\frac{292.944}{100.539}$} = \uuline{2.91 yrs}\\
+
+\begin{table}[H]
+    \centering
+    {\color{blue}\begin{tabular}{ccccc}
+    \toprule
+        time & Cashflow & Discount factor & PV & $PV \times t$\\\midrule
+        1 & 3 & 1.0281 & 2.9180 & 2.9180\\
+        2 & 3 & 1.0570 & 2.8382 & 5.6765\\
+        3 & 103 & 1.0867 & 94.7832 & 284.3495\\\midrule
+         & &        & 100.5394 & 292.944\\ \bottomrule
+    \end{tabular}}
+    \label{tab:my_label}
+\end{table}
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[c)] Calculate the implied one-year forward rates in year 2, year 3 and year 4.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 2c}
+%The one-year forward rate in year 2: \\
+$f_{1,2} = ${\Large $\frac{1.0260^2}{1.0230}$} - 1 = \uuline{2.89\%}\\
+\\
+$f_{2,3} = ${\Large $\frac{1.0282^3}{1.0260^2}$} - 1 = \uuline{3.26\%}\\
+\\
+$f_{3,4} = ${\Large $\frac{1.0296^4}{1.0282^3}$} - 1 = \uuline{3.37\%}\\
+
+
+\color{black}
+\begin{enumerate}
+    \item[d)] Assuming that the spot yield curve evolves in line with the pure expectation hypothesis, compute the one-year holding period return on this bond.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 2d}
+The yield curve one-year later:\\
+\\
+1-yr spot rate: $ r_1$ = $ f_{1,2}$ = 2.89\%\\
+\\
+2-yr spot rate: $(1 + r_2)^2$ = $(1+r_1) (1 + f_{2,3})$\\
+$r_2 =$ ($\sqrt[2]{1.0289 \times 1.0326}$) - 1 = \uuline{3.08\%}\\
+\\
+3-yr spot rate: $(1 + r_3)^3$ = $(1+r_1) (1 + f_{2,3}) (1 + f_{3,4})$\\
+$r_3 =$ ($\sqrt[3]{1.0289 \times 1.0326 \times 1.0337}$) - 1 = \uuline{3.18\%}\\
+\\
+The price of the 3\% coupon bond one-year later:\\
+$P_1 =$ {\Large $\frac{3}{1.0289} + \frac{103}{1.0308^2}$} = \uuline{99.86}\\
+\\
+Holding period return: HPR = {\Large $\frac{99.86 - 100.54 + 3}{100.54}$} = \uuline{2.30\%}
+
+
+
+\color{black}
+\section*{Problem 3}
+A government bond, Bond 1, with a face value of 100 and coupon rate of 4.50\% will mature in four years. An investor is looking to invest NOK 5 million for a period of two years. The investor considers various strategies in the interest rate market. In addition to Bond 1, the investor may invest in government Bond 2. Bond 2’s coupon rate is also 4.50\%, but the time to maturity is two years. In the financial press, you see that the term structure (yield curve) for government bonds with a coupon rate of 4.50\% is:
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.4\textwidth}{!}{%
+\begin{tabular}{lllll}
+Year       & 1    & 2    & 3    & 4    \\\midrule
+Yield (\%) & 4.00 & 4.20 & 4.50 & 4.90
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+\begin{enumerate}
+    \item[a] Assume that the yield curve is stable, calculate the geometric return for:
+    \begin{enumerate}
+        \item[i)] Buy bond 1, and sell it after two years
+        \item[ii)] Buy bond 2, and hold it to maturity.
+    \end{enumerate}
+    
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 3a}
+\textbf{i) Buy Bond 1 and sell it after two years}\\
+\\
+Price today @ t = 0:\\
+$P_0^{1} = ${\Large $\frac{4.5}{1.049} + \frac{4.5}{1.049^2} + \frac{4.5}{1.049^3} + \frac{104.5}{1.049^4}$} = 98.58\\
+\\
+Price one year later @ t = 1:\\
+$P_1^{1} = ${\Large $\frac{4.5}{1.045} + \frac{4.5}{1.045^2} + \frac{104.5}{1.045^3}$} = 100\\
+\\
+Price two years later @ t = 2:\\
+$P_2^{1} = ${\Large $\frac{4.5}{1.042} + \frac{104.5}{1.042^2}$} = 100.56\\
+\\
+Holding Period Return: \\
+$HPR_1^1 =$ {\Large $\frac{100-98.58 + 4.5}{98.58}$} = 6\%\\
+\\
+$HPR_2^1 =$ {\Large $\frac{100.56 - 100 + 4.5}{100}$} = 5.06\%\\
+\\
+Geometric average return over investment period: $r_G^1 =$ $\sqrt{1.06 \times 1.0506} - 1$ = \uuline{5.53\%}
+\\
+
+\noindent
+\\
+\textbf{ii) Buy bond 2, and hold it to maturity}\\
+%The geometric average return on Bond 2 which is held to maturity (assuming that the yield curve remains stable) is equal to the bond's yield to maturity i.e 4.20\%\\
+Price today @ t = 0:\\
+$P_0^{2} = ${\Large $\frac{4.5}{1.042} + \frac{104.5}{1.042^2}$} = 100.56\\
+\\
+Price one year later @ t = 1:\\
+$P_1^{2} = ${\Large $\frac{104.5}{1.040}$} = 100.48\\
+Holding Period Return: $HPR_1 =$ {\Large $\frac{100.48 - 100.56 + 4.5}{100.56}$} = 4.39\%\\
+\\
+Price two years later @ t = 2:\\
+$P_2^{2} = $ 100 (bond is redeemed at par value)\\
+Holding Period Return: 
+$HPR_1^2 =$ {\Large $\frac{100.48 - 100.56 + 4.5}{100.56}$} = 4.39\%\\
+\\
+$HPR_2^2 =$ {\Large $\frac{100 - 100.48 + 4.5}{100.48}$} = 4.00\%\\
+\\
+Geometric average return over investment period: $r_G^2 =$ $\sqrt{1.0439 \times 1.04} - 1$ = \uuline{4.2\%}
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+    \item[b)] Explain why there are differences between the two strategies in a)   
+\end{enumerate}
+
+
+\color{blue}
+\subsection*{Solution 3b}
+Investment strategy 1 is called rolling down or riding the yield curve while Investment strategy 2 is known as Maturity Matching. When the yield curve is upward-sloping and stable, investment strategy 1 offers superior returns over strategy 2.
+
+
+
+
+
+\color{black}
+\section*{Problem 4}
+In the fixed-income market, we have the following information for zero-coupon bonds:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc}
+        Maturity (years) & 1 & 2 & 3\\\midrule
+        Yield to maturity (\%) & 4.3 & 4.0 & 3.8\\
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+You are analysing three bonds, all maturing in three years, but with different coupon rates. Bond A has a coupon rate of 8\%, bond B has a coupon rate of 4\%, while bond C is a zero coupon bond.
+
+\begin{enumerate}
+    \item [a)] Calculate the price of the three bonds.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 4a}
+Price of Bond A:\\
+$P_0^A =$ {\Large $\frac{8}{1.043} + \frac{8}{1.04^2} + \frac{108}{1.038^3}$} = \uuline{111.63}\\
+\\
+Price of Bond B:\\
+$P_0^B =$ {\Large $\frac{4}{1.043} + \frac{4}{1.04^2} + \frac{104}{1.038^3}$} = \uuline{100.52}\\
+\\
+\\
+Price of Bond B:\\
+$P_0^C =$ {\Large $\frac{100}{1.038^3}$} = \uuline{89.41}\\
+\\
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item [b)] Without making calculations, briefly explain which bond has the lowest yield to maturity and which bond has the lowest duration.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 4b}
+Holding time to maturity constant:
+Bond C offers the lowest average return at maturity compared to other bonds. This is because Bond C is a zero-coupon bond with a single cash flow offered at maturity. In contrast, Bond A offers the highest average return to the bond investors at maturity.
+\\
+Bond A has the lowest effective duration. With the highest coupon rate, Bond A offers more of its total cash flow at earlier periods in the bond's life. In contrast, Bond C has the highest duration since all of its cash flow is offered at maturity.
+
+
+
+\noindent
+\\
+\color{black}
+You have an investment horizon of two years and are considering investing in either bond A or bond C. You are considering two different strategies: \textbf{i)} Buy bond A today, reinvest the coupon payment in one year in the same security and sell in two years. \textbf{ii)} Buy bond C today and sell it in two years. You assume that the yield curve given in the table above is stable.
+\begin{enumerate}
+    \item [c)] Calculate the annual geometric average return for each of the two investment strategies.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 4c}
+i) Buy bond A today, reinvest the coupon payment in one year in the same security, and sell in two years\\
+\\
+$P_0^A =$ \uuline{111.63}\\
+$P_1^A =$ {\Large $\frac{8}{1.043} + \frac{108}{1.040^2}$} = \uuline{107.52}\\
+$P_2^A =$ {\Large $\frac{108}{1.043}$} = \uuline{103.55}\\
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.6\textwidth}{!}{%
+    {\color{blue}\begin{tabular}{cll}
+    \toprule
+         & Description & Cash flow \\\midrule
+         & Ist coupon received at t = 1 and reinvested   & $8\times 1.04 $ = 8.32\\
+         & 2nd coupon received at t = 2  & 8 \\
+         & Proceeds from bond sale  & 103.55 \\\bottomrule
+         & Settlement amount  & 119.87 \\\bottomrule
+    \end{tabular}}
+    }
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+Invested amount ($V_0$) is NOK 111.63\\
+Settlement amount ($V_2$) is NOK 119.87\\
+Geometric/Time Weighted/ Compound Return =  {\Large $\sqrt[2]{\frac{119.87}{111.63}} - 1$} = \uuline{3.62\%}\\
+
+\noindent
+\\
+\textbf{ii) Buy bond C today and sell it in two years}\\
+\\
+Price of Bond B:\\
+$P_0^C =$ {\Large $\frac{100}{1.038^3}$} = \uuline{89.41}\\
+\\
+$P_1^C =$ {\Large $\frac{100}{1.040^2}$} = \uuline{92.46}\\
+\\
+$P_2^C =$ {\Large $\frac{100}{1.043}$} = \uuline{95.88}\\
+\\
+Holding Period Return (HPR):
+$HPR_1 =$ {\Large $\frac{92.46 - 89.41}{89.41}$} = 3.4\%\\
+\\
+$HPR_2 =$ {\Large $\frac{95.88 - 92.46}{92.46}$} = 3.7\%\\
+\\
+Geometric return: $\sqrt{1.034 \times 1.037} - 1$ = \uuline{3.55\%}
+
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+    \item [d)] Which alternative is best? Briefly explain why.
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 4d}
+Strategy 2 (Maturity Matching) offers better returns than Strategy 2 (Rolling down the yield curve). Maturity matching ensures that capital gains offset low reinvestment returns when interest rates fall and vice versa. Since the yield curve is downward sloping, which indicates that interest rates are falling, Strategy 2 offers a better return to the investor. If the yield curve was upward-sloping, strategy 1 would perform better than Strategy 2.
+
+
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+    \item [e)] Is there an alternative investment strategy in this market that would be clearly better than the two mentioned here?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 4e}
+With a downward-sloping yield curve, bonds with longer maturity sell at a higher price than bonds with short maturity. Also, zero coupon bonds are attractive when interest rates are low since the investor enjoys capital appreciation without reinvestment risk.  In this case, the best strategy would be to adopt a roll-over strategy i.e. buying two consecutive 1-yr zero coupon bonds. 
+The geometric return from such a strategy would be 
+$(\sqrt[2]{1.043\times 1.04}) - 1$ = 4.15\%, which outperforms Strategy 1 and Strategy 2.
+
+\noindent
+\\
+COMMENTS:\\
+If Bond D is the 1-yr zero coupon bond available at t = 0 and Bond E is the 1-yr zero coupon bond available at t = 1\\
+$P_0^D =$ {\Large $\frac{100}{1.043}$} = \uuline{95.88}\\
+$P_1^D =$ 100 (Redemption of bond at par value\\
+Holding period return from investing in Bond D: $HPR_1 =$ {\Large $\frac{100 - 95.88}{95.88}$} = 4.30\%\\
+\\
+$P_1^E =$ {\Large $\frac{100}{1.040}$} = \uuline{96.15}\\
+$P_2^E =$ 100 (Redemption of bond at par value\\
+Holding period return from investing in Bond E: $HPR_2 =$ {\Large $\frac{100 - 96.15}{96.15}$} = 4.00\%\\
+
+
+
+
+\noindent
+\\
+\color{black}
+You put together a portfolio consisting of a face value of NOK 100 million in bond A and a face value of NOK 91.9 million in a one-year zero-coupon bond D.
+\begin{enumerate}
+    \item [f)] What is the duration of this portfolio?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 4f}
+Duration of Bond D = its time to maturity = 1 yr
+\\
+Duration of Bond A: {\Large $\frac{312.1661}{111.634}$} = \uuline{2.796 yrs}\\
+
+\begin{table}[H]
+    \centering
+    {\color{blue}\begin{tabular}{ccccc}
+    \toprule
+        time & Cashflow & Discount factor = [$(1+r)^t$]& PV & $PV \times t$\\\midrule
+        1 & 8 & 1.043 & 7.6702 & 7.6702\\
+        2 & 8 & 1.0816 & 7.3965 & 14.7929\\
+        3 & 108 & 1.1184 & 96.5677 & 289.703\\\midrule
+         & &     &  111.634 & 312.1661 \\\bottomrule
+    \end{tabular}}
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+Purchase amount for Bond A: NOK 100 million $\times \frac{111.634}{100}$ = NOK 111.634 million\\
+\\
+Purchase amount for Bond D: NOK 91.9 million $\times \frac{95.88}{100}$ = NOK 88.114 million\\
+\\
+Value of Bond Portfolio: NOK 111.634 million + NOK 88.114 million = NOK 199.748 million\\
+\\
+Weight of Bond A in the portfolio: $\frac{111.634}{199.748} = 0.56$\\
+\\
+Weight of Bond B in the portfolio: $\frac{88.114}{199.748} = 0.44$\\
+\\
+Duration of the bond portfolio: $(0.56 \times 2.796) + (0.44 \times 1)$ = \uuline{2.00 yrs}
+
+
+
+\color{black}
+\section*{Problem 5}
+A newly issued bond has a maturity of 10 years and pays a 7\% coupon rate annually. The bond sells at par value.
+\begin{enumerate}
+    \item[a)] What is the duration of the bond?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 5a}
+
+\begin{table}[H]
+    \centering
+    {\color{blue}\begin{tabular}{ccccc}
+    \toprule
+        t & CF & DF at 7\%  & PV & $PV\cdot t$\\\midrule
+        1 & 7 & 1.07 & 6.5421 & 6.5421 \\ 
+        2 & 7 & 1.1449 & 6.1141 & 12.2281\\
+        3 & 7 & 1.2250 & 5.7141 & 17.1423\\
+        4 & 7 & 1.3108 & 5.3403 & 21.3611 \\
+        5 & 7 & 1.4026 & 4.9909 & 24.9545\\
+        6 & 7 & 1.5007 & 4.6644 & 27.9864\\
+        7 & 7 & 1.6058 & 4.3592 & 30.5147\\
+        8 & 7 & 1.7182 & 4.0741 & 32.5925\\
+        9 & 7 & 1.8385 & 3.8075 & 34.2678\\
+        10 & 107 & 1.9672 & 54.3934 & 543.9337 \\\midrule
+           &     &         & 100 & 751.5232\\\bottomrule
+    \end{tabular}}
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+\\
+Bond Duration: {\Large $\frac{751.5232}{100}$} = \uuline{7.52 yrs}
+
+
+\noindent
+\\
+or 
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.5\textwidth}{!}{%
+\color{blue}\begin{tabular}{@{}llllll@{}}
+\toprule
+t  & CF  & DF at 7\%      & PV       & $w = \frac{PV_t}{P_0}$       & $w\cdot t$               \\ \midrule
+1  & 7   & 1.07     & 6.542056 & 0.065421 & 0.065421          \\
+2  & 7   & 1.1449   & 6.114071 & 0.061141 & 0.122281          \\
+3  & 7   & 1.225043 & 5.714085 & 0.057141 & 0.171423          \\
+4  & 7   & 1.310796 & 5.340266 & 0.053403 & 0.213611          \\
+5  & 7   & 1.402552 & 4.990903 & 0.049909 & 0.249545          \\
+6  & 7   & 1.50073  & 4.664396 & 0.046644 & 0.279864          \\
+7  & 7   & 1.605781 & 4.359248 & 0.043592 & 0.305147          \\
+8  & 7   & 1.718186 & 4.074064 & 0.040741 & 0.325925          \\
+9  & 7   & 1.838459 & 3.807536 & 0.038075 & 0.342678          \\
+10 & 107 & 1.967151 & 54.39337 & 0.543934 & 5.439337          \\ \midrule
+   &     &          & 100      &          & \textbf{7.515232} \\ \bottomrule
+\end{tabular}%
+}
+
+\label{tab:my-table}
+\end{table}
+
+
+
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+    \item[b)] What is the convexity of the bond?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 5b}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.5\textwidth}{!}{%
+\color{blue}\begin{tabular}{@{}llllll@{}}
+\toprule
+t  & CF  & DF     & PV      & $t^2 + t$ & $PV \cdot(t^2 + t)$ \\ \midrule
+1  & 7   & 1.07   & 6.5421  & 2                        & 13.08411                      \\
+2  & 7   & 1.1449 & 6.1141  & 6                        & 36.68443                      \\
+3  & 7   & 1.2250 & 5.7141  & 12                       & 68.56902                      \\
+4  & 7   & 1.3108 & 5.3403  & 20                       & 106.8053                      \\
+5  & 7   & 1.4026 & 4.9909  & 30                       & 149.7271                      \\
+6  & 7   & 1.5007 & 4.6644  & 42                       & 195.9046                      \\
+7  & 7   & 1.6058 & 4.3592  & 56                       & 244.1179                      \\
+8  & 7   & 1.7182 & 4.0741  & 72                       & 293.3326                      \\
+9  & 7   & 1.8385 & 3.8075  & 90                       & 342.6783                      \\
+10 & 107 & 1.9672 & 54.3934 & 110                      & 5983.271                      \\ \midrule
+   &     &        &         &                          & 7434.175                      \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\noindent
+Convexity of the bond: {\Large $\frac{1}{100} \cdot \frac{1}{1.07^2} $} $\cdot 7434.175$ = \uuline{64.93}
+
+
+
+
+
+\noindent
+\\
+\color{black}
+If the interest rate in the market is expected to increase from 7\% to 8\%;
+\begin{enumerate}
+    \item[c)] What new price is predicted by the modified duration rule 
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 5c}
+Modified duration: {\Large $\frac{7.52}{1.07}$} = 7.02\\
+price risk: $-7.02 \cdot 1\% = -7.02\%$ \\
+New price predicted by the bond's duration: NOK 100$ \times 0.9298$ = \uuline{NOK 92.98}
+
+
+\noindent
+\\
+\color{black}
+If interest rates are expected to increase from 7\% to 8\% 
+\begin{enumerate} 
+    \item[d)] What new price is predicted by the convexity rule 
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 5d}
+Price risk: $(-7.02 \times 0.01) + (0.5 \times 64.93 \times 0.01^2) = -0.0669$ or -6.7\% \\
+New price predicted by the duration and convexity of the bond: NOK 100$ \times 0.9330$ = \uuline{NOK 93.30}
+
+
+
+
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+    \item[e)] Find the actual price assuming that interest rates immediately increase from 7\% to 8\% (time to maturity is still  10 years) 
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 5e}
+$P_0 = $ {\Large $= 7[\frac{1 - (1.08^{-10})}{0.08}] + \frac{100}{(1.08)^{10}}$} = \uuline{93.29}\\
+
+
+
+
+\color{black}
+\section*{Problem 6}
+A 6\% coupon bond paying interest annually has a modified duration of 10-yrs, sells for NOK 80 and is priced at a yield to maturity of 8\%. If the YTM increases to 9\%, what is the predicted change in price based on the bond's duration
+
+\color{blue}
+\subsection*{Solution 6}
+Price risk: $-10 \cdot 1\% = -10\%$ \\
+New price predicted by modified duration: NOK 80$ \times 0.90$ = \uuline{NOK 72}
+
+
+
+\color{black}
+\section*{Problem 7}
+A pension plan has an obligation to pay NOK 10,000 once a year during a 10-year period, beginning 5 years from now. The interest rates are flat at 10\%
+\begin{enumerate}
+     \item[a)] what is the duration of this obligation? 
+\end{enumerate}
+
+   
+
+\color{blue}
+\subsection*{Solution 7a} 
+The duration of the obligation is 9.60 yrs.\\
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.5\textwidth}{!}{%
+\color{blue}\begin{tabular}{@{}llllll@{}}
+\toprule
+t  & CF    & DF       & PV      & w        & w*t               \\ \midrule
+5  & 10000 & 1.61051  & 6209.21 & 0.162746 & 0.813728          \\
+6  & 10000 & 1.771561 & 5644.74 & 0.14795  & 0.887703          \\
+7  & 10000 & 1.948717 & 5131.58 & 0.1345   & 0.941503          \\
+8  & 10000 & 2.143589 & 4665.07 & 0.122273 & 0.978185          \\
+9  & 10000 & 2.357948 & 4240.98 & 0.111157 & 1.000416          \\
+10 & 10000 & 2.593742 & 3855.43 & 0.101052 & 1.010522          \\
+11 & 10000 & 2.853117 & 3504.94 & 0.091866 & 1.010522          \\
+12 & 10000 & 3.138428 & 3186.31 & 0.083514 & 1.00217           \\
+13 & 10000 & 3.452271 & 2896.64 & 0.075922 & 0.986986          \\
+14 & 10000 & 3.797498 & 2633.31 & 0.06902  & 0.96628           \\ \midrule
+   &       &          &  41,968.2       &          & \textbf{9.598013} \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+
+
+
+
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+     \item[b)] If the pension fund intends to use a 5-yr and 20-yr zero coupon bonds to immunise this position, how much should be placed in each bond? 
+\end{enumerate}
+
+
+\color{blue}
+\subsection*{Solution 7b} 
+Duration of a 5-yr zero coupon bond = 5 yrs\\
+Duration of a 20-yr zero coupon bond = 20 yrs\\
+Amount invested in the 5-yr zero coupon bond: w\\
+Amount invested in the 20-yr zero coupon bond: 1 - w\\
+\\
+$9.6 = 5w + 20(1-w)$\\
+$w = 0.69$\\
+$1-w = 0.31$\\
+Market value investment in each bond:\\
+5-yr bond: $0.69 \times 41968.2  = $ NOK 29,098\\
+20-yr bond: $0.31 \times 41968.2 = $ NOK 12,871\\
+\\
+Face value investment in each bond:\\
+5-yr bond: NOK 29,098$ \times 1.1^5  \approx $ NOK 46863\\
+20-yr bond: NOK 12871$ \times 1.1^{20}  \approx $ NOK 86,585\\
+
+
+
+
+\color{black}
+\section*{Problem 8}
+The 6-month Treasury bill spot rate is 4\% and the 1-yr treasury bill spot rate is 5\%. What is the implied 6-month forward rate for six months from now?
+
+\color{blue}
+\subsection*{Solution 8} 
+$1 + (f_{0.6,1} \times 0.6) =$ {\Large $\frac{1 + (0.05)}{1 + (0.04 \times 0.6)}$}\\
+$f_{0.6,1}$ = \uuline{4.23\%}
+
+
+
+\noindent
+\\
+\color{black}
+\color{black}
+\section*{Problem 9}
+Below is a list of prices for zero coupon bonds with par values of NOK 100.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.25\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+Maturity (Yrs) & Price (\%) \\ \midrule
+1              & 94.34      \\
+2              & 87.35      \\
+3              & 81.64      \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] An 8.5\% coupon bond making annual coupon will mature in three years. What should the yield to maturity on the bond be?
+    \item[b)] if at the end of the first year, the yield curve flattens out at 8\%. What will be the 1-yr holding period return on the coupon bond?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 9a} 
+The price of the the 8.5\%  coupon bond  is NOK 104.02\\
+The yield to maturity of the 8.5\%  coupon bond  is 6.97\%
+
+
+\noindent
+\\
+\color{black}
+\begin{enumerate}
+    \item[b)] if at the end of the first year, the yield curve flattens out at 8\%. What will be the 1-yr holding period return on the coupon bond?
+\end{enumerate}
+
+\color{blue}
+\subsection*{Solution 9b} 
+$P_0 = 104.02$\\
+$P_1 = 100.89$\\
+HPR = 5.16\%
+
+
+\color{black}
+\section*{Problem 10}
+The current yield curve for default-free zero-coupon bonds is as follows.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.35\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+Maturity (Yrs) & Yield to Maturity (\%) \\ \midrule
+1              & 10.00     \\
+2              & 11.00      \\
+3              & 12.00      \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+Assuming that the pure expectation hypothesis of the term structure is correct and market expectations are accurate, what will be the yield to maturity on 1-year zero coupon bonds next year?
+
+\color{blue}
+\subsection*{Solution 10} 
+Under the pure expectation hypothesis, the yield to maturity of 1-year zero coupon bonds next year ($s_2$) is equal to the one-year implied forward rate in year 2 ($f_{1,2}$) = 
+12\%
+\end{document}

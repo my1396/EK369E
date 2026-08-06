@@ -1,0 +1,209 @@
+---
+title: "Portfolio Risk and Diversification Exercise"
+format: 
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    fontsize: 12pt
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+# Portfolio Analysis Exercise
+
+## Scenario
+You are analyzing two assets with the following historical returns over 5 periods:
+
+| Period | Asset A Return (%) | Asset B Return (%) |
+| ------ | ------------------ | ------------------ |
+| 1      | 10                 | 12                 |
+| 2      | 6                  | 16                 |
+| 3      | 14                 | 8                  |
+| 4      | 2                  | 4                  |
+| 5      | 18                 | 20                 |
+
+
+## Instructions
+Following the steps below, you will compute the mean and standard deviation of the two asset returns, construct a portfolio, and analyze its properties.
+
+### Step 1: Calculate the correlation coefficient between Asset A and Asset B.
+
+- Correlation (Asset A, Asset B) = _______
+
+### Step 2: Calculate the standard deviation of Asset A and B returns, respectively.
+
+**Asset A:**
+
+- Mean return = _______%
+- Variance = _______
+- Standard deviation = _______%
+
+**Asset B:**
+
+- Mean return = _______%
+- Variance = _______
+- Standard deviation = _______%
+
+### Step 3: Construct an equally weighted portfolio of the two assets. Calculate the portfolio returns.
+
+Portfolio weight in Asset A (wA) = _______  
+Portfolio weight in Asset B (wB) = _______
+
+| Period | Portfolio Return (%) |
+| ------ | -------------------- |
+| 1      | _______              |
+| 2      | _______              |
+| 3      | _______              |
+| 4      | _______              |
+| 5      | _______              |
+
+Portfolio mean return = _______%
+
+### Step 4: Calculate the standard deviation of the portfolio returns.
+
+Portfolio variance = _______  
+Portfolio standard deviation = _______%
+
+### Step 5: Calculate the average of the volatility of Asset A and B (using results in Step 1). Compare it with the volatility of the portfolio returns.
+
+Average volatility of individual assets = _______%  
+Portfolio volatility = _______%  
+Difference = _______%
+
+---
+
+## Reflection
+
+How does correlation between assets influence the portfolio's risk? 
+
+- What would happen if correlation was 0.0 instead of 0.6?
+- What would happen if correlation was 1.0?
+- What would happen if correlation was $-0.6$?
+- What would happen if correlation was $-1.0$?
+
+
+Write 3–4 sentences interpreting the results for a diversified vs concentrated investment decision.
+
+_________________________________________________
+_________________________________________________
+_________________________________________________
+_________________________________________________
+_________________________________________________
+
+---
+
+## Formulas (Reference)
+
+**Mean:** $\bar{r} = \frac{1}{n}\sum_{i=1}^{n} r_i$
+
+**Variance:** $\sigma^2 = \frac{1}{n-1}\sum_{i=1}^{n} (r_i - \bar{r})^2$
+
+**Covariance:** $\cov(r_A, r_B) = \frac{1}{n-1}\sum_{i=1}^{n} (r_{A,i} - \bar{r}_A)(r_{B,i} - \bar{r}_B)$
+
+**Correlation coefficient:**  $\rho_{AB} = \frac{\cov(r_A, r_B)}{\sigma_A \sigma_B}$ 
+
+**Standard Deviation:** $\sigma = \sqrt{\sigma^2}$
+
+**Portfolio Return:** $r_p = w_A r_A + w_B r_B$
+
+**Portfolio Variance:** $\sigma_p^2 = w_A^2\sigma_A^2 + w_B^2\sigma_B^2 + 2w_Aw_B\rho_{AB}\sigma_A\sigma_B$
+
+
+--------------------------------------------------------------------------------
+
+
+## Solution
+
+### Step 1: Individual Asset Statistics
+
+Asset A returns (%): 10, 6, 14, 2, 18  
+Asset B returns (%): 12, 16, 8, 4, 20
+
+**Asset A:**
+
+Mean: $\bar{r}_A = (10+6+14+2+18)/5 = 50/5 = 10\%$  
+Deviations: $0, -4, 4, -8, 8$  
+Variance: $\sigma_A^2 = \frac{0 + 16 + 16 + 64 + 64}{4} = 40$  
+Std dev: $\sigma_A = \sqrt{40} = 6.32\%$
+
+**Asset B:**
+
+Mean: $\bar{r}_B = (12+16+8+4+20)/5 = 60/5 = 12\%$  
+Deviations: $0, 4, -4, -8, 8$  
+Variance: $\sigma_B^2 = \frac{0 + 16 + 16 + 64 + 64}{4} = 40$  
+Std dev: $\sigma_B = \sqrt{40} = 6.32\%$
+
+**Correlation:**
+
+$\cov(A,B) = \frac{0 + (-4)(4) + (4)(-4) + (-8)(-8) + (8)(8)}{4} = \frac{96}{4} = 24$  
+$\rho_{AB} = \frac{24}{6.3249 \times 6.3249} = \frac{24}{40} = 0.60$
+
+### Step 2: Portfolio Returns
+
+Equal weights: $w_A = w_B = 0.5$  
+$r_p = 0.5 r_A + 0.5 r_B$
+
+Updated paired returns (using new ordering of B):
+
+| Period | $r_A$ | $r_B$ | $r_p$ |
+| ------ | ----- | ----- | ----- |
+| 1      | 10    | 12    | 11    |
+| 2      | 6     | 16    | 11    |
+| 3      | 14    | 8     | 11    |
+| 4      | 2     | 4     | 3     |
+| 5      | 18    | 20    | 19    |
+
+Portfolio mean: $\bar{r}_p = (11+11+11+3+19)/5 = 55/5 = 11\%$
+
+### Step 3: Portfolio Risk
+
+**Method 1 (direct):** Deviations from mean: $(0,0,0,-8,8)$ → 
+$\sigma_p^2 = (0+0+0+64+64)/4 = 128/4 = 32$  
+$\sigma_p = \sqrt{32} = 5.66\%$
+
+**Method 2 (formula):**
+$\sigma_p^2 = (0.5)^2(40) + (0.5)^2(40) + 2(0.5)(0.5)(0.60)(6.3249)(6.3249)$  
+$= 10 + 10 + 0.5 \times 0.60 \times 40 = 20 + 12 = 32$  
+Matches direct method exactly.
+
+Portfolio st dev (rounded): $5.66\%$
+
+### Step 4: Comparison
+
+Average individual volatility $= (6.32\% + 6.32\%)/2 = 6.32\%$  
+Portfolio volatility $= 5.66\%$  
+Diversification benefit $= 6.32\% - 5.66\% \approx 0.66\%$
+
+### Reflection Sample Answer
+
+Moderate correlation (0.60) allows a diversification benefit: portfolio volatility (5.66%) is below the asset volatilities (both 6.32%). Even with only five observations, combining them lowers risk without lowering expected return (11%). Lower correlation would push portfolio risk closer to zero; higher correlation would erode the gain. Equal weighting beats concentrating in either asset for a risk‑averse investor.
+
+### Alternative Correlation Scenarios
+
+- **If correlation were 0.0:**  
+
+  $\sigma_p^2 = 0.25(40) + 0.25(40) = 10 + 10 = 20 \Rightarrow \sigma_p = \sqrt{20} = 4.47\%$  
+  Benefit $= 6.32\% - 4.47\% = 1.85\%$
+
+- **If correlation were 1.0:**  
+  $\sigma_p = 6.32\%$ (no benefit)
+
+- **If correlation were $-0.6$:**  
+  $\sigma_p^2 = 10 + 10 - 12 = 8 \Rightarrow \sigma_p = \sqrt{8} = 2.83\%$  
+  Benefit $= 6.32\% - 2.83\% = 3.49\%$
+
+- **If correlation were $-1.0$ (perfect negative):**  
+  With equal variances, equal weights already give: $\sigma_p^2 = 10 + 10 - 20 = 0 \Rightarrow \sigma_p = 0\%$ (risk eliminated).  
+  Zero risk also occurs for any weights satisfying $w_A = w_B$ here since $\sigma_A=\sigma_B$.
+
+**Summary:**
+
+- $\rho = -1.0$: Zero risk (perfect hedge).
+- $\rho = -0.6$: Significant benefit (~3.49%).
+- $\rho = 0.0$: Large benefit (~1.85%).
+- $\rho = 0.60$: Moderate benefit (~0.66%).
+- $\rho = 1.0$: No benefit.
+
+The benefits of diversification increase as correlation decreases; when asset volatilities differ, achieving perfect hedging with $\rho=-1$ requires unequal portfolio weights.
+

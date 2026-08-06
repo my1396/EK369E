@@ -1,0 +1,109 @@
+---
+title: "EMH quiz: Cowles-Jones test hand-calculation"
+solution: false
+format: 
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    fontsize: 12pt
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+## **The TechStart Investment Challenge**
+
+**Background Story:**
+
+Elena Martinez, a quantitative analyst at Nordic Capital, has been tasked with evaluating the efficiency of TechStart Index, a new technology stock index launched 100 trading days ago. Her supervisor believes that this young market segment might not follow a random walk due to:
+
+- High volatility from speculative trading
+- Limited analyst coverage of small tech companies
+- Momentum trading by retail investors
+
+Elena decides to use the classic Cowles-Jones test to determine if the daily returns show any predictable patterns that could be exploited for trading profits.
+
+**The Data:**
+
+Elena collected 100 daily log returns from the TechStart Index. After analyzing the sign patterns of consecutive returns, she found:
+
+- **48 sequences** (consecutive days with returns of the same sign: $(+,+)$ or $(-,-)$)
+- **51 reversals** (consecutive days with opposite signs: $(+,-)$ or $(-,+)$)
+- **56 positive return days** out of 100 total days
+
+**Your Task:**
+
+As Elena's junior analyst, help her complete the Cowles-Jones test analysis:
+
+### **Questions:**
+
+**Q1.** What is the Cowles-Jones test statistic $\widehat{CJ}$ for this data?
+
+**Q2.** Under the random walk hypothesis (no drift), what should the expected value of $\widehat{CJ}$ be? Explain why.
+
+**Q3.** Calculate the proportion of positive returns ($\pi$) and the proportion of sequences ($\pi_s$). What do these values suggest about the market?
+
+**Q4.** Calculate the standard deviation $\sigma$ for the Cowles-Jones test statistic using the formula:
+$$\sigma^2 = \frac{\pi_s (1-\pi_s) + 2(\pi^3 + (1-\pi)^3 - \pi_s^2)}{n (1-\pi_s)^4}$$
+Show all your work step by step.
+
+**Q5.** Using your calculated standard deviation from Q4, compute the t-statistic for testing $H_0: CJ = 1$.
+
+**Q6.** With the t-statistic obtained in Q5, what is the two-sided p-value? (Use standard normal table)
+
+**Q7.** At the 5% significance level, what should Elena conclude about market efficiency in the TechStart Index? Should Nordic Capital develop a trading strategy based on this pattern?
+
+**Q8.** **Business Decision:** Elena's supervisor asks: "Should we allocate $10 million to a momentum-based trading strategy for TechStart stocks?" Provide a recommendation based on your statistical analysis.
+
+---
+
+::: {.content-visible when-meta="solution"}
+
+## **Solutions**
+
+**A1.** $\widehat{CJ} = \frac{N_s}{N_r} = \frac{48}{51} \approx 0.941$
+
+**A2.** Under the random walk hypothesis with no drift, sequences and reversals should be equally likely. Therefore, $E[\widehat{CJ}] = 1$. This is because consecutive returns should be independent, making positive-positive and positive-negative outcomes equally probable.
+
+**A3.** 
+
+- $\pi = \frac{56}{100} = 0.56$ (proportion of positive returns)
+- $\pi_s = \frac{48}{100} = 0.48$ (proportion of sequences)
+
+The positive bias in returns ($\pi = 0.56 > 0.5$) suggests an upward drift, but interestingly, we observe fewer sequences than expected ($\pi_s < 0.5$), indicating more reversals than sequences.
+
+**A4.** **Step-by-step calculation of $\sigma$:**
+
+Using the formula: $\sigma^2 = \frac{\pi_s (1-\pi_s) + 2(\pi^3 + (1-\pi)^3 - \pi_s^2)}{n (1-\pi_s)^4}$
+
+With $\pi = 0.56$, $\pi_s = 0.48$, $n = 100$:
+
+1. $\pi_s(1-\pi_s) = 0.48 \times 0.52 = 0.2496$
+2. $\pi^3 + (1-\pi)^3 - \pi_s^2 = 0.56^3 + 0.44^3 - 0.48^2 = 0.1758 + 0.0851 - 0.2304 = 0.0305$
+3. Multiply by 2: $2 \times 0.0305 = 0.0610$
+4. Add: $0.2496 + 0.0610 = 0.3106$
+5. Calculate denominator: $n (1-\pi_s)^4 = 100 \times 0.52^4 = 100 \times 0.0732 = 7.32$
+6. $\sigma^2 = 0.3106 / 7.32 = 0.0424$
+7. $\sigma = \sqrt{0.0424} = 0.206$
+
+**A5.** $t = \frac{\widehat{CJ} - 1}{\sigma} = \frac{0.941 - 1}{0.206} = \frac{-0.059}{0.206} = -0.286$
+
+**A6.** For $t = -0.286$, the two-sided p-value is $p \approx 2 \times P(Z < -0.286) \approx 2 \times 0.387 \approx 0.774$ or **77.4%**.
+
+**A7.** **Statistical Conclusion:** Since $p = 0.774 > 0.05$, we **fail to reject** the null hypothesis. There is insufficient evidence to conclude that TechStart Index returns deviate from a random walk.
+
+**A8.** **Business Recommendation:** 
+
+**Do NOT allocate $10 million to the momentum strategy.** 
+
+**Reasoning:**
+
+- The test provides no statistical evidence of predictable patterns
+- A p-value of 77.6% suggests the observed pattern could very easily occur by random chance
+- Despite having 56% positive days, the excess of reversals over sequences (51 vs 48) indicates no exploitable momentum
+- **Risk vs. Reward:** Without statistical evidence of market inefficiency, a $10 million momentum bet would be pure speculation
+- **Alternative:** Consider diversified index investing or focus on markets where inefficiencies are statistically demonstrated
+
+**Key Insight:** This case demonstrates that even when a market shows positive drift (56% up days), it can still behave as a random walk with respect to sequential patterns. The presence of more reversals than sequences actually suggests mean reversion tendencies, contradicting a momentum strategy.
+
+:::

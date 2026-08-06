@@ -1,0 +1,146 @@
+\documentclass[12]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum} % TeX Gyre Bonum font
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{dirtytalk}
+\usepackage{xcolor}
+\usepackage[affil-it]{authblk}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+\title{EK369E: Financial Markets\\ Portfolio Theory\\Problem Set }
+\author{Nord University Business School}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Problem 1}
+Shares in Kojo currently trade for NOK 100 and the company's dividend policy is to pay out 8\% of its retained earnings as dividends at the end of each year.In the course of your analysis as an analyst at Kingdom Investments, you determine that the earnings and price of Kojo's shares are dependent on the state of the economy and 
+you produce the following expectations about Kojo's stock price and dividend which is presented in the table below. Based on this expectation, compute the mean and standard deviation of the holding period return (HPR) on this stock.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{lccc}
+\textit{}     & \multicolumn{1}{l}{\textit{Probability}} & \multicolumn{1}{l}{\textit{\begin{tabular}[c]{@{}l@{}}Ending Price per share\\ (NOK)\end{tabular}}} & \multicolumn{1}{l}{\textit{\begin{tabular}[c]{@{}l@{}}Dividend per share\\ (NOK)\end{tabular}}} \\ \hline
+Boom          & 0.35                                     & 140                                                                                                 & 10.4                                                                                            \\
+Normal growth & 0.30                                     & 110                                                                                                 & 8                                                                                               \\
+Recession     & 0.35                                     & 80                                                                                                  & 5.6                                                                                             \\ \hline
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+
+
+
+
+\section*{Problem 2}
+A share in Fund C has had the following value developments over the last three years:\\
+$t_0$ = NOK 200; $t_1$ = NOK 224; $t_2$ = NOK 280; $t_3$ = NOK 238
+\begin{enumerate}
+    \item[a)] Calculate the annual arithmetic average return over the three years
+    \item[b)] Calculate the annual geometric average return over the three years
+    \item[c)] Briefly explain why the two methods in a) and b) provide different answers
+\end{enumerate}
+
+
+\section*{Problem 3}
+Your supervisor has just given you a dataset that enables you to compute historical rates of return on Norwegian stocks all the way back to 2000. Is there any advantage or disadvantage of using this data set to estimate the expected return on Norwegian stocks over the coming year?
+
+
+
+\section*{Problem 4}
+Damaris Johnson manages a risky portfolio with an expected return of 18\% and a standard deviation of 28\%. The T-bill rate is 8\%
+\begin{enumerate}
+    \item[a)]  Suppose that a new client of Johnson decides to invest a certain portion of their investment in the risky portfolio (y) and the remainder in the T-bill (1-y)  so that the overall portfolio will have an expected rate of return of 16\%
+    \begin{enumerate}
+        \item[i.] what proportion is invested in the risky portfolio
+        \item[ii.] What is the standard deviation of this portfolio
+    \end{enumerate}
+    \item[b)] Suppose that the new client prefers to invest an amount in the risky portfolio that maximizes the expected return of the complete portfolio subject to the constraint that the standard deviation of the complete portfolio cannot be greater than 18\%
+    \begin{enumerate}
+        \item[i.] What proportion is invested in the risky portfolio
+        \item[ii.] What is the expected return of the complete portfolio
+    \end{enumerate}
+    \item[c)] Through an analysis of the client's financial profile, it is determined that their degree of risk aversion is A = 5
+    \begin{enumerate}
+        \item[i.] What proportion (y) should now be invested in the risky portfolio
+        \item[ii.] What is the expected return and standard deviation of the client's optimized portfolio?
+    \end{enumerate}
+\end{enumerate}
+
+
+\section*{Problem 5}
+Consider a portfolio that offers an expected rate of return of 12\% and a standard deviation of 18\%. T-bills offer a risk-free 7\% rate of return. What is the maximum level of risk aversion for which the risky portfolio is still preferred to T-bills?\\
+\textit{Note: $U = E(r) - 0.5A\sigma^2$}
+
+
+
+\section*{Problem 6}
+Suppose that there are only two stocks in the market; stock Alfa and Bravo. The expected return on Alfa is 15\% with a standard deviation of 10\%. Bravo has an expected return of 12\% with a standard deviation of 7\%. The covariance between the returns of the stocks is 0.002 (in decimal). Assume that short selling is not allowed.
+\begin{enumerate}
+    \item[a)] What is the minimum standard deviation you can obtain by investing in a combination of Alfa and Bravo?
+\end{enumerate}
+
+
+
+
+\section*{Problem 7}
+You manage an equity fund with an expected risk premium of 10\% and an expected standard deviation of 14\%. The rate of Treasury bills is 6\%. Your client chooses to invest NOK 60,000 of her portfolio in your equity fund and NOK 40,000 in a T-bill money market fund. What are the expected return and standard deviation of return on your client's portfolio?
+
+
+
+\section*{Problem 8}
+Given NOK 100,000 to invest, what is the expected risk premium in NOK of investing in equities versus risk-free T-bills based on the information below.
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\resizebox{0.7\textwidth}{!}{%
+\begin{tabular}{lcc}
+\textit{\textbf{Action}}                       & \multicolumn{1}{l}{\textit{\textbf{Probability}}} & \multicolumn{1}{l}{\textit{\textbf{Expected Return}}} \\ \hline
+Invest in equities                            & 0.6                                               & NOK 50,000                                            \\
+\multicolumn{1}{c}{}                           & 0.4                                               & -NOK 20,000                                           \\
+\multicolumn{1}{c}{Invest in risk-free T-bill} & 1.0                                               & NOK 5000                                              \\ \hline
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\section*{Problem 9}
+Assume that investor’s preferences can be expressed by the utility function $U = E(r) - 0.005 \cdot A\cdot \sigma^2$, where U is utility, E(r) is expected return, A is the risk aversion coefficient and $\sigma^2$ is variance.
+A risk averse investor has invested NOK 1 million in fund A which offers an expected return of 15\% and a standard deviation of 25\%. A financial advisor has offered Fund V, which offers an expected rate of return of 16\% and standard deviation of 28\%, as an alternative.
+\begin{enumerate}
+    \item[a)] If the investor has a risk aversion coefficient of 3, which fund is the best one of A and V?
+    \item[b)] For which risk aversion coefficient will the two funds be equally good?
+\end{enumerate}
+Assume that there exist a bond investment, Fund B, with an expected return of 8\% and a standard deviation of 20\%. The correlation coefficient between the return on Fund A and Fund B is -0.2. This investor is considering combining the equity and bond funds in a portfolio (P). 
+\begin{enumerate}
+    \item[c)] What share invested in Fund A minimises the risk of portfolio P?
+    \item[d)] compute the expected return and standard deviation of Portfolio P
+\end{enumerate}
+
+
+
+\end{document}

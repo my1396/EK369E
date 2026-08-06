@@ -1,0 +1,43 @@
+---
+title: "Portfolio Theory Quiz Questions"
+format: 
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    fontsize: 12pt
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+
+## Multiple Choice Quiz: Portfolio Theory
+
+
+## Utility Curve
+
+
+## The Optimal Complete Portfolio
+
+Complete Portfolio ($C$) = Risky Portfolio ($P$) + Risk-free Asset ($f$)
+
+Optimal Complete portfolio weights:  $\displaystyle y^* = \frac{E(r_P) - r_f}{A\cdot \sigma_P^2}$, where $A$ is the risk aversion coefficient.
+
+Return of the Complete Portfolio: 
+$$
+\begin{aligned}
+E(r_C) &= yE(r_P) + (1-y) r_f \\
+&= r_f + y \left[E(r_P)-r_f\right]
+\end{aligned}
+$$
+
+Variance of the Complete Portfolio:  $\sigma^2_C = y^2\cdot \sigma_P^2.$
+
+
+## CAL
+
+
+## Global Minimum Variance Portfolio
+
+
+## Optimal Risky Portfolio

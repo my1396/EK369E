@@ -1,0 +1,351 @@
+
+\documentclass[12]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{dirtytalk}
+\usepackage{xcolor}
+\usepackage[affil-it]{authblk}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+
+
+
+
+
+\title{EK369E: Financial Markets\\ Term Structure and Interest Rate Risk\\ Problem Set}
+\author{Nord University Business School}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section*{Problem 1}
+The table below summarizes some information from the fixed-income market:
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.3\textwidth}{!}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Bond & \begin{tabular}[c]{@{}l@{}}Maturity\\ (years)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coupon rate\\ (\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Yield\\ (\%)\end{tabular} \\ \midrule
+A    & 5.5                                                        & 0                                                          & 2.5                                                  \\
+B    & 2.5                                                        & 4.0                                                        & 2.0                                                  \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] Calculate the duration and the modified duration for the two bonds.
+\end{enumerate}
+
+
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[b)] Which of the two bonds will have the smallest price change for a given change in the interest rate? Give a short explanation.
+\end{enumerate}
+
+
+
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[c)] If a fund manager invests (for face value) NOK 10 million in bond A and (for face value) NOK 16 million in bond B, what will the duration of the portfolio be?
+\end{enumerate}
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[d)] Calculate the duration of the portfolio one year later, given that the yield is unchanged for both bonds.
+\end{enumerate}
+
+\color{black}
+\begin{enumerate}
+    \item[d)] What is duration drift, and how big is the duration drift for the two bonds?
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\color{black}
+\section*{Problem 2}
+In the fixed-income market, four different zero-coupon bonds are traded, all with a face value of NOK 100. The table below summarizes the relevant data:
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.25\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+Bond & Price & \begin{tabular}[c]{@{}l@{}}Years to\\  Maturity\end{tabular} \\ \midrule
+A    & 97.75 & 1                                                            \\
+B    & 95.00 & 2                                                            \\
+C    & 92.00 & 3                                                            \\
+D    & 89.00 & 4                                                            \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] Calculate the rates on the spot yield curve i.e.  $r_1, r_2, r_3$ and $r_4$.
+\end{enumerate}
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[c)] A three-year coupon bond has a face value of NOK 100 and an annual coupon rate of 3\%.
+    \begin{enumerate}
+        \item[i] Based on the yield structure above, what is the market price of the coupon bond?
+        \item[ii] Find the yield to maturity for the coupon bond.
+        \item[iv] Find the duration of the coupon bond.
+    \end{enumerate}
+\end{enumerate}
+
+
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[c)] Calculate the implied one-year forward rates in year 2, year 3, and year 4.
+\end{enumerate}
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[d)] Assuming that the spot yield curve evolves in line with the pure expectation hypothesis, compute the one-year holding period return on this bond.
+\end{enumerate}
+
+
+
+\color{black}
+\section*{Problem 3}
+A government bond, Bond 1, with a face value of 100 and coupon rate of 4.50\% will mature in four years. An investor is looking to invest NOK 5 million for two years. The investor considers various strategies in the interest rate market. In addition to Bond 1, the investor may invest in government Bond 2. Bond 2’s coupon rate is also 4.50\%, but the time to maturity is two years. In the financial press, you see that the term structure (yield curve) for government bonds with a coupon rate of 4.50\% is:
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.4\textwidth}{!}{%
+\begin{tabular}{lllll}
+Year       & 1    & 2    & 3    & 4    \\\midrule
+Yield (\%) & 4.00 & 4.20 & 4.50 & 4.90
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+\begin{enumerate}
+    \item[a)] Assume that the yield curve is stable, calculate the geometric return for:
+    \begin{enumerate}
+        \item[i)] Buy bond 1, and sell it after two years
+        \item[ii)] Buy bond 2, and hold it to maturity.
+    \end{enumerate}
+    
+\end{enumerate}
+
+
+
+
+\color{black}
+\begin{enumerate}
+    \item[b)] Explain why there are differences between the two strategies in a)   
+\end{enumerate}
+
+
+
+
+
+\color{black}
+\section*{Problem 4}
+In the fixed-income market, we have the following information for zero-coupon bonds:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc}
+        Maturity (years) & 1 & 2 & 3\\\midrule
+        Yield to maturity (\%) & 4.3 & 4.0 & 3.8\\
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+
+\noindent
+You are analyzing three bonds, all maturing in three years, but with different coupon rates. Bond A has a coupon rate of 8\%, bond B has a coupon rate of 4\%, while bond C is a zero coupon bond.
+
+\begin{enumerate}
+    \item [a)] Calculate the price of the three bonds.
+\end{enumerate}
+
+
+\color{black}
+\begin{enumerate}
+    \item [b)] Without making calculations, briefly explain which bond has the lowest yield to maturity and which bond has the lowest duration.
+\end{enumerate}
+
+\noindent
+\color{black}
+You have an investment horizon of two years and are considering investing in either bond A or bond C. You are considering two different strategies: \textbf{i)} Buy bond A today, reinvest the coupon payment in one year in the same security, and sell in two years. \textbf{ii)} Buy bond C today and sell it in two years. You assume that the yield curve given in the table above is stable, i.e., that there are parallel shifts in the yield curve over time.
+
+\begin{enumerate}
+    \item [c)] Calculate the annual geometric average return for each of the two investment strategies.
+\end{enumerate}
+
+
+\color{black}
+\begin{enumerate}
+    \item [d)] Which alternative is best? Briefly explain why.
+\end{enumerate}
+
+
+\color{black}
+\begin{enumerate}
+    \item [e)] Is there an alternative investment strategy in this market that would be clearly better than the two mentioned here?
+\end{enumerate}
+
+\noindent
+\color{black}
+You put together a portfolio consisting of a face value of NOK 100 million in bond A and a face value of NOK 91.9 million in a one-year zero-coupon bond D.
+\begin{enumerate}
+    \item [f)] What is the duration of this portfolio?
+\end{enumerate}
+
+
+
+\color{black}
+\section*{Problem 5}
+A newly issued bond has a maturity of 10 years and pays a 7\% coupon rate annually. The bond sells at par value.
+\begin{enumerate}
+    \item[a)] What is the duration of the bond?
+    \item[b)] What is the convexity of the bond?
+\end{enumerate}
+
+\noindent
+\\
+If the interest rate in the market is expected to increase from 7\% to 8\%;
+\begin{enumerate}
+    \item[c)] What new price is predicted by the modified duration rule 
+    \item[d)] What new price is predicted by the convexity rule 
+    \item[e)] Find the actual price assuming that the interest rate immediately increases from 7\% to 8\% (time to maturity is still  10 years) 
+\end{enumerate}
+
+
+
+\color{black}
+\section*{Problem 6}
+A 6\% coupon bond paying interest annually has a modified duration of 10-yrs, sells for NOK 80 and is priced at a yield to maturity of 8\%. If the YTM increases to 9\%, what is the predicted change in price based on the bond's duration?
+
+
+\color{black}
+\section*{Problem 7}
+A pension plan has an obligation to pay NOK 10,000 once a year for a 10-year period, beginning 5 years from now. The current interest rate is 10\%
+\begin{enumerate}
+     \item[a)] What is the duration of this obligation? 
+\end{enumerate}
+
+
+\color{black}
+\begin{enumerate}
+     \item[b)] If the pension fund intends to use 5-yr and 20-yr zero coupon bonds to immunize this position, how much should be placed in each bond? 
+\end{enumerate}
+
+
+\color{black}
+\section*{Problem 8}
+The 6-month Treasury bill spot rate is 4\% and the 1-yr treasury bill spot rate is 5\%. What is the implied 6-month forward rate for six months from now?
+
+
+\color{black}
+\section*{Problem 9}
+Below is a list of prices for zero coupon bonds with par values of NOK 100.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.25\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+Maturity (Yrs) & Price (\%) \\ \midrule
+1              & 94.34      \\
+2              & 87.35      \\
+3              & 81.64      \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+
+\begin{enumerate}
+    \item[a)] An 8.5\% coupon bond making annual coupon will mature in three years. What should the yield to maturity on the bond be?
+    \item[b)] if at the end of the first year, the yield curve flattens out at 8\%. What will be the 1-yr holding period return on the coupon bond?
+\end{enumerate}
+
+
+
+
+\color{black}
+\section*{Problem 10}
+The current yield curve for default-free zero-coupon bonds is as follows.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.35\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+Maturity (Yrs) & Yield to Maturity (\%) \\ \midrule
+1              & 10.00     \\
+2              & 11.00      \\
+3              & 12.00      \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+Assuming that the pure expectation hypothesis of the term structure is correct and market expectations are accurate, what will be the yield to maturity on 1-year zero coupon bonds next year?
+
+
+
+\end{document}

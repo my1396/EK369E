@@ -1,0 +1,265 @@
+\documentclass[12]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{dirtytalk}
+\usepackage{xcolor}
+\usepackage[affil-it]{authblk}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+
+
+
+
+
+\title{EK3693E: Financial Markets\\ Factor Models and Equilbrium in Capital Markets\\ Problem Set}
+\author{Nord University Business School}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\color{black}
+\section*{Problem 1}
+Consider the excess return index model regression results for Stocks A and B:\\
+$R_A = 1\% + 1.2R_M$\\
+$R^2 = 0.576$\\
+$ \text{Residual standard deviation} = 10.3\%$\\
+\\
+$R_B = -2\% + 0.8R_M$\\
+$R^2 = 0.436$\\
+$\text{Residual standard deviation} = 9.1\%$\\
+\begin{enumerate}
+    \item[a)] Which stock has more firm-specific risk?
+    \item[b)] Which stock has greater market risk?
+    \item[c)] For which stock does market movement explain a greater fraction of return variability?
+    \item[d] if $r_f$ is constant at 6\% and the regression has been run using total return rather than excess returns, what would have been the regression intercept for stock A?
+\end{enumerate}
+
+
+
+
+\color{black}
+\section*{Problem 2}
+A stock currently has a beta estimate of 1.24
+\begin{enumerate}
+    \item[a)] what is the adjusted beta for this stock?
+    \item[b)] If you estimate this regression equation, $\beta_t = 0.3 + 0.7\beta_{t-1}$ which describes the evolution of beta over time, what would be your predicted beta for the next year?
+\end{enumerate}
+
+
+
+
+\color{black}
+\section*{Problem 3}
+A portfolio manager wishes to use the Arbitrage Pricing Theory (APT) for making investment decisions. The manager evaluates four stocks (i=1,2,3,4) and assumes that two fundamental factors generate the return structure denoted $F_i$ and $F_2$. The table below summarises the manager's estimate of expected return E($r_i$), the factor sensitivity of the stocks $\beta_{i1}$ and $\beta_{i2}$, and the manager's current portfolio weights $w_i^0$.
+You learn that the set of possible arbitrage weights is $w_1 = -0.280$, $w_2 = 0.043$, $w_3 = -0.065$ and $w_4 = 0.302$
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.35\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+Stock (i)  & \textbf{$E(r_i)$} & \textbf{$\beta_{i1}$} & \textbf{$\beta_{i2}$} & \textbf{$w_i^0$} \\ \midrule
+\textbf{1} & -0.05            & 1.5                & -1.0               & 0.32                             \\
+\textbf{2} & 0.26             & 2.0                & 2.0                & 0.48                             \\
+\textbf{3} & 0.166            & -0.5               & 1.0                & 0.12                             \\
+\textbf{4} & 0.118             & 1.0                & -1.0               & 0.08                             \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:my-table}
+\end{table}
+\begin{enumerate}
+    \item[a)] What is the relationship in general between the portfolio weights $w_i^0$ and the arbitrage weights $w_i$?
+    \item[b)] Calculate the new portfolio weights $w_i^1$
+    \item[c)] Does this situation give rise to a profitable arbitrage portfolio?
+\end{enumerate}
+
+\noindent
+
+\noindent
+
+\noindent
+
+\noindent
+The research department in the company informs that a possible equilibrium in the stock market is given by the following Arbitrage Pricing Model (APM)
+\begin{equation*}
+    E(r_i) = \lambda_0 + \lambda_1\cdot \beta_i1 + \lambda_2\cdot \beta_i2
+\end{equation*}
+Where $\lambda_0 = 0.04$, $\lambda_1 = -0.02$ and $\lambda_2 = 0.06$, and $\beta_{i1}$ and $\beta_{i2}$ indicate stock i's sensitivity to Factor 1 and 2 respectively.
+\begin{enumerate}
+    \item[d)] What is the interpretation for $\lambda_0, \lambda_1$ and $\lambda_2$ in this model?
+    \item[e)] Is the manager's expected return on the four stocks (as given in the table) consistent with this equilibrium?
+    \item[f)] What do you think will happen to the future stock prices in this market if the manager's expectations are correct?
+\end{enumerate}
+
+
+
+
+
+
+\color{black}
+\section*{Problem 4}
+The price of the Tonga stock will over the coming period either increase by 55\%(state 1) fall by 13\% (state 2) or remain unchanged (State 3). There is equal probability for all states. 
+Similarly, the market portfolio will either increase by 40\% (state 1), remain unchanged (state 2) or fall by 10\% (state 3). The covariance between the return on Tonga and the market portfolio is 593.33 (calculations based on the above percentage). The risk-free interest rate is 3\%. No dividends are paid.
+\begin{enumerate}
+    \item[a)] Use variance as a risk measure, and decompose Tonga's total risk into the systematic and unsystematic parts respectively. 
+\end{enumerate}
+
+
+
+
+
+\color{black}
+\section*{Problem 5}
+The investment fund Omega has an equity portfolio with a strong tilt towards value stocks, i.e. stocks with low prices relative to book values. The investment strategy is based on buying the 50 stocks with the lowest price-to-book ratios every year and hold these stocks for one year. Over the last 15 years, on average, this investment strategy (return minus risk-free rate of interest) has given a statistically significant abnormal return of 5\% ($\alpha$). The CAPM beta of the portfolio over the same period was 0.6. The realized risk premium (excess return) on the market portfolio was 5\%, and its variance was 0.04. The $R^2$-value of a regression of the portfolio return on the market portfolio return is 0.70.
+\begin{enumerate}
+    \item[a)] Write down the return on the portfolio in terms of a regression equation using the information you are given in the above text.
+    \item[b)] Decompose the variance of the portfolio into a systematic and an unsystematic component.
+\end{enumerate}
+\noindent
+Assume now that the expected return is given by the two-factor model $[E(r_i) - r_f] = \beta_i\cdot[E(r_m) - r_f)] + h\cdot E(r_{HML})$, where the expected return on the HML-portfolio ($r_{HML}$) is 5\%. Assume that the covariance between the return on the HML-portfolio and the market portfolio is zero, and that Omega’s portfolio factor loading on the HML-portfolio (h) is 1.0.
+\begin{enumerate}
+    \item[c)] Write down the return on the portfolio in terms of a regression equation and compare with the expression in question a) in terms of the empirical challenge of testing the Efficient Market Hypothesis (EMH)
+\end{enumerate}
+
+
+
+\color{black}
+\section*{Problem 6}
+In the stock market, the market portfolio has an index value of 1,000. In the next year, the index will either increase by 25\% or decrease by 15\%. The risk-adjusted (fictive) probability of an increase is 0.475. The risk-free interest rate for the period is 4\%. A share in the Alfa equity fund is listed at a value of 250. In one year, the fund value will be 344 given that the market is experiencing an upturn, or 184 given that the market is experiencing a downturn. The risk premium on this equity fund is 8\%.
+\begin{enumerate}
+    \item[a.]  Based on this information, find the actual probabilities of an increase and decrease in the next year.
+    \item[b.]  Based on the Capital Asset Pricing Model CAPM, what beta value does the equity fund have?
+    \item[c.]  Check for the market portfolio that using actual probabilities and fictive probabilities for future value yields the same market price today.
+\end{enumerate}
+
+
+
+
+
+\color{black}
+\section*{Problem 7}
+Suppose that the index models for Stock A and B is estimated from excess returns with the following results.\\
+$R_A = 3\% + 0.7R_M + e_A$\\
+$R_B = -2\% + 1.2R_M + e_B$\\
+$\sigma_M = 20\%;\text{  } R_A^2 = 0.20;\text{  } R_B^2 = 0.12 $
+
+\begin{enumerate}
+    \item[a)] What is the standard deviation of each stock?
+    \item[b)] What is the covariance between each stock and the market index?
+    \item[c)] What is the covariance and correlation coefficient between the two stocks? 
+\end{enumerate}
+
+
+
+
+
+\color{black}
+\section*{Use this information to answer problem 8 - 10}
+{\large Assume that the risk-free rate of interest available in the market is 6\% and the expected \textcolor{red}{excess} rate of return on the market index is 16\%.}
+\color{black}
+\subsection*{Problem 8}
+A share of stock sells for USD 50 today. It will pay a dividend of USD 6 per share at the end of the year. Its beta is 1.2. What do investors expect the stock to sell for at the end of the year? 
+
+
+
+\color{black}
+\subsection*{Problem 9}
+A stock has an expected rate of return of 4\%. What is its beta?
+
+
+
+\color{black}
+\subsection*{Problem 10}
+You are  evaluating a firm with expected perpetual cash flow of USD 1000 but you are not sure if its risk. If you think the beta of the firm is 0.5, when it is actually 1, how much more will you offer for the firm compared to its true worth?
+
+
+
+
+\color{black}
+\section*{Problem 11}
+Suppose that the rate of return on short-term government securities (perceived to be risk free) is about 5\%. Suppose also that the expected rate of return required by the market for a portfolio with a beta of 1 is 12\%. According to the capital asset pricing model:
+\begin{enumerate}
+    \item[a)] What is the expected rate of return on the market portfolio?
+    \item[b)] What would be the expected rate of return on a stock with beta = 0?
+    \item[c)] suppose that you consider buying  a share of stock at USD 40. The stock is expected to pay USD 3 dividends next year and you expect it to sell then for USD 41. The stock risk has been evaluated at beta = -1.5. Is the stock overpriced or underpriced? 
+\end{enumerate}
+
+
+
+
+
+\color{black}
+\section*{Problem 12}
+Assume that there are two independent economic Factors $F_1$ and $F_2$. The risk-free rate is 6\% and all stocks have independent firm-specific components with a standard deviation of 45\%. Portfolios A and B are both well diversified with the following properties presented in the table below. What is the expected return-beta relationship in this economy?
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.6\textwidth}{!}{%
+\begin{tabular}{llll}
+Portfolio & Beta on $F_1$ & Beta on $F_2$ & Expected Return \\ \hline
+A         & 1.5         & 2.0         & 31\%            \\
+B         & 2.2         & -0.2        & 27\%           
+\end{tabular}%
+}
+\end{table}
+
+
+
+
+\color{black}
+\section*{Problem 13}
+Assume that portfolios A and B are well-diversified, that E($r_A$) = 12\% and E($r_B$) = 9\%. If the economy has only one factor and $\beta_A$ = 1.2 and $\beta_B$ = 0.8. What must be the risk-free rate be?
+
+
+
+\color{black}
+\section*{Problem 14}
+Given the following information about the factors for the multi-factor model of a particular stock; Inflation risk premium (INF) = 6\%, inflation factor loading = 1.2, industrial production risk premium (IND) = 8\%, industrial production factor loading = 0.5, oil price risk premium (OIL) = 3\%, oil price factor loading = 0.3.
+If the Treasury bills currently offer a 6\% yield, find the expected rate of return on this stock if the market views it as correctly priced.
+
+
+\color{black}
+\section*{Problem 15}
+Consider the following data for a one-factor economy. Both Portfolios are well diversified. 
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\resizebox{0.25\textwidth}{!}{%
+\begin{tabular}{lll}
+Portfolio & E(r) & Beta \\ \hline
+A         & 12\% & 1.2  \\
+F         & 6\%  & 0.0 
+\end{tabular}%
+}
+\end{table}
+\noindent
+Suppose that another portfolio (E) exists which is well-diversified with a beta of 0.6 and an expected return of 8\%. Would an arbitrage opportunity exist? if so, what would be the arbitrage strategy?
+
+
+\end{document}
