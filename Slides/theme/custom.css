@@ -20,11 +20,36 @@
     padding: 0;
 }
 /* Center vertically */
+/* Works as a slide class (`class: center-v`), where the parent
+   .remark-slide-content has a definite height. */
 .center-v {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
+}
+
+/* Equal-height columns, so .center-v also works *inside* a column.
+   .pull-left/.pull-right are floats sized by their content, so a nested
+   .center-v has no parent height for its `height: 100%` to resolve against.
+   Wrapping both columns in .pull-layout-v makes them flex items that
+   stretch to the row height. Use example:
+     .pull-layout-v[
+     .pull-left[ ...tall content... ]
+     .pull-right[ .center-v[ ...centered against the left column... ] ]
+     ]
+*/
+.remark-slide-content .pull-layout-v {
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    align-items: stretch;
+}
+
+.remark-slide-content .pull-layout-v > .pull-left,
+.remark-slide-content .pull-layout-v > .pull-right {
+    float: none;
+    width: 49%;
 }
 /* Smaller text */
 .small-text,
@@ -135,10 +160,19 @@ ul {
     font-size: 110% !important;
 }
 
-/* Lettered lists */
+/* Lettered lists a b... */
 .remark-slide-content .lower-alpha ol {
     list-style-type: lower-alpha;
 }
+/* Use example
+  .lower-alpha[ 
+  1. Item 1 
+  2. Item 2
+  ]
+  will be rendered as
+  a. Item 1
+  b. Item 2
+*/
 
 /* Level 1 numbered list with letters in parentheses */
 /* Use example

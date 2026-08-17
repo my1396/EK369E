@@ -226,6 +226,8 @@ Alex is tracking the performance of his investment over three consecutive period
 ---
 ## Average Return
 
+**Note: covered in 2_portfolio_theory.Rmd already! Remove this.**
+
 Given a series of portfolio returns $r_{p,t}$, $t=1,2,\ldots,T$, the average return can be calculated in two ways:
 
 - **Arithmetic mean** (AM) portfolio return
