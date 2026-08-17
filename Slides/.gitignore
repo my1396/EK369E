@@ -9,6 +9,9 @@ data/
 # Produced vignettes
 vignettes/*.html
 
+# Temp copy print-notes.R writes next to a deck while printing
+.*-notes-tmp.html
+
 # R Environment Variables
 .Renviron
 
