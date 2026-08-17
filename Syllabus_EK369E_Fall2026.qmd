@@ -1,0 +1,72 @@
+---
+title: "Syllabus EK369E Financial Markets"
+subtitle: "Fall 2026"
+from: markdown+tex_math_single_backslash
+format:
+  pdf:
+    documentclass: scrartcl
+    include-in-header:
+      - latex/preamble.tex
+      - text: |
+          \setmainfont{GeorgiaPro-Regular}
+          \setmathfont{Cambria Math}
+          \setmathrm{GeorgiaPro-Regular}
+          \newenvironment{parskipsection}{\begingroup\setlength{\parskip}{0.5\baselineskip}}{\endgroup}
+    fontsize: 12pt
+---
+
+::: {=latex}
+\vspace{-4em}
+\renewcommand{\tightlist}{%
+    \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+:::
+
+This course gives students a practical and analytical foundation in capital markets, with a focus on portfolio theory, fixed-income instruments, equity valuation, and empirical asset-pricing applications. Across the semester, students will connect financial theory to real market data and portfolio decisions.
+
+The course starts with core concepts in portfolio theory and bond pricing, then moves into term structure, interest-rate risk management, and trading with fixed-income instruments. In the second half, the course shifts to equity-focused topics including factor models, valuation, portfolio optimization, performance evaluation, market efficiency, and event studies.
+
+
+## Sessions Overview
+
+**Introduction** *(Week 34, Lecturer: Menghan)*
+
+- **Introduction to Capital Markets:** overview of financial markets, market participants, and traded instruments.
+- **Portfolio Theory:** computing Investment Risk and Return, constructing an investment portfolio
+
+**Fixed Income** *(Weeks 35–37, Lecturer: Chamath)*
+
+- **Pricing of Bond Instruments:** cash flow discounting, yield to maturity, and bond pricing fundamentals.
+- **The Term Structure of Interest Rates:** yield curves, spot and forward rates, and term structure theories.
+- **Managing Interest Rate Risk:** duration, convexity, and immunization strategies.
+- **Trading with Fixed-Income Instruments:** how bonds are traded, quoted, and used in portfolio management.
+
+**Factor Models** *(**two lectures** in Week 38, Guest Lecturer: Sabina)*
+
+- **Single-Factor Models / CAPM:** the capital asset pricing model, beta, the security market line, and empirical tests.
+- **Multifactor Models / APT:** arbitrage pricing theory, common risk factors, and factor-model estimation.
+- **Stock Market Rates of Return and Their Characteristics:** empirical patterns in equity returns, cross-sectional anomalies, and return predictability.
+
+**Equity** *(Weeks 39–45, Lecturer: Menghan; Problem Set: Chamath)*
+
+- **Portfolio Optimization:** mean-variance optimization, constraints, and practical implementation.
+- **Portfolio Performance Evaluation:** Sharpe ratio, alpha, information ratio, and attribution analysis.
+- **Market Efficiency:** forms of efficiency, test market efficiency.
+- **Event Studies:** methodology for measuring abnormal returns around corporate events.
+
+
+## Course Evaluation
+
+A to F grading scale will be used.
+
+The final grade in EK369E is based on:
+
+- **Final exam: 100%**
+
+You may find previous years' exams and solutions in Canvas. 
+
+Final exam will be digital in WISEflow. Exam will be four hours, consisting of multiple choice questions and open-ended questions. 
+You will have access to a formula sheet. Familiarize yourself with the formula sheet in Canvas before the exam. 
+
+You need to bring your own calculator. Refer to [Approved Calculators](https://www.nord.no/student/eksamen/hjelpemidler#godkjente-kalkulatorer) for which models are allowed. You are responsible for taking a calculator that is listed in the approved list.
+
+Date: Refer to [StudentWeb](https://www.nord.no/student/studentverktoy/studentweb)

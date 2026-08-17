@@ -4,6 +4,6 @@ source("~/.Rprofile")
 
 # Add project-specific configurations below
 library(knitr)
-library(renderthis)
+library(renderthis) # for rendering xaringan presentations
 library(rmarkdown)
 library(tidyverse)

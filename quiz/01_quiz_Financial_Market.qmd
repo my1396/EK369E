@@ -1,109 +1,168 @@
 ---
-title: "Financial Market Quiz Questions"
-format: 
+title: "Quiz: Introduction to the Financial Market"
+from: markdown+tex_math_single_backslash
+params:
+#   solution: false
+  solution: true
+filters:
+  - ../libs/color-text.lua
+format:
   pdf:
     include-in-header: ../latex/preamble.tex
     fontsize: 12pt
 ---
 
 ::: {=latex}
-\vspace{-4em}
+\vspace{-6em}
 :::
 
-# Multiple Choice Quiz: Introduction to the Financial Market
 
+1. What is one primary role of the financial market?
 
-1. **What is one primary role of the financial market?**
-   A) To increase government spending
-   B) To facilitate the investment process
-   C) To reduce taxes
-   D) To eliminate inflation
+   A)  To increase government spending
+   B)  To reduce taxes
+   C)  To facilitate the investment process
+   D)  To eliminate inflation
 
-2. **Which of the following is a function of the financial market?**
-   A) Ensuring inefficient capital allocation
-   B) Disseminating accurate information
-   C) Increasing consumption only
-   D) Reducing business longevity
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
 
-3. **Real assets are best described as:**
-   A) Contractual claims to other assets
-   B) Productive units with intrinsic value
-   C) Always liquid
-   D) Always have a corresponding liability
-
-4. **Which is NOT an example of a real asset?**
-   A) Land
-   B) Factories
-   C) Treasury bond
-   D) Intellectual property
-
-5. **Which of the following descriptions of Financial assets is correct?**
-   A) Represent productive units
-   B) Have intrinsic value
-   C) Represent contractual claims to real assets
-   D) Are always less liquid than real assets
-
-6. **Which of the following is a class of financial assets?**
-   A) Real estate
-   B) Fixed-income securities
-   C) Raw materials
-   D) Intellectual property
-
-7. **Fixed-income securities provide:**
-   A) Variable income streams
-   B) No income
-   C) Fixed and predetermined income streams
-   D) Only capital gains
-
-8. **Equity securities represent:**
-   A) A claim to a fixed income
-   B) A stake in the residual value of a company
-   C) Ownership of government bonds
-   D) A pool of mortgage loans
-
-9. **Asset-backed securities derive their cashflow from:**
-   A) Government taxes
-   B) Pools of fixed-income assets
-   C) Equity shares
-   D) Preference shares
-
-
-10. **A Special Purpose Entity (SPE) in asset-backed securities is used to:**
-    - A) Issue government bonds
-    - B) Pool and issue fixed-income assets
-    - C) Accumulate dividends
-    - D) Trade equity shares
-
----
-
-# Answer Key & Explanations
-
-1. **B) To facilitate the investment process**  
    The financial market's main role is to channel funds from savers to borrowers, enabling investments.
+   :::
+   :::
 
-2. **B) Disseminating accurate information**  
+2. Which of the following is a function of the financial market?
+
+   A)  Disseminating accurate information
+   B)  Ensuring inefficient capital allocation
+   C)  Reducing business longevity
+   D)  Increasing consumption only
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is A.**
+
    Financial markets help allocate capital efficiently by providing accurate information to participants.
+   :::
+   :::
 
-3. **B) Productive units with intrinsic value**  
+3. Real assets are best described as:
+
+   A)  Contractual claims to other assets
+   B)  Always liquid
+   C)  Always have a corresponding liability
+   D)  Productive units with intrinsic value
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is D.**
+
    Real assets are tangible and have intrinsic value, such as land or factories.
+   :::
+   :::
 
-4. **C) Treasury bond**  
+4. Which is NOT an example of a real asset?
+
+   A)  Intellectual property
+   B)  Treasury bond
+   C)  Land
+   D)  Factories
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is B.**
+
    Treasury bonds are financial assets, not real assets; they represent a claim rather than a physical item.
+   :::
+   :::
 
-5. **C) Represent contractual claims to real assets**  
+5. Which of the following descriptions of financial assets is correct?
+
+   A)  Represent contractual claims to real assets
+   B)  Have intrinsic value
+   C)  Represent productive units
+   D)  Are always less liquid than real assets
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is A.**
+
    Financial assets are contracts that entitle the holder to future cash flows from real assets.
+   :::
+   :::
 
-6. **B) Fixed-income securities**  
+6. Which of the following is a class of financial assets?
+
+   A)  Raw materials
+   B)  Real estate
+   C)  Fixed-income securities
+   D)  Intellectual property
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
+
    Fixed-income securities are one of the three main classes of financial assets, along with equity and derivatives.
+   :::
+   :::
 
-7. **C) Fixed and predetermined income streams**  
+7. Fixed-income securities provide:
+
+   A)  Variable income streams
+   B)  Only capital gains
+   C)  No income
+   D)  Fixed and predetermined income streams
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is D.**
+
    Fixed-income securities pay a set amount at regular intervals, such as bonds.
+   :::
+   :::
 
-8. **B) A stake in the residual value of a company**  
+8. Equity securities represent:
+
+   A)  A stake in the residual value of a company
+   B)  A claim to a fixed income
+   C)  A pool of mortgage loans
+   D)  Ownership of government bonds
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is A.**
+
    Equity securities give holders ownership and a claim on the company's net assets.
+   :::
+   :::
 
-9. **B) Pools of fixed-income assets**  
+9. Asset-backed securities derive their cashflow from:
+
+   A)  Preference shares
+   B)  Government taxes
+   C)  Pools of fixed-income assets
+   D)  Equity shares
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
+
    Asset-backed securities are created from pools of assets like mortgages, which generate cash flows.
+   :::
+   :::
 
-10. **B) Pool and issue fixed-income assets**  
-   SPEs are used to isolate asset pools and issue securities backed by those assets.
+10. A Special Purpose Entity (SPE) in asset-backed securities is used to:
+
+    A)  Trade equity shares
+    B)  Pool and issue fixed-income assets
+    C)  Accumulate dividends
+    D)  Issue government bonds
+
+    ::: {.content-visible when-meta="params.solution"}
+    ::: {.blue}
+    **The correct answer is B.**
+
+    SPEs are used to isolate asset pools and issue securities backed by those assets.
+    :::
+    :::

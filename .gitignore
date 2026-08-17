@@ -48,6 +48,8 @@ Ugochi/
 
 # LaTeX build artifacts
 *.aux
+*.bcf
+*.run.xml
 *.fdb_latexmk
 *.fls
 *.log
