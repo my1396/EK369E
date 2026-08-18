@@ -1,16 +1,16 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
     <title>Portfolio Performance Evaluation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Instructor: Menghan Yuan" />
-    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
-    <script src="libs/mark.js-8.11.1/mark.min.js"></script>
-    <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
-    <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/mark.js/mark.min.js"></script>
+    <link href="libs/xaringanExtra-search/search.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-search/search.js"></script>
     <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":true,"autoSearch":true}) })</script>
-    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
     <!-- MathJax V2 Configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -187,6 +187,12 @@
       }
     });
     </script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/fnaufel/xaringan-smartify/smartify.min.js"></script>
     <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="theme/custom.css" type="text/css" />
   </head>
@@ -205,6 +211,7 @@ class: center, middle, inverse, title-slide
 ]
 
 ---
+
 
 
 
@@ -268,6 +275,15 @@ For example, an interest rate of `\(5\%\)` payable every six months will be quot
 ### Relationship between Simple and Log Returns
 
 .pull-left[
+
+```
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="ptf-performance-evaluation_files/figure-html/log-return-plot-1.png" alt="Figure: Relationship between Simple and Continuously Compounded Returns" width="504" /&gt;
 &lt;p class="caption"&gt;Figure: Relationship between Simple and Continuously Compounded Returns&lt;/p&gt;
@@ -365,6 +381,8 @@ Alex is tracking the performance of his investment over three consecutive period
 
 ---
 ## Average Return
+
+**Note: covered in 2_portfolio_theory.Rmd already! Remove this.**
 
 Given a series of portfolio returns `\(r_{p,t}\)`, `\(t=1,2,\ldots,T\)`, the average return can be calculated in two ways:
 
@@ -720,6 +738,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
 <script src="theme/example-numbering.js"></script>
+<script type="text/javascript">smartify();</script>
 
 <script>
 slideshow._releaseMath = function(el) {

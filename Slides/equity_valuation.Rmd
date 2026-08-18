@@ -1,38 +1,16 @@
 ---
 title: "Equity Valuation"
-author: "Instructor: Menghan Yuan"
-date: "Fall 2025"
-output: 
-  xaringan::moon_reader:
-    css: ["theme/xaringan-themer.css", "theme/custom.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: yes
-      countIncrementalSlides: no
-      ratio: '16:9'
-    includes:
-      in_header: libs/mathjax.html
 ---
 
-```{r setup, include=F}
-# Side-by-side comparison using stargazer
-library(tidyverse)
-library(knitr)
+```{r child = "_setup.Rmd"}
+```
+
+```{r setup-deck, include=FALSE}
+# Deck-specific: extra packages, hidden code, svg figures.
 library(quantmod)
 library(stargazer)
 library(data.table)
-opts_chunk$set(
-  echo = FALSE, message = FALSE, fig.align = "center", fig.pos = "H",
-  dpi = 300, fig.retina = 2, dev = "svg"
-)
-```
-
-```{r xaringanExtra-extension, echo=FALSE}
-# add search box
-xaringanExtra::use_search(show_icon = TRUE, position = "bottom-left")
-# enable tile view
-xaringanExtra::use_tile_view()
+opts_chunk$set(echo = FALSE, dpi = 300, fig.retina = 2, dev = "svg")
 ```
 
 ```{r fun}
@@ -304,7 +282,7 @@ Company profiles:
 - **Coca-Cola Co. (KO)**: Large-cap (~$270 billion) consumer staples company; defensive stock
 
 ```{r}
-data_dir <- "/Users/menghan/Library/CloudStorage/OneDrive-Norduniversitet/EK369E 2025Fall/Slides/data/"
+data_dir <- "data/"
 f_name <- paste0(data_dir, "FF_3Factors_case_study.csv")
 reg_data <- read_csv(f_name)
 # Split data for individual regressions

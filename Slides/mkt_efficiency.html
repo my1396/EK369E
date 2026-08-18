@@ -189,6 +189,12 @@
       }
     });
     </script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/fnaufel/xaringan-smartify/smartify.min.js"></script>
     <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="theme/custom.css" type="text/css" />
   </head>
@@ -207,6 +213,9 @@ class: center, middle, inverse, title-slide
 ]
 
 ---
+
+
+
 
 
 
@@ -673,7 +682,6 @@ Suppose log prices follow a RW with drift:
 `$$p_t=\mu+p_{t-1}+e_t, \quad e_t\sim N(0, \sigma^2)$$`
 `\(r_t=\mu+e_t\)` where `\(p_t=\mu+p_{t-1}+e_t\)` and `\(e_t\sim N(0, \sigma^2)\)`
 
-
 Such a drift makes **sequences more likely than reversals**.
 The indicator variables `\(I_t\)` is like a biased coin-toss:
 
@@ -952,7 +960,6 @@ Box.test(returns, lag=1, type="Ljung-Box")
 
 ---
 
-
 ## References
 
 .small[
@@ -973,10 +980,12 @@ Lo, A. W. (1989). The size and power of the variance ratio test in finite sample
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "slideNumberFormat": "%current%/%total%",
+  "countIncrementalSlides": false,
   "highlightStyle": "github",
   "highlightLines": true,
-  "countIncrementalSlides": false,
-  "ratio": "16:9"
+  "highlightSpans": true
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -1073,6 +1082,8 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<script src="theme/example-numbering.js"></script>
+<script type="text/javascript">smartify();</script>
 
 <script>
 slideshow._releaseMath = function(el) {

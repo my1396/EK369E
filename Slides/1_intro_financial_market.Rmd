@@ -1,58 +1,8 @@
 ---
 title: "Introduction to the Financial Market"
-author: "Instructor: Menghan Yuan"
-date: "Fall 2025"
-output:
-  xaringan::moon_reader:
-    css: ["theme/xaringan-themer.css", "theme/custom.css"]
-    lib_dir: libs
-    nature:
-      ratio: '16:9'
-      slideNumberFormat: '%current%/%total%'
-      countIncrementalSlides: false
-      highlightStyle: github
-      highlightLines: true
-      highlightSpans: true
-    includes:
-      in_header: ["libs/mathjax.html", "libs/in_header.html"]
-      after_body: ["theme/example-numbering.html", "libs/after_body.html"]
 ---
 
-```{r setup, include=FALSE}
-library(knitr)
-library(kableExtra)
-library(tidyverse)
-library(huxtable)
-
-# don't show code unless we explicitly set echo = TRUE
-opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
-opts <- options(knitr.kable.NA = "")
-
-## control long outputs by using eg `max.lines = 10`
-hook_output_default <- knitr::knit_hooks$get('output')
-truncate_to_lines <- function(x, n) {
-   if (!is.null(n)) {
-      x = unlist(stringr::str_split(x, '\n'))
-      if (length(x) > n) {
-         # truncate the output
-         x = c(head(x, n), '...\n')
-      }
-      x = paste(x, collapse = '\n') # paste first n lines together
-   }
-   x
-}
-knitr::knit_hooks$set(output = function(x, options) {
-   max.lines <- options$max.lines
-   x <- truncate_to_lines(x, max.lines)
-   hook_output_default(x, options)
-})
-```
-
-```{r xaringanExtra-extension, echo=FALSE}
-# add search box
-xaringanExtra::use_search(show_icon = TRUE, position = "bottom-left")
-# enable tile view
-xaringanExtra::use_tile_view()
+```{r child = "_setup.Rmd"}
 ```
 
 

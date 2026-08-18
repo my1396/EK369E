@@ -4,7 +4,7 @@
     <title>Equity Valuation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Instructor: Menghan Yuan" />
-    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.30/header-attrs.js"></script>
     <script src="libs/mark.js-8.11.1/mark.min.js"></script>
     <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
@@ -187,6 +187,12 @@
       }
     });
     </script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/fnaufel/xaringan-smartify/smartify.min.js"></script>
     <link rel="stylesheet" href="theme/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="theme/custom.css" type="text/css" />
   </head>
@@ -201,10 +207,13 @@ class: center, middle, inverse, title-slide
 ### Instructor: Menghan Yuan
 ]
 .date[
-### Fall 2025
+### Fall 2026
 ]
 
 ---
+
+
+
 
 
 
@@ -1094,7 +1103,7 @@ Preview of Fama-French 3 factors for US market:
 
 ## Visualization of Risk-Free Rate
 
-&lt;img src="equity_valuation_files/figure-html/unnamed-chunk-4-1.svg" width="3600" style="display: block; margin: auto;" /&gt;
+&lt;img src="equity_valuation_files/figure-html/unnamed-chunk-5-1.svg" width="3600" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -2072,7 +2081,7 @@ Example Setup (monthly returns):
 
 ## Plot: SML vs. Assets
 
-&lt;img src="equity_valuation_files/figure-html/unnamed-chunk-11-1.svg" width="3000" style="display: block; margin: auto;" /&gt;
+&lt;img src="equity_valuation_files/figure-html/unnamed-chunk-12-1.svg" width="3000" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -2154,10 +2163,12 @@ Now we increase `\(r_f\)`, while holding `\(E[r_M-r_f]\)` fixed.
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "slideNumberFormat": "%current%/%total%",
+  "countIncrementalSlides": false,
   "highlightStyle": "github",
   "highlightLines": true,
-  "countIncrementalSlides": false,
-  "ratio": "16:9"
+  "highlightSpans": true
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -2254,6 +2265,8 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<script src="theme/example-numbering.js"></script>
+<script type="text/javascript">smartify();</script>
 
 <script>
 slideshow._releaseMath = function(el) {

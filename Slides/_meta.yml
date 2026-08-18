@@ -1,0 +1,4 @@
+# Shared document metadata, pulled in by the --metadata-file pandoc arg in
+# _output.yml. Change the date here once and every deck follows.
+author: "Instructor: Menghan Yuan"
+date: "Fall 2026"
