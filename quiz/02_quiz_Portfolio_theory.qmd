@@ -2,7 +2,7 @@
 title: "Quiz: Portfolio Theory"
 from: markdown+tex_math_single_backslash
 params:
-  # solution: false
+#   solution: false
   solution: true
 filters:
   - ../libs/color-text.lua
@@ -11,6 +11,8 @@ format:
     include-in-header: ../latex/preamble.tex
     fontsize: 12pt
 ---
+
+{{< include _chunk-opt.qmd >}}
 
 ::: {=latex}
 \vspace{-6em}
@@ -169,9 +171,218 @@ format:
     :::
 
 
+```{r}
+#| label: indifference-map
+#| include: false
+# Builds images/indifference_map_quiz.png, the figure used in Q11.
+#
+# Three curves E(r) = U + 0.5 * A * sigma^2 with the SAME A = 3 but different U:
+# one investor's indifference map. Equal curvature means the curves are vertical
+# shifts of one another and can never cross, so the highest curve is the highest
+# utility at every level of risk. 
+
+library(ggplot2)
+
+A_common <- 3
+map_curves <- data.frame(
+    curve = factor(c("I", "II", "III"), levels = c("I", "II", "III")),
+    U     = c(0.11, 0.08, 0.05)
+)
+
+sigma <- seq(0, 0.25, length.out = 400)
+dat_map <- do.call(rbind, lapply(seq_len(nrow(map_curves)), function(i) {
+    data.frame(curve = map_curves$curve[i],
+               sigma = sigma,
+               er    = map_curves$U[i] + 0.5 * A_common * sigma^2)
+}))
+
+lab_map <- data.frame(
+    curve = map_curves$curve,
+    sigma = 0.25,
+    er    = map_curves$U + 0.5 * A_common * 0.25^2,
+    text  = paste("Curve", map_curves$curve)
+)
+
+pal_map <- c("I" = "#0072B2", "II" = "#D55E00", "III" = "#009E73")
+
+p_map <- ggplot(dat_map, aes(sigma, er, colour = curve)) +
+    geom_line(linewidth = 0.9) +
+    geom_point(data = lab_map, size = 2.1, show.legend = FALSE) +
+    geom_text(data = lab_map, aes(label = text), hjust = -0.22, size = 4.4,
+              fontface = "bold", show.legend = FALSE) +
+    scale_colour_manual(values = pal_map) +
+    scale_x_continuous(labels = function(x) paste0(x * 100, "%"),
+                       breaks = seq(0, 0.25, 0.05),
+                       limits = c(0, 0.325), expand = c(0, 0)) +
+    scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
+                       breaks = seq(0, 0.22, 0.02),
+                       limits = c(0, 0.225), expand = c(0, 0)) +
+    labs(x = expression(paste("Standard deviation, ", sigma)),
+         y = expression(paste("Expected return, ", E(r)))) +
+    theme_classic(base_size = 15) +
+    theme(
+        legend.position = "none",
+        axis.title.x = element_text(margin = margin(t = 7)),
+        axis.title.y = element_text(margin = margin(r = 7)),
+        panel.grid.major = element_line(colour = "grey92", linewidth = 0.3),
+        axis.line = element_line(colour = "grey30", linewidth = 0.4),
+        plot.margin = margin(10, 12, 8, 8)
+    )
+
+dir.create("images", showWarnings = FALSE)
+ggsave("images/indifference_map_quiz.png", p_map,
+       width = 6.8, height = 4.1, dpi = 300, bg = "white")
+```
+
+
+```{r #fig-same-A, fig.cap="Indifference curves – same curvature.", out.width="80%"}
+knitr::include_graphics("images/indifference_map_quiz.png")
+```
+
+11. @fig-same-A shows three indifference curves. Which curve gives the investor the **highest utility**?
+
+    A)  Curve I
+    B)  Curve II
+    C)  Curve III
+    D)  They all give the same utility, since the risk aversion coefficient is the same
+
+    ::: {.content-visible when-meta="params.solution"}
+    ::: {.blue}
+    **The correct answer is A.**
+
+    Because the risk aversion $A$ is the same for all three, the curves have identical curvature: they are simply vertical shifts of one another and can therefore **never cross**.
+
+    The utility score is the **vertical intercept**, since setting $\sigma = 0$ in $E(r) = U + \frac{1}{2} A \sigma^2$ leaves $E(r) = U$. Reading the intercepts: Curve I gives $U = 11\%$, Curve II gives $8\%$ and Curve III gives $5\%$. Curve I is the highest.
+    :::
+    :::
+
+```{r}
+#| label: indifference-curves
+#| include: false
+# Builds images/indifference_curves_quiz.png, the figure used in Q11-Q13.
+#
+# Each curve is E(r) = U + 0.5 * A * sigma^2, the locus of (sigma, E(r)) pairs
+# giving one investor the same utility score U:
+#   curvature <-> risk aversion A  (convex A > 0, flat A = 0, concave A < 0)
+#   intercept <-> utility score U  (value of E(r) at sigma = 0)
+#
+# The parameters are chosen so the two readings give different rankings:
+# curve 3 is the most convex (largest A) but curve 1 has the highest intercept
+# (largest U), and the two cross at sigma = 14.1%.
+library(ggplot2)
+
+curves <- data.frame(
+    curve = factor(1:4),
+    A     = c(2, 0, 5, -2),
+    U     = c(0.09, 0.04, 0.06, 0.07)
+)
+
+sigma <- seq(0, 0.25, length.out = 400)
+dat <- do.call(rbind, lapply(seq_len(nrow(curves)), function(i) {
+    data.frame(curve = curves$curve[i],
+               sigma = sigma,
+               er    = curves$U[i] + 0.5 * curves$A[i] * sigma^2)
+}))
+
+# label placed at the right end of each curve
+lab <- do.call(rbind, lapply(seq_len(nrow(curves)), function(i) {
+    data.frame(curve = curves$curve[i],
+               sigma = 0.25,
+               er    = curves$U[i] + 0.5 * curves$A[i] * 0.25^2,
+               text  = paste("Curve", curves$curve[i]))
+}))
+
+pal <- c("1" = "#0072B2", "2" = "#009E73", "3" = "#D55E00", "4" = "#CC79A7")
+
+p <- ggplot(dat, aes(sigma, er, colour = curve)) +
+    geom_line(linewidth = 0.9) +
+    geom_point(data = lab, size = 2.1, show.legend = FALSE) +
+    geom_text(data = lab, aes(label = text), hjust = -0.22, size = 4.4,
+              fontface = "bold", show.legend = FALSE) +
+    scale_colour_manual(values = pal) +
+    scale_x_continuous(labels = function(x) paste0(x * 100, "%"),
+                       breaks = seq(0, 0.25, 0.05),
+                       limits = c(0, 0.315), expand = c(0, 0)) +
+    scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
+                       breaks = seq(0, 0.22, 0.02),
+                       limits = c(0, 0.225), expand = c(0, 0)) +
+    labs(x = expression(paste("Standard deviation, ", sigma)),
+         y = expression(paste("Expected return, ", E(r)))) +
+    theme_classic(base_size = 15) +
+    theme(
+        legend.position = "none",
+        axis.title.x = element_text(margin = margin(t = 7)),
+        axis.title.y = element_text(margin = margin(r = 7)),
+        panel.grid.major = element_line(colour = "grey92", linewidth = 0.3),
+        axis.line = element_line(colour = "grey30", linewidth = 0.4),
+        plot.margin = margin(10, 12, 8, 8)
+    )
+
+dir.create("images", showWarnings = FALSE)
+ggsave("images/indifference_curves_quiz.png", p,
+       width = 6.8, height = 4.1, dpi = 300, bg = "white")
+```
+
+--------------------------------------------------------------------------------
+
+*Questions 12–14 refer to @fig-indifference-curves below.*
+
+```{r #fig-indifference-curves}
+#| fig.cap: "Indifference curves for four investors with different risk aversion and utility scores."
+#| out.width: "80%"
+knitr::include_graphics("images/indifference_curves_quiz.png")
+```
+
+12. Which curve belongs to the **most risk-averse** investor, i.e. the investor with the largest risk aversion coefficient $A$?
+
+    A)  Curve 1
+    B)  Curve 2
+    C)  Curve 3
+    D)  Curve 4
+
+    ::: {.content-visible when-meta="params.solution"}
+    ::: {.blue}
+    **The correct answer is C.**
+
+    Risk aversion shows up as **curvature**. Rearranging the utility function gives $E(r) = U + \frac{1}{2} A \sigma^2$, so $A$ is twice the coefficient on $\sigma^2$: the larger $A$ is, the more sharply the curve bends upward, because the investor demands a much bigger increase in expected return to accept each extra unit of risk.
+    :::
+    :::
+
+13. Which curve represents the **highest utility score** $U$?
+
+    A)  Curve 1
+    B)  Curve 2
+    C)  Curve 3
+    D)  Curve 4
+
+    ::: {.content-visible when-meta="params.solution"}
+    ::: {.blue}
+    **The correct answer is A.**
+
+    The utility score is captured by the **intercept**. 
+    Curve 1 has the highest intercept, hence curve 1 has the highest utility level.
+    :::
+    :::
+
+14. Which curve belongs to a **risk-neutral** investor?
+
+    A)  Curve 1
+    B)  Curve 2
+    C)  Curve 3
+    D)  Curve 4
+
+    ::: {.content-visible when-meta="params.solution"}
+    ::: {.blue}
+    **The correct answer is B.**
+
+    A risk-neutral investor has $A = 0$, so the penalty term $\frac{1}{2} A \sigma^2$ disappears and $U = E(r)$. Utility no longer depends on $\sigma$, which makes the indifference curve **horizontal**: this investor is equally happy with a certain $4\%$ and with a wildly volatile portfolio expected to return $4\%$.
+    :::
+    :::
+
+
 ## Part II: Calculation Questions
 
-11. **Scenario analysis and portfolio choice.**
+15. **Scenario analysis and portfolio choice.**
 
     You are evaluating two funds. Their returns depend on the state of the economy next year as follows:
 
@@ -191,13 +402,21 @@ format:
     **Solution:**
 
     **(a) Expected returns.** Apply $E(r) = \sum_s r_s \, p_s$:
-    $$E(r_A) = 0.25(-0.12) + 0.50(0.10) + 0.25(0.28) = -0.03 + 0.05 + 0.07 = 0.09 = 9\%$$
-    $$E(r_B) = 0.25(-0.04) + 0.50(0.08) + 0.25(0.16) = -0.01 + 0.04 + 0.04 = 0.07 = 7\%$$
+    $$E(r_A) = 0.25(-0.12) + 0.50(0.10) + 0.25(0.28) = -0.03 + 0.05 + 0.07 = 9\%$$
+    $$E(r_B) = 0.25(-0.04) + 0.50(0.08) + 0.25(0.16) = -0.01 + 0.04 + 0.04 = 7\%$$
 
     **(b) Variance and standard deviation.** Apply $\sigma^2 = \sum_s \left[r_s - E(r)\right]^2 p_s$:
-    $$\sigma_A^2 = 0.25(-0.21)^2 + 0.50(0.01)^2 + 0.25(0.19)^2 = 0.011025 + 0.00005 + 0.009025 = 0.0201$$
+    $$\begin{aligned}
+    \sigma_A^2 &= 0.25(-0.21)^2 + 0.50(0.01)^2 + 0.25(0.19)^2 \\
+    &= 0.011025 + 0.00005 + 0.009025 \\
+    &= 0.0201
+    \end{aligned}$$
     $$\sigma_A = \sqrt{0.0201} = 0.1418 = 14.18\%$$
-    $$\sigma_B^2 = 0.25(-0.11)^2 + 0.50(0.01)^2 + 0.25(0.09)^2 = 0.003025 + 0.00005 + 0.002025 = 0.0051$$
+    $$\begin{aligned}
+    \sigma_B^2 &= 0.25(-0.11)^2 + 0.50(0.01)^2 + 0.25(0.09)^2 \\
+    &= 0.003025 + 0.00005 + 0.002025 \\
+    &= 0.0051
+    \end{aligned}$$
     $$\sigma_B = \sqrt{0.0051} = 0.0714 = 7.14\%$$
 
     Fund A offers the higher expected return, but with roughly twice the standard deviation.
@@ -214,7 +433,7 @@ format:
     :::
     :::
 
-12. **The complete portfolio and the Capital Allocation Line.**
+16. **The complete portfolio and the Capital Allocation Line.**
 
     You manage a risky portfolio P with an expected return of $14\%$ and a standard deviation of $20\%$. The risk-free rate is $5\%$.
 
@@ -228,7 +447,7 @@ format:
     **Solution:**
 
     **(a) Complete portfolio with $y = 0.6$.**
-    $$E(r_C) = r_F + y\left[E(r_P) - r_F\right] = 0.05 + 0.60(0.14 - 0.05) = 0.05 + 0.054 = 0.104 = 10.4\%$$
+    $$E(r_C) = r_F + y\left[E(r_P) - r_F\right] = 0.05 + 0.60(0.14 - 0.05) = 10.4\%$$
     $$\sigma_C = y \cdot \sigma_P = 0.60 \times 0.20 = 0.12 = 12\%$$
 
     **(b) Slope of the CAL.**
