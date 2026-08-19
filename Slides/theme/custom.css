@@ -51,6 +51,18 @@
     float: none;
     width: 49%;
 }
+
+/* Uneven columns. Add a split class alongside .pull-layout-v:
+     .pull-layout-v.split-60-40[
+     .pull-left[ ...wider column... ]
+     .pull-right[ ...narrower column... ]
+     ]
+   Widths sum to 98%, since the flex row keeps a 2% gap between the columns. */
+.remark-slide-content .pull-layout-v.split-60-40 > .pull-left  { width: 59%; }
+.remark-slide-content .pull-layout-v.split-60-40 > .pull-right { width: 39%; }
+
+.remark-slide-content .pull-layout-v.split-40-60 > .pull-left  { width: 39%; }
+.remark-slide-content .pull-layout-v.split-40-60 > .pull-right { width: 59%; }
 /* Smaller text */
 .small-text,
 .small-text p,
@@ -154,6 +166,12 @@ ul {
 }
 .MJXc-display {
     margin: 0.5em 0 !important;
+}
+/* Pull display math up against the line that introduces it */
+.remark-slide-content .tight-math .MJXc-display,
+.remark-slide-content .tight-math p>span.mjx-chtml.MJXc-display {
+    margin-top: 0.1em !important;
+    margin-bottom: 0.1em !important;
 }
 /* Set font size for math, default to 121% */
 .mjx-chtml {
@@ -266,4 +284,9 @@ body.remark-container {
         font-family: 'Georgia Pro', 'Libertinus Serif', serif !important;
         font-weight: 600 !important;
     }
+}
+
+/* Predefined colors */
+.env-red {
+    color: rgb(185, 64, 71);
 }

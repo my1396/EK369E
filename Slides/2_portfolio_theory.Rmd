@@ -34,7 +34,7 @@ class: inverse, center, middle
 
 We cannot know the actual return on an investment in the future. A more realistic approach is to estimate the expected return conditional on a set of possible **investment scenarios**. 
 
-.pull-layout-v[
+.pull-layout-v.split-60-40[
 
 .pull-left[
 - Expected return on asset $i$:
@@ -114,7 +114,7 @@ Answers (standard deviations): Asset X = 0.24, Asset Y = 0.13
 - Return on an investment based on all income and price changes during a holding period.
   - If the income is received at the beginning of the holding period, the HPR must include the cash flow derived from reinvesting the income.
 
-$$HPR_1 = \frac{P_1 - P_0 + I_1}{P_0}$$
+$$HPR_1 = \frac{P_1 - P_0 + I_1}{P_0} = \frac{P_1 + I_1}{P_0} - 1$$
 
 
 Where: 
@@ -139,11 +139,14 @@ A 30-year US treasury bond with an 8% coupon is currently selling at par. The co
 ]
 
 - Compute the probability distribution of the 1-year HPR on this bond.
+- What is the expected HPR on this bond?
 
 ???
 Compute the HPR based on the bond price in each future state.
 
 Answers: 0.19, 0.16, 0.15
+
+$E[HPR]=0.20\times 0.19 + 0.5\times 0.16 0.3\times 0.15 =0.163$
 
 ---
 
@@ -209,7 +212,7 @@ answer:
 
 (b) After the first month, her investment grows to $100 \* (1 + 0.10) = $110. After the second month, it decreases to $110 \* (1 - 0.10) = $99.
 
-(c) $GM = [(1+r_1)(1+r_2)]^{1/2} - 1 = [(1 + 0.10) * (1 - 0.10)]^{1/2} - 1 ≈ -0.50%$
+(c) $GM = [(1+r_1)(1+r_2)]^{1/2} - 1 = [(1 + 0.10) * (1 - 0.10)]^{1/2} - 1 ≈ -0.50\%$
 
 (d) The geometric return provides a better measure of Sarah’s investment performance because it accounts for the **compounding effect of returns over multiple periods**. Unlike the arithmetic average, which can be misleading in volatile markets, the geometric return reflects the actual growth rate of the investment, showing that Sarah's investment decreased in value over the two months.
 
@@ -219,22 +222,23 @@ answer:
 ## Historical Risk
 ]
 
+.tight-top.tight-math[
 - Variance of return $(\sigma^2)$:
-  
-  .tight-top.tight-bottom[
   $$\begin{aligned}
   \text{Unbiased estimator:} \quad \sigma^2 &= \frac{1}{T-1} \sum_{t=1}^{T} \left[ r_t - \bar{r} \right]^2 \\
   \text{Biased estimator:} \quad s^2 &= \frac{1}{T}\sum_{t=1}^{T}\left[ r_t - \bar{r}\right]^2
   \end{aligned}$$
   In practice, both version are used.
   When $T$ is large, the difference between $T$ and $T-1$ becomes negligible. 
-  ]
+]
 
+.tight-math[
 - Standard deviation of return $(\sigma)$:
   $$\sigma = \sqrt{\sigma^2}$$
 
 - Covariance between two assets $(\sigma_{1,2})$:
   $$\sigma_{1,2} = \frac{1}{T-1} \sum_{t=1}^{T} \left[ (r_{1,t} - \bar{r}_1) \cdot (r_{2,t} - \bar{r}_2) \right]$$
+]
 
 Where: $r_t$ = return in each period; $\bar{r}$ = average return; $T$ = number of periods.
 
@@ -377,21 +381,26 @@ There are three important allocation decisions a rational investor makes:
 
 ---
 
-## Risk Tolerance
+.tight-top.tight-bottom[
+## Utility Score
+
+The utility score of a portfolio is a measure of the overall satisfaction or happiness that an investor derives from the portfolio's performance, taking into account the investor's risk aversion and preferences.
 
 $$\text{Utility score } (U) = E(r) - \frac{1}{2} A \sigma^2$$
+]
 
-**Risk-averse** $(A > 0)$**:**
+**Risk-averse** $(A > 0)$:
 - have a low tolerance for deviations from expected return
   - *i.e., penalise risky investments more severely*
 
-**Risk-neutral** $(A = 0)$**:**
+**Risk-neutral** $(A = 0)$:
 - indifferent to deviations from expected return
   - *i.e., no penalty for risky investments*
 
-**Risk-loving** $(A < 0)$**:**
+**Risk-loving** $(A < 0)$:
 - actively seek out or enjoy risk
   - *i.e., risky investments increase the investor's utility*
+
 
 .small-text[
 *Where: $E(r)$ = expected return; $A$ = index of investor's risk aversion; $\sigma^2$ = variance of expected returns.*
@@ -412,11 +421,26 @@ $$\text{Utility score } (U) = E(r) - \frac{1}{2} A \sigma^2$$
 
 ## The Indifference Curve
 
-<img src="images/indifference_curves.png" alt="risk aversion for different types of investors" style="display: block; margin-right: auto; margin-left: auto; width:52%;" />
+.pull-left[
+
+$$\underbrace{U = E(r) - \frac{1}{2} A \sigma^2}_\text{Utility Score} \Rightarrow \underbrace{\red{E[r] = U + \frac{1}{2} A \sigma^2} }_\text{Indifference Curve}$$ 
+<img src="images/indifference_curves.png" alt="risk aversion for different types of investors" style="display: block; margin-right: auto; margin-left: auto; width:95%;" />
 
 .small-text[
 Source: analystprep.com
 ]
+]
+
+.pull-right[
+- Every point on the indifference curve yields the same level of utility, $U$, based on different expected returns and standard deviations. 
+- The **curvature** of the indifference curve depends on the investor's risk aversion, $\red{A}$:
+  - **Risk-averse** $(A > 0)$: upward sloping curve, convexed, the larger the $A$, more convexed the curve
+  - **Risk-neutral** $(A = 0)$: flat curve
+  - **Risk-loving** $(A < 0)$: downward sloping curve, concaved, the more negative the $A$, more concaved the curve
+- The **intercept** stands for the Utility Score, $\red{U}$. Higher intercepts represent higher levels of utility. A rational investor will choose portfolios on the highest indifference curve.
+]
+
+
 
 ???
 - The indifference curve plots the utility of an investor based on their risk tolerance. Every point on the indifference curve yields the same level of utility based on different expected returns and standard deviations.
@@ -502,13 +526,22 @@ Without any calculation:
   $$\sigma_C = y \cdot \sigma_P$$
 
 Where:
-- $E(r_P)$ = expected return of the risky portfolio; 
-- $\sigma_P$ = standard deviation of the risky portfolio; 
-- $r_F$ = risk-free return; 
-- $y$ = weight of the risky portfolio; 
-- $1-y$ = weight of the risk-free asset.
+- $E(r_P)$: expected return of the risky portfolio; 
+- $\sigma_P$: standard deviation of the risky portfolio; 
+- $r_F$: risk-free return; 
+- $\red{y}$<span class="env-red">: weight of the risky portfolio; </span>
+- $1-y$: weight of the risk-free asset.
 
 ???
+$$\begin{aligned}
+r_c &= r_F + y (r_p-r_F) \\
+\var(r_c) &= \var\left(r_F + y (r_p-r_F)\right) \\
+&= \underbrace{\var(r_F)}_\text{$r_F$ has zero variance} + \var\left(y (r_p-r_F)\right) + 2 \underbrace{\cov\left(r_F, y (r_p-r_F)\right)}_\text{$r_F$ is constant, so covariance is zero} \\
+&= 0 + y^2 \var(r_p) + 0 \\
+&= y^2 \sigma_p^2 \\
+\sigma_c &= \sqrt{\var(r_c)} = \sqrt{y^2 \sigma_p^2} = y \sigma_p
+\end{aligned}$$
+
 - The most basic and first step in constructing an efficient portfolio begins by allocating a fraction of the investment capital to risky and risk-free assets.
 
 - A rational investor can maximise their investment portfolio by combining risky and risk-free assets.
@@ -632,7 +665,7 @@ You manage a risky portfolio with an expected rate of return of 18% and a standa
 ]
 
 ???
-Answers: $y = 0.3644$, $E(r_C) = 0.1164$, standard deviation = 0.1020
+Answers: $y^* = 0.3644$, $E(r_C) = 0.1164$, standard deviation = 0.1020
 
 ---
 
