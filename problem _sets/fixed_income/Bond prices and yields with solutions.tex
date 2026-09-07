@@ -65,20 +65,20 @@ The YTM of this bond must be higher than 6\% since the bond is trading at a disc
 Given the difference between the bond's price and the par value, we can begin with a YTM of 7.5\% and increase incrementally until we get the price that equates the present value of inflows to the present value of out flows.\\
 We can also speed up the process by using the annuity formula to discount the coupon payments of the bond. Annuity formula = $\frac{1 - (1+ YTM)^{-T}}{YTM}$\\
 @YTM = 7.5\%\\
-$P_0 = $ {\Large $= 6[\frac{1 - (1.075)^{-3}}{0.075}] + \frac{100}{(1.075)^3}$}\\
+$P_0 = $ {\Large $6[\frac{1 - (1.075)^{-3}}{0.075}] + \frac{100}{(1.075)^3}$}\\
 $P_0 = (6 \times 2.6005) + 80.4961 = 96.099$\\
 This price is higher than 93.3, so we increase the YTM by 1\%\\
 \\
-YTM = 8.5\%\\
-$P_0 = $ {\Large $= 6[\frac{1 - (1.085)^{-3}}{0.085}] + \frac{100}{(1.085)^3}$}\\
+@YTM = 8.5\%\\
+$P_0 = $ {\Large $6[\frac{1 - (1.085)^{-3}}{0.085}] + \frac{100}{(1.085)^3}$}\\
 $P_0 = (6\times 2.5540) + 78.291 = 93.61$\\
-This price is slightly higher than 93.3, so we increase the YTM by 0.05\%\\
+This price is slightly higher than 93.3, so we increase the YTM by 0.1\%\\
 \\
-@YTM = 8.55\%\\
-$P_0 = $ {\Large $= 6[\frac{1 - (1.0855)^{-3}}{0.0855}] + \frac{100}{(1.0855)^3}$}\\
-$P_0 = (6\times 2.5517) + 78.1826 = 93.49$\\
+@YTM = 8.6\%\\
+$P_0 = $ {\Large $6[\frac{1 - (1.086)^{-3}}{0.086}] + \frac{100}{(1.086)^3}$}\\
+$P_0 = (6\times 2.5494) + 78.0747 = 93.37$\\
 This price is approximately the same as 93.3, we can conclude that the 
-\uuline{YTM is approximately 8.55\%}
+\uuline{YTM is approximately 8.6\%}
 
 \noindent
 \\
@@ -89,7 +89,7 @@ We set $(1 + YTM) = x$\\
 \\
 {93.3 = \Large $\frac{6x^2 + 6x + 106}{x^3}$}  \hspace{4mm}  {\small(\textit{by finding the Least common multiple on the right side of the equation above})}\\
 \\
-{$93.3x^3 - 6x^2 -6x -106$} \hspace{4mm}  {\small(\textit{by cross multiplying (or multiply both sides of the the equation above by $x^3$) and equate to zero})}\\
+{$93.3x^3 - 6x^2 -6x -106 = 0$} \hspace{4mm}  {\small(\textit{by cross multiplying (or multiply both sides of the the equation above by $x^3$) and equate to zero})}\\
 Solving for x using equation mode on your calculator yields:\\
 $ x = 1.086 \therefore \uuline{YTM = 0.086 \text{ or } 8.6\%}$
 
@@ -434,9 +434,9 @@ A newly issued bond pays its coupons once annually. Its coupon rate is 5\%, its 
 \color{blue}
 \subsubsection*{Solution 5a.}
 Price at the beginning of the year ($P_0$):\\
-$P_0 = $ {\Large $= 5[\frac{1 - (1.08)^{-20}}{0.08}] + \frac{100}{(1.08)^{20}}$} = 70.55\\
+$P_0 = $ {\Large $5[\frac{1 - (1.08)^{-20}}{0.08}] + \frac{100}{(1.08)^{20}}$} = 70.55\\
 \\
-$P_1 = $ {\Large $= 5[\frac{1 - (1.07)^{-19}}{0.07}] + \frac{100}{(1.07)^{19}}$} = 79.33\\
+$P_1 = $ {\Large $5[\frac{1 - (1.07)^{-19}}{0.07}] + \frac{100}{(1.07)^{19}}$} = 79.33\\
 \\
 $HPR_1$ = {\Large $\frac{79.33 - 70.55 + 5}{70.55}$ }= \uuline{0.1953 / 19.53\%}\\
 
@@ -448,19 +448,6 @@ $HPR_1$ = {\Large $\frac{79.33 - 70.55 + 5}{70.55}$ }= \uuline{0.1953 / 19.53\%}
 
 \color{blue}
 \subsubsection*{Solution 5b.}
-
-$HPR_1 = 19.53\%$\\
-\\
-$P_2 = $ {\Large $= 5[\frac{1 - (1.07)^{-18}}{0.07}] + \frac{100}{(1.07)^{18}}$} = 79.88\\
-\\
-$HPR_2$ = {\Large $\frac{79.88 - 79.33 + 5}{79.33}$ }= \uuline{6.996\% or 7\%}\\
-\\
-Realised Compound Yield = $(\sqrt[2]{1.1953 \times 1.07}) - 1$ = \uuline{13.09\% $\approx$ 13\%}
-
-\noindent
-or 
-
-\noindent
 
 
 \begin{table}[H]
@@ -517,16 +504,8 @@ $P_{0, Clean}^A = P_{0, Invoice }^A = $ {\Large $\frac{100}{(1.025)^{5.5}}$} = \
 
 \noindent
 \textbf{Bond B}\\
-There are two methods of computing the  invoice price.\\
-\textit{Method 1}: compute the clean price based on T = 2.5 and add accrued coupon for 0.5 years to get invoice price\\
-$P_{0, clean}^B = $ {\Large $= 4[\frac{1 - (1.020)^{-2.5}}{0.020}] + \frac{100}{(1.020)^{2.5}}$ }\\
-$P_{0, clean}^B = $ {\large $= (4\times 2.42) + 95.17$} = \uuline{104.85}\\
-Accrued interest on Bond B: $0.5\times 4$ = 2\\
-$P_{0, invoice}^B$ =  104.85 + 2 = \uuline{106.85}\\
-
 \noindent
-\textit{Method 2}:
-Compute the invoice price using the formula and setting T = 3\\
+Compute the invoice price using the price between coupon dates formula and setting T = 3\\
 $P_{0, invoice}^B $ = {\huge $\frac{\frac{4}{0.02} \times [1.02^3 -1] + 100 }{(1.02)^{3-1+0.5}}$}\\
 \\
 $P_{0, invoice}^B $ = {\Large $\frac{112.24}{1.0508}$}  = \uuline{106.81}\\
@@ -559,9 +538,9 @@ Treasury bonds paying an 8\% coupon rate with semiannual payments currently sell
 
 \color{blue}
 \subsubsection*{Solution 7}
-A semi-annual coupon bond selling at par has semi-annual coupon rate = semi-annual YTM = 8\%\\
-This represents an effective annual yield of $0.08^2 = 0.1664$ or $16.64\%$\\
-Therefore,to continue to sell at par, when paying coupons annually, the bond's coupon rate must be equal to its YTM of \uuline{16.64\%}.
+A bond with an annual coupon rate of 8\%, paid semiannually, pays 4\% of its face value every six months. Since the bond sells at par, its semiannual yield to maturity is also 4\%.\\
+For a face value of NOK 100, the first NOK 4 coupon can be reinvested for six months at 4\%, earning NOK 0.16. Together with the second NOK 4 coupon, this gives NOK 8.16 at year-end, equivalent to an effective annual yield of 8.16\%.\\
+Therefore, to continue selling at par with the same required effective annual yield, the bond must offer an \textbf{annual coupon rate of 8.16\% when coupons are paid once annually}.
 
 
 
@@ -581,7 +560,7 @@ $P_0^{Bond 1} =$ {\Large $\frac{100}{1.08^{10}}$} = \uuline{ 46.32 }\\
 \\
 $P_0^{Bond 2} =$ \uuline{100}\\
 \\
-$P_0^{Bond 3} =$ {\Large $= 10[\frac{1 - (1.08)^{-10}}{0.08}] + \frac{100}{(1.08)^{10}}$} = \uuline{113.42} \\
+$P_0^{Bond 3} =$ {\Large $10[\frac{1 - (1.08)^{-10}}{0.08}] + \frac{100}{(1.08)^{10}}$} = \uuline{113.42} \\
 
 
 \noindent
@@ -596,10 +575,10 @@ $P_1^{Bond 1} =$ {\Large $\frac{100}{1.08^{9}}$} = \uuline{50.02}\\
 \\
 $P_1^{Bond 2} =$ \uuline{100}\\
 \\
-$P_1^{Bond 3} =$ {\Large $= 10[\frac{1 - (1.08)^{-9}}{0.08}] + \frac{100}{(1.08)^{9}}$} = \uuline{112.49} \\
+$P_1^{Bond 3} =$ {\Large $10[\frac{1 - (1.08)^{-9}}{0.08}] + \frac{100}{(1.08)^{9}}$} = \uuline{112.49} \\
 
 \noindent
-Comments: \\
+\textit{Comments:} \\
 Holding all else equal and assuming stable interest rates, discount bonds increase in value (approach the par-value) as they approach maturity. \\
 Holding all else equal and assuming stable interest rates, premium bonds reduce in value (approach the par-value) as they approach maturity. This is because the number of high coupon payments, the reason why they were priced above par, reduces as maturity approaches.\\
 In summary, bonds(with similar attributes) are priced such that all investors earn comparable total return (otherwise there would be arbitrage in the bond market). 
@@ -622,7 +601,7 @@ $HPR_1^{Bond 2}$ = {\Large $\frac{100 - 100 + 8 }{100}$ }= \uuline{8.0\%}\\
 $HPR_1^{Bond 3}$ = {\Large $\frac{112.49 - 113.42 + 10 }{113.42}$ }= \uuline{7.997\% $\approx$ 8.0\%}\\
 
 \noindent
-Comments: 
+\textit{Comments:} \\
 With stable interest rates, these bonds are interchangeable as the investor earns the same return regardless.
 
 
@@ -636,11 +615,11 @@ With stable interest rates, these bonds are interchangeable as the investor earn
 
 \color{blue}
 \subsubsection*{Solution 8d.}
-$P_1^{Bond 1} =$ {\Large $\frac{100}{1.07^{9}}$} = \uuline{54.39}\\
+$P_1^{Bond 1}$ = {\Large $\frac{100}{1.07^{9}}$} = \uuline{54.39}\\
 \\
-$P_1^{Bond 2} =${\Large $= 8[\frac{1 - (1.07)^{-9}}{0.08}] + \frac{100}{(1.07)^{9}}$} =  \uuline{106.52}\\
+$P_1^{Bond 2}$ = {\Large $8[\frac{1 - (1.07)^{-9}}{0.07}] + \frac{100}{(1.07)^{9}}$} =  \uuline{106.52}\\
 \\
-$P_1^{Bond 3} =$ {\Large $= 10[\frac{1 - (1.07)^{-9}}{0.08}] + \frac{100}{(1.07)^{9}}$} = \uuline{119.55} \\
+$P_1^{Bond 3}$ = {\Large $10[\frac{1 - (1.07)^{-9}}{0.07}] + \frac{100}{(1.07)^{9}}$} = \uuline{119.55} \\
 \\
 \\
 $HPR_1^{Bond 1}$ = {\Large $\frac{54.39 - 46.32 }{46.32}$ }= \uuline{17.42\% }\\
@@ -650,8 +629,8 @@ $HPR_1^{Bond 2}$ = {\Large $\frac{106.52 - 100 + 8 }{100}$ }= \uuline{14.52\%}\\
 $HPR_1^{Bond 3}$ = {\Large $\frac{119.55 - 113.42 + 10 }{113.42}$ }= \uuline{14.22\%}\\
 
 \noindent
-Comment: 
-When interest rates decline, the HPR of a bond increases (due to the capital appreciation in price). This appreciation is more for zero-coupon bonds (they more quickly approach par-value). In this example, the zero-coupon bond performs better than the coupon-paying bonds since majority of the holding period return comes from capital appreciation when interest rates reduce.
+\textit{Comments:} \\
+When yields fall, bond prices rise, increasing holding period returns compared with unchanged yields. For these bonds with the same maturity and initial yield, the zero-coupon bond is the most sensitive to interest rate changes because all its cash flow occurs at maturity. It therefore experiences the largest percentage price increase from the yield decline and earns the highest holding period return.
 \end{document}
 
 
