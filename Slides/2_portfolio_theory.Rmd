@@ -676,7 +676,7 @@ Answers: $y^* = 0.3644$, $E(r_C) = 0.1164$, standard deviation = 0.1020
 **Risky Portfolio = Risky Asset 1 + Risky Asset 2**
 
 - **Portfolio Return** $\left( E(r_P) \right)$:
-  $$E(r_P) = \sum_{i=1}^{2} w_i \cdot E(r_i)$$
+  $$E(r_P) = w_1 \cdot E(r_1) + w_2 E(r_2)$$
 
 - **Portfolio Variance** $(\sigma_P^2)$:
   $$\sigma_P^2 = w_1^2 \cdot \sigma_1^2 + (1 - w_1)^2 \cdot \sigma_2^2 + 2 \cdot w_1 \cdot (1 - w_1) \cdot \sigma_{1,2}$$
@@ -686,7 +686,7 @@ Where:
 - $w_i$ = weight of asset $i$
 - $w_2 = 1 - w_1$
 - $E(r_i)$ = expected return of asset $i$; 
-- $\sigma_{1,2}$ = covariance between assets 1 and 2; 
+- $\sigma_{1,2}$ = covariance between assets 1 and 2, where $\sigma_{1,2}=\rho_{1,2}\sigma_1\sigma_2$; 
 - $\rho_{1,2}$ = correlation between assets 1 and 2.
 ]
 
