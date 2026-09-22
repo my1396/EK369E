@@ -3,12 +3,8 @@ title: "Event Study Class Examples"
 params:
 #   solution: false
   solution: true
-filters:
-  - ../libs/color-text.lua
-format: 
+format:
   pdf:
-    include-in-header: ../latex/preamble.tex
-    fontsize: 12pt
     number-sections: true
 ---
 

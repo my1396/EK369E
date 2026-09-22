@@ -1,8 +1,15 @@
 ---
 title: "Quiz: Factor Models"
+# Toggle the solution on/off
 params:
 #   solution: false
   solution: true
+format:
+  pdf:
+    number-sections: true
+# Put the section number in front of each PDF bookmark.
+hyperrefoptions:
+  - bookmarksnumbered=true
 ---
 
 {{< include _chunk-opt.qmd >}}
@@ -11,469 +18,457 @@ params:
 \vspace{-6em}
 :::
 
-1. **Index model regression results.**
+## Index model regression results
 
-   The excess return index model has been estimated for Stocks A and B:
+The excess return index model has been estimated for Stocks A and B:
 
-   |                             | Stock A               | Stock B                |
-   | --------------------------- | --------------------- | ---------------------- |
-   | Regression                  | $R_A = 1\% + 1.2 R_M$ | $R_B = -2\% + 0.8 R_M$ |
-   | $R^2$                       | $0.576$               | $0.436$                |
-   | Residual standard deviation | $10.3\%$              | $9.1\%$                |
+|                             | Stock A               | Stock B                |
+| --------------------------- | --------------------- | ---------------------- |
+| Regression                  | $R_A = 1\% + 1.2 R_M$ | $R_B = -2\% + 0.8 R_M$ |
+| $R^2$                       | $0.576$               | $0.436$                |
+| Residual standard deviation | $10.3\%$              | $9.1\%$                |
 
-   a)  Which stock has more firm-specific risk?
-   b)  Which stock has greater market risk?
-   c)  For which stock does market movement explain a greater fraction of return variability?
-   d)  If $r_f$ is constant at $6\%$ and the regression had been run using total returns rather than excess returns, what would the regression intercept for Stock A have been?
+a)  Which stock has more firm-specific risk?
+b)  Which stock has greater market risk?
+c)  For which stock does market movement explain a greater fraction of return variability?
+d)  If $r_f$ is constant at $6\%$ and the regression had been run using total returns rather than excess returns, what would the regression intercept for Stock A have been?
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   **(a) Firm-specific risk.** This is the residual standard deviation, the part of return variability the market factor leaves unexplained: $10.3\%$ for Stock A against $9.1\%$ for Stock B. **Stock A has more firm-specific risk.**
+**(a) Firm-specific risk.** This is the residual standard deviation, the part of return variability the market factor leaves unexplained: $10.3\%$ for Stock A against $9.1\%$ for Stock B. **Stock A has more firm-specific risk.**
 
-   **(b) Market risk.** Beta measures a security's sensitivity to market-wide uncertainty. Stock A has the higher beta ($1.2$ against $0.8$), so **Stock A carries the greater market risk**.
+**(b) Market risk.** Beta measures a security's sensitivity to market-wide uncertainty. Stock A has the higher beta ($1.2$ against $0.8$), so **Stock A carries the greater market risk**.
 
-   **(c) Explained variability.** $R^2$ is the proportion of total risk that is systematic. Stock A's $R^2$ of $0.576$ exceeds Stock B's $0.436$, so **market movements explain a greater fraction of Stock A's return variability**.
+**(c) Explained variability.** $R^2$ is the proportion of total risk that is systematic. Stock A's $R^2$ of $0.576$ exceeds Stock B's $0.436$, so **market movements explain a greater fraction of Stock A's return variability**.
 
-   **(d) Intercept in total returns.** Starting from the excess-return specification with $r_f = 6\%$:
-   $$r_A - 6\% = 1\% + 1.2\,(r_M - 6\%)$$
-   $$r_A = \left[1\% + (1 - 1.2) \times 6\%\right] + 1.2\,r_M = -0.2\% + 1.2\,r_M$$
+**(d) Intercept in total returns.** Starting from the excess-return specification with $r_f = 6\%$:
+$$r_A - 6\% = 1\% + 1.2\,(r_M - 6\%)$$
+$$r_A = \left[1\% + (1 - 1.2) \times 6\%\right] + 1.2\,r_M = -0.2\% + 1.2\,r_M$$
 
-   Regressing total return on total market return would therefore have given an intercept of $\mathbf{-0.2\%}$.
-   :::
-   :::
+Regressing total return on total market return would therefore have given an intercept of $\mathbf{-0.2\%}$.
+:::
+:::
 
-2. **Adjusting and forecasting beta.**
+## Adjusting and forecasting beta
 
-   A stock currently has a beta estimate of $1.24$.
+A stock currently has a beta estimate of $1.24$.
 
-   a)  What is the adjusted beta for this stock?
-   b)  If you estimate the regression equation $\beta_t = 0.3 + 0.7\,\beta_{t-1}$, which describes the evolution of beta over time, what would be your predicted beta for the next year?
+a)  What is the adjusted beta for this stock?
+b)  If you estimate the regression equation $\beta_t = 0.3 + 0.7\,\beta_{t-1}$, which describes the evolution of beta over time, what would be your predicted beta for the next year?
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   **(a) Adjusted beta.** The standard adjustment shrinks the estimate two-thirds of the way from the sample estimate towards the market beta of $1.0$:
-   $$\beta_{\text{adjusted}} = \tfrac{2}{3} \times 1.24 + \tfrac{1}{3} \times 1.0 = \mathbf{1.16}$$
+**(a) Adjusted beta.** The standard adjustment shrinks the estimate two-thirds of the way from the sample estimate towards the market beta of $1.0$:
+$$\beta_{\text{adjusted}} = \tfrac{2}{3} \times 1.24 + \tfrac{1}{3} \times 1.0 = \mathbf{1.16}$$
 
-   **(b) Predicted beta.**
-   $$\beta_{\text{predicted}} = 0.3 + 0.7 \times 1.24 = \mathbf{1.17}$$
-   :::
-   :::
+**(b) Predicted beta.**
+$$\beta_{\text{predicted}} = 0.3 + 0.7 \times 1.24 = \mathbf{1.17}$$
+:::
+:::
 
-3. **Arbitrage portfolios and the APT.**
+## Arbitrage portfolios and the APT
 
-   A portfolio manager wishes to use the Arbitrage Pricing Theory (APT) for making investment decisions. The manager evaluates four stocks ($i = 1, 2, 3, 4$) and assumes that two fundamental factors, $F_1$ and $F_2$, generate the return structure. The table below summarises the manager's estimate of the expected return $E(r_i)$, the factor sensitivities $\beta_{i1}$ and $\beta_{i2}$, and the manager's current portfolio weights $w_i^0$.
+A portfolio manager wishes to use the Arbitrage Pricing Theory (APT) for making investment decisions. The manager evaluates four stocks ($i = 1, 2, 3, 4$) and assumes that two fundamental factors, $F_1$ and $F_2$, generate the return structure. The table below summarises the manager's estimate of the expected return $E(r_i)$, the factor sensitivities $\beta_{i1}$ and $\beta_{i2}$, and the manager's current portfolio weights $w_i^0$.
 
-   You learn that the set of possible arbitrage weights is $w_1 = -0.280$, $w_2 = 0.043$, $w_3 = -0.065$ and $w_4 = 0.302$.
+You learn that the set of possible arbitrage weights is $w_1 = -0.280$, $w_2 = 0.043$, $w_3 = -0.065$ and $w_4 = 0.302$.
 
-   | Stock $i$ | $E(r_i)$ | $\beta_{i1}$ | $\beta_{i2}$ | $w_i^0$ |
-   | --------- | -------- | ------------ | ------------ | ------- |
-   | 1         | $-0.05$  | $1.5$        | $-1.0$       | $0.32$  |
-   | 2         | $0.26$   | $2.0$        | $2.0$        | $0.48$  |
-   | 3         | $0.166$  | $-0.5$       | $1.0$        | $0.12$  |
-   | 4         | $0.118$  | $1.0$        | $-1.0$       | $0.08$  |
+| Stock $i$ | $E(r_i)$ | $\beta_{i1}$ | $\beta_{i2}$ | $w_i^0$ |
+| --------- | -------- | ------------ | ------------ | ------- |
+| 1         | $-0.05$  | $1.5$        | $-1.0$       | $0.32$  |
+| 2         | $0.26$   | $2.0$        | $2.0$        | $0.48$  |
+| 3         | $0.166$  | $-0.5$       | $1.0$        | $0.12$  |
+| 4         | $0.118$  | $1.0$        | $-1.0$       | $0.08$  |
 
-   a)  What is the relationship in general between the portfolio weights $w_i^0$ and the arbitrage weights $w_i$?
-   b)  Calculate the new portfolio weights $w_i^1$.
-   c)  Does this situation give rise to a profitable arbitrage portfolio?
+a)  What is the relationship in general between the portfolio weights $w_i^0$ and the arbitrage weights $w_i$?
+b)  Calculate the new portfolio weights $w_i^1$.
+c)  Does this situation give rise to a profitable arbitrage portfolio?
 
-   The research department informs you that a possible equilibrium in the stock market is given by the following Arbitrage Pricing Model (APM):
-   $$E(r_i) = \lambda_0 + \lambda_1 \cdot \beta_{i1} + \lambda_2 \cdot \beta_{i2}$$
+The research department informs you that a possible equilibrium in the stock market is given by the following Arbitrage Pricing Model (APM):
+$$E(r_i) = \lambda_0 + \lambda_1 \cdot \beta_{i1} + \lambda_2 \cdot \beta_{i2}$$
 
-   where $\lambda_0 = 0.04$, $\lambda_1 = -0.02$ and $\lambda_2 = 0.06$, and $\beta_{i1}$ and $\beta_{i2}$ indicate stock $i$'s sensitivity to Factor 1 and Factor 2 respectively.
+where $\lambda_0 = 0.04$, $\lambda_1 = -0.02$ and $\lambda_2 = 0.06$, and $\beta_{i1}$ and $\beta_{i2}$ indicate stock $i$'s sensitivity to Factor 1 and Factor 2 respectively.
 
-   d)  What is the interpretation of $\lambda_0$, $\lambda_1$ and $\lambda_2$ in this model?
-   e)  Is the manager's expected return on the four stocks (as given in the table) consistent with this equilibrium?
-   f)  What do you think will happen to future stock prices in this market if the manager's expectations are correct?
+d)  What is the interpretation of $\lambda_0$, $\lambda_1$ and $\lambda_2$ in this model?
+e)  Is the manager's expected return on the four stocks (as given in the table) consistent with this equilibrium?
+f)  What do you think will happen to future stock prices in this market if the manager's expectations are correct?
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   **(a) Portfolio weights and arbitrage weights.** If an investor holds a portfolio (with weights $w_i^0$) whose return is lower than that of another portfolio (with weights $w_i^1$) carrying the *same* factor exposure, an arbitrage opportunity exists. The investor exploits it by constructing an arbitrage portfolio with weights $w_i$, so that
-   $$w_i^1 = w_i^0 + w_i \qquad \Longleftrightarrow \qquad w_i^0 = w_i^1 - w_i$$
+**(a) Portfolio weights and arbitrage weights.** If an investor holds a portfolio (with weights $w_i^0$) whose return is lower than that of another portfolio (with weights $w_i^1$) carrying the *same* factor exposure, an arbitrage opportunity exists. The investor exploits it by constructing an arbitrage portfolio with weights $w_i$, so that
+$$w_i^1 = w_i^0 + w_i \qquad \Longleftrightarrow \qquad w_i^0 = w_i^1 - w_i$$
 
-   **(b) New portfolio weights.** Applying $w_i^1 = w_i^0 + w_i$:
-   $$\begin{aligned}
-   w_1^1 &= 0.32 + (-0.280) = 0.040 \\
-   w_2^1 &= 0.48 + 0.043 = 0.523 \\
-   w_3^1 &= 0.12 + (-0.065) = 0.055 \\
-   w_4^1 &= 0.08 + 0.302 = 0.382
-   \end{aligned}$$
+**(b) New portfolio weights.** Applying $w_i^1 = w_i^0 + w_i$:
+$$\begin{aligned}
+w_1^1 &= 0.32 + (-0.280) = 0.040 \\
+w_2^1 &= 0.48 + 0.043 = 0.523 \\
+w_3^1 &= 0.12 + (-0.065) = 0.055 \\
+w_4^1 &= 0.08 + 0.302 = 0.382
+\end{aligned}$$
 
-   **(c) Is the arbitrage profitable?** Arbitrage pays off if the expected return of the arbitrage portfolio is positive:
-   $$\begin{aligned}
-   E(r_P^A) &= \sum_{i=1}^{4} w_i \cdot E(r_i) \\
-   &= (-0.280)(-0.05) + (0.043)(0.26) + (-0.065)(0.166) + (0.302)(0.118) \\
-   &= 0.014 + 0.011 - 0.011 + 0.036 = \mathbf{0.05}
-   \end{aligned}$$
+**(c) Is the arbitrage profitable?** Arbitrage pays off if the expected return of the arbitrage portfolio is positive:
+$$\begin{aligned}
+E(r_P^A) &= \sum_{i=1}^{4} w_i \cdot E(r_i) \\
+&= (-0.280)(-0.05) + (0.043)(0.26) + (-0.065)(0.166) + (0.302)(0.118) \\
+&= 0.014 + 0.011 - 0.011 + 0.036 = \mathbf{0.05}
+\end{aligned}$$
 
-   Since $E(r_P^A) > 0$, the arbitrage portfolio is profitable.
+Since $E(r_P^A) > 0$, the arbitrage portfolio is profitable.
 
-   **(d) Interpretation of the parameters.** Within this multi-factor Arbitrage Pricing Model:
+**(d) Interpretation of the parameters.** Within this multi-factor Arbitrage Pricing Model:
 
-   - $\lambda_0$ is the risk-free return;
-   - $\lambda_1$ is the risk premium compensating investors for exposure to Factor 1 $(F_1)$;
-   - $\lambda_2$ is the risk premium compensating investors for exposure to Factor 2 $(F_2)$.
+- $\lambda_0$ is the risk-free return;
+- $\lambda_1$ is the risk premium compensating investors for exposure to Factor 1 $(F_1)$;
+- $\lambda_2$ is the risk premium compensating investors for exposure to Factor 2 $(F_2)$.
 
-   **(e) Consistency with the equilibrium.** Under the APM the equilibrium expected return of each stock is:
-   $$\begin{aligned}
-   E(r_1) &= 0.04 + 1.5(-0.02) - 1.0(0.06) = -0.05 \\
-   E(r_2) &= 0.04 + 2.0(-0.02) + 2.0(0.06) = 0.12 \\
-   E(r_3) &= 0.04 - 0.5(-0.02) + 1.0(0.06) = 0.11 \\
-   E(r_4) &= 0.04 + 1.0(-0.02) - 1.0(0.06) = -0.04
-   \end{aligned}$$
+**(e) Consistency with the equilibrium.** Under the APM the equilibrium expected return of each stock is:
+$$\begin{aligned}
+E(r_1) &= 0.04 + 1.5(-0.02) - 1.0(0.06) = -0.05 \\
+E(r_2) &= 0.04 + 2.0(-0.02) + 2.0(0.06) = 0.12 \\
+E(r_3) &= 0.04 - 0.5(-0.02) + 1.0(0.06) = 0.11 \\
+E(r_4) &= 0.04 + 1.0(-0.02) - 1.0(0.06) = -0.04
+\end{aligned}$$
 
-   Except for Stock 1, the manager's expectations differ from the equilibrium model.
+Except for Stock 1, the manager's expectations differ from the equilibrium model.
 
-   **(f) Effect on future prices.** Each stock's alpha is the manager's expected return less the equilibrium return:
+**(f) Effect on future prices.** Each stock's alpha is the manager's expected return less the equilibrium return:
 
-   - Stock 1: $\alpha = -0.05 - (-0.05) = 0$. A zero alpha means the stock is fairly priced, so its price will likely remain unchanged.
-   - Stock 2: $\alpha = 0.26 - 0.12 = 0.14$. A positive alpha means the stock is under-priced, so its price will likely rise.
-   - Stock 3: $\alpha = 0.166 - 0.11 = 0.056$. Under-priced, so its price will likely rise.
-   - Stock 4: $\alpha = 0.118 - (-0.04) = 0.158$. Under-priced, so its price will likely rise.
-   :::
-   :::
+- Stock 1: $\alpha = -0.05 - (-0.05) = 0$. A zero alpha means the stock is fairly priced, so its price will likely remain unchanged.
+- Stock 2: $\alpha = 0.26 - 0.12 = 0.14$. A positive alpha means the stock is under-priced, so its price will likely rise.
+- Stock 3: $\alpha = 0.166 - 0.11 = 0.056$. Under-priced, so its price will likely rise.
+- Stock 4: $\alpha = 0.118 - (-0.04) = 0.158$. Under-priced, so its price will likely rise.
+:::
+:::
 
-4. **Decomposing total risk.**
+## Decomposing total risk
 
-   Over the coming period the price of the Tonga stock will either increase by $55\%$ (state 1), fall by $13\%$ (state 2), or remain unchanged (state 3). All three states are equally likely. The market portfolio will either increase by $40\%$ (state 1), remain unchanged (state 2), or fall by $10\%$ (state 3).
+Over the coming period the price of the Tonga stock will either increase by $55\%$ (state 1), fall by $13\%$ (state 2), or remain unchanged (state 3). All three states are equally likely. The market portfolio will either increase by $40\%$ (state 1), remain unchanged (state 2), or fall by $10\%$ (state 3).
 
-   | State | Probability | Tonga    | Market portfolio |
-   | ----- | ----------- | -------- | ---------------- |
-   | 1     | $1/3$       | $+55\%$  | $+40\%$          |
-   | 2     | $1/3$       | $-13\%$  | $0\%$            |
-   | 3     | $1/3$       | $0\%$    | $-10\%$          |
+| State | Probability | Tonga    | Market portfolio |
+| ----- | ----------- | -------- | ---------------- |
+| 1     | $1/3$       | $+55\%$  | $+40\%$          |
+| 2     | $1/3$       | $-13\%$  | $0\%$            |
+| 3     | $1/3$       | $0\%$    | $-10\%$          |
 
-   The covariance between the return on Tonga and the market portfolio is $593.33$ (computed from the above percentages). The risk-free interest rate is $3\%$. No dividends are paid.
+The covariance between the return on Tonga and the market portfolio is $593.33$ (computed from the above percentages). The risk-free interest rate is $3\%$. No dividends are paid.
 
-   a)  Using variance as the risk measure, decompose Tonga's total risk into its systematic and unsystematic parts.
+a)  Using variance as the risk measure, decompose Tonga's total risk into its systematic and unsystematic parts.
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   Working with end-of-period values relative to a base of $100\%$, the expected value of Tonga is
-   $$\tfrac{1}{3}(155\%) + \tfrac{1}{3}(87\%) + \tfrac{1}{3}(100\%) = 114\%$$
+Working with end-of-period values relative to a base of $100\%$, the expected value of Tonga is
+$$\tfrac{1}{3}(155\%) + \tfrac{1}{3}(87\%) + \tfrac{1}{3}(100\%) = 114\%$$
 
-   and its variance is
-   $$\tfrac{1}{3}(155\% - 114\%)^2 + \tfrac{1}{3}(87\% - 114\%)^2 + \tfrac{1}{3}(100\% - 114\%)^2 = 868.67$$
+and its variance is
+$$\tfrac{1}{3}(155\% - 114\%)^2 + \tfrac{1}{3}(87\% - 114\%)^2 + \tfrac{1}{3}(100\% - 114\%)^2 = 868.67$$
 
-   For the market portfolio,
-   $$\tfrac{1}{3}(140\%) + \tfrac{1}{3}(100\%) + \tfrac{1}{3}(90\%) = 110\%$$
-   $$\sigma_M^2 = \tfrac{1}{3}(140\% - 110\%)^2 + \tfrac{1}{3}(100\% - 110\%)^2 + \tfrac{1}{3}(90\% - 110\%)^2 = 466.67$$
+For the market portfolio,
+$$\tfrac{1}{3}(140\%) + \tfrac{1}{3}(100\%) + \tfrac{1}{3}(90\%) = 110\%$$
+$$\sigma_M^2 = \tfrac{1}{3}(140\% - 110\%)^2 + \tfrac{1}{3}(100\% - 110\%)^2 + \tfrac{1}{3}(90\% - 110\%)^2 = 466.67$$
 
-   Tonga's beta follows from the covariance:
-   $$\beta = \frac{\sigma_{\text{Tonga},M}}{\sigma_M^2} = \frac{593.33}{466.67} = 1.27$$
+Tonga's beta follows from the covariance:
+$$\beta = \frac{\sigma_{\text{Tonga},M}}{\sigma_M^2} = \frac{593.33}{466.67} = 1.27$$
 
-   The systematic and firm-specific parts of the variance are therefore
-   $$\begin{aligned}
-   \text{Systematic:} \quad & \beta^2 \times \sigma_M^2 = 1.27^2 \times 466.67 = \mathbf{754.37} \\
-   \text{Firm-specific:} \quad & \sigma_e^2 = \sigma_{\text{Tonga}}^2 - \beta^2 \sigma_M^2 = 868.67 - 754.37 = \mathbf{114.29}
-   \end{aligned}$$
-   :::
-   :::
+The systematic and firm-specific parts of the variance are therefore
+$$\begin{aligned}
+\text{Systematic:} \quad & \beta^2 \times \sigma_M^2 = 1.27^2 \times 466.67 = \mathbf{754.37} \\
+\text{Firm-specific:} \quad & \sigma_e^2 = \sigma_{\text{Tonga}}^2 - \beta^2 \sigma_M^2 = 868.67 - 754.37 = \mathbf{114.29}
+\end{aligned}$$
+:::
+:::
 
-5. **Alpha, risk decomposition and the joint-hypothesis problem.**
+## Alpha, risk decomposition and the joint-hypothesis problem
 
-   The investment fund Omega holds an equity portfolio with a strong tilt towards value stocks, i.e. stocks with low prices relative to book values. The strategy is to buy the 50 stocks with the lowest price-to-book ratios every year and hold them for one year. Over the last 15 years this strategy has, on average, delivered a statistically significant abnormal return of $5\%$ $(\alpha)$ in excess of the risk-free rate. The CAPM beta of the portfolio over the same period was $0.6$. The realised risk premium on the market portfolio was $5\%$ and its variance was $0.04$. The $R^2$ of a regression of the portfolio return on the market return is $0.70$.
+The investment fund Omega holds an equity portfolio with a strong tilt towards value stocks, i.e. stocks with low prices relative to book values. The strategy is to buy the 50 stocks with the lowest price-to-book ratios every year and hold them for one year. Over the last 15 years this strategy has, on average, delivered a statistically significant abnormal return of $5\%$ $(\alpha)$ in excess of the risk-free rate. The CAPM beta of the portfolio over the same period was $0.6$. The realised risk premium on the market portfolio was $5\%$ and its variance was $0.04$. The $R^2$ of a regression of the portfolio return on the market return is $0.70$.
 
-   a)  Write down the return on the portfolio in terms of a regression equation, using the information given above.
-   b)  Decompose the variance of the portfolio into a systematic and an unsystematic component.
+a)  Write down the return on the portfolio in terms of a regression equation, using the information given above.
+b)  Decompose the variance of the portfolio into a systematic and an unsystematic component.
 
-   Assume now that the expected return is given by the two-factor model
-   $$E(r_i) - r_f = \beta_i \cdot \left[E(r_m) - r_f\right] + h \cdot E(r_{HML})$$
+Assume now that the expected return is given by the two-factor model
+$$E(r_i) - r_f = \beta_i \cdot \left[E(r_m) - r_f\right] + h \cdot E(r_{HML})$$
 
-   where the expected return on the HML portfolio $(r_{HML})$ is $5\%$. Assume that the covariance between the return on the HML portfolio and the market portfolio is zero, and that Omega's factor loading on the HML portfolio $(h)$ is $1.0$.
+where the expected return on the HML portfolio $(r_{HML})$ is $5\%$. Assume that the covariance between the return on the HML portfolio and the market portfolio is zero, and that Omega's factor loading on the HML portfolio $(h)$ is $1.0$.
 
-   c)  Write down the return on the portfolio in terms of a regression equation and compare it with the expression in part (a), in terms of the empirical challenge of testing the Efficient Market Hypothesis (EMH).
+c)  Write down the return on the portfolio in terms of a regression equation and compare it with the expression in part (a), in terms of the empirical challenge of testing the Efficient Market Hypothesis (EMH).
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   **(a) Single-index regression.** The excess return of the portfolio is
-   $$E(r_P - r_f) = \alpha + \beta\,(r_m - r_f)$$
-   $$8\% = 5\% + 0.6\,(5\%)$$
+**(a) Single-index regression.** The excess return of the portfolio is
+$$E(r_P - r_f) = \alpha + \beta\,(r_m - r_f)$$
+$$8\% = 5\% + 0.6\,(5\%)$$
 
-   **(b) Variance decomposition.** Total risk follows from the definition of beta and the fact that $R^2 = \rho_{P,M}^2$:
-   $$\beta = \rho_{P,M}\,\frac{\sigma_P}{\sigma_M} \qquad \Longrightarrow \qquad \beta^2 = \rho_{P,M}^2\,\frac{\sigma_P^2}{\sigma_M^2} = R^2\,\frac{\sigma_P^2}{\sigma_M^2}$$
-   $$0.6^2 = 0.70 \times \frac{\sigma_P^2}{0.04} \qquad \Longrightarrow \qquad \sigma_P^2 = 0.0206$$
+**(b) Variance decomposition.** Total risk follows from the definition of beta and the fact that $R^2 = \rho_{P,M}^2$:
+$$\beta = \rho_{P,M}\,\frac{\sigma_P}{\sigma_M} \qquad \Longrightarrow \qquad \beta^2 = \rho_{P,M}^2\,\frac{\sigma_P^2}{\sigma_M^2} = R^2\,\frac{\sigma_P^2}{\sigma_M^2}$$
+$$0.6^2 = 0.70 \times \frac{\sigma_P^2}{0.04} \qquad \Longrightarrow \qquad \sigma_P^2 = 0.0206$$
 
-   The systematic component is
-   $$\beta^2 \times \sigma_M^2 = 0.6^2 \times 0.04 = 0.0144$$
+The systematic component is
+$$\beta^2 \times \sigma_M^2 = 0.6^2 \times 0.04 = 0.0144$$
 
-   and the unsystematic component is the remainder:
-   $$\sigma_e^2 = \sigma_P^2 - \beta^2 \sigma_M^2 = 0.0206 - 0.0144 = 0.0062$$
+and the unsystematic component is the remainder:
+$$\sigma_e^2 = \sigma_P^2 - \beta^2 \sigma_M^2 = 0.0206 - 0.0144 = 0.0062$$
 
-   **(c) Two-factor regression and the joint-hypothesis problem.**
-   $$E(r_i) - r_f = \beta_i \cdot \left[E(r_m) - r_f\right] + h \cdot E(r_{HML})$$
-   $$8\% = 0.6\,(5\%) + 1.0\,(5\%)$$
+**(c) Two-factor regression and the joint-hypothesis problem.**
+$$E(r_i) - r_f = \beta_i \cdot \left[E(r_m) - r_f\right] + h \cdot E(r_{HML})$$
+$$8\% = 0.6\,(5\%) + 1.0\,(5\%)$$
 
-   Note that the two-factor model leaves *no* abnormal return to explain: the same $8\%$ that looked like a $5\%$ alpha under the CAPM is fully accounted for by the HML loading.
+Note that the two-factor model leaves *no* abnormal return to explain: the same $8\%$ that looked like a $5\%$ alpha under the CAPM is fully accounted for by the HML loading.
 
-   If we assume that equilibrium in the market is described by the CAPM, the portfolio is incorrectly priced — as evidenced by the alpha — and the market is inefficient. If instead we assume that equilibrium is described by the two-factor model, the portfolio is correctly priced and the market is efficient. This is the **joint-hypothesis problem** in testing the EMH: we simultaneously test the correctness of the equilibrium model *and* market efficiency, and cannot tell which of the two a rejection refers to.
-   :::
-   :::
+If we assume that equilibrium in the market is described by the CAPM, the portfolio is incorrectly priced — as evidenced by the alpha — and the market is inefficient. If instead we assume that equilibrium is described by the two-factor model, the portfolio is correctly priced and the market is efficient. This is the **joint-hypothesis problem** in testing the EMH: we simultaneously test the correctness of the equilibrium model *and* market efficiency, and cannot tell which of the two a rejection refers to.
+:::
+:::
 
-6. **Actual and risk-adjusted probabilities.**
+## Actual and risk-adjusted probabilities
 
-   In the stock market, the market portfolio has an index value of $1{,}000$. Over the next year the index will either increase by $25\%$ or decrease by $15\%$. The risk-adjusted (fictive) probability of an increase is $0.475$. The risk-free interest rate for the period is $4\%$. A share in the Alfa equity fund is listed at a value of $250$. In one year the fund value will be $344$ if the market experiences an upturn, or $184$ if it experiences a downturn. The risk premium on this equity fund is $8\%$.
+In the stock market, the market portfolio has an index value of $1{,}000$. Over the next year the index will either increase by $25\%$ or decrease by $15\%$. The risk-adjusted (fictive) probability of an increase is $0.475$. The risk-free interest rate for the period is $4\%$. A share in the Alfa equity fund is listed at a value of $250$. In one year the fund value will be $344$ if the market experiences an upturn, or $184$ if it experiences a downturn. The risk premium on this equity fund is $8\%$.
 
-   a)  Based on this information, find the actual probabilities of an increase and a decrease over the next year.
-   b)  Based on the Capital Asset Pricing Model (CAPM), what beta does the equity fund have?
-   c)  Check, for the market portfolio, that discounting future value with actual probabilities and with fictive probabilities yields the same market price today.
+a)  Based on this information, find the actual probabilities of an increase and a decrease over the next year.
+b)  Based on the Capital Asset Pricing Model (CAPM), what beta does the equity fund have?
+c)  Check, for the market portfolio, that discounting future value with actual probabilities and with fictive probabilities yields the same market price today.
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   **(a) Actual probabilities.** The required return on the Alfa fund is its risk premium plus the risk-free rate: $8\% + 4\% = 12\%$. Writing $p^A$ for the actual probability of an increase and discounting the expected payoff at $12\%$:
-   $$250 = \frac{p^A(344) + (1 - p^A)(184)}{1.12}$$
-   $$280 = 184 + 160\,p^A \qquad \Longrightarrow \qquad 96 = 160\,p^A \qquad \Longrightarrow \qquad p^A = 0.6$$
+**(a) Actual probabilities.** The required return on the Alfa fund is its risk premium plus the risk-free rate: $8\% + 4\% = 12\%$. Writing $p^A$ for the actual probability of an increase and discounting the expected payoff at $12\%$:
+$$250 = \frac{p^A(344) + (1 - p^A)(184)}{1.12}$$
+$$280 = 184 + 160\,p^A \qquad \Longrightarrow \qquad 96 = 160\,p^A \qquad \Longrightarrow \qquad p^A = 0.6$$
 
-   The actual probability of an increase is $\mathbf{60\%}$ and of a decrease $\mathbf{40\%}$.
+The actual probability of an increase is $\mathbf{60\%}$ and of a decrease $\mathbf{40\%}$.
 
-   **(b) Beta of the fund.** The expected return on the market under the actual probabilities is
-   $$E(r_M) = 0.6\,(25\%) + 0.4\,(-15\%) = 9\%$$
+**(b) Beta of the fund.** The expected return on the market under the actual probabilities is
+$$E(r_M) = 0.6\,(25\%) + 0.4\,(-15\%) = 9\%$$
 
-   Applying the CAPM to the fund's $12\%$ required return:
-   $$12\% = 4\% + \beta\,(9\% - 4\%) \qquad \Longrightarrow \qquad \beta = \mathbf{1.6}$$
+Applying the CAPM to the fund's $12\%$ required return:
+$$12\% = 4\% + \beta\,(9\% - 4\%) \qquad \Longrightarrow \qquad \beta = \mathbf{1.6}$$
 
-   **(c) Two routes to the same price.** With actual probabilities the expected payoff is discounted at the market's expected return of $9\%$:
-   $$\frac{0.6\,(1250) + 0.4\,(850)}{1.09} = \frac{1090}{1.09} = 1000$$
+**(c) Two routes to the same price.** With actual probabilities the expected payoff is discounted at the market's expected return of $9\%$:
+$$\frac{0.6\,(1250) + 0.4\,(850)}{1.09} = \frac{1090}{1.09} = 1000$$
 
-   With risk-adjusted probabilities the expected payoff is discounted at the risk-free rate of $4\%$:
-   $$\frac{0.475\,(1250) + 0.525\,(850)}{1.04} = \frac{1040}{1.04} = 1000$$
+With risk-adjusted probabilities the expected payoff is discounted at the risk-free rate of $4\%$:
+$$\frac{0.475\,(1250) + 0.525\,(850)}{1.04} = \frac{1040}{1.04} = 1000$$
 
-   Both give a price of $1{,}000$ today: the risk adjustment can be made either in the discount rate or in the probabilities, but not in both.
-   :::
-   :::
+Both give a price of $1{,}000$ today: the risk adjustment can be made either in the discount rate or in the probabilities, but not in both.
+:::
+:::
 
-7. **Standard deviation, covariance and correlation from the index model.**
+## Standard deviation, covariance and correlation from the index model
 
-   Suppose that the index models for Stocks A and B are estimated from excess returns with the following results:
-   $$R_A = 3\% + 0.7 R_M + e_A$$
-   $$R_B = -2\% + 1.2 R_M + e_B$$
-   $$\sigma_M = 20\%; \qquad R_A^2 = 0.20; \qquad R_B^2 = 0.12$$
+Suppose that the index models for Stocks A and B are estimated from excess returns with the following results:
+$$R_A = 3\% + 0.7 R_M + e_A$$
+$$R_B = -2\% + 1.2 R_M + e_B$$
+$$\sigma_M = 20\%; \qquad R_A^2 = 0.20; \qquad R_B^2 = 0.12$$
 
-   a)  What is the standard deviation of each stock?
-   b)  What is the covariance between each stock and the market index?
-   c)  What are the covariance and the correlation coefficient between the two stocks?
+a)  What is the standard deviation of each stock?
+b)  What is the covariance between each stock and the market index?
+c)  What are the covariance and the correlation coefficient between the two stocks?
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   **(a) Standard deviations.** The standard deviation of a security follows from
-   $$\beta_i = \rho_{i,M} \times \frac{\sigma_i}{\sigma_M}, \qquad \text{where } \rho_{i,M} = \sqrt{R_i^2}$$
-   $$0.7 = \sqrt{0.20} \times \frac{\sigma_A}{0.2} \qquad \Longrightarrow \qquad \sigma_A = \mathbf{0.31}$$
-   $$1.2 = \sqrt{0.12} \times \frac{\sigma_B}{0.2} \qquad \Longrightarrow \qquad \sigma_B = \mathbf{0.69}$$
+**(a) Standard deviations.** The standard deviation of a security follows from
+$$\beta_i = \rho_{i,M} \times \frac{\sigma_i}{\sigma_M}, \qquad \text{where } \rho_{i,M} = \sqrt{R_i^2}$$
+$$0.7 = \sqrt{0.20} \times \frac{\sigma_A}{0.2} \qquad \Longrightarrow \qquad \sigma_A = \mathbf{0.31}$$
+$$1.2 = \sqrt{0.12} \times \frac{\sigma_B}{0.2} \qquad \Longrightarrow \qquad \sigma_B = \mathbf{0.69}$$
 
-   **(b) Covariance with the market.** From $\beta_i = \dfrac{\cov_{i,M}}{\sigma_M^2}$:
-   $$0.7 = \frac{\cov_{A,M}}{0.2^2} \qquad \Longrightarrow \qquad \cov_{A,M} = \mathbf{0.028}$$
-   $$1.2 = \frac{\cov_{B,M}}{0.2^2} \qquad \Longrightarrow \qquad \cov_{B,M} = \mathbf{0.048}$$
+**(b) Covariance with the market.** From $\beta_i = \dfrac{\cov_{i,M}}{\sigma_M^2}$:
+$$0.7 = \frac{\cov_{A,M}}{0.2^2} \qquad \Longrightarrow \qquad \cov_{A,M} = \mathbf{0.028}$$
+$$1.2 = \frac{\cov_{B,M}}{0.2^2} \qquad \Longrightarrow \qquad \cov_{B,M} = \mathbf{0.048}$$
 
-   **(c) Covariance and correlation between the stocks.** In the index model the only source of comovement between two stocks is the market factor, so
-   $$\cov_{A,B} = \beta_A \times \beta_B \times \sigma_M^2 = 0.7 \times 1.2 \times 0.2^2 = \mathbf{0.0336}$$
+**(c) Covariance and correlation between the stocks.** In the index model the only source of comovement between two stocks is the market factor, so
+$$\cov_{A,B} = \beta_A \times \beta_B \times \sigma_M^2 = 0.7 \times 1.2 \times 0.2^2 = \mathbf{0.0336}$$
 
-   The correlation is then
-   $$\cor_{A,B} = \rho_{A,M} \times \rho_{B,M} = \sqrt{0.20} \times \sqrt{0.12} = \mathbf{0.15}$$
+The correlation is then
+$$\cor_{A,B} = \rho_{A,M} \times \rho_{B,M} = \sqrt{0.20} \times \sqrt{0.12} = \mathbf{0.15}$$
 
-   or equivalently
-   $$\cor_{A,B} = \frac{\beta_A \times \beta_B \times \sigma_M^2}{\sigma_A \times \sigma_B} = \frac{0.7 \times 1.2 \times 0.2^2}{0.31 \times 0.69} = \mathbf{0.15}$$
-   :::
-   :::
+or equivalently
+$$\cor_{A,B} = \frac{\beta_A \times \beta_B \times \sigma_M^2}{\sigma_A \times \sigma_B} = \frac{0.7 \times 1.2 \times 0.2^2}{0.31 \times 0.69} = \mathbf{0.15}$$
+:::
+:::
 
---------------------------------------------------------------------------------
+## Applying the CAPM
 
-*Questions 8–10 refer to the following information: the risk-free rate of interest available in the market is $6\%$ and the expected excess rate of return of the market index is $16\%$.*
+The risk-free rate of interest available in the market is $6\%$ and the expected excess rate of return of the market index is $16\%$.
 
-8. **Expected price from the CAPM.**
+a)  A share of stock sells for USD 50 today. It will pay a dividend of USD 6 per share at the end of the year. Its beta is $1.2$. What do investors expect the stock to sell for at the end of the year?
+b)  A stock has an expected rate of return of $4\%$. What is its beta?
+c)  You are evaluating a firm with an expected perpetual cash flow of USD 1,000, but you are unsure of its risk. If you think the beta of the firm is $0.5$ when it is actually $1.0$, how much more will you offer for the firm compared with its true worth?
 
-   A share of stock sells for USD 50 today. It will pay a dividend of USD 6 per share at the end of the year. Its beta is $1.2$. What do investors expect the stock to sell for at the end of the year?
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+**(a) Expected price from the CAPM.** The expected return required by the CAPM is
+$$E(r) = 6\% + 1.2 \times 16\% = 25.2\%$$
 
-   The expected return required by the CAPM is
-   $$E(r) = 6\% + 1.2 \times 16\% = 25.2\%$$
+The expected end-of-year price follows from the definition of the holding period return:
+$$r_{\text{stock}} = \frac{P_1 - P_0 + \text{Dividend}}{P_0}$$
+$$0.252 = \frac{P_1 - 50 + 6}{50} \qquad \Longrightarrow \qquad P_1 - 44 = 12.6 \qquad \Longrightarrow \qquad \mathbf{P_1 = 56.6}$$
 
-   The expected end-of-year price follows from the definition of the holding period return:
-   $$r_{\text{stock}} = \frac{P_1 - P_0 + \text{Dividend}}{P_0}$$
-   $$0.252 = \frac{P_1 - 50 + 6}{50} \qquad \Longrightarrow \qquad P_1 - 44 = 12.6 \qquad \Longrightarrow \qquad \mathbf{P_1 = 56.6}$$
-   :::
-   :::
+**(b) Beta from an expected return.**
+$$6\% + \beta \times 16\% = 4\% \qquad \Longrightarrow \qquad \beta = \mathbf{-0.13}$$
 
-9. **Beta from an expected return.**
+A stock with a negative beta is negatively correlated with the market: it tends to rise when the market falls and vice versa. Such assets may be considered "safe-haven assets".
 
-   A stock has an expected rate of return of $4\%$. What is its beta?
+**(c) Mispricing a firm by misjudging its beta.** The value of the firm is its perpetual cash flow discounted at the required rate of return, $V_0 = \dfrac{CF_\infty}{r}$.
 
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
+*If $\beta = 0.5$:*
+$$r = 6\% + 0.5 \times 16\% = 14\% \qquad \Longrightarrow \qquad V_0 = \frac{1000}{0.14} = \text{USD } 7{,}143$$
 
-   $$6\% + \beta \times 16\% = 4\% \qquad \Longrightarrow \qquad \beta = \mathbf{-0.13}$$
+*If $\beta = 1.0$:*
+$$r = 6\% + 1.0 \times 16\% = 22\% \qquad \Longrightarrow \qquad V_0 = \frac{1000}{0.22} = \text{USD } 4{,}545$$
 
-   A stock with a negative beta is negatively correlated with the market: it tends to rise when the market falls and vice versa. Such assets may be considered "safe-haven assets".
-   :::
-   :::
+By underestimating the beta you underestimate the required return, discount too gently, and pay
+$$7{,}143 - 4{,}545 = \mathbf{USD\ 2{,}598}$$
 
-10. **Mispricing a firm by misjudging its beta.**
+more than the firm is worth.
+:::
+:::
 
-    You are evaluating a firm with an expected perpetual cash flow of USD 1,000, but you are unsure of its risk. If you think the beta of the firm is $0.5$ when it is actually $1.0$, how much more will you offer for the firm compared with its true worth?
+## The CAPM and the security market line
 
-    ::: {.content-visible when-meta="params.solution"}
-    ::: {.blue}
-    **Solution:**
+Suppose that the rate of return on short-term government securities (perceived to be risk free) is about $5\%$. Suppose also that the expected rate of return required by the market for a portfolio with a beta of $1$ is $12\%$. According to the Capital Asset Pricing Model:
 
-    The value of the firm is its perpetual cash flow discounted at the required rate of return, $V_0 = \dfrac{CF_\infty}{r}$.
+a)  What is the expected rate of return on the market portfolio?
+b)  What would be the expected rate of return on a stock with $\beta = 0$?
+c)  Suppose that you consider buying a share of stock at USD 40. The stock is expected to pay USD 3 in dividends next year and you expect it to sell then for USD 41. The stock's risk has been evaluated at $\beta = -1.5$. Is the stock overpriced or underpriced?
 
-    **If $\beta = 0.5$:**
-    $$r = 6\% + 0.5 \times 16\% = 14\% \qquad \Longrightarrow \qquad V_0 = \frac{1000}{0.14} = \text{USD } 7{,}143$$
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-    **If $\beta = 1.0$:**
-    $$r = 6\% + 1.0 \times 16\% = 22\% \qquad \Longrightarrow \qquad V_0 = \frac{1000}{0.22} = \text{USD } 4{,}545$$
+**(a) The market portfolio.** A stock with a beta equal to $1$ has the same expected return as the market portfolio, so the expected return on the market portfolio is $\mathbf{12\%}$. Verify:
+$$12\% = 5\% + 1 \times (12\% - 5\%)$$
 
-    By underestimating the beta you underestimate the required return, discount too gently, and pay
-    $$7{,}143 - 4{,}545 = \mathbf{USD\ 2{,}598}$$
+**(b) A zero-beta stock.** A stock with a beta of zero carries no systematic risk and therefore earns the risk-free rate, $\mathbf{5\%}$. Verify:
+$$5\% = 5\% + 0 \times (12\% - 5\%)$$
 
-    more than the firm is worth.
-    :::
-    :::
+**(c) Overpriced or underpriced?** The return required by the CAPM is
+$$E(r) = 5\% + (-1.5) \times (12\% - 5\%) = -5.5\%$$
 
---------------------------------------------------------------------------------
+while the return the investor expects is
+$$\frac{41 - 40 + 3}{40} = 10\%$$
 
-11. **The CAPM and the security market line.**
+The gap between the two is a positive alpha of
+$$10\% - (-5.5\%) = 15.5\%$$
 
-    Suppose that the rate of return on short-term government securities (perceived to be risk free) is about $5\%$. Suppose also that the expected rate of return required by the market for a portfolio with a beta of $1$ is $12\%$. According to the Capital Asset Pricing Model:
+which means the stock is **underpriced**. Its negative beta makes it valuable as a hedge, so the market requires a return *below* the risk-free rate to hold it — yet it is expected to deliver $10\%$.
+:::
+:::
 
-    a)  What is the expected rate of return on the market portfolio?
-    b)  What would be the expected rate of return on a stock with $\beta = 0$?
-    c)  Suppose that you consider buying a share of stock at USD 40. The stock is expected to pay USD 3 in dividends next year and you expect it to sell then for USD 41. The stock's risk has been evaluated at $\beta = -1.5$. Is the stock overpriced or underpriced?
+## A two-factor economy
 
-    ::: {.content-visible when-meta="params.solution"}
-    ::: {.blue}
-    **Solution:**
+Assume that there are two independent economic factors, $F_1$ and $F_2$. The risk-free rate is $6\%$ and all stocks have independent firm-specific components with a standard deviation of $45\%$. Portfolios A and B are both well diversified, with the properties below. What is the expected return–beta relationship in this economy?
 
-    **(a) The market portfolio.** A stock with a beta equal to $1$ has the same expected return as the market portfolio, so the expected return on the market portfolio is $\mathbf{12\%}$. Verify:
-    $$12\% = 5\% + 1 \times (12\% - 5\%)$$
+| Portfolio | Beta on $F_1$ | Beta on $F_2$ | Expected return |
+| --------- | ------------- | ------------- | --------------- |
+| A         | $1.5$         | $2.0$         | $31\%$          |
+| B         | $2.2$         | $-0.2$        | $27\%$          |
 
-    **(b) A zero-beta stock.** A stock with a beta of zero carries no systematic risk and therefore earns the risk-free rate, $\mathbf{5\%}$. Verify:
-    $$5\% = 5\% + 0 \times (12\% - 5\%)$$
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-    **(c) Overpriced or underpriced?** The return required by the CAPM is
-    $$E(r) = 5\% + (-1.5) \times (12\% - 5\%) = -5.5\%$$
+Because both portfolios are well diversified, their firm-specific risk is negligible and expected returns are governed by the multi-factor model
+$$E(r_i) = r_f + \beta_{i1} F_1 + \beta_{i2} F_2$$
 
-    while the return the investor expects is
-    $$\frac{41 - 40 + 3}{40} = 10\%$$
+Substituting each portfolio gives two equations in the two factor risk premia:
+$$\begin{aligned}
+\text{Portfolio A:} \quad 31\% &= 6\% + 1.5\,F_1 + 2.0\,F_2 \\
+\text{Portfolio B:} \quad 27\% &= 6\% + 2.2\,F_1 - 0.2\,F_2
+\end{aligned}$$
 
-    The gap between the two is a positive alpha of
-    $$10\% - (-5.5\%) = 15.5\%$$
+Solving the system gives $F_1 = 10\%$ and $F_2 = 5\%$, so the expected return–beta relationship is
+$$E(r_i) = 6\% + 10\%\,\beta_{i1} + 5\%\,\beta_{i2}$$
+:::
+:::
 
-    which means the stock is **underpriced**. Its negative beta makes it valuable as a hedge, so the market requires a return *below* the risk-free rate to hold it — yet it is expected to deliver $10\%$.
-    :::
-    :::
+## The risk-free rate in a one-factor economy
 
-12. **A two-factor economy.**
+Assume that portfolios A and B are well diversified, with $E(r_A) = 12\%$ and $E(r_B) = 9\%$. If the economy has only one factor, and $\beta_A = 1.2$ and $\beta_B = 0.8$, what must the risk-free rate be?
 
-    Assume that there are two independent economic factors, $F_1$ and $F_2$. The risk-free rate is $6\%$ and all stocks have independent firm-specific components with a standard deviation of $45\%$. Portfolios A and B are both well diversified, with the properties below. What is the expected return–beta relationship in this economy?
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-    | Portfolio | Beta on $F_1$ | Beta on $F_2$ | Expected return |
-    | --------- | ------------- | ------------- | --------------- |
-    | A         | $1.5$         | $2.0$         | $31\%$          |
-    | B         | $2.2$         | $-0.2$        | $27\%$          |
+Since portfolios A and B are well diversified, their expected returns are given by $E(r_i) = r_f + \beta_i F$:
+$$\begin{aligned}
+E(r_A): \quad 12\% &= r_f + 1.2\,F \\
+E(r_B): \quad 9\% &= r_f + 0.8\,F
+\end{aligned}$$
 
-    ::: {.content-visible when-meta="params.solution"}
-    ::: {.blue}
-    **Solution:**
+The factor premium $F$ is unknown, so we solve the two equations simultaneously. Subtracting the second from the first eliminates $r_f$:
+$$12\% - 9\% = (1.2 - 0.8)\,F \qquad \Longrightarrow \qquad 0.4\,F = 3\% \qquad \Longrightarrow \qquad F = 7.5\%$$
 
-    Because both portfolios are well diversified, their firm-specific risk is negligible and expected returns are governed by the multi-factor model
-    $$E(r_i) = r_f + \beta_{i1} F_1 + \beta_{i2} F_2$$
+Substituting back into the equation for $E(r_A)$:
+$$12\% = r_f + 1.2 \times 7.5\% \qquad \Longrightarrow \qquad r_f = \mathbf{3\%}$$
 
-    Substituting each portfolio gives two equations in the two factor risk premia:
-    $$\begin{aligned}
-    \text{Portfolio A:} \quad 31\% &= 6\% + 1.5\,F_1 + 2.0\,F_2 \\
-    \text{Portfolio B:} \quad 27\% &= 6\% + 2.2\,F_1 - 0.2\,F_2
-    \end{aligned}$$
+Verify with portfolio B: $9\% = 3\% + 0.8 \times 7.5\%$, as given.
+:::
+:::
 
-    Solving the system gives $F_1 = 10\%$ and $F_2 = 5\%$, so the expected return–beta relationship is
-    $$E(r_i) = 6\% + 10\%\,\beta_{i1} + 5\%\,\beta_{i2}$$
-    :::
-    :::
+## A multi-factor model with macroeconomic risk premia
 
-13. **The risk-free rate in a one-factor economy.**
+You are given the following information about the factors in the multi-factor model of a particular stock: the inflation risk premium (INF) is $6\%$ with a factor loading of $1.2$; the industrial production risk premium (IND) is $8\%$ with a factor loading of $0.5$; and the oil price risk premium (OIL) is $3\%$ with a factor loading of $0.3$. Treasury bills currently offer a $6\%$ yield.
 
-    Assume that portfolios A and B are well diversified, with $E(r_A) = 12\%$ and $E(r_B) = 9\%$. If the economy has only one factor, and $\beta_A = 1.2$ and $\beta_B = 0.8$, what must the risk-free rate be?
+Find the expected rate of return on this stock if the market views it as correctly priced.
 
-    ::: {.content-visible when-meta="params.solution"}
-    ::: {.blue}
-    **Solution:**
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-    Since portfolios A and B are well diversified, their expected returns are given by $E(r_i) = r_f + \beta_i F$:
-    $$\begin{aligned}
-    E(r_A): \quad 12\% &= r_f + 1.2\,F \\
-    E(r_B): \quad 9\% &= r_f + 0.8\,F
-    \end{aligned}$$
+The equilibrium model of the stock's return is
+$$E(r_i) = r_f + \beta_{i,INF}\,INF + \beta_{i,IND}\,IND + \beta_{i,OIL}\,OIL$$
+$$E(r_i) = 6\% + 1.2\,(6\%) + 0.5\,(8\%) + 0.3\,(3\%) = \mathbf{18.1\%}$$
+:::
+:::
 
-    The factor premium $F$ is unknown, so we solve the two equations simultaneously. Subtracting the second from the first eliminates $r_f$:
-    $$12\% - 9\% = (1.2 - 0.8)\,F \qquad \Longrightarrow \qquad 0.4\,F = 3\% \qquad \Longrightarrow \qquad F = 7.5\%$$
+## Arbitrage in a one-factor economy
 
-    Substituting back into the equation for $E(r_A)$:
-    $$12\% = r_f + 1.2 \times 7.5\% \qquad \Longrightarrow \qquad r_f = \mathbf{3\%}$$
+Consider the following data for a one-factor economy. Both portfolios are well diversified.
 
-    Verify with portfolio B: $9\% = 3\% + 0.8 \times 7.5\%$, as given.
-    :::
-    :::
+```{=latex}
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Portfolio} & $\boldsymbol{E(r)}$ & \textbf{Beta} \\
+\midrule
+A & 12\% & 1.2 \\
+F & 6\%  & 0.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+```
 
-14. **A multi-factor model with macroeconomic risk premia.**
+Suppose that another portfolio E exists, which is well diversified with a beta of $0.6$ and an expected return of $8\%$. Would an arbitrage opportunity exist? If so, what would the arbitrage strategy be?
 
-    You are given the following information about the factors in the multi-factor model of a particular stock: the inflation risk premium (INF) is $6\%$ with a factor loading of $1.2$; the industrial production risk premium (IND) is $8\%$ with a factor loading of $0.5$; and the oil price risk premium (OIL) is $3\%$ with a factor loading of $0.3$. Treasury bills currently offer a $6\%$ yield.
+::: {.content-visible when-meta="params.solution"}
+::: {.blue}
+**Solution:**
 
-    Find the expected rate of return on this stock if the market views it as correctly priced.
+Since portfolios A and F are well diversified, their expected returns satisfy $E(r_i) = r_f + \beta_i F$. Portfolio F has a beta of $0$, so its return *is* the risk-free rate, $r_f = 6\%$. The factor premium then follows from portfolio A:
+$$12\% = 6\% + 1.2\,F \qquad \Longrightarrow \qquad F = 5\%$$
 
-    ::: {.content-visible when-meta="params.solution"}
-    ::: {.blue}
-    **Solution:**
+Under this equilibrium, a well-diversified portfolio with a beta of $0.6$ should have an expected return of
+$$E(r) = 6\% + 0.6\,(5\%) = 9\%$$
 
-    The equilibrium model of the stock's return is
-    $$E(r_i) = r_f + \beta_{i,INF}\,INF + \beta_{i,IND}\,IND + \beta_{i,OIL}\,OIL$$
-    $$E(r_i) = 6\% + 1.2\,(6\%) + 0.5\,(8\%) + 0.3\,(3\%) = \mathbf{18.1\%}$$
-    :::
-    :::
+Portfolio E offers only $8\%$, so it is incorrectly priced and **an arbitrage opportunity exists**.
 
-15. **Arbitrage in a one-factor economy.**
+The strategy is to build a portfolio with the same beta of $0.6$ out of the correctly priced portfolios A and F. Taking $50\%$ in A and $50\%$ in F gives a new portfolio N with
+$$\beta_N = 0.5\,(1.2) + 0.5\,(0) = 0.6$$
+$$E(r_N) = 0.5\,(12\%) + 0.5\,(6\%) = 9\%$$
 
-    Consider the following data for a one-factor economy. Both portfolios are well diversified.
-
-    | Portfolio | $E(r)$  | Beta  |
-    | --------- | ------- | ----- |
-    | A         | $12\%$  | $1.2$ |
-    | F         | $6\%$   | $0.0$ |
-
-    Suppose that another portfolio E exists, which is well diversified with a beta of $0.6$ and an expected return of $8\%$. Would an arbitrage opportunity exist? If so, what would the arbitrage strategy be?
-
-    ::: {.content-visible when-meta="params.solution"}
-    ::: {.blue}
-    **Solution:**
-
-    Since portfolios A and F are well diversified, their expected returns satisfy $E(r_i) = r_f + \beta_i F$. Portfolio F has a beta of $0$, so its return *is* the risk-free rate, $r_f = 6\%$. The factor premium then follows from portfolio A:
-    $$12\% = 6\% + 1.2\,F \qquad \Longrightarrow \qquad F = 5\%$$
-
-    Under this equilibrium, a well-diversified portfolio with a beta of $0.6$ should have an expected return of
-    $$E(r) = 6\% + 0.6\,(5\%) = 9\%$$
-
-    Portfolio E offers only $8\%$, so it is incorrectly priced and **an arbitrage opportunity exists**.
-
-    The strategy is to build a portfolio with the same beta of $0.6$ out of the correctly priced portfolios A and F. Taking $50\%$ in A and $50\%$ in F gives a new portfolio N with
-    $$\beta_N = 0.5\,(1.2) + 0.5\,(0) = 0.6$$
-    $$E(r_N) = 0.5\,(12\%) + 0.5\,(6\%) = 9\%$$
-
-    Portfolio N matches E's factor exposure exactly but earns more. Selling portfolio E short and buying portfolio N with the proceeds therefore yields a risk-free profit of
-    $$9\% - 8\% = \mathbf{1\%}$$
-    :::
-    :::
+Portfolio N matches E's factor exposure exactly but earns more. Selling portfolio E short and buying portfolio N with the proceeds therefore yields a risk-free profit of
+$$9\% - 8\% = \mathbf{1\%}$$
+:::
+:::

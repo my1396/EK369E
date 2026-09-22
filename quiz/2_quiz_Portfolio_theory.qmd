@@ -1,5 +1,6 @@
 ---
 title: "Quiz: Portfolio Theory"
+# Toggle the solution on/off
 params:
 #   solution: false
   solution: true

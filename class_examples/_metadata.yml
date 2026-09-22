@@ -1,11 +1,9 @@
-# Shared metadata for the quiz/ directory
+# Shared metadata for the class_example/ directory
 resources:
   - "../filters/emoji/*.png"
 
 # Pandoc Extensions
 from: markdown+tex_math_single_backslash
-
-
 filters:
   - ../filters/color-text.lua
   - ../filters/unlisted-sections.lua

@@ -31,7 +31,17 @@
 \makeatother
 
 % table typesetting
-\usepackage{float}
+\usepackage{float} % for [H] placement specifier
+% Make all tables use [H] placement by default
+% Still takes placement, eg [htbp]; defaults to [H] if no placement is specified
+\makeatletter
+\renewenvironment{table}[1][H]{%
+  \@float{table}[#1]%
+}{%
+  \end@float
+}
+\makeatother
+
 \usepackage{siunitx}
 \newcommand\mc[1]{\multicolumn{1}{c}{#1}} % center table header
 %% define TeX macros

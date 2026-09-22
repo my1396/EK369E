@@ -1,9 +1,5 @@
 ---
 title: "Portfolio Risk and Diversification Exercise"
-format: 
-  pdf:
-    include-in-header: ../latex/preamble.tex
-    fontsize: 12pt
 ---
 
 ::: {=latex}
