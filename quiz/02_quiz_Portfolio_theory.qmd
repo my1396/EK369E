@@ -1,15 +1,8 @@
 ---
 title: "Quiz: Portfolio Theory"
-from: markdown+tex_math_single_backslash
 params:
 #   solution: false
   solution: true
-filters:
-  - ../libs/color-text.lua
-format:
-  pdf:
-    include-in-header: ../latex/preamble.tex
-    fontsize: 12pt
 ---
 
 {{< include _chunk-opt.qmd >}}

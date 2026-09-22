@@ -1,0 +1,339 @@
+---
+title: "Quiz: Portfolio Optimization"
+params:
+  solution: false
+  # solution: true
+---
+
+{{< include _chunk-opt.qmd >}}
+
+::: {=latex}
+\vspace{-6em}
+:::
+
+1. **Scenario analysis of the holding period return.**
+
+   Shares in Kojo currently trade for NOK 100, and the company's dividend policy is to pay out $8\%$ of its retained earnings as dividends at the end of each year. In the course of your analysis as an analyst at Kingdom Investments, you determine that the earnings and price of Kojo's shares depend on the state of the economy, and you produce the expectations about Kojo's stock price and dividend shown below.
+
+   ```{=latex}
+   \begin{table}[H]
+   \centering
+   \begin{tabular}{lccc}
+   \hline
+   & \textbf{Probability} & \textbf{Ending price per share} & \textbf{Dividend per share} \\
+   & & \textbf{(NOK)} & \textbf{(NOK)} \\
+   \hline
+   Boom          & 0.35 & 140 & 10.4 \\
+   Normal growth & 0.30 & 110 & 8.0 \\
+   Recession     & 0.35 & 80  & 5.6 \\
+   \hline
+   \end{tabular}
+   \end{table}
+   ```
+
+   Based on these expectations, compute the mean and standard deviation of the holding period return (HPR) on this stock.
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   The HPR in each state captures both the capital gain and the dividend, relative to the price at the start of the period, $P_0 = 100$:
+   $$\begin{aligned}
+   \text{Boom:} \quad & \frac{140 - 100 + 10.4}{100} = 0.504 \\
+   \text{Normal growth:} \quad & \frac{110 - 100 + 8}{100} = 0.180 \\
+   \text{Recession:} \quad & \frac{80 - 100 + 5.6}{100} = -0.144
+   \end{aligned}$$
+
+   The expected HPR is the probability-weighted average of the three:
+   $$E(HPR) = 0.35\,(0.504) + 0.30\,(0.180) + 0.35\,(-0.144) = \mathbf{0.18}$$
+
+   and the standard deviation follows from the squared deviations around that mean:
+   $$\sigma = \sqrt{0.35\,(0.504 - 0.18)^2 + 0.30\,(0.18 - 0.18)^2 + 0.35\,(-0.144 - 0.18)^2} = \mathbf{0.2711}$$
+
+   Note that the normal-growth state contributes nothing to the variance: its return coincides exactly with the mean.
+   :::
+   :::
+
+2. **Arithmetic and geometric average returns.**
+
+   A share in Fund C has had the following value developments over the last three years:
+   $$t_0 = \text{NOK } 200; \qquad t_1 = \text{NOK } 224; \qquad t_2 = \text{NOK } 280; \qquad t_3 = \text{NOK } 238$$
+
+   a)  Calculate the arithmetic average return over the three years.
+   b)  Calculate the geometric average return over the three years.
+   c)  Briefly explain why the two methods in (a) and (b) provide different answers.
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   The annual returns are
+   $$\begin{aligned}
+   r_1 &= \frac{224 - 200}{200} = 0.12 \\
+   r_2 &= \frac{280 - 224}{224} = 0.25 \\
+   r_3 &= \frac{238 - 280}{280} = -0.15
+   \end{aligned}$$
+
+   **(a) Arithmetic average return.**
+   $$\bar{r} = \frac{0.12 + 0.25 - 0.15}{3} = \mathbf{0.0733}$$
+
+   **(b) Geometric average return.**
+   $$\left[(1.12 \times 1.25 \times 0.85)^{1/3}\right] - 1 = \mathbf{0.0597}$$
+
+   **(c) Why they differ.** The arithmetic mean and the geometric mean coincide only if there is no variation in the rate of return across the years. Whenever returns vary over time, the geometric mean return is strictly smaller than the arithmetic mean, because it accounts for compounding: it is the constant annual rate that would have turned NOK 200 into NOK 238 over the three years, whereas the arithmetic mean simply averages the year-by-year rates.
+   :::
+   :::
+
+3. **Using historical returns to estimate expected returns.**
+
+   Your supervisor has just given you a dataset of the annual rates of return on Norwegian stocks all the way back to 2000. Is there any advantage or disadvantage of using this dataset to estimate the expected return on Norwegian stocks over the coming year?
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   In general, the arithmetic mean of historical returns is the best unbiased estimate of future returns. However, this rests on the assumption that the distribution of historical returns *is* the true return distribution for Norwegian stocks.
+
+   The longer the sample, the more precisely the mean is estimated — which argues for using all the data back to 2000. Against that, you must ensure there have been no structural breaks in the dataset that would imply the distribution of historical returns differs from that of expected returns in the market going forward. A long sample buys precision only if the underlying distribution has been stable over the whole period.
+   :::
+   :::
+
+4. **The complete portfolio and the optimal risky share.**
+
+   Damaris Johnson manages a risky portfolio with an expected return of $18\%$ and a standard deviation of $28\%$. The T-bill rate is $8\%$.
+
+   a)  Suppose that a new client of Johnson decides to invest a certain portion of their investment in the risky portfolio $(y)$ and the remainder in T-bills $(1-y)$, so that the overall portfolio will have an expected rate of return of $16\%$.
+
+       i.  What proportion is invested in the risky portfolio?
+       ii. What is the standard deviation of this portfolio?
+
+   b)  Suppose that the new client prefers to invest an amount in the risky portfolio that maximises the expected return of the complete portfolio, subject to the constraint that the standard deviation of the complete portfolio cannot be greater than $18\%$.
+
+       i.  What proportion is invested in the risky portfolio?
+       ii. What is the expected return of the complete portfolio?
+
+   c)  Through an analysis of the client's financial profile, it is determined that their degree of risk aversion is $A = 5$.
+
+       i.  What proportion $y$ should now be invested in the risky portfolio?
+       ii. What are the expected return and standard deviation of the client's optimised portfolio?
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   **(a) Targeting an expected return of $16\%$.** The complete portfolio C places a weight $y$ on the risky portfolio P and $1-y$ on the risk-free asset F:
+   $$E(r_C) = y\,E(r_P) + (1-y)\,r_F$$
+   $$16\% = 18\%\,y + 8\%\,(1-y) \qquad \Longrightarrow \qquad 8 = 10\,y \qquad \Longrightarrow \qquad y = \mathbf{0.8}$$
+
+   So $\mathbf{80\%}$ goes into the risky portfolio. Since the risk-free asset contributes no risk, the standard deviation is simply
+   $$\sigma_C = y\,\sigma_P = 0.8 \times 28\% = \mathbf{22.4\%}$$
+
+   **(b) Targeting a standard deviation of $18\%$.** Expected return rises with $y$, so the constraint binds and the client holds as much of P as the risk ceiling allows:
+   $$\sigma_C = y\,\sigma_P \qquad \Longrightarrow \qquad 18 = 28\,y \qquad \Longrightarrow \qquad y \approx \mathbf{0.64}$$
+
+   The expected return of the complete portfolio is then
+   $$E(r_C) = 0.64\,(18\%) + 0.36\,(8\%) = \mathbf{14.4\%}$$
+
+   **(c) The optimal weight for $A = 5$.** The weight that maximises utility is
+   $$y^* = \frac{E(r_P) - r_F}{A\,\sigma_P^2} = \frac{0.18 - 0.08}{5 \times 0.28^2} = \mathbf{0.26}$$
+   $$E(r_C) = 8\% + 0.26\,(18\% - 8\%) = \mathbf{10.6\%}$$
+   $$\sigma_C = 0.26 \times 28\% = \mathbf{7.28\%}$$
+
+   This client is considerably more risk-averse than the one in part (a): facing the same Capital Allocation Line, they hold only a quarter of their wealth in the risky portfolio rather than four-fifths.
+   :::
+   :::
+
+5. **The maximum risk aversion that still prefers the risky portfolio.**
+
+   Consider a portfolio that offers an expected rate of return of $12\%$ and a standard deviation of $18\%$. T-bills offer a risk-free $7\%$ rate of return. What is the maximum level of risk aversion for which the risky portfolio is still preferred to T-bills?
+
+   *Note:* $U = E(r) - 0.5\,A\,\sigma^2$.
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   T-bills carry no risk, so their utility score is their return regardless of $A$:
+   $$U_{\text{T-bill}} = 0.07 - 0.5 \times A \times 0 = 0.07$$
+
+   The risky portfolio's utility score falls as risk aversion rises:
+   $$U_{\text{risky}} = 0.12 - 0.5 \times A \times 0.18^2 = 0.12 - 0.0162\,A$$
+
+   The two are equally attractive at the level of risk aversion that equates the scores:
+   $$0.07 = 0.12 - 0.0162\,A \qquad \Longrightarrow \qquad A = \mathbf{3.09}$$
+
+   For the investor to choose the risky portfolio over T-bills, their level of risk aversion cannot be more than $3.09$. Above that, the variance penalty outweighs the $5$ percentage points of extra expected return.
+   :::
+   :::
+
+6. **Portfolio of two stocks.**
+
+   Suppose that there are only two stocks in the market: stock Alfa and stock Bravo. The expected return on Alfa is $15\%$ with a standard deviation of $10\%$. Bravo has an expected return of $12\%$ with a standard deviation of $7\%$. The covariance between the returns of the stocks is $0.002$ (in decimals). 
+   The annual risk-free rate is $3\%$.
+   Assume that short selling is not allowed.
+
+   ```{=latex}
+   \begin{table}[H]
+   \centering
+   \begin{tabular}{lcc}
+   \hline
+   & \textbf{Stock Alfa} & \textbf{Stock Bravo} \\
+   \hline
+   Expected return, $\mu$ & 15\% & 12\% \\
+   Standard deviation, $\sigma$ & 10\% & 7\% \\
+   Covariance, $\sigma_{AB}$ & \multicolumn{2}{c}{0.002} \\
+   \hline
+   \end{tabular}
+   \end{table}
+   ```
+
+   a)  What is the minimum standard deviation you can obtain by investing in a combination of Alfa and Bravo?
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   The lowest attainable standard deviation is that of the **minimum-variance portfolio**, whose weights are
+   $$w^*_{\text{Alfa}} = \frac{\sigma^2_{\text{Bravo}} - \cov_{\text{Alfa},\text{Bravo}}}{\sigma^2_{\text{Alfa}} + \sigma^2_{\text{Bravo}} - 2\,\cov_{\text{Alfa},\text{Bravo}}} = \frac{0.07^2 - 0.002}{0.10^2 + 0.07^2 - (2 \times 0.002)} = \mathbf{0.266}$$
+   $$w^*_{\text{Bravo}} = 1 - w^*_{\text{Alfa}} = 0.734$$
+
+   Both weights are positive, so the short-selling restriction is not binding. This portfolio gives an expected return of
+   $$E(r_P) = 0.266\,(0.15) + 0.734\,(0.12) = 0.1280 \text{ or } 12.8\%$$
+
+   and a standard deviation of
+   $$\begin{aligned}
+   \sigma_P &= \sqrt{0.266^2 \times 0.1^2 + 0.734^2 \times 0.07^2 + 2 \times 0.266 \times 0.734 \times 0.002} \\
+   &= \mathbf{0.0643} \text{ or } \mathbf{6.43\%}
+   \end{aligned}$$
+
+   Note that $6.43\%$ is below the standard deviation of *either* stock on its own — the diversification benefit that comes from combining assets which are less than perfectly correlated.
+   :::
+   :::
+
+   b)  What would your asset allocation be if you want to maximize the risk-adjusted return (Sharpe ratio) of the portfolio? What is the Sharpe ratio of this portfolio? 
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   The combination with the highest Sharpe ratio is the **tangency portfolio**. 
+   $$\begin{aligned}
+   x^{tan}_{\text{Alfa}} &= \frac{(\mu_A - r_f)\,\sigma_B^2 - (\mu_B - r_f)\,\sigma_{AB}}{(\mu_A - r_f)\,\sigma_B^2 + (\mu_B - r_f)\,\sigma_A^2 - \left[(\mu_A - r_f) + (\mu_B - r_f)\right]\sigma_{AB}}, \\
+   x^{tan}_{\text{Bravo}} &= 1 - x^{tan}_{\text{Alfa}}
+   \end{aligned}$$
+
+   Substituting $\mu_A = 0.15$, $\sigma_A = 0.10$, $\mu_B = 0.12$, $\sigma_B = 0.07$, $\sigma_{AB} = 0.002$ and $r_f = 0.03$:
+   $$\begin{aligned}
+   \text{Numerator} &= 0.12\,(0.07^2) - 0.09\,(0.002) = 0.000588 - 0.000180 = 0.000408 \\
+   \text{Denominator} &= 0.12\,(0.07^2) + 0.09\,(0.10^2) - (0.12 + 0.09)(0.002) \\
+   &= 0.000588 + 0.000900 - 0.000420 = 0.001068
+   \end{aligned}$$
+   $$x^{tan}_{\text{Alfa}} = \frac{0.000408}{0.001068} = \mathbf{0.3820}, \qquad x^{tan}_{\text{Bravo}} = \mathbf{0.6180}$$
+
+   So the allocation is roughly $\mathbf{38\%}$ in Alfa and $\mathbf{62\%}$ in Bravo. Both weights are positive, so the no-short-selling restriction is again not binding. This portfolio has
+   $$E(r_P) = 0.3820\,(0.15) + 0.6180\,(0.12) = 0.1315 \text{ or } 13.15\%$$
+   $$\begin{aligned}
+   \sigma_P &= \sqrt{0.3820^2\,(0.10^2) + 0.6180^2\,(0.07^2) + 2\,(0.3820)(0.6180)(0.002)} \\
+   &= 0.0654 \text{ or } 6.54\%
+   \end{aligned}$$
+   $$\mathrm{SR}_P = \frac{0.1315 - 0.03}{0.0654} = \mathbf{1.55}$$
+   :::
+   :::
+
+
+7. **Expected return and risk of a client's complete portfolio.**
+
+   You manage an equity fund with an expected risk premium of $10\%$ and an expected standard deviation of $14\%$. The rate on Treasury bills is $6\%$. Your client chooses to invest NOK 60,000 of her portfolio in your equity fund and NOK 40,000 in a T-bill money market fund. What are the expected return and standard deviation of return on your client's portfolio?
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   The weight of the equity fund in the complete portfolio is
+   $$y = \frac{60{,}000}{60{,}000 + 40{,}000} = 0.6$$
+
+   Because the fund's $10\%$ is a *risk premium*, the expected return of the complete portfolio is the risk-free rate plus the client's share of that premium:
+   $$E(r_C) = 6\% + 0.6 \times 10\% = \mathbf{12\%}$$
+   $$\sigma_C = 0.6 \times 14\% = \mathbf{8.4\%}$$
+   :::
+   :::
+
+8. **The expected risk premium in kroner.**
+
+   Given NOK 100,000 to invest, what is the expected risk premium in NOK of investing in equities versus risk-free T-bills, based on the information below?
+
+   | Action                     | Probability | Expected return  |
+   | -------------------------- | ----------- | ---------------- |
+   | Invest in equities         | $0.6$       | NOK 50,000       |
+   |                            | $0.4$       | $-$NOK 20,000    |
+   | Invest in risk-free T-bill | $1.0$       | NOK 5,000        |
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   Convert each kroner payoff into a rate of return on the NOK 100,000 invested:
+   $$\begin{aligned}
+   \text{T-bill:} \quad & \frac{5{,}000}{100{,}000} = 0.05 \\
+   \text{Equities, scenario 1:} \quad & \frac{50{,}000}{100{,}000} = 0.50 \\
+   \text{Equities, scenario 2:} \quad & \frac{-20{,}000}{100{,}000} = -0.20
+   \end{aligned}$$
+
+   The expected return on equities is the probability-weighted average of the two scenarios:
+   $$E(r_{\text{equities}}) = 0.6\,(0.50) + 0.4\,(-0.20) = 0.22$$
+
+   The expected risk premium is the excess over the risk-free return:
+   $$0.22 - 0.05 = 0.17$$
+
+   Expressed in kroner:
+   $$0.17 \times 100{,}000 = \mathbf{NOK\ 17{,}000}$$
+   :::
+   :::
+
+9. **Choosing between funds and combining equity with bonds.**
+
+   Assume that an investor's preferences can be expressed by the utility function $U = E(r) - 0.005 \cdot A \cdot \sigma^2$, where $U$ is utility, $E(r)$ is the expected return, $A$ is the risk aversion coefficient and $\sigma^2$ is the variance.
+
+   A risk-averse investor has invested NOK 1 million in Fund A, which offers an expected return of $15\%$ and a standard deviation of $25\%$. A financial advisor has offered Fund V, which offers an expected rate of return of $16\%$ and a standard deviation of $28\%$, as an alternative.
+
+   a)  If the investor has a risk aversion coefficient of $3$, which is the better of Funds A and V?
+   b)  For which risk aversion coefficient will the two funds be equally good?
+
+   Assume now that there exists a bond investment, Fund B, with an expected return of $8\%$ and a standard deviation of $20\%$. The correlation coefficient between the return on Fund A and Fund B is $-0.2$. This investor is considering combining the equity and bond funds in a portfolio P.
+
+   c)  What share invested in Fund A minimises the risk of portfolio P?
+   d)  Compute the expected return and standard deviation of portfolio P.
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   Note the form of the utility function: the coefficient $0.005$ replaces the usual $\tfrac{1}{2}$ because returns and standard deviations are measured in *percentage points* here rather than decimals.
+
+   **(a) Utility scores at $A = 3$.**
+   $$\begin{aligned}
+   U_A &= 15 - 0.005 \times 3 \times 25^2 = 5.625 \\
+   U_V &= 16 - 0.005 \times 3 \times 28^2 = 4.24
+   \end{aligned}$$
+
+   Fund A has the higher utility score, so **Fund A is preferable** for this investor. Fund V's extra percentage point of expected return does not compensate for its higher variance at this level of risk aversion.
+
+   **(b) The risk aversion that equates the two funds.**
+   $$15 - 3.125\,A = 16 - 3.92\,A \qquad \Longrightarrow \qquad A = \mathbf{1.26}$$
+
+   At $A = 1.26$ the two funds are equally attractive. Below that the investor prefers Fund V, above it Fund A.
+
+   **(c) The minimum-risk share of Fund A.** First convert the correlation into a covariance:
+   $$\cov_{A,B} = -0.2 \times 0.25 \times 0.20 = -0.01$$
+
+   The weight on Fund A that minimises the variance of P is then
+   $$w_A = \frac{\sigma_B^2 - \cov_{A,B}}{\sigma_A^2 + \sigma_B^2 - 2\,\cov_{A,B}} = \frac{0.2^2 - (-0.01)}{0.25^2 + 0.2^2 - (2 \times -0.01)} = \mathbf{0.408}$$
+
+   **(d) Expected return and risk of portfolio P.**
+   $$E(r_P) = 0.408\,(15\%) + 0.592\,(8\%) \approx \mathbf{10.86\%}$$
+   $$\sigma_P^2 = (0.408^2 \times 0.25^2) + (0.592^2 \times 0.20^2) + (2 \times 0.408 \times 0.592 \times -0.01) \approx 0.0196$$
+   $$\sigma_P = \sqrt{0.0196} \approx \mathbf{14\%}$$
+
+   The negative correlation does real work here: portfolio P is less volatile than Fund B alone $(20\%)$ and far less volatile than Fund A alone $(25\%)$.
+   :::
+   :::

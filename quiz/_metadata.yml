@@ -1,0 +1,14 @@
+resources: 
+  - "../latex/filters/emoji/*.png"
+
+# Pandoc Extensions
+from: markdown+tex_math_single_backslash
+filters:
+  - ../libs/color-text.lua
+  - ../libs/unlisted-sections.lua
+format:
+  pdf:
+    include-in-header: ../latex/preamble.tex
+    pdf-engine: xelatex
+    fontsize: 12pt
+   #  keep-tex: true

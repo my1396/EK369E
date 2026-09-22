@@ -1,3 +1,5 @@
+%% pdf engine: xelatex
+\usepackage[paper=a4paper, left=1.0in, right=1.0in, top=1.0in, bottom=0.6in, footskip=1.5cm, includefoot, heightrounded]{geometry}
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{xeCJK}  % support for Chinese
@@ -14,6 +16,10 @@
 \setmonofont{Consolas}
 \usepackage{unicode-math}
 \setmathfont{XCharter-Math.otf}
+
+% autowrap code blocks
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 
 % reduce title top margin
 \usepackage{xpatch}

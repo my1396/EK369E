@@ -284,6 +284,22 @@ body.remark-container {
         font-family: 'Georgia Pro', 'Libertinus Serif', serif !important;
         font-weight: 600 !important;
     }
+
+    /* No blank page at the end of the PDF.
+       remark sets `page-break-after: always` on every .remark-slide-container,
+       the last one included, so Chrome closes the print-out with a forced
+       break onto an empty page. `:has()` picks out the final container no
+       matter what follows it -- `:last-child` does not match, because
+       xaringanExtra's search box is appended after it inside
+       .remark-slides-area. */
+    .remark-slide-container:not(:has(~ .remark-slide-container)) {
+        page-break-after: avoid;
+    }
+
+    /* That search box is screen furniture; keep it out of the PDF. */
+    .remark-slides-area > .search {
+        display: none;
+    }
 }
 
 /* Predefined colors */

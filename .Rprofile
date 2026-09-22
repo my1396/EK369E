@@ -1,4 +1,4 @@
-cat("This is the local user .Rprofile file\n")
+cat("This is the local user .Rprofile file EK369E\n")
 # Source the global user .Rprofile
 source("~/.Rprofile")
 
