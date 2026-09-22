@@ -15,6 +15,12 @@ Ugochi/
 # Allow PDFs inside out_dir folders
 !**/out_dir/*.pdf
 
+# git track the following PDFs
+!quiz/2_quiz_Portfolio_theory_question.pdf
+!quiz/2_quiz_Portfolio_theory_solution.pdf
+!quiz/3_quiz_Factor_Models_question.pdf
+!quiz/3_quiz_Factor_Models_solution.pdf
+
 # Auto generated system files
 .DS_Store
 ~*
