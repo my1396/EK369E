@@ -5,7 +5,7 @@ library(tidyverse)
 library(huxtable)
 
 # don't show code unless we explicitly set echo = TRUE
-opts_chunk$set(echo = TRUE, message=FALSE, fig.align="center", fig.pos = "H")
+opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.align="center", fig.pos = "H")
 opts <- options(knitr.kable.NA = "")
 
 ## control long outputs by using eg `max.lines = 10`
@@ -25,6 +25,25 @@ knitr::knit_hooks$set(output = function(x, options) {
    max.lines <- options$max.lines
    x <- truncate_to_lines(x, max.lines)
    hook_output_default(x, options)
+})
+```
+
+```{r jquery-before-keprint, include=FALSE}
+# kableExtra's kable_styling() pulls in kePrint.js, which is plain jQuery
+# ($(document).ready(...)). rmarkdown emits html_dependencies near the TOP of
+# <head> but places `includes: in_header` at the BOTTOM, so the jQuery loaded
+# there arrives after kePrint and the page throws
+#   ReferenceError: $ is not defined
+# Registering a jQuery dependency here -- from _setup.Rmd, which every deck
+# sources first -- puts it ahead of kePrint in the emitted <head>.
+#
+# Borrow rmarkdown's own bundled copy: its source sits in the R library, so it
+# cannot collide with this project's lib_dir. (Pointing a dependency at
+# libs/jquery-3.6.0 would make rmarkdown copy that folder onto itself and
+# empty it.) Guarded, since html_dependency_jquery() is rmarkdown-internal.
+local({
+  jq <- try(rmarkdown:::html_dependency_jquery(), silent = TRUE)
+  if (!inherits(jq, "try-error")) invisible(knitr::knit_meta_add(list(jq)))
 })
 ```
 

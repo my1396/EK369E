@@ -1,0 +1,96 @@
+---
+title: "Return: APR vs AER"
+params:
+  # solution: false
+  solution: true
+---
+
+::: {=latex}
+\vspace{-4em}
+:::
+
+1. Lena sees an offer: APR = 18% with monthly compounding. She wants to understand what this means in terms of her actual monthly cost and her effective annual cost.
+
+   - What is the monthly interest rate?
+   - What is the AER?
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   APR $= 18\%$ with monthly compounding $m = 12$.
+
+   Monthly interest rate $r = \frac{APR}{m} = \frac{0.18}{12} = 0.015 = 1.5\%$.
+
+   AER $= (1 + r)^m - 1 = (1.015)^{12} - 1 \approx 19.56\%$.
+   :::
+   :::
+
+2. Two banks try to win over Aaron:
+
+   - Bank A advertises APR 12% with monthly compounding.
+   - Bank B advertises APR 12% with quarterly compounding.
+
+   Aaron asks you: Which bank truly gives him a better annual return?
+   
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+
+   We want to compare AERs.
+
+   **Bank A:**
+   Monthly interest rate $r_A = \frac{APR}{m} = \frac{0.12}{12} = 0.01$.
+   
+   $AER_A = (1 + r_A)^m - 1 = (1.01)^{12} - 1 \approx 12.68\%$.
+   
+   **Bank B:**
+   Quarterly interest rate $r_B = \frac{APR}{m} = \frac{0.12}{4} = 0.03$.
+   
+   $AER_B = (1 + r_B)^m - 1 = (1.03)^4 - 1 \approx 12.55\%$.
+
+   $AER_A > AER_B,$ bank A offers the higher effective annual return.
+   :::
+   :::
+
+3. Emma just received $100 as a gift and wants to put it in a bank. The bank advertises an **Annual Percentage Rate (APR) of 10\%**. She wonders how much money she will have after one year depending on how interest is calculated.  
+
+   Calculate the final amount after one year under each of the following scenarios:
+
+   (a) The bank applies a **simple annual return**.
+   (b) The bank **compounds interest semi-annually** (twice per year).
+   (c) The bank **compounds interest monthly**.
+   (d) The bank **compounds interest daily**.  
+   (e) The bank **uses continuous compounding**.
+   
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **Solution:**
+   Given the formula
+   $$
+   D_t = D_0 \left(1+\frac{R}{n}\right)^{nt},
+   $$
+   we have $D_0 = 100$, $R = 10\%$, and $t = 1$ year.
+   (a) For $n=1$, what you get in one year is
+       $$
+       D_1 = 100 \left(1+\frac{0.10}{1}\right)^{1 \times 1} = 100 \times 1.10 = 110.
+       $$
+   (b) For $n=2$, what you get in one year is
+       $$
+       D_1 = 100 \left(1+\frac{0.10}{2}\right)^{2 \times 1} = 100 \times 1.1025 = 110.25.
+       $$
+   (c) For $n=12$, what you get in one year is
+       $$
+       D_1 = 100 \left(1+\frac{0.10}{12}\right)^{12 \times 1} = 100 \times 1.1047 = 110.47.
+       $$
+   (d) For $n=365$, what you get in one year is
+       $$
+       D_1 = 100 \left(1+\frac{0.10}{365}\right)^{365 \times 1} = 100 \times 1.1052 = 110.52.
+       $$
+   (e) For continuous compounding, what you get in one year is
+       $$
+       D_1 = 100 e^{0.10 \times 1} = 100 \times 1.1052 = 110.52.
+       $$
+   **Conclusion:** The more frequently interest is compounded, the greater the final amount Emma can receive. When compounding is daily or continuous, the final amount is approximately the same.
+   :::
+   :::

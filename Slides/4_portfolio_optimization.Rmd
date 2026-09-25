@@ -6,17 +6,34 @@ title: "Portfolio Optimization"
 ```
 
 
+## Agenda
+
+- Security Market Line (SML) -- Application
+- Portfolio opportunity set and plot the efficient frontier
+- Optimal risky portfolio
+  - Global minimum variance portfolio
+  - Tangency portfolio
+- Practical exercise: Portfolio optimization with R
+
+---
+
+class: title-slide-section, center, middle
+
+# Security Market Line (Application)
+
+---
+
 ## Security Market Line -- Application
 
 CAPM:
 $$\mu_i = R_f + \beta_i \; (\mu_M-R_f)$$
 
-SML represents the linear relationship between expected return and systematic risk ($\mu_i \sim beta_i$).
+SML represents the linear relationship between expected return and systematic risk ($\mu_i \sim \beta_i$).
 
 **Interpretation:**
-- Intercept = risk-free rate $R_f$ (beta = 0)
+- Intercept = risk-free rate $R_f$ ($\beta_i = 0$)
 - Slope = market risk premium $(\mu_M - R_f)$
-- Always passes through the market portfolio (beta = 1, $\mu_M$)
+- Always passes through the market portfolio ($\beta = 1$, $\mu_M$)
 
 **Application:**
 - Point ABOVE the SML: offers a higher return than required for its beta → undervalued (underpriced)
@@ -28,7 +45,7 @@ SML represents the linear relationship between expected return and systematic ri
 
 Example Setup (monthly returns):
 - $\mu_i = R_f + \beta \times (\mu_M-R_f) = 0.15\% + \beta \times 0.60\%$, Risk‑free rate $R_f = 0.15\%$, market risk premium $\mu_M-R_f = 0.60\%$.
-- Observed Raw: historical average monthly raw return; what you actually observed
+- Observed: historical average monthly return; what you actually observed
 
 ```{r echo=FALSE, results='asis'}
 rf <- 0.0015 # 0.15% monthly
@@ -54,13 +71,13 @@ assets <- assets %>%
 tbl <- assets %>%
   mutate(
     Beta = sprintf("%.2f", Beta),
-    `Observed Raw %` = sprintf("%.2f", Observed_Raw * 100),
-    `Expected Raw %` = sprintf("%.2f", Expected_Raw * 100)
+    `Observed %` = sprintf("%.2f", Observed_Raw * 100),
+    `Expected %` = sprintf("%.2f", Expected_Raw * 100)
   ) %>%
-  select(Ticker, Name, Beta, `Observed Raw %`, `Expected Raw %`, Position)
+  select(Ticker, Name, Beta, `Observed %`, `Expected %`, Position)
 
 tbl %>%
-  kable(format = "html", align = c("l", "l", "c", "c", "c", "l"), caption = "Illustrative SML Comparison (Monthly Raw Returns)")
+  kable(format = "html", align = c("l", "l", "c", "c", "c", "l"), caption = "Illustrative SML Comparison (Monthly Returns)")
 ```
 
 
@@ -135,7 +152,8 @@ p_SML <- ggplot() +
     scale_x_continuous(expand = expansion(mult = c(0.1, 0.02))) + # Add padding to prevent cropping
     labs(
         title = "Security Market Line (Monthly Returns)",
-        y = latex2exp::TeX("Expected Return $\\,\\mu_i$ (%)"), x = latex2exp::TeX("Systematic Risk, $\\,\\beta_i$"),
+        y = latex2exp::TeX("Expected Return $\\,\\mu_i$ (%)"), 
+        x = latex2exp::TeX("Systematic Risk, $\\,\\beta_i$"),
         color = "Position"
     ) +
     theme_minimal(base_size = 14) +
@@ -247,8 +265,8 @@ p_SML_mrp_comparison <- ggplot() +
     labs(
         title = "Effect of Increasing Equity Risk Premium on SML",
         subtitle = "Risk-free rate held constant at 0.15%",
-        y = latex2exp::TeX("Expected Raw Return $\\,E[r_i]\\,$ (%)"), 
-        x = "Beta (Systematic Risk)",
+        y = latex2exp::TeX("Expected Return $\\,\\mu_i$ (%)"), 
+        x = latex2exp::TeX("Systematic Risk, $\\,\\beta_i$"),
         color = "Scenario",
         linetype = "Scenario"
     ) +
@@ -346,8 +364,8 @@ p_SML_rf_comparison <- ggplot() +
   labs(
     title = "Effect of Increasing Risk-Free Rate on SML",
     subtitle = "Equity risk premium held constant at 0.6%",
-    y = latex2exp::TeX("Expected Raw Return $\\,E[r_i]\\,$ (%)"),
-    x = "Beta (Systematic Risk)",
+    y = latex2exp::TeX("Expected Return $\\,\\mu_i$ (%)"),
+    x = latex2exp::TeX("Systematic Risk, $\\,\\beta_i$"),
     color = "Scenario",
     linetype = "Scenario"
   ) +
@@ -366,23 +384,22 @@ include_graphics(f_name)
 ```
 
 ---
+
 ### Impact Insights
+
 - **Increase in $r_f$, holding $E[r_M-r_f]$ fixed:**
   
   The SML shifts up in parallel; slope stays the same. All points on the line move vertically upward by $\Delta r_f.$ No rotation occurs because the market risk premium is constant.
 
+---
 
+class: title-slide-section, center, middle
 
-
-<!-- 
-- **Increase in $r_f$, holding $E[r_M]$ fixed:**
-  
-  SML pivots around beta = 1 (point at $(1, E[r_M])$). Required return rises for low-beta assets (beta < 1) and falls for high-beta assets (beta > 1). Some low-beta “undervalued” points can drop closer to (or below) SML; some high-beta overvalued points may move to fairly valued. 
--->
+# Optimal Portfolio Construction
 
 ---
 
-# Portfolio opportunity set
+## Portfolio opportunity set
 
 The collection of all feasible investment possibilities set, or *portfolio opportunity set*, in the case of two assets is simply all possible portfolios that can be formed by varying the portfolio weights such that the weights sum to one.
 
@@ -397,7 +414,7 @@ E[r_{p,t}] &= \sum_{i=1}^k w_{i,t} E[r_{i,t}] \\
 
 ---
 
-# Given setup for two assets A and B
+## Given setup for two assets A and B
 
 ```{r echo=FALSE, results='asis'}
 # Create huxtable and use special characters that will be converted to math
@@ -710,9 +727,9 @@ ht %>% set_width(0.5) %>% print_html()
 ```
 ]
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # initialize parameters
-library(IntroCompFinR)
+suppressWarnings(library(IntroCompFinR))
 mu.vec <- c(mu.A, mu.B)
 names(mu.vec) <- c("Asset A", "Asset B")
 
@@ -727,6 +744,7 @@ colnames(sigma2.mat) <- rownames(sigma2.mat) <- c("Asset A", "Asset B")
 
   .small-text[
   ```{r}
+  
   k <- 2 # number of assets
   ew <- rep(1,k)/k
   equalWeight.portfolio <- getPortfolio(er=mu.vec, cov.mat=sigma2.mat, weights=ew)
@@ -793,10 +811,13 @@ round((mu.vec - rf)/sigma.vec, 4)
 ]
 
 ---
-
+.tight-top.tight-bottom[
 ## Efficient frontier
+]
 
+.tight-top.tight-bottom[
 The function `efficient.frontier()` constructs the set of efficient portfolios.
+]
 
 ```{r}
 ef <- efficient.frontier(mu.vec, sigma2.mat, alpha.min=-0.5, alpha.max=2, nport=20)
@@ -805,7 +826,7 @@ ef
 
 - ER: expected return
 - SD: standard deviation
-- `alpha.min` and `alpha.max` specify the range of portfolio weights on individual assets.
+- `alpha.min` and `alpha.max` specify the range of portfolio weights on the first asset. Here, we allow the $w_A$ to vary from -0.5 to 2, corresponding to $w_b$ of 1.5 to -1.0.
 
 ---
 

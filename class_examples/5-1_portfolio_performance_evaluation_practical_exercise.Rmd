@@ -1,0 +1,262 @@
+---
+title: "Practical Exercises: Portfolio Performance Evaluation"
+output: 
+  pdf_document:
+    number_sections: true
+header-includes:
+  - \usepackage[bookmarksnumbered=true]{hyperref}
+---
+
+```{r chunk-opt, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                      fig.width = 6.5, fig.height = 4.5, fig.align = "center")
+```
+
+# Packages
+
+Run this once. If a package is already installed, `install.packages()` will
+simply reinstall it, so you can comment out the line afterwards.
+
+```{r install, eval=FALSE}
+install.packages(c(
+  "PerformanceAnalytics",  # every performance measure used below
+  "xts",                   # the time series container it expects
+  "tidyverse",             # dplyr / ggplot2 / readr
+  "knitr", "kableExtra",   # tables
+  "scales"                 # percentage formatting
+))
+```
+
+```{r libs}
+library(PerformanceAnalytics)
+library(xts)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+```
+
+`PerformanceAnalytics` masks a few base functions (`legend`, `plot`) and
+attaches `xts` and `zoo` for you. The masking warnings are harmless.
+
+The figures below use each package's default styling. You do not need any
+particular theme -- feel free to restyle them however you like.
+
+
+# Class Example: An Active ETF against its Benchmark
+
+We evaluate **ARK Innovation (ARKK)**, an actively managed ETF, against
+**SPY** (an S&P 500 index fund) over **120 months, 2015--2024**.
+
+Performance evaluation needs exactly three monthly series:
+
+1. the return on the portfolio being evaluated,
+2. the return on a benchmark, and
+3. the risk-free rate.
+
+## The data {-}
+
+The returns are supplied in `data/etf_ARKK_case_study_monthly.csv`, in the `data/` folder beside this file. Keep the two together, or adjust the path below. It holds 120 monthly rows with four columns:
+
+| Column | Meaning |
+| --------- | ----------------------------------------------------------- |
+| `Date`    | last calendar day of the month |
+| `ptf_ret` | simple return on ARKK, from adjusted prices (dividends and splits included) |
+| `bmk_ret` | simple return on SPY, same basis |
+| `rf`      | one-month T-bill return, from the Fama-French data library, as a decimal |
+
+```{r read-data}
+ret <- read.csv("data/etf_ARKK_case_study_monthly.csv")
+ret$Date <- as.Date(ret$Date)
+```
+
+Almost every `PerformanceAnalytics` function wants an `xts` object, so convert
+once and reuse. Give the columns readable names -- they become the labels in
+every table and chart below.
+
+```{r to-xts}
+ret_xts <- xts(ret[, c("ptf_ret", "bmk_ret")], order.by = ret$Date)
+colnames(ret_xts) <- c("ARK Innovation", "S&P 500")
+
+rf_xts <- xts(ret$rf, order.by = ret$Date)
+colnames(rf_xts) <- "rf"   # a name is required, not optional
+```
+
+Data preview:
+
+```{r show-data, echo=FALSE}
+rbind(head(ret, 5), tail(ret, 5)) %>%
+  mutate(across(2:4, ~ percent(.x, accuracy = 0.01))) %>%
+  kable(row.names = FALSE, booktabs = TRUE,
+        col.names = c("Date", "Portfolio", "Benchmark", "Risk free"),
+        ) %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+Note the risk-free rate is *exactly zero* in 2015 and back above 4% a year by
+2024. Over a ten-year sample it is not a constant, and treating it as one will
+distort every excess-return measure.
+
+## Cumulative performance
+
+`charts.PerformanceSummary` stacks three views: the cumulative return, the
+monthly returns, and the drawdown from the running peak.
+
+```{r chart-summary, fig.height=6}
+charts.PerformanceSummary(ret_xts, main = "ARKK vs SPY", legend.loc = "topleft")
+```
+
+At the 2021 peak the fund was worth **3.7 times** the benchmark; by the end of
+2024 it is **behind** it. The drawdown panel shows a fall of about **77%** from
+which it has still not recovered.
+
+The drawdown panel is the one investors actually feel, and neither the Sharpe
+ratio nor alpha will tell you about it.
+
+## Summary statistics
+
+```{r stats}
+stats <- table.Stats(ret_xts, digits = 4)
+```
+
+```{r stats-print, echo=FALSE}
+stats %>%
+  kable(digits = 4, booktabs = TRUE, format = "latex", linesep = "") %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+Things to notice:
+
+- `Kurtosis` is **excess** kurtosis, so positive values mean fat tails.
+- The skew runs in opposite directions for the two series.
+
+## Risk-adjusted performance
+
+```{r measures}
+# Sharpe ratio. geometric = FALSE reproduces the sqrt(12) scaling from the
+# lecture; the default TRUE annualizes the mean geometrically instead.
+sharpe <- SharpeRatio.annualized(ret_xts, Rf = rf_xts, geometric = FALSE)
+
+# Everything CAPM-related in one call. scale = 12 because the data is monthly.
+capm <- table.CAPM(Ra = ret_xts[, 1], Rb = ret_xts[, 2],
+                   Rf = rf_xts$rf, scale = 12, digits = 4)
+```
+
+```{r measures-print, echo=FALSE}
+rbind(sharpe,
+      `Beta`             = c(capm["Beta", ], 1),
+      `Annualized Alpha` = c(capm["Annualized Alpha", ], 0),
+      `R-squared`        = c(capm["R-squared", ], 1)) %>%
+  kable(digits = 3, booktabs = TRUE) %>%
+  kable_styling(latex_options = "HOLD_position")
+
+capm[c("Tracking Error", "Active Premium",
+       "Information Ratio", "Treynor Ratio"), , drop = FALSE] %>%
+  kable(digits = 3, booktabs = TRUE) %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+
+
+## Performance by year
+
+`table.AnnualizedReturns` summarises a whole sample. To get one column per
+calendar year, split the series and apply it to each piece.
+
+```{r by-year}
+table_by_year <- function(R, Rf) {
+  yr <- mapply(function(r, rf) table.AnnualizedReturns(r, Rf = rf),
+               split(R,  f = "years"),   # xts::split.xts
+               split(Rf, f = "years"),
+               SIMPLIFY = FALSE)
+  out <- do.call(cbind, yr)
+  colnames(out) <- unique(format(index(R), "%Y"))
+  # cbind keeps the first year's Rf in the Sharpe label, which is misleading
+  # once the other columns use their own year's rate
+  rownames(out)[3] <- "Annualized Sharpe"
+  t(out)
+}
+
+performance_by_year <- table_by_year(ret_xts$`ARK Innovation`, rf_xts$rf)
+```
+
+```{r by-year-print, echo=FALSE}
+performance_by_year %>%
+  as.data.frame() %>%
+  mutate(across(c(`Annualized Return`, `Annualized Std Dev`),
+                ~ percent(.x, accuracy = 0.01)),
+         `Annualized Sharpe` = number(`Annualized Sharpe`, accuracy = 0.01)) %>%
+  kable(align = "r", booktabs = TRUE, format = "latex", linesep = "") %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+
+## Rolling performance
+
+A 12-month rolling window shows how the measures move through time instead of
+collapsing the decade into one number.
+
+```{r chart-rolling, fig.height=6}
+charts.RollingPerformance(R = ret_xts, width = 12, Rf = rf_xts$rf,
+                          main = "Rolling 12-month performance",
+                          legend.loc = "topleft")
+```
+
+## Risk decomposition
+
+```{r risk}
+risk <- table.SpecificRisk(Ra = ret_xts[, 1], Rb = ret_xts[, 2],
+                           Rf = rf_xts$rf, digits = 4)
+```
+
+```{r risk-print, echo=FALSE}
+risk %>%
+  kable(digits = 3, booktabs = TRUE) %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+\newpage
+
+# Practical Exercise: A Second Fund
+
+A second dataset, `data/utilities_fund_monthly.csv`, has the same four columns
+and covers the same 120 months. The benchmark and risk-free columns are
+identical to the class example; only `ptf_ret` differs -- it is a **utilities
+sector fund**, a defensive, low-beta portfolio, and about as far from ARKK as
+you can get while still holding US equities.
+
+```{r exercise-data}
+ex <- read.csv("data/utilities_fund_monthly.csv")
+ex$Date <- as.Date(ex$Date)
+rbind(ex %>% head(5), ex %>% tail(5)) %>% 
+  mutate(across(2:4, ~ percent(.x, accuracy = 0.01))) %>%
+  kable(digits = 4, row.names = FALSE, format = "latex", booktabs = TRUE,
+        col.names = c("Date", "Portfolio", "Benchmark", "Risk free")) %>% 
+  kable_styling(latex_options = "HOLD_position")
+
+ex_xts <- xts(ex[, c("ptf_ret", "bmk_ret")], order.by = ex$Date)
+colnames(ex_xts) <- c("Utilities Fund", "S&P 500")
+
+ex_rf <- xts(ex$rf, order.by = ex$Date)
+colnames(ex_rf) <- "rf"
+```
+
+Work through the same steps as the class example and answer the following.
+
+(a) Plot the cumulative performance. When was the fund ahead of its benchmark,
+    and what was its worst drawdown? How does that drawdown compare with
+    ARKK's $77\%$?
+
+(b) Report the summary statistics for the fund and the benchmark monthly returns using `table.Stats()`. How do the two series compare in terms of mean, volatility, skew and kurtosis?
+
+(c) Compute the annualized Sharpe ratio for the fund and the benchmark. Which
+    would you rather hold as your *entire* risky portfolio?
+
+(d) Compute the beta, Jensen's alpha, the Treynor ratio and the information
+    ratio.
+
+(e) Decompose total risk into systematic and specific risk. What fraction of
+    the fund's variance is firm-specific? Compare the $R^2$ with ARKK's
+    $0.52$: which fund is the market explaining more of?
+
+(f) On the evidence, would you call this fund's manager skilled? 

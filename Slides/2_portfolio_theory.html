@@ -362,29 +362,33 @@ Answers: 0.19, 0.16, 0.15
 `\(E[HPR]=0.20\times 0.19 + 0.5\times 0.16 0.3\times 0.15 =0.163\)`
 
 ---
-
+.tight-top.tight-bottom[
 ## Average Return
+]
 
 Given a series of portfolio returns `\(r_{p,t}\)`, `\(t=1,2,\ldots,T\)`, the average return can be calculated in two ways:
 
 - **Arithmetic mean** (AM) portfolio return
   `$$\begin{aligned}
-  \text{Arithmetic } \bar{r}_{p, 0:T} &amp;= \frac{1}{T}\sum_{t=1}^T r_{p,t} \\
+  \text{Arithmetic } \bar{r}_{p,\, 0:T} = \bar{r}_A &amp;= \frac{1}{T}\sum_{t=1}^T r_{p,t} \\
   &amp;= \frac{1}{T} \left(r_{p,1} + r_{p,2} + \cdots + r_{p,T}\right)
   \end{aligned}$$`
 
 - **Geometric mean** (GM) portfolio return
   `$$\begin{aligned}
-  \text{Geometric } \bar{r}_{p, 0:T} &amp;= \left[\prod_{t=1}^T (1+r_{p,t}) \right] ^{\frac{1}{T}}-1 \\
+  \text{Geometric } \bar{r}_{p,\, 0:T} = \bar{r}_G &amp;= \left[\prod_{t=1}^T (1+r_{p,t}) \right] ^{\frac{1}{T}}-1 \\
   &amp;= \sqrt[T]{(1 + r_{p,1}) \times (1 + r_{p,2}) \times \cdots \times (1 + r_{p,T})} - 1
   \end{aligned}$$`
+
+- Relationship between AM and GM:
+  `$$\bar{r}_G \approx \bar{r}_A - 0.5\sigma^2$$`
 
 ???
 
 - GM the preferred method when computing the average rate of return over several holding periods
 - GM is the same as the arithmetic average if there is no variance in return
-- When there is variation, the geometric average is always smaller than the arithmetic average.
-- GM offers the best estimate of past returns
+- When there is variation, the geometric average is always smaller than the arithmetic average, `\(\bar{r}_G \leq \bar{r}_A.\)` Higher variance in returns leads to a larger difference between the two averages.
+- GM offers the best estimate of past returns.
 
 ---
 class: example-block
@@ -425,7 +429,7 @@ answer:
 
 (b) After the first month, her investment grows to $100 \* (1 + 0.10) = $110. After the second month, it decreases to $110 \* (1 - 0.10) = $99.
 
-(c) `\(GM = [(1+r_1)(1+r_2)]^{1/2} - 1 = [(1 + 0.10) * (1 - 0.10)]^{1/2} - 1 ≈ -0.50\%\)`
+(c) The geometric return is `$$\begin{aligned} \bar{r}_G &amp;= [(1+r_1)(1+r_2)]^{1/2} - 1 \\ &amp;= [(1 + 0.10) * (1 - 0.10)]^{1/2} - 1 \\ &amp;≈ -0.50\% \end{aligned}$$`
 
 (d) The geometric return provides a better measure of Sarah’s investment performance because it accounts for the **compounding effect of returns over multiple periods**. Unlike the arithmetic average, which can be misleading in volatile markets, the geometric return reflects the actual growth rate of the investment, showing that Sarah's investment decreased in value over the two months.
 
@@ -453,7 +457,7 @@ answer:
   `$$\sigma_{1,2} = \frac{1}{T-1} \sum_{t=1}^{T} \left[ (r_{1,t} - \bar{r}_1) \cdot (r_{2,t} - \bar{r}_2) \right]$$`
 ]
 
-Where: `\(r_t\)` = return in each period; `\(\bar{r}\)` = average return; `\(T\)` = number of periods.
+Where: `\(r_t\)` = return in each period; `\(\bar{r}\)` = *arithmetic* average return; `\(T\)` = number of periods.
 
 ???
 A refresher on computing risk and covariance.
@@ -889,7 +893,7 @@ Answers: `\(y^* = 0.3644\)`, `\(E(r_C) = 0.1164\)`, standard deviation = 0.1020
 **Risky Portfolio = Risky Asset 1 + Risky Asset 2**
 
 - **Portfolio Return** `\(\left( E(r_P) \right)\)`:
-  `$$E(r_P) = \sum_{i=1}^{2} w_i \cdot E(r_i)$$`
+  `$$E(r_P) = w_1 \cdot E(r_1) + w_2 E(r_2)$$`
 
 - **Portfolio Variance** `\((\sigma_P^2)\)`:
   `$$\sigma_P^2 = w_1^2 \cdot \sigma_1^2 + (1 - w_1)^2 \cdot \sigma_2^2 + 2 \cdot w_1 \cdot (1 - w_1) \cdot \sigma_{1,2}$$`
@@ -899,7 +903,7 @@ Where:
 - `\(w_i\)` = weight of asset `\(i\)`
 - `\(w_2 = 1 - w_1\)`
 - `\(E(r_i)\)` = expected return of asset `\(i\)`; 
-- `\(\sigma_{1,2}\)` = covariance between assets 1 and 2; 
+- `\(\sigma_{1,2}\)` = covariance between assets 1 and 2, where `\(\sigma_{1,2}=\rho_{1,2}\sigma_1\sigma_2\)`; 
 - `\(\rho_{1,2}\)` = correlation between assets 1 and 2.
 ]
 
@@ -1111,6 +1115,54 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })(document);</script>
 <script src="theme/example-numbering.js"></script>
 <script type="text/javascript">smartify();</script>
+<script>
+(function () {
+  // Leave the title slide and the `inverse` section dividers out of the slide
+  // count, so the numbering reflects content slides only -- on screen and in
+  // the PDF alike.
+  //
+  // Why not remark's `count: false`? Because in remark that marks a slide as a
+  // *continuation* of the one before it, so xaringan tags the PREVIOUS slide
+  // `has-continuation`, and xaringan's own print stylesheet carries
+  // `@media print { .has-continuation { display: none } }`. The net effect is
+  // that the slide immediately before every divider silently vanishes from the
+  // PDF. Renumbering after the fact leaves remark's slide model untouched.
+  function renumber() {
+    // Scope to the real deck: xaringanExtra's tile view clones every container.
+    var containers = document.querySelectorAll(
+      '.remark-slides-area > .remark-slide-container');
+    if (!containers.length) return;
+
+    var items = [];
+    containers.forEach(function (c) {
+      var content = c.querySelector('.remark-slide-content');
+      if (!content) return;
+      items.push({
+        container: c,
+        skip: content.classList.contains('title-slide') ||
+              content.classList.contains('inverse'),
+        // Intermediate state of an incremental (`--`) slide: shares its number.
+        intermediate: c.classList.contains('has-continuation')
+      });
+    });
+
+    var total = items.filter(function (it) {
+      return !it.skip && !it.intermediate;
+    }).length;
+
+    var n = 0;
+    items.forEach(function (it) {
+      var el = it.container.querySelector('.remark-slide-number');
+      if (!el) return;
+      if (it.skip) { el.style.visibility = 'hidden'; return; }
+      el.textContent = (it.intermediate ? n + 1 : ++n) + '/' + total;
+    });
+  }
+
+  if (document.querySelector('.remark-slides-area')) renumber();
+  else window.addEventListener('load', renumber);
+})();
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

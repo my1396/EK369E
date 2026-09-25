@@ -4,13 +4,14 @@
     <title>Event Study</title>
     <meta charset="utf-8" />
     <meta name="author" content="Instructor: Menghan Yuan" />
-    <script src="libs/header-attrs-2.30/header-attrs.js"></script>
-    <script src="libs/mark.js-8.11.1/mark.min.js"></script>
-    <link href="libs/xaringanExtra-search-0.0.1/search.css" rel="stylesheet" />
-    <script src="libs/xaringanExtra-search-0.0.1/search.js"></script>
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="libs/mark.js/mark.min.js"></script>
+    <link href="libs/xaringanExtra-search/search.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-search/search.js"></script>
     <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":true,"autoSearch":true}) })</script>
-    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
     <!-- MathJax V2 Configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -180,7 +181,10 @@
           diag: "\\mathrm{diag}",
           rank: "\\mathrm{rank}",
           vecc: "\\mathrm{vec}",
-          
+
+          // a literal dollar sign inside math: \dollars 100
+          dollar: "\\$",
+
           // define colors
           red: ["{\\color[RGB]{185,64,71}{#1}}", 1],
         }
@@ -220,13 +224,10 @@ class: center, middle, inverse, title-slide
 
 
 
-class: inverse, center, middle
 
 # Agenda
 
----
-
-class: center-v
+.center-v[
 
 - Event Study Overview
 - Measuring Abnormal Returns
@@ -234,6 +235,7 @@ class: center-v
   - Single Abnormal Return
   - Cumulative Abnormal Return
   - Portfolio Abnormal Return (Cumulative Average Abnormal Return)
+]
 
 ---
 class: inverse, center, middle
@@ -767,6 +769,54 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })(document);</script>
 <script src="theme/example-numbering.js"></script>
 <script type="text/javascript">smartify();</script>
+<script>
+(function () {
+  // Leave the title slide and the `inverse` section dividers out of the slide
+  // count, so the numbering reflects content slides only -- on screen and in
+  // the PDF alike.
+  //
+  // Why not remark's `count: false`? Because in remark that marks a slide as a
+  // *continuation* of the one before it, so xaringan tags the PREVIOUS slide
+  // `has-continuation`, and xaringan's own print stylesheet carries
+  // `@media print { .has-continuation { display: none } }`. The net effect is
+  // that the slide immediately before every divider silently vanishes from the
+  // PDF. Renumbering after the fact leaves remark's slide model untouched.
+  function renumber() {
+    // Scope to the real deck: xaringanExtra's tile view clones every container.
+    var containers = document.querySelectorAll(
+      '.remark-slides-area > .remark-slide-container');
+    if (!containers.length) return;
+
+    var items = [];
+    containers.forEach(function (c) {
+      var content = c.querySelector('.remark-slide-content');
+      if (!content) return;
+      items.push({
+        container: c,
+        skip: content.classList.contains('title-slide') ||
+              content.classList.contains('inverse'),
+        // Intermediate state of an incremental (`--`) slide: shares its number.
+        intermediate: c.classList.contains('has-continuation')
+      });
+    });
+
+    var total = items.filter(function (it) {
+      return !it.skip && !it.intermediate;
+    }).length;
+
+    var n = 0;
+    items.forEach(function (it) {
+      var el = it.container.querySelector('.remark-slide-number');
+      if (!el) return;
+      if (it.skip) { el.style.visibility = 'hidden'; return; }
+      el.textContent = (it.intermediate ? n + 1 : ++n) + '/' + total;
+    });
+  }
+
+  if (document.querySelector('.remark-slides-area')) renumber();
+  else window.addEventListener('load', renumber);
+})();
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

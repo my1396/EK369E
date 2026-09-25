@@ -1,0 +1,58 @@
+---
+title: "Return: APR vs AER"
+---
+
+```{r child = "_setup.Rmd"}
+```
+
+## APR vs AER
+
+- **Annual Percentage Rate (APR)**: The APR is the simple interest rate that does not account for compounding within the year. It is calculated as:
+  $$\text{APR} = r \times m$$
+  where $r$ is the single period interest rate and $m$ is the number of compounding periods per year.
+
+- **Annual Effective Rate (AER)**: The AER accounts for compounding and represents the actual annual return on an investment. It is calculated as:
+  $$\text{AER} = (1 + r)^m - 1$$
+
+---
+class: example-block
+
+### Lena's APR/AER question
+
+Lena sees an offer: APR = 18% with monthly compounding. She wants to understand what this means in terms of her actual monthly cost and her effective annual cost.
+
+- What is the monthly interest rate?
+- What is the AER?
+
+---
+class: example-block
+
+### Aaron's bank comparison
+
+Two banks try to win over Aaron:
+
+- Bank A advertises APR 12% with monthly compounding.
+- Bank B advertises APR 12% with quarterly compounding.
+
+Aaron asks you: Which bank truly gives him a better annual return?
+
+---
+class: example-block
+
+### Bank Deposit Scenarios
+
+Emma just received $100 as a gift and wants to put it in a bank. The bank advertises an **Annual Percentage Rate (APR) of 10%**. She wonders how much money she will have after one year depending on how interest is calculated.  
+
+Calculate the final amount after one year under each of the following scenarios:
+
+(a) The bank applies a **simple annual return**  
+(b) The bank **compounds interest semi-annually** (twice per year)  
+(c) The bank **compounds interest monthly**  
+(d) The bank **compounds interest daily**  
+(e) The bank **uses continuous compounding**  
+
+Hint: Use the following formula
+$$D_t = D_0 \left(1+\frac{R}{m}\right)^{mt}$$
+where $D_0$ is the initial deposit, $D_t$ is the the value of the deposit at time $t$, $R$ is the APR, $m$ is the number of compounding periods per year, and $t$ is the number of years.
+
+

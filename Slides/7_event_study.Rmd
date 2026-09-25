@@ -6,14 +6,9 @@ title: "Event Study"
 ```
 
 
-
-class: inverse, center, middle
-
 # Agenda
 
----
-
-class: center-v
+.center-v[
 
 - Event Study Overview
 - Measuring Abnormal Returns
@@ -21,6 +16,7 @@ class: center-v
   - Single Abnormal Return
   - Cumulative Abnormal Return
   - Portfolio Abnormal Return (Cumulative Average Abnormal Return)
+]
 
 ---
 class: inverse, center, middle

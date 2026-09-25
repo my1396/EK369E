@@ -20,5 +20,5 @@ xaringan::moon_reader:
     highlightSpans: true
   includes:
     in_header: ["libs/mathjax.html", "libs/in_header.html"]
-    after_body: ["theme/example-numbering.html", "libs/after_body.html"]
+    after_body: ["theme/example-numbering.html", "libs/after_body.html", "theme/slide-numbering.html"]
   pandoc_args: ["--metadata-file=_meta.yml"]

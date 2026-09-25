@@ -1,0 +1,48 @@
+<script>
+(function () {
+  // Leave the title slide and the `inverse` section dividers out of the slide
+  // count, so the numbering reflects content slides only -- on screen and in
+  // the PDF alike.
+  //
+  // Why not remark's `count: false`? Because in remark that marks a slide as a
+  // *continuation* of the one before it, so xaringan tags the PREVIOUS slide
+  // `has-continuation`, and xaringan's own print stylesheet carries
+  // `@media print { .has-continuation { display: none } }`. The net effect is
+  // that the slide immediately before every divider silently vanishes from the
+  // PDF. Renumbering after the fact leaves remark's slide model untouched.
+  function renumber() {
+    // Scope to the real deck: xaringanExtra's tile view clones every container.
+    var containers = document.querySelectorAll(
+      '.remark-slides-area > .remark-slide-container');
+    if (!containers.length) return;
+
+    var items = [];
+    containers.forEach(function (c) {
+      var content = c.querySelector('.remark-slide-content');
+      if (!content) return;
+      items.push({
+        container: c,
+        skip: content.classList.contains('title-slide') ||
+              content.classList.contains('inverse'),
+        // Intermediate state of an incremental (`--`) slide: shares its number.
+        intermediate: c.classList.contains('has-continuation')
+      });
+    });
+
+    var total = items.filter(function (it) {
+      return !it.skip && !it.intermediate;
+    }).length;
+
+    var n = 0;
+    items.forEach(function (it) {
+      var el = it.container.querySelector('.remark-slide-number');
+      if (!el) return;
+      if (it.skip) { el.style.visibility = 'hidden'; return; }
+      el.textContent = (it.intermediate ? n + 1 : ++n) + '/' + total;
+    });
+  }
+
+  if (document.querySelector('.remark-slides-area')) renumber();
+  else window.addEventListener('load', renumber);
+})();
+</script>

@@ -31,6 +31,11 @@
 \makeatother
 
 % table typesetting
+% needspace lets a block ask for a minimum amount of room: if less than that is
+% left on the page, LaTeX breaks first. Pandoc renders markdown pipe tables as
+% `longtable`, which is built to split across pages, so `\needspace` before a
+% table is the way to keep one whole without rewriting it as raw LaTeX.
+\usepackage{needspace}
 \usepackage{float} % for [H] placement specifier
 % Make all tables use [H] placement by default
 % Still takes placement, eg [htbp]; defaults to [H] if no placement is specified

@@ -29,6 +29,29 @@
     height: 100%;
 }
 
+/* .center-v used as a *div* inside a slide, e.g.
+       ## Heading
+       .center-v[ ... ]
+   Centres on the WHOLE slide, not on the space left below the heading. In
+   normal flow the div starts under the heading, so `height: 100%` makes its
+   midpoint land a heading's-height too low. Taking it out of flow and pinning
+   it to all four edges gives it the full slide height, so its midpoint is the
+   slide's midpoint and the heading sits above it.
+   `padding: inherit` picks up the slide's own 4em side padding, so the text
+   still lines up with every other slide. Scoped with :has() so the slide-class
+   form (`class: center-v`) is untouched. */
+.remark-slide-content:has(> .center-v) {
+    position: relative;
+}
+
+.remark-slide-content > .center-v {
+    position: absolute;
+    inset: 0;
+    padding: inherit;
+    box-sizing: border-box;
+    height: auto;
+}
+
 /* Equal-height columns, so .center-v also works *inside* a column.
    .pull-left/.pull-right are floats sized by their content, so a nested
    .center-v has no parent height for its `height: 100%` to resolve against.
@@ -99,6 +122,37 @@
     color: var(--text-bold-color) !important;
 }
 
+/* knitr's include_graphics() emits <img style="display: block; margin: auto">
+   inside a paragraph of its own. The newlines around it still form a line box,
+   so the figure sits roughly one line of leading lower than it looks like it
+   should, and carries the same dead space underneath. Zeroing the line height
+   removes it; the small block margins keep the figure off the neighbouring
+   text. */
+.remark-slide-content p:has(> img[style*="display: block"]) {
+    line-height: 0;
+}
+
+/* Flex containers do not collapse their children's margins, so the first
+   paragraph inside a .pull-left/.pull-right column stacks its top margin on
+   top of whatever sits above the row. Drop it: the column already starts
+   where the row starts. */
+.remark-slide-content .pull-layout > .pull-left > p:first-child,
+.remark-slide-content .pull-layout > .pull-right > p:first-child,
+.remark-slide-content .pull-layout-v > .pull-left > p:first-child,
+.remark-slide-content .pull-layout-v > .pull-right > p:first-child {
+    /* !important, because `.remark-slide-content p` below sets 0.5rem that way */
+    margin-block-start: 0 !important;
+}
+
+/* Long inline code -- `PerformanceAnalytics::charts.PerformanceSummary` and
+   friends -- is a single unbreakable word as far as CSS is concerned, so it
+   gets pushed whole onto the next line and leaves a ragged gap behind it.
+   break-word lets the browser split such a token, but only when it will not
+   otherwise fit, so short code spans are untouched. */
+.remark-slide-content .remark-inline-code {
+    overflow-wrap: break-word;
+}
+
 /* Split utilities: tighten top and bottom independently */
 .remark-slide-content .tight-top {
     margin-top: -0.5em !important;
@@ -112,6 +166,18 @@
 .remark-slide-content .tight-bottom {
     line-height: 1.2;
 }
+/* .tight-bottom hangs a -0.5em margin on the wrapper, but a heading's own
+   bottom margin (37px for an h2) *collapses* with it rather than adding to
+   it: a collapsed margin is the largest positive plus the most negative, so
+   piling on a second -0.5em anywhere below changes nothing at all. To
+   genuinely close the gap under a slide title, shrink the heading's own
+   margin. Opt in per slide:  .tight-bottom.tight-heading[ ## Title ] */
+.remark-slide-content .tight-heading h1,
+.remark-slide-content .tight-heading h2,
+.remark-slide-content .tight-heading h3 {
+    margin-bottom: 1rem !important;
+}
+
 /* set <h3> margins inside tight-top or tight-bottom */
 .remark-slide-content .tight-top h3,
 .remark-slide-content .tight-bottom h3 {
@@ -127,6 +193,15 @@
 ul {
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
+}
+
+/* Third-level bullets a touch smaller, so the hierarchy reads at a glance.
+   `em` is relative to the level-2 list, so the step is proportional whatever
+   the slide's base size. Note remark needs 6 spaces of indent to nest a third
+   level (4 beyond the parent's marker), not the 4 that pandoc would accept. */
+.remark-slide-content ul ul ul,
+.remark-slide-content ol ol ol {
+    font-size: 0.9em;
 }
 
 /* Paragraphs */
@@ -161,7 +236,7 @@ ul {
 /* Tighter displaymath top margins */
 .remark-slide-content p>span.mjx-chtml.MJXc-display {
     display: block;
-    margin-top: 0.25rem !important;
+    margin-top: 0.5rem !important;
     margin-bottom: 0.25rem !important;
 }
 .MJXc-display {
@@ -204,6 +279,14 @@ ul {
    (b) Second
    (c) Third
 */
+/* Open the list with the same gap a paragraph would leave, rather than the
+   browser's default 1em, so an (a)(b)(c) list sits on the text rhythm.
+   Keep this in step with the `.remark-slide-content p` margins above. */
+.remark-slide-content ol[type="a"] {
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+}
+
 .remark-slide-content ol[type="a"]>li {
     list-style-type: none;
     position: relative;
@@ -269,15 +352,52 @@ body.remark-container {
 }
 /* If author already typed 'Example' keep from duplicating (optional heuristic) */
 
+/* ---------------------------------------------------------------------------
+   Body font: keep Chrome (and therefore the PDF) in step with Safari.
+
+   xaringan-themer asks for 'Noto Sans', but its Google Fonts @import is
+   commented out, so the family has to resolve from locally installed files.
+   Chrome resolves it; Safari does not -- measured with canvas, 'Noto Sans' in
+   Safari comes out byte-identical to a deliberately nonexistent family, i.e.
+   it silently falls back to the system font. Noto Sans is ~11% wider than the
+   system font, so body lines that fit on one line in Safari wrapped to two in
+   Chrome, and pagedown::chrome_print is Chrome -- hence the PDF disagreed with
+   the Safari preview.
+
+   Naming the system font explicitly makes every engine agree. Re-enabling the
+   Noto Sans webfont on line 21 of xaringan-themer.css would also make them
+   agree, but on Chrome's wider rendering rather than Safari's.
+   --------------------------------------------------------------------------- */
+:root {
+    --text-font-family: -apple-system;
+    --text-font-family-fallback: BlinkMacSystemFont, system-ui, 'Helvetica Neue', Helvetica, Arial;
+    --text-font-base: sans-serif;
+}
+
 /* pdf output font weight */
 @media print {
     body {
         /* force Noto Sans for pdf output */
-        font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, system-ui, Arial, sans-serif !important;
+        font-family: -apple-system, BlinkMacSystemFont, system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
         font-weight: 400 !important;
     }
     strong, b {
         font-weight: 700 !important;
+    }
+
+    /* Heavier-looking body text in the PDF. 
+       -webkit-text-stroke thickens the glyph outlines while
+       leaving advance widths untouched, so the PDF stays line-for-line
+       identical to the HTML. Verified layout-neutral at 0.2/0.3/0.4px. */
+    .remark-slide-content {
+        -webkit-text-stroke: 0.2px currentColor;
+    }
+    /* Headings are already 600, and math has its own weighting -- leave both. */
+    .remark-slide-content h1,
+    .remark-slide-content h2,
+    .remark-slide-content h3,
+    .remark-slide-content .mjx-chtml {
+        -webkit-text-stroke: 0 !important;
     }
     /* MathJax font for print */
     .mjx-chtml {

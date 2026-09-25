@@ -1,8 +1,8 @@
 ---
-title: "Portfolio Performance Evaluation Quiz"
+title: "Quiz: Portfolio Performance Evaluation"
 params:
-  solution: false
-#   solution: true
+  # solution: false
+  solution: true
 ---
 
 ::: {=latex}
@@ -10,51 +10,196 @@ params:
 :::
 
 
-1. Maria is considering a savings account that pays 1% interest per month. The bank’s brochure highlights the APR, but she wants to understand her true annual return.
+1. A stock's simple return over a month is $R_t = 5\%$. What is the corresponding log return $r_t$?
 
-   - What APR does the bank advertise?
-   - What is the AER that Maria will actually earn?
-  
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution**
-
-   Monthly interest rate $r = 1\%$ and monthly compounding $m = 12$.
-
-   APR $= r \times m = 0.01 \times 12 = 0.12 = 12\%$.
- 
-   AER $= (1+r)^m - 1 = (1.01)^{12} - 1 \approx 12.68\%$.
-   :::
-   :::
-
-2. James is comparing credit cards. One card charges 4% interest every quarter. The bank lists an APR, but James knows compounding matters.
-
-   - What is the APR?
-   - What is the AER James should consider when comparing cards?
-   
-   ::: {.content-visible when-meta="params.solution"}
-   ::: {.blue}
-   **Solution:**
-
-   Quarterly interest rate $r = 4\%$ and quarterly compounding $m = 4$.
-
-   APR $= 0.04 \times 4 = 0.16 = 16\%$.
-
-   AER $= (1.04)^4 - 1 \approx 16.99\%$.
-   :::
-   :::
-
-3. Sophia hears her professor say: “The APR will always be less than or equal to the AER, except when compounding is annual.”
-
-   Is this statement true or false? Explain briefly why.
+   A)  $r_t = \ln(0.05)$
+   B)  $r_t = \ln(1.05) \approx 4.88\%$
+   C)  $r_t = e^{0.05} - 1 \approx 5.13\%$
+   D)  $r_t = 5\%$, the two measures coincide
 
    ::: {.content-visible when-meta="params.solution"}
    ::: {.blue}
-   **Solution:**
+   **The correct answer is B.**
 
-   **True.** APR equals $r \times m$ while AER equals $(1+r)^m - 1$. Because compounding makes interest grow on previously earned interest, $(1+r)^m - 1 \ge r m$ for ordinary positive rates and equality holds when $m=1$ so the compounding frequency is annual.
+   The log return is $r_t = \ln(P_t/P_{t-1}) = \ln(1+R_t)$, so $\ln(1.05)\approx 0.0488$.
+
+   Note that $r_t < R_t$ whenever $R_t>0$. The two are close for small returns but diverge as returns get larger.
    :::
    :::
 
+2. A portfolio earns simple returns of $2\%$, $-1\%$ and $3\%$ over three consecutive periods. Which statement about the cumulative return is correct?
 
+   A)  The cumulative simple return is $2-1+3 = 4\%$
+   B)  The cumulative log return is the product of the three log returns
+   C)  The cumulative log return is the sum of the three log returns
+   D)  The cumulative simple return and the cumulative log return are equal
 
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
+
+   Log returns are **additive across time**: $r_{0:3} = r_1 + r_2 + r_3 \approx 3.93\%$. This is their main practical advantage.
+
+   Simple returns must instead be **compounded**: $R_{0:3} = (1.02)(0.99)(1.03) - 1 \approx 4.05\%$, not $4\%$. And since $R_{0:3} = e^{r_{0:3}} - 1$, the two cumulative figures are close but not equal.
+   :::
+   :::
+
+3. A portfolio holds $N$ assets with weights $w_i$. Which description of the portfolio's return is most accurate?
+
+   A)  The log return can be obtained as the weighted average of the individual assets' log returns
+   B)  The log return can be obtained by first aggregating the simple returns across assets, then taking the natural log of one plus that portfolio simple return
+   C)  The simple return can be obtained by compounding one plus each asset's simple return across assets, then subtracting one
+   D)  Both the simple return and the log return can be obtained as weighted averages of the corresponding individual asset returns
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is B.**
+
+   Simple returns are additive **across assets**, so the portfolio's simple return is $R_P = \sum_{i=1}^N w_i R_i$. The portfolio log return is given by:
+   $$
+   r_P = \ln(1 + R_P) = \ln\left(\sum_{i=1}^N w_i R_i + 1\right)
+   $$
+   A is the common mistake: log returns are additive **across time**, not across assets, so a weighted average of log returns is *not* the portfolio log return. The weighted average of log returns underestimates the true portfolio log return:
+   $$
+   \sum_i w_i \ln(1+R_i) \le \ln\left(1 + \sum_i w_i R_i\right)
+   $$
+   C applies the wrong aggregation rule in the other direction: compounding $\prod(1+R_i)$ is how a *single* asset's returns combine **across time**, not how several assets combine at one date.
+
+   D is wrong. The simple return is a weighted average, while the log return is not.
+   :::
+   :::
+
+4. When computing the Sharpe ratio of a portfolio, which average return belongs in the numerator, and why?
+
+   A)  The geometric mean, because it reflects realized compound growth
+   B)  The geometric mean, because it is always the more conservative estimate
+   C)  The arithmetic mean, because the Sharpe ratio comes from single-period mean-variance theory
+   D)  Either one, since the choice has no material effect on the ranking
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
+
+   The Sharpe ratio is a **single-period** mean-variance measure. Its numerator estimates the one-period *expected* excess return, and the arithmetic mean is the unbiased estimator of that expectation.
+
+   The geometric mean answers a different question -- realized compound growth -- and it has *already* been penalised for volatility, since $\bar{r}_G \approx \bar{r}_A - \sigma^2/2$. Using it in the numerator and then dividing by $\sigma$ would charge the portfolio for its volatility twice.
+
+   The $\sqrt{12}$ annualization also assumes i.i.d. returns and arithmetic means; it is not valid for geometric means.
+   :::
+   :::
+
+5. Why might an investor prefer the semi-deviation to the ordinary standard deviation?
+
+   A)  It is easier to annualize
+   B)  It counts only deviations below the mean, so it does not penalise upside surprises
+   C)  It is always smaller, so it makes the portfolio look less risky
+   D)  It is unaffected by the shape of the return distribution
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is B.**
+
+   The semi-deviation
+   $$
+   \text{Semi } \sigma_p = \sqrt{\frac{1}{T-1}\textstyle\sum_{t=1}^{T}\big[\min(r_{p,t}-\bar{r}_p,\,0)\big]^2}
+   $$
+   replaces each above-mean deviation with zero, so only downside variability is counted.
+   :::
+   :::
+
+6. A portfolio has a one-day $1\%$ Value-at-Risk of NOK 1 million. Which statement is correct?
+
+   A)  The portfolio will lose exactly NOK 1 million on the worst day in 100
+   B)  The expected loss on the days when VaR is breached is NOK 1 million
+   C)  There is a $1\%$ chance of losing more than NOK 1 million over one day
+   D)  The maximum possible one-day loss is NOK 1 million
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
+
+   A $1\%$ VaR is a **quantile**: the probability of a loss greater than VaR is at most $1\%$.
+
+   A and D misread it as a bound. B describes the **expected shortfall**, $\text{ES}(\alpha) = E[r_p \mid r_p \le \text{VaR}(\alpha)]$, which averages the losses in the tail.
+   :::
+   :::
+
+7. Two portfolios have the same Treynor ratio, but portfolio $A$ has a much lower Sharpe ratio than portfolio $B$. What does this tell you?
+
+   A)  Portfolio $A$ carries much more firm-specific risk than portfolio $B$
+   B)  Portfolio $A$ has a higher beta than portfolio $B$
+   C)  One of the two ratios must have been computed incorrectly
+   D)  Portfolio $A$ has a negative Jensen's alpha
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is A.**
+
+   Both measures share the same numerator, the average excess return. They differ only in the denominator: Treynor divides by $\beta_p$ (systematic risk only), Sharpe by $\sigma_p$ (total risk).
+
+   Equal Treynor with a lower Sharpe therefore means $A$ has more **total** risk for the same systematic risk -- that is, more diversifiable firm-specific risk, which earns no expected reward.
+   :::
+   :::
+
+8. Jensen's alpha for a portfolio is best described as:
+
+   A)  The portfolio's return in excess of the risk-free rate
+   B)  The portfolio's return in excess of its benchmark's return
+   C)  The vertical distance between the portfolio's average return and the security market line
+   D)  The slope of the regression of portfolio returns on market returns
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is C.**
+
+   Jensen's alpha is the average return **in excess of what the CAPM predicts** given the portfolio's beta:
+   $$
+   \alpha_p = \bar{r}_p - \big[\bar{r}_f + \beta_p(\bar{r}_m - \bar{r}_f)\big]
+   $$
+   Geometrically, that is the vertical distance from the point $(\beta_p, \bar{r}_p)$ to the security market line. A portfolio plotting above the SML has a positive alpha.
+
+   D describes the **beta** coefficient, not alpha.
+   :::
+   :::
+
+9. The information ratio differs from the Sharpe ratio in that it:
+
+   A)  Measures performance against a benchmark rather than the risk-free rate
+   B)  Uses beta instead of standard deviation in the denominator
+   C)  Requires the portfolio to be fully diversified
+   D)  Cannot be annualized
+
+   ::: {.content-visible when-meta="params.solution"}
+   ::: {.blue}
+   **The correct answer is A.**
+   $$
+   \text{IR}_p = \frac{\bar{r}_p - \bar{r}_m}{\sigma_{p-m}}
+   $$
+   The benchmark return $\bar{r}_m$ replaces the risk-free rate in the numerator, and the denominator $\sigma_{p-m}$ -- the standard deviation of the return *difference*, known as the **tracking error** -- replaces total volatility. The ratio measures active return per unit of active risk.
+
+   B describes the Treynor ratio. The annualized version is $\text{IR}_p \times \sqrt{12}$ for monthly data, so D is wrong.
+   :::
+   :::
+
+10. A fund has an annualized standard deviation of $36\%$, a beta of $1.71$, and an $R^2$ of $0.52$ against its benchmark. What does the $R^2$ imply?
+
+    A)  The fund beat its benchmark in $52\%$ of months
+    B)  $52\%$ of the fund's return came from the market
+    C)  About half of the fund's return variance is systematic; the rest is firm-specific and earns no expected reward
+    D)  The fund's alpha is statistically significant at the $5\%$ level
+
+    ::: {.content-visible when-meta="params.solution"}
+    ::: {.blue}
+    **The correct answer is C.**
+
+    $R^2$ is the fraction of the fund's return **variance** explained by the benchmark, so roughly half of this fund's variation is systematic and half is firm-specific.
+
+    Total risk decomposes as
+    $$
+    \sigma_p^2 = \beta_p^2\sigma_m^2 + \sigma^2(e_p),
+    $$
+    and the specific component $\sigma^2(e_p)$ carries no expected reward. It is precisely what drags the Sharpe ratio down while leaving the beta-based measures untouched -- which is why a low-$R^2$ fund can look acceptable on Treynor and poor on Sharpe.
+
+    A confuses variance explained with a hit rate, B confuses variance with return, and D is unrelated: $R^2$ says nothing about the precision of the alpha estimate.
+    :::
+    :::

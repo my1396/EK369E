@@ -11,6 +11,11 @@ number-sections: true
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 4)
 ```
 
+```{r}
+# Install IntroCompFinR package using GitHub mirror
+remotes::install_github("r-forge/introcompfinr", subdir = "pkg/IntroCompFinR", upgrade = "never")
+```
+
 ```{r libs}
 # Load libraries
 library(tidyverse)
@@ -179,11 +184,22 @@ abline(a=rf, b=sr.tan, col="green", lwd=2)
 
 Annual estimates of stock return parameters
 
-|                             | Boeing | Microsoft |
-| :-------------------------: | :----: | :-------: |
-|           $\mu$           | 0.149  |   0.331   |
-|       $\sigma^{2}$        | 0.069  |   0.136   |
-| $\rho$(Boeing, Microsoft) | -0.008 |           |
+
+```{=latex}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lcc}
+\hline
+ & Boeing & Microsoft \\
+\hline
+$\mu$    & 0.149  & 0.331 \\
+$\sigma^{2}$ & 0.069  & 0.136 \\
+$\rho(\text{Boeing},\text{Microsoft})$ & \multicolumn{2}{c}{$-0.008$} \\
+\hline
+\end{tabular}
+\end{table}
+```
+
 
 Risk free rate (annual) $r_f = 0.03$.
 
@@ -293,17 +309,24 @@ mt_df %>%
 # combine and prepare for plotting
 all_df <- bind_rows(bm_df, bt_df, mt_df)
 
-# Plot frontier
+# Plot frontier.
 ggplot(all_df, aes(x = sd_p, y = mu_p, color = portfolio)) +
-    geom_line() +
-    geom_point(size = 1) +
-    labs(
-        x = TeX("SD($r_p$)"), y = TeX("E($r_p$)"),
-        title = "Mean-Standard Deviation Frontier"
-    ) +
-    scale_color_manual(values = c("Boeing-Microsoft" = "#EE0000FF", "Boeing-Tbill" = "#3B4992FF", "Microsoft-Tbill" = "#008B45FF")) +
-    theme_minimal() +
-    theme(legend.position = "bottom")
+  geom_path() +
+  geom_point(size = 1) +
+  labs(
+    x = TeX("SD($r_p$)"), y = TeX("E($r_p$)"),
+    title = "Mean-Standard Deviation Frontier"
+  ) +
+  scale_color_manual(values = c("Boeing-Microsoft" = "#EE0000FF", "Boeing-Tbill" = "#3B4992FF", "Microsoft-Tbill" = "#008B45FF")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+# Using IntroCompFinR to plot the efficient frontier for Boeing and Microsoft
+ef_bm <- efficient.frontier(mu.vec, sigma2.mat, alpha.min=-1, alpha.max=2, nport=20)
+ef_bm
+plot(ef_bm)
 ```
 
 ### Sharpe Ratios of Individual Assets {-}
